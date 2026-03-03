@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Decorative Candle "Rose" - Mimosa Atelier</title>
+    <meta charset="UTF-8">
+    <meta name="Authors" content="Yuliia Sagan and Denys Shepitko">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="mimosatitle.ico" type="image/x-icon">
+    <meta name="Description" content="Decorative rose-shaped candle. Elegant ornament made from 100% soy wax.">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="profile-icon">
+        <a href="profile.html">
+
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="12" cy="8" r="4" stroke="black" stroke-width="2"/>
+<path d="M4 20c0-4 4-6 8-6s8 2 8 6" 
+        stroke="black" 
+        stroke-width="2" 
+        stroke-linecap="round"/>
+</svg>
+            </a>
+</div>
+
+    
+    <div class="language-switcher">
+        <button class="lang-btn active" data-lang="en" title="English">EN</button>
+        <button class="lang-btn" data-lang="fr" title="Français">FR</button>
+        <button class="lang-btn" data-lang="ua" title="Українська">UA</button>
+    </div>
+
+    
+    <header>
+        <figure>
+            <a href="index.html">
+            <img src="logobl2.ico" alt="Mimosa Logo" width="250" height="80">
+                </a>
+        </figure>
+        <nav>
+            <ul>
+                <li><a href="index.html" data-translate="nav-home">Home</a></li>
+                    <li><a href="products2.html" data-translate="nav-products">Products</a></li>
+                    <li><a href="About.html" data-translate="nav-about">About Us</a></li>
+                <li><a href="contact.html" data-translate="nav-contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    
+    <main class="product-page">
+        
+        <div class="breadcrumbs">
+            <a href="index.html" data-translate="nav-home">Home</a>
+            <span>/</span>
+            <a href="products2.html" data-translate="nav-products">Products</a>
+            <span>/</span>
+            <span data-translate="product3-name">Decorative Candle "Rose"</span>
+        </div>
+
+        <div class="product-container">
+            
+            <div class="product-gallery">
+                <div class="main-image">
+                    <img id="mainProductImage" src="rose.ico" alt="Decorative Candle Rose">
+                </div>
+                <div class="thumbnail-images">
+                    <img src="PR23.ICO" alt="View 1" class="thumbnail active" onclick="changeImage(this)">
+                    <img src="PRO2.ICO" alt="View 2" class="thumbnail" onclick="changeImage(this)">
+                    <img src="PRO24.ICO" alt="View 3" class="thumbnail" onclick="changeImage(this)">
+                </div>
+            </div>
+
+            
+            <div class="product-info">
+                <h1 data-translate="product3-name">Decorative Candle "Rose"</h1>
+                
+                <div class="product-rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="reviews">(24 reviews)</span>
+                </div>
+
+                <p class="product-price-large">7.99€</p>
+
+                <p class="product-description" data-translate="product3-full-desc">
+                Delicate rose-shaped candle crafted from 100% soy wax. Elegant and ornamental, perfect for centerpieces and romantic décor.
+                </p>
+
+                
+                <div class="product-details">
+                    <h3 data-translate="details-title">Product Details</h3>
+                    <ul>
+                        <li><strong data-translate="composition-label">Composition:</strong> <span data-translate="product3-composition">100% soy wax</span></li>
+                        <li><strong data-translate="burn-time-label">Burn Time:</strong> <span data-translate="burn-time">~40 hours</span></li>
+                        <li><strong data-translate="weight-label">Weight:</strong> 200g</li>
+                        <li><strong data-translate="scent-label">Scent Notes:</strong> <span data-translate="scent-notes">Lavender, Vanilla, Sandalwood</span></li>
+                        <li><strong data-translate="handmade-label">Handmade:</strong> <span data-translate="handmade-yes">Yes</span></li>
+                    </ul>
+                </div>
+
+                
+                <div class="quantity-section">
+                    <label for="quantity" data-translate="quantity-label">Quantity:</label>
+                    <div class="quantity-selector">
+                        <button onclick="decreaseQuantity()">−</button>
+                        <input type="number" id="quantity" value="1" min="1" max="10" readonly>
+                        <button onclick="increaseQuantity()">+</button>
+                    </div>
+                </div>
+
+                
+                <div class="product-actions">
+                    <button class="btn-add-cart" onclick="addToCart()">
+                        <span data-translate="add-to-cart">Add to Cart</span>
+                    </button>
+                    <button class="btn-wishlist" onclick="toggleWishlist(this)">
+                        ♡
+                    </button>
+                </div>
+
+                
+                <div class="product-features">
+                    <div class="feature">
+                        <span class="icon">🌿</span>
+                        <span data-translate="feature-natural">100% Natural</span>
+                    </div>
+                    <div class="feature">
+                        <span class="icon">♻️</span>
+                        <span data-translate="feature-eco">Eco-Friendly</span>
+                    </div>
+                    <div class="feature">
+                        <span class="icon">✋</span>
+                        <span data-translate="feature-handmade">Handmade</span>
+                    </div>
+                </div>
+
+                <div class="related-products">
+                    <h3 data-translate="related-title">You May Also Like</h3>
+                    <article class="related-card" onclick="window.location.href='products1.html'">
+                        <img src="bento.ico" alt="Bento Candle">
+                        <h3 data-translate="product1-name">Bento Bougie</h3>
+                    </article>
+                    <article class="related-card" onclick="window.location.href='products2.html'">
+                        <img src="parfume.ico" alt="Bougie Parfumée">
+                        <h3 data-translate="product2-name">Bougie Parfumée</h3>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+    <button id="back-to-top" class="back-to-top">
+        <span>↑</span>
+    </button>
+
+    
+    <script>
+
+    const translations = {
+        en: {
+            'nav-home': 'Home',
+            'nav-products': 'Products',
+            'nav-about': 'About Us',
+            'nav-contact': 'Contact',
+            'product3-name': 'Decorative Candle "Rose"',
+            'product3-full-desc': 'Delicate rose-shaped candle crafted from 100% soy wax. Elegant and ornamental, perfect for centerpieces and romantic décor.',
+            'details-title': 'Product Details',
+            'composition-label': 'Composition:',
+            'product3-composition': '100% soy wax',
+            'burn-time-label': 'Burn Time:',
+            'burn-time': '~40 hours',
+            'weight-label': 'Weight:',
+            'scent-label': 'Scent Notes:',
+            'scent-notes': 'Lavender, Vanilla, Sandalwood',
+            'handmade-label': 'Handmade:',
+            'handmade-yes': 'Yes',
+            'quantity-label': 'Quantity:',
+            'add-to-cart': 'Add to Cart',
+            'feature-natural': '100% Natural',
+            'feature-eco': 'Eco-Friendly',
+            'feature-handmade': 'Handmade',
+            'related-title': 'You May Also Like',
+            'product1-name': 'Bento Bougie',
+            'product2-name': 'Bougie Parfumée',
+            'footer-copyright': 'All rights reserved.',
+            'footer-privacy': 'Privacy Policy',
+            'footer-terms': 'Terms',
+            'footer-contact': 'Contact',
+            'cookie-title': '🍪 We use cookies',
+            'cookie-text': 'We use cookies to improve your experience on our site.',
+            'cookie-accept': 'Accept',
+            'cookie-decline': 'Decline'
+        },
+        fr: {
+            'nav-home': 'Accueil',
+            'nav-products': 'Produits',
+            'nav-about': 'À propos',
+            'nav-contact': 'Contact',
+            'product3-name': 'Bougie décorative "Rose"',
+            'product3-full-desc': 'Bougie délicate en forme de rose, fabriquée à partir de cire de soja 100%. Élégante et ornementale, parfaite pour les centres de table et la décoration romantique.',
+            'composition-label': 'Composition:',
+            'product3-composition': '100% cire de soja',
+            'burn-time-label': 'Temps de combustion:',
+            'burn-time': '~40 heures',
+            'weight-label': 'Poids:',
+            'scent-label': 'Notes olfactives:',
+            'scent-notes': 'Lavande, Vanille, Bois de santal',
+            'handmade-label': 'Fait main:',
+            'handmade-yes': 'Oui',
+            'quantity-label': 'Quantité:',
+            'add-to-cart': 'Ajouter au Panier',
+            'feature-natural': '100% Naturel',
+            'feature-eco': 'Écologique',
+            'feature-handmade': 'Fait Main',
+            'related-title': 'Vous Aimerez Aussi',
+            'product1-name': 'Bento Bougie',
+            'product2-name': 'Bougie Parfumée',
+            'footer-copyright': 'Tous droits réservés.',
+            'footer-privacy': 'Politique de confidentialité',
+            'footer-terms': 'CGV',
+            'footer-contact': 'Contact',
+            'cookie-title': '🍪 Nous utilisons des cookies',
+            'cookie-text': 'Nous utilisons des cookies pour améliorer votre expérience.',
+            'cookie-accept': 'Accepter',
+            'cookie-decline': 'Refuser'
+        },
+        ua: {
+            'nav-home': 'Головна',
+            'nav-products': 'Продукти',
+            'nav-about': 'Про нас',
+            'nav-contact': 'Контакти',
+            'product3-name': 'Декоративна свічка "Троянда"',
+            'product3-full-desc': 'Делікатна свічка у формі троянди, виготовлена зі 100% соєвого воску. Елегантна і декоративна, ідеально підходить для центрів столу та романтичного декору.',
+            'composition-label': 'Склад:',
+            'product3-composition': '100% соєвий віск',
+            'burn-time-label': 'Час горіння:',
+            'burn-time': '~40 годин',
+            'weight-label': 'Вага:',
+            'scent-label': 'Аромати:',
+            'scent-notes': 'Лаванда, Ваніль, Сандалове дерево',
+            'handmade-label': 'Ручна робота:',
+            'handmade-yes': 'Так',
+            'quantity-label': 'Кількість:',
+            'add-to-cart': 'Додати в Кошик',
+            'feature-natural': '100% Натурально',
+            'feature-eco': 'Екологічно',
+            'feature-handmade': 'Ручна Робота',
+            'related-title': 'Вам Також Сподобається',
+            'product1-name': 'Свічка Бенто',
+            'product2-name': 'Ароматична Свічка',
+            'footer-copyright': 'Всі права захищені.',
+            'footer-privacy': 'Політика конфіденційності',
+            'footer-terms': 'Умови',
+            'footer-contact': 'Контакти',
+            'cookie-title': '🍪 Ми використовуємо cookies',
+            'cookie-text': 'Ми використовуємо cookies для покращення вашого досвіду.',
+            'cookie-accept': 'Прийняти',
+            'cookie-decline': 'Відхилити'
+        }
+    };
+
+
+    function switchLanguage(lang) {
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelector(`.lang-btn[data-lang="${lang}"]`).classList.add('active');
+        localStorage.setItem('selectedLanguage', lang);
+        document.querySelectorAll('[data-translate]').forEach(element => {
+            const key = element.getAttribute('data-translate');
+            if (translations[lang] && translations[lang][key]) {
+                element.textContent = translations[lang][key];
+            }
+        });
+    }
+
+
+    function changeImage(thumbnail) {
+        const mainImage = document.getElementById('mainProductImage');
+        mainImage.src = thumbnail.src;
+        document.querySelectorAll('.thumbnail').forEach(thumb => {
+            thumb.classList.remove('active');
+        });
+        thumbnail.classList.add('active');
+    }
+
+
+    function increaseQuantity() {
+        const input = document.getElementById('quantity');
+        if (parseInt(input.value) < 10) {
+            input.value = parseInt(input.value) + 1;
+        }
+    }
+
+    function decreaseQuantity() {
+        const input = document.getElementById('quantity');
+        if (parseInt(input.value) > 1) {
+            input.value = parseInt(input.value) - 1;
+        }
+    }
+
+
+    function addToCart() {
+        const quantity = document.getElementById('quantity').value;
+        alert(`Added ${quantity} item(s) to cart!`);
+    }
+
+
+    function toggleWishlist(button) {
+        if (button.textContent === '♡') {
+            button.textContent = '♥';
+            button.style.color = '#ff4757';
+        } else {
+            button.textContent = '♡';
+            button.style.color = '#5a5a5a';
+        }
+    }
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+
+
+        const savedLang = localStorage.getItem('selectedLanguage') || 'en';
+        switchLanguage(savedLang);
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                switchLanguage(this.getAttribute('data-lang'));
+            });
+        });
+
+
+        const cookieBanner = document.getElementById('cookie-banner');
+        const acceptBtn = document.getElementById('accept-cookies');
+        const declineBtn = document.getElementById('decline-cookies');
+        if (!localStorage.getItem('cookieConsent')) {
+            setTimeout(() => cookieBanner.classList.add('show'), 1000);
+        }
+        acceptBtn.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieBanner.classList.remove('show');
+        });
+        declineBtn.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieBanner.classList.remove('show');
+        });
+
+
+        const backToTopBtn = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            backToTopBtn.classList.toggle('show', window.pageYOffset > 300);
+        });
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+    </script>
+</body>
+</html>

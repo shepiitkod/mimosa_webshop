@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mimosa Home Page</title>
+    <meta charset="UTF-8">
+    <meta name="Authors" content="Yuliia Sagan and Denys Shepitko">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="logobl2.ico" type="image/x-icon">
+    <meta name="Keywords" content="Mimosa, Mimosa candles, Mimosa bio bougies, bougies artisanales bio, bougies naturelles, bougies parfumées, bougies écologiques, bougies végétales, bougies faites main, bougies durables, bougies respectueuses de l'environnement">
+    <meta name="Description" content="Découvrez Mimosa, votre destination pour des bougies artisanales bio, naturelles et parfumées. Nos bougies écologiques sont fabriquées à la main avec des ingrédients végétaux durables, offrant une expérience sensorielle unique tout en respectant l'environnement.">
+    <link rel="stylesheet" href="styles.css">
+    <script src="translations.js"></script>
+</head>
+
+<body>
+
+    <div class="language-switcher">
+        <button class="lang-btn active" data-lang="en" title="English">EN</button>
+        <button class="lang-btn" data-lang="fr" title="Français">FR</button>
+        <button class="lang-btn" data-lang="ua" title="Українська">UA</button>
+    </div>
+
+    <header>
+        <figure>
+            <a href="index.html">
+                <img src="logobl2.ico" alt="Mimosa Logo" width="250" height="80">
+            </a>
+        </figure>
+        <nav>
+            <ul>
+                <li><a href="index.html" data-translate="nav-home">Home</a></li>
+                <li><a href="products2.html" data-translate="nav-products">Products</a></li>
+                <li><a href="About.html" data-translate="nav-about">About Us</a></li>
+                <li><a href="contact.html" data-translate="nav-contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="profile-icon">
+            <a href="profile.html">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="8" r="4" stroke="black" stroke-width="2"/>
+    <path d="M4 20c0-4 4-6 8-6s8 2 8 6" 
+        stroke="black" 
+        stroke-width="2" 
+        stroke-linecap="round"/>
+    </svg>
+            </a>
+    </div>
+    </header>
+
+    
+    <section class="hero">
+        <div class="hero-photos">
+              <img src="photo1.ico" alt="Candle from collection 1" class="hero-photo hero-photo-1">
+              <img src="photo2.ico" alt="Photo model for the new collection" class="hero-photo hero-photo-2">
+              <img src="photo3.ico" alt="Candle from the collection 2" class="hero-photo hero-photo-3">
+        </div>
+        <div class="hero-content">
+            <h1 data-translate="hero-title">Handcrafted Candles</h1>
+            <p class="hero-subtitle" data-translate="hero-subtitle">Natural. Elegant. Made with Love in Nîmes, France</p>
+            <a href="products2.html" class="hero-btn" data-translate="hero-btn">Explore Collection</a>
+        </div>
+    </section>
+
+    <section class="about-snippet">
+        <h2 data-translate="about-snippet-title">Welcome to Mimosa Atelier</h2>
+        <p data-translate="about-snippet-text">Every candle is a story, crafted by hand with 100% natural soy wax and exclusive fragrances from Provence. We believe in beauty, sustainability, and the art of slow living.</p>
+    </section>
+
+    
+    <main>
+        <h2 class="section-title" data-translate="products-title">Our New Collection</h2>
+        
+        <section class="Products">
+            <article id="product1" class="Product1">
+                <a href="products1.html" class="product-link" aria-label="Bento Candle details">
+                    <figure>
+                        <img src="bento.ico" alt="Bento Candle">
+                    </figure>
+                    <h3 data-translate="product1-name">Bento Candle</h3>
+                </a>
+                <p class="product-desc" data-translate="product1-desc">Perfect for birthdays and weddings</p>
+                <p class="product-composition" data-translate="product1-composition">100% soy wax, natural fragrance</p>
+                <p class="product-price">€14,99</p>
+            </article>
+
+
+            <article id="product2" class="Product2">
+                <a href="products2.html" class="product-link" aria-label="Bougie Parfumée details">
+                    <figure>
+                        <img src="parfume.ico" alt="Bougie Parfumée">
+                    </figure>
+                    <h3 data-translate="product2-name">Bougie Parfumée</h3>
+                </a>
+                <p class="product-desc" data-translate="product2-desc">Scented candle for atmosphere</p>
+                <p class="product-composition" data-translate="product2-composition">100% soy wax, natural fragrance</p>
+                <p class="product-price">€26.99</p>
+            </article>
+
+            <article id="product3" class="Product3">
+                <a href="products3.html" class="product-link" aria-label="Decorative Candle Rose details">
+                    <figure>
+                        <img src="rose.ico" alt="Decorative Candle Rose">
+                    </figure>
+                    <h3 data-translate="product3-name">Decorative Candle "Rose"</h3>
+                </a>
+                <p class="product-desc" data-translate="product3-desc">Decorative rose-shaped candle</p>
+                <p class="product-composition" data-translate="product3-composition">100% soy wax</p>
+                <p class="product-price">€7.99</p>
+            </article>
+        </section>
+            <article class="Product4">
+                <a href="products2.html" class="product-link" aria-label="See all products">
+                    <h3 data-translate="product4-name">New Products Coming Soon</h3>
+                </a>
+                <p class="product-desc" data-translate="product4-desc">Stay tuned for our next release!</p>
+            </article>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Mimosa Atelier. <span data-translate="footer-copyright">All rights reserved.</span></p>
+            <nav class="footer-links">
+                <a href="confidential.html" data-translate="footer-privacy">Privacy Policy</a>
+                <a href="#" data-translate="footer-terms">Terms</a>
+                <a href="contact.html" data-translate="footer-contact">Contact</a>
+            </nav>
+            <div class="footer-social">
+                <a href="mailto:mimosa.atelier.france@gmail.com" data-translate="footer-email">Email</a>
+                <a href="https://www.instagram.com/mimosa_atelier_france/" target="_blank" data-translate="footer-instagram">Instagram</a>
+            </div>
+        </div>
+        <p class="legal-text">Nîmes, France | SIRET: XXX XXX XXX</p>
+    </footer>
+
+    <div id="cookie-banner" class="cookie-banner">
+        <div class="cookie-content">
+            <div class="cookie-text">
+                <h3 data-translate="cookie-title">🍪 We use cookies</h3>
+                <p data-translate="cookie-text">We use cookies to improve your experience on our site. By continuing, you accept our privacy policy.</p>
+            </div>
+            <div class="cookie-buttons">
+                <button id="accept-cookies" class="btn-accept" data-translate="cookie-accept">Accept</button>
+                <button id="decline-cookies" class="btn-decline" data-translate="cookie-decline">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <button id="back-to-top" class="back-to-top">
+        <span>↑</span>
+    </button>
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedLang = localStorage.getItem('selectedLanguage') || 'en';
+        switchLanguage(savedLang);
+        
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                switchLanguage(lang);
+            });
+        });
+
+        const cookieBanner = document.getElementById('cookie-banner');
+        const acceptBtn = document.getElementById('accept-cookies');
+        const declineBtn = document.getElementById('decline-cookies');
+        
+        const cookieConsent = localStorage.getItem('cookieConsent');
+        
+        if (!cookieConsent) {
+            setTimeout(() => {
+                cookieBanner.classList.add('show');
+            }, 1000);
+        }
+        
+        acceptBtn.addEventListener('click', function() {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieBanner.classList.remove('show');
+        });
+        
+        declineBtn.addEventListener('click', function() {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieBanner.classList.remove('show');
+        });
+
+        const backToTopBtn = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    </script>
+</body>
+</html>
