@@ -54,5 +54,10 @@ Admin panel / CMS
 
 Performance optimization
 
-SEO improvements
+SEO impovements
+-----
+
+
+## Live Demo
+[View Website](https://shepiitkod.github.io/mimosa_webshop/)
 -----
