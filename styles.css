@@ -456,16 +456,10 @@ main p {
     position: relative;
 }
 
-.Product1:hover {
-    transform: translateY(-15px) rotate(-1.5deg);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
-}
-.Product2:hover {
-    transform: translateY(-15px) scale(1.04);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
-}
+.Product1:hover,
+.Product2:hover,
 .Product3:hover {
-    transform: translateY(-15px) rotate(1.5deg);
+    transform: translateY(-10px);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
 }
 
@@ -486,9 +480,11 @@ main p {
     transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-.Product1:hover img { transform: scale(1.12) rotate(-3deg); }
-.Product2:hover img { transform: scale(1.15); }
-.Product3:hover img { transform: scale(1.12) rotate(3deg); }
+.Product1:hover img,
+.Product2:hover img,
+.Product3:hover img {
+    transform: scale(1.06);
+}
 
 .Product1 figcaption, .Product2 figcaption, .Product3 figcaption { display: none; }
 
@@ -534,10 +530,10 @@ main p {
 }
 
 .Products > article .product-price {
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    margin: 0;
+    position: static;
+    display: inline-flex;
+    align-items: center;
+    margin: 16px 24px 26px;
     padding: 8px 14px;
     border-radius: 999px;
     border: 1px solid rgba(255, 255, 255, 0.9);
@@ -548,11 +544,23 @@ main p {
     color: #1a1a1a;
     font-size: 18px;
     letter-spacing: -0.2px;
-    z-index: 4;
+    z-index: auto;
 }
 
 .Products > article .product-composition {
-    margin-bottom: 22px;
+    margin-bottom: 8px;
+}
+
+/* Keep language switcher in normal page flow to avoid drifting on mobile. */
+.language-switcher {
+    position: static;
+    top: auto;
+    right: auto;
+    transform: none;
+    flex-direction: row;
+    align-self: center;
+    margin: 12px auto 6px;
+    z-index: 10;
 }
 
 
@@ -984,11 +992,13 @@ footer {
 
 @media (max-width: 768px) {
     .language-switcher {
-        top: 15px;
-        right: 15px;
+        position: static;
+        top: auto;
+        right: auto;
         transform: none;
         flex-direction: row;
         padding: 8px;
+        margin: 10px auto 6px;
     }
     .profile-icon {
         top: 74px;
@@ -1997,10 +2007,12 @@ opacity: 0.7;
 
 @media (max-width: 480px) {
     .language-switcher {
-        right: 10px;
-        top: 10px;
+        position: static;
+        right: auto;
+        top: auto;
         padding: 6px;
         gap: 6px;
+        margin: 8px auto 6px;
     }
 
     .lang-btn {
@@ -2384,12 +2396,12 @@ opacity: 0.7;
 
     nav ul {
         width: 100%;
-        justify-content: flex-start;
+        justify-content: center;
         gap: 10px;
         flex-wrap: nowrap;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
-        padding: 0 56px 4px 6px;
+        padding: 0 44px 4px;
         scrollbar-width: none;
     }
 
@@ -2416,11 +2428,13 @@ opacity: 0.7;
     }
 
     .language-switcher {
-        top: 8px;
-        right: 8px;
+        position: static;
+        top: auto;
+        right: auto;
         padding: 5px;
         gap: 5px;
-        z-index: 3000;
+        z-index: 10;
+        margin: 8px auto 6px;
     }
 
     .lang-btn {
@@ -2876,8 +2890,9 @@ opacity: 0.7;
     }
 
     body {
-        padding-left: var(--safe-left);
-        padding-right: var(--safe-right);
+        /* Keep mobile layout centered even when safe-area is present only on one side. */
+        padding-left: max(var(--safe-left), var(--safe-right));
+        padding-right: max(var(--safe-left), var(--safe-right));
     }
 
     header {
@@ -2885,8 +2900,8 @@ opacity: 0.7;
     }
 
     .language-switcher {
-        top: calc(8px + var(--safe-top));
-        right: calc(8px + var(--safe-right));
+        top: auto;
+        right: auto;
     }
 
     .profile-icon {
