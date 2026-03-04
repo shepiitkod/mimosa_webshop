@@ -432,10 +432,11 @@ main p {
 
 .Products {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 32px;
-    max-width: 1300px;
+    width: min(1120px, 100%);
     margin: 0 auto;
+    padding: 0 20px;
 }
 
 .Products > article {
@@ -1466,6 +1467,8 @@ footer {
 @media (max-width: 1024px) {
     .Products {
         grid-template-columns: repeat(2, 1fr);
+        width: min(900px, 100%);
+        padding: 0 16px;
     }
 }
 
@@ -1894,6 +1897,9 @@ opacity: 0.7;
     .Products {
         padding: 0 14px;
         gap: 18px;
+        width: min(560px, 100%);
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .Product1,
@@ -2513,7 +2519,10 @@ opacity: 0.7;
     .Products {
         grid-template-columns: 1fr;
         gap: 12px;
-        padding: 0 10px;
+        width: min(560px, 100%);
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0 12px;
     }
 
     .Product1,
