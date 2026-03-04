@@ -438,6 +438,12 @@ main p {
     margin: 0 auto;
 }
 
+.Products > article {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
 .Product1, .Product2, .Product3 {
     background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(15px);
@@ -468,12 +474,15 @@ main p {
     aspect-ratio: 1 / 1;
     overflow: hidden;
     background: linear-gradient(145deg, #fafafa, #f0f0f0);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
 }
 
 .Product1 img, .Product2 img, .Product3 img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
@@ -522,6 +531,28 @@ main p {
     color: #c9a961;
     margin: 20px 24px 28px 24px;
     letter-spacing: -0.8px;
+}
+
+.Products > article .product-price {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    margin: 0;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    color: #1a1a1a;
+    font-size: 18px;
+    letter-spacing: -0.2px;
+    z-index: 4;
+}
+
+.Products > article .product-composition {
+    margin-bottom: 22px;
 }
 
 
@@ -2100,9 +2131,11 @@ opacity: 0.7;
         line-height: 1.35;
     }
 
-    .product-price {
-        font-size: 22px;
-        margin: 10px 16px 16px;
+    .Products > article .product-price {
+        top: 10px;
+        right: 10px;
+        font-size: 16px;
+        padding: 7px 12px;
     }
 
     .Product1:hover,
@@ -2282,8 +2315,11 @@ opacity: 0.7;
         font-size: 12px;
     }
 
-    .product-price {
-        font-size: 20px;
+    .Products > article .product-price {
+        top: 8px;
+        right: 8px;
+        font-size: 15px;
+        padding: 6px 10px;
     }
 
     .product-page {
