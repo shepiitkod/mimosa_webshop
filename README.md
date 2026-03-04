@@ -58,6 +58,6 @@ SEO impovements
 
 
 
-## Live Demo
+
 [View Website](https://shepiitkod.github.io/mimosa_webshop/)
 -----
