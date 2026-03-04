@@ -959,6 +959,12 @@ footer {
         flex-direction: row;
         padding: 8px;
     }
+    .profile-icon {
+        top: 74px;
+        right: 15px;
+        width: 48px;
+        height: 48px;
+    }
     .lang-btn {
         width: 42px;
         height: 42px;
