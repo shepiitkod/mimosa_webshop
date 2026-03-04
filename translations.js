@@ -6,6 +6,12 @@ const translations = {
         'nav-products': 'Products',
         'nav-about': 'About Us',
         'nav-contact': 'Contact',
+        'nav-sub-all': 'All Products',
+        'nav-sub-bento': 'Bento Candles',
+        'nav-sub-scented': 'Scented Candles',
+        'nav-sub-rose': 'Decorative Rose',
+        'nav-sub-gifts': 'Gift Collections',
+        'nav-sub-new': 'New Arrivals',
         
         
         'hero-title': 'Handcrafted Candles',
@@ -146,6 +152,12 @@ const translations = {
         'nav-products': 'Produits',
         'nav-about': 'À propos',
         'nav-contact': 'Contact',
+        'nav-sub-all': 'Tous les produits',
+        'nav-sub-bento': 'Bougies Bento',
+        'nav-sub-scented': 'Bougies parfumées',
+        'nav-sub-rose': 'Rose décorative',
+        'nav-sub-gifts': 'Collections cadeaux',
+        'nav-sub-new': 'Nouveautés',
         
         
         'hero-title': 'Bougies Artisanales',
@@ -286,6 +298,12 @@ const translations = {
         'nav-products': 'Продукти',
         'nav-about': 'Про нас',
         'nav-contact': 'Контакти',
+        'nav-sub-all': 'Усі товари',
+        'nav-sub-bento': 'Свічки Bento',
+        'nav-sub-scented': 'Ароматичні свічки',
+        'nav-sub-rose': 'Декоративна троянда',
+        'nav-sub-gifts': 'Подарункові колекції',
+        'nav-sub-new': 'Новинки',
         
         
         'hero-title': 'Ручні Свічки',
