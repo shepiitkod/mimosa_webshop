@@ -65,12 +65,37 @@
     <section class="hero">
         <div class="hero-photos">
             <div class="hero-track" aria-label="Featured photos">
+                <img src="assets/images/MAIN1.ico" alt="Handcrafted candle arrangement" class="hero-photo">
+                <img src="assets/images/MAIN2.ico" alt="Natural candle in studio light" class="hero-photo">
+                <img src="assets/images/MAIN3.ico" alt="Decorative candle close-up" class="hero-photo">
+                <img src="assets/images/MAIN4.ico" alt="Mimosa candle with floral styling" class="hero-photo">
+                <img src="assets/images/MAIN5.ico" alt="Gift-ready candle collection" class="hero-photo">
+                <img src="assets/images/MAIN6.ico" alt="Scented candle detail" class="hero-photo">
+                <img src="assets/images/MAIN7.ico" alt="Minimal candle setup" class="hero-photo">
+                <img src="assets/images/MAIN8.ico" alt="Rose decorative candle" class="hero-photo">
+                <img src="assets/images/MAIN9.ico" alt="Warm-toned handcrafted candle" class="hero-photo">
+                <img src="assets/images/MAIN10.ico" alt="Seasonal candle composition" class="hero-photo">
+                <img src="assets/images/MAIN11.ico" alt="Soy wax candle close-up" class="hero-photo">
+                <img src="assets/images/MAIN12.ico" alt="Atelier candle styling" class="hero-photo">
                 <img src="assets/images/photo1.ico" alt="Candle from collection 1" class="hero-photo">
                 <img src="assets/images/photo2.ico" alt="Photo model for the new collection" class="hero-photo">
-                <img src="assets/images/photo3.ico" alt="Candle from the collection 2" class="hero-photo">
-                <img src="assets/images/photo1.ico" alt="Candle from collection 1" class="hero-photo" aria-hidden="true">
-                <img src="assets/images/photo2.ico" alt="Photo model for the new collection" class="hero-photo" aria-hidden="true">
-                <img src="assets/images/photo3.ico" alt="Candle from the collection 2" class="hero-photo" aria-hidden="true">
+                <img src="assets/images/photo3.ico" alt="Candle from collection 2" class="hero-photo">
+
+                <img src="assets/images/MAIN1.ico" alt="" class="hero-photo" aria-hidden="true">
+                <img src="assets/images/MAIN2.ico" alt="" class="hero-photo" aria-hidden="true">
+                <img src="assets/images/MAIN3.ico" alt="" class="hero-photo" aria-hidden="true">
+                <img src="assets/images/MAIN4.ico" alt="" class="hero-photo" aria-hidden="true">
+                <img src="assets/images/MAIN5.ico" alt="" class="hero-photo" aria-hidden="true">
+                <img src="assets/images/MAIN6.ico" alt="" class="hero-photo" aria-hidden="true">
+                <img src="assets/images/MAIN7.ico" alt="" class="hero-photo" aria-hidden="true">
+                <img src="assets/images/MAIN8.ico" alt="" class="hero-photo" aria-hidden="true">
+                <img src="assets/images/MAIN9.ico" alt="" class="hero-photo" aria-hidden="true">
+                <img src="assets/images/MAIN10.ico" alt="" class="hero-photo" aria-hidden="true">
+                <img src="assets/images/MAIN11.ico" alt="" class="hero-photo" aria-hidden="true">
+                <img src="assets/images/MAIN12.ico" alt="" class="hero-photo" aria-hidden="true">
+                <img src="assets/images/photo1.ico" alt="" class="hero-photo" aria-hidden="true">
+                <img src="assets/images/photo2.ico" alt="" class="hero-photo" aria-hidden="true">
+                <img src="assets/images/photo3.ico" alt="" class="hero-photo" aria-hidden="true">
             </div>
         </div>
         <div class="hero-content">
@@ -226,6 +251,7 @@
         const cookieBanner = document.getElementById('cookie-banner');
         const acceptBtn = document.getElementById('accept-cookies');
         const declineBtn = document.getElementById('decline-cookies');
+        const heroPhotos = document.querySelector('.home-page .hero-photos');
         
         const cookieConsent = localStorage.getItem('cookieConsent');
         
@@ -246,6 +272,20 @@
         });
 
         const backToTopBtn = document.getElementById('back-to-top');
+
+        function updateHeroAnimationState() {
+            if (!heroPhotos) {
+                return;
+            }
+
+            if (window.pageYOffset > 80) {
+                heroPhotos.classList.add('hero-photos--animated');
+            } else {
+                heroPhotos.classList.remove('hero-photos--animated');
+            }
+        }
+
+        updateHeroAnimationState();
         
         window.addEventListener('scroll', function() {
             if (window.pageYOffset > 300) {
@@ -253,6 +293,8 @@
             } else {
                 backToTopBtn.classList.remove('show');
             }
+
+            updateHeroAnimationState();
         });
         
         backToTopBtn.addEventListener('click', function() {
