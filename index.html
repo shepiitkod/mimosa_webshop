@@ -6,7 +6,7 @@
     <meta name="Authors" content="Yuliia Sagan and Denys Shepitko">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="shortcut icon" href="logobl2.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/images/banner2.ico" type="image/x-icon">
     <meta name="Keywords" content="Mimosa, Mimosa candles, Mimosa bio bougies, bougies artisanales bio, bougies naturelles, bougies parfumées, bougies écologiques, bougies végétales, bougies faites main, bougies durables, bougies respectueuses de l'environnement">
     <meta name="Description" content="Découvrez Mimosa, votre destination pour des bougies artisanales bio, naturelles et parfumées. Nos bougies écologiques sont fabriquées à la main avec des ingrédients végétaux durables, offrant une expérience sensorielle unique tout en respectant l'environnement.">
     <link rel="stylesheet" href="styles.css">
@@ -16,9 +16,12 @@
 <body>
 
     <div class="language-switcher">
-        <button class="lang-btn active" data-lang="en" title="English">EN</button>
-        <button class="lang-btn" data-lang="fr" title="Français">FR</button>
-        <button class="lang-btn" data-lang="ua" title="Українська">UA</button>
+        <button class="lang-current" type="button" aria-label="Toggle language menu" aria-expanded="false">EN</button>
+        <div class="lang-options" aria-label="Language options">
+            <button class="lang-btn active" data-lang="en" title="English" type="button">EN</button>
+            <button class="lang-btn" data-lang="fr" title="Français" type="button">FR</button>
+            <button class="lang-btn" data-lang="ua" title="Українська" type="button">UA</button>
+        </div>
     </div>
 
     <header>
@@ -164,15 +167,56 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const savedLang = localStorage.getItem('selectedLanguage') || 'en';
-        switchLanguage(savedLang);
-        
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const lang = this.getAttribute('data-lang');
-                switchLanguage(lang);
+        const languageSwitcher = document.querySelector('.language-switcher');
+        const langCurrentBtn = document.querySelector('.lang-current');
+
+        function updateCompactLanguageUI() {
+            if (!languageSwitcher || !langCurrentBtn) {
+                return;
+            }
+
+            const activeBtn = languageSwitcher.querySelector('.lang-btn.active') || languageSwitcher.querySelector('.lang-btn');
+            if (!activeBtn) {
+                return;
+            }
+
+            langCurrentBtn.textContent = activeBtn.textContent.trim();
+            langCurrentBtn.setAttribute('data-lang', activeBtn.getAttribute('data-lang') || 'en');
+        }
+
+        if (languageSwitcher && langCurrentBtn) {
+            updateCompactLanguageUI();
+
+            langCurrentBtn.addEventListener('click', function() {
+                const isExpanded = languageSwitcher.classList.toggle('expanded');
+                langCurrentBtn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
             });
-        });
+
+            languageSwitcher.querySelectorAll('.lang-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    // Let translations.js handle switching, then sync compact label and collapse menu.
+                    setTimeout(function() {
+                        updateCompactLanguageUI();
+                        languageSwitcher.classList.remove('expanded');
+                        langCurrentBtn.setAttribute('aria-expanded', 'false');
+                    }, 0);
+                });
+            });
+
+            document.addEventListener('click', function(event) {
+                if (!languageSwitcher.contains(event.target)) {
+                    languageSwitcher.classList.remove('expanded');
+                    langCurrentBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    languageSwitcher.classList.remove('expanded');
+                    langCurrentBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
 
         const cookieBanner = document.getElementById('cookie-banner');
         const acceptBtn = document.getElementById('accept-cookies');
