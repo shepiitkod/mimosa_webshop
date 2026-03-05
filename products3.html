@@ -14,9 +14,12 @@
 <body>
 
     <div class="language-switcher">
-        <button class="lang-btn active" data-lang="en" title="English">EN</button>
-        <button class="lang-btn" data-lang="fr" title="Français">FR</button>
-        <button class="lang-btn" data-lang="ua" title="Українська">UA</button>
+        <button class="lang-current" type="button" aria-label="Toggle language menu" aria-expanded="false">EN</button>
+        <div class="lang-options" aria-label="Language options">
+            <button class="lang-btn active" data-lang="en" title="English" type="button">EN</button>
+            <button class="lang-btn" data-lang="fr" title="Français" type="button">FR</button>
+            <button class="lang-btn" data-lang="ua" title="Українська" type="button">UA</button>
+        </div>
     </div>
 
     
@@ -328,14 +331,54 @@
 
     document.addEventListener('DOMContentLoaded', function() {
 
+        const languageSwitcher = document.querySelector('.language-switcher');
+        const langCurrentBtn = document.querySelector('.lang-current');
+
+        function updateCompactLanguageUI() {
+            if (!languageSwitcher || !langCurrentBtn) {
+                return;
+            }
+
+            const activeBtn = languageSwitcher.querySelector('.lang-btn.active') || languageSwitcher.querySelector('.lang-btn');
+            if (!activeBtn) {
+                return;
+            }
+
+            langCurrentBtn.textContent = activeBtn.textContent.trim();
+            langCurrentBtn.setAttribute('data-lang', activeBtn.getAttribute('data-lang') || 'en');
+        }
+
 
         const savedLang = localStorage.getItem('selectedLanguage') || 'en';
         switchLanguage(savedLang);
+        updateCompactLanguageUI();
+
         document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 switchLanguage(this.getAttribute('data-lang'));
+                setTimeout(function() {
+                    updateCompactLanguageUI();
+                    if (languageSwitcher && langCurrentBtn) {
+                        languageSwitcher.classList.remove('expanded');
+                        langCurrentBtn.setAttribute('aria-expanded', 'false');
+                    }
+                }, 0);
             });
         });
+
+        if (languageSwitcher && langCurrentBtn) {
+            langCurrentBtn.addEventListener('click', function() {
+                const isExpanded = languageSwitcher.classList.toggle('expanded');
+                langCurrentBtn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+            });
+
+            document.addEventListener('click', function(event) {
+                if (!languageSwitcher.contains(event.target)) {
+                    languageSwitcher.classList.remove('expanded');
+                    langCurrentBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
 
 
         const cookieBanner = document.getElementById('cookie-banner');
