@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой профиль</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body class="profile-dashboard-page">
+    <main class="profile-dashboard">
+        <section class="profile-user-card">
+            <div class="profile-avatar">{{ request.user.username|first|upper }}</div>
+            <h1>Мой профиль</h1>
+            <p class="profile-user-name">@{{ request.user.username }}</p>
+            <div class="profile-nav-links">
+                <a href="{% url 'shop:cart' %}">Корзина</a>
+                <a href="{% url 'shop:home' %}">Главная</a>
+                <a href="{% url 'shop:logout' %}">Выйти</a>
+            </div>
+        </section>
+
+        <section class="profile-orders-card">
+            <h2>Мои заказы</h2>
+            {% if orders %}
+                <div class="orders-list">
+                {% for order in orders %}
+                    <article class="order-card">
+                        <div class="order-card-top">
+                            <h3>Заказ #{{ order.id }}</h3>
+                            {% if order.status == 'delivered' %}
+                                <span class="order-status-badge status-delivered">Delivered</span>
+                            {% elif order.status == 'shipped' %}
+                                <span class="order-status-badge status-transit">In Transit</span>
+                            {% else %}
+                                <span class="order-status-badge status-neutral">{{ order.get_status_display }}</span>
+                            {% endif %}
+                        </div>
+                        <p class="order-meta">Дата: {{ order.created_at }}</p>
+                        <p class="order-meta">Сумма: EUR {{ order.total_amount }}</p>
+                        <ul class="order-items-list">
+                            {% for item in order.items.all %}
+                                <li>{{ item.product.title }} x {{ item.quantity }} (EUR {{ item.price_at_purchase }})</li>
+                            {% endfor %}
+                        </ul>
+                        {% if order.status != 'paid' %}
+                        <form method="post" action="{% url 'shop:create_checkout_session' order.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="profile-pay-btn">Оплатить заказ</button>
+                        </form>
+                        {% endif %}
+                    </article>
+                {% endfor %}
+                </div>
+            {% else %}
+                <p class="profile-empty-state">Заказов пока нет.</p>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>

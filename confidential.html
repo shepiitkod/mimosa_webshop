@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,12 +7,12 @@
     <meta name="Authors" content="Yuliia Sagan and Denys Shepitko">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="shortcut icon" href="assets/images/mimosatitle.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'assets/images/mimosatitle.ico' %}" type="image/x-icon">
     <meta name="Keywords" content="Mimosa, Mimosa candles, Mimosa bio bougies, bougies artisanales bio, bougies naturelles, bougies parfumées, bougies écologiques, bougies végétales, bougies faites main, bougies durables, bougies respectueuses de l'environnement">
     <meta name="Description" content="Découvrez Mimosa, votre destination pour des bougies artisanales bio, naturelles et parfumées. Nos bougies écologiques sont fabriquées à la main avec des ingrédients végétaux durables, offrant une expérience sensorielle unique tout en respectant l'environnement.">
-    <link rel="stylesheet" href="styles.css">
-    <script src="translations.js"></script>
-    <script src="animations.js" defer></script>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <script src="{% static 'translations.js' %}"></script>
+    <script src="{% static 'animations.js' %}" defer></script>
 </head>
 
 <body>
@@ -27,30 +28,30 @@
 
     <header>
         <figure>
-            <a href="index.html">
-                <img src="assets/images/logobl2.ico" alt="Mimosa Logo" width="250" height="80">
+            <a href="{% url 'shop:home' %}">
+                <img src="{% static 'assets/images/logobl2.ico' %}" alt="Mimosa Logo" width="250" height="80">
             </a>
         </figure>
         <nav>
             <ul>
-                <li><a href="index.html" data-translate="nav-home">Home</a></li>
+                <li><a href="{% url 'shop:home' %}" data-translate="nav-home">Home</a></li>
                 <li class="products-menu">
-                    <a href="products2.html" data-translate="nav-products">Products</a>
+                    <a href="{% url 'shop:products' %}" data-translate="nav-products">Products</a>
                     <div class="dropdown-catalog" aria-label="Product categories">
-                        <a href="products2.html" class="dropdown-item" data-translate="nav-sub-all">All Products</a>
-                        <a href="products1.html" class="dropdown-item" data-translate="nav-sub-bento">Bento Candles</a>
-                        <a href="products2.html" class="dropdown-item" data-translate="nav-sub-scented">Scented Candles</a>
-                        <a href="products3.html" class="dropdown-item" data-translate="nav-sub-rose">Decorative Rose</a>
-                        <a href="products2.html" class="dropdown-item" data-translate="nav-sub-gifts">Gift Collections</a>
-                        <a href="products2.html" class="dropdown-item" data-translate="nav-sub-new">New Arrivals</a>
+                        <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-all">All Products</a>
+                        <a href="{% url 'shop:product_bento' %}" class="dropdown-item" data-translate="nav-sub-bento">Bento Candles</a>
+                        <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-scented">Scented Candles</a>
+                        <a href="{% url 'shop:product_rose' %}" class="dropdown-item" data-translate="nav-sub-rose">Decorative Rose</a>
+                        <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-gifts">Gift Collections</a>
+                        <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-new">New Arrivals</a>
                     </div>
                 </li>
-                <li><a href="About.html" data-translate="nav-about">About Us</a></li>
-                <li><a href="contact.html" data-translate="nav-contact">Contact</a></li>
+                <li><a href="{% url 'shop:about' %}" data-translate="nav-about">About Us</a></li>
+                <li><a href="{% url 'shop:contact' %}" data-translate="nav-contact">Contact</a></li>
             </ul>
         </nav>
         <div class="profile-icon">
-            <a href="profile.html">
+            <a href="{% url 'shop:profile' %}">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="12" cy="8" r="4" stroke="black" stroke-width="2"/>
     <path d="M4 20c0-4 4-6 8-6s8 2 8 6" 
@@ -173,9 +174,9 @@
         <div class="footer-content">
             <p>&copy; 2026 Mimosa Atelier. <span data-translate="footer-copyright">All rights reserved.</span></p>
             <nav class="footer-links">
-                <a href="confidential.html" data-translate="footer-privacy">Privacy Policy</a>
+                <a href="{% url 'shop:privacy' %}" data-translate="footer-privacy">Privacy Policy</a>
                 <a href="#" data-translate="footer-terms">Terms</a>
-                <a href="contact.html" data-translate="footer-contact">Contact</a>
+                <a href="{% url 'shop:contact' %}" data-translate="footer-contact">Contact</a>
             </nav>
             <div class="footer-social">
                 <a href="mailto:mimosa.atelier.france@gmail.com" data-translate="footer-email">Email</a>
