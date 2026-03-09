@@ -301,12 +301,6 @@ def create_order_from_product(request):
 		status=201,
 	)
 
-
-# Backward-compatible alias used by existing templates.
-def add_to_cart(request, product_id):
-	return cart_add(request, product_id)
-
-
 @login_required
 @require_POST
 def create_checkout_session(request, order_id):

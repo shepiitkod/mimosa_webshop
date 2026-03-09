@@ -37,18 +37,18 @@
                 <li><a href="{% url 'shop:home' %}" data-translate="nav-home">Home</a></li>
                 <li><a href="{% url 'shop:cart' %}">Cart ({{ cart_items_count }})</a></li>
                 <li class="products-menu">
-                    <a href="products2.html" data-translate="nav-products">Products</a>
+                    <a href="{% url 'shop:products' %}" data-translate="nav-products">Products</a>
                     <div class="dropdown-catalog" aria-label="Product categories">
-                        <a href="products2.html" class="dropdown-item" data-translate="nav-sub-all">All Products</a>
-                        <a href="products1.html" class="dropdown-item" data-translate="nav-sub-bento">Bento Candles</a>
-                        <a href="products2.html" class="dropdown-item" data-translate="nav-sub-scented">Scented Candles</a>
-                        <a href="products3.html" class="dropdown-item" data-translate="nav-sub-rose">Decorative Rose</a>
-                        <a href="products2.html" class="dropdown-item" data-translate="nav-sub-gifts">Gift Collections</a>
-                        <a href="products2.html" class="dropdown-item" data-translate="nav-sub-new">New Arrivals</a>
+                        <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-all">All Products</a>
+                        <a href="{% url 'shop:product_bento' %}" class="dropdown-item" data-translate="nav-sub-bento">Bento Candles</a>
+                        <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-scented">Scented Candles</a>
+                        <a href="{% url 'shop:product_rose' %}" class="dropdown-item" data-translate="nav-sub-rose">Decorative Rose</a>
+                        <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-gifts">Gift Collections</a>
+                        <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-new">New Arrivals</a>
                     </div>
                 </li>
-                <li><a href="About.html" data-translate="nav-about">About Us</a></li>
-                <li><a href="contact.html" data-translate="nav-contact">Contact</a></li>
+                <li><a href="{% url 'shop:about' %}" data-translate="nav-about">About Us</a></li>
+                <li><a href="{% url 'shop:contact' %}" data-translate="nav-contact">Contact</a></li>
             </ul>
         </nav>
         <div class="profile-icon">
@@ -108,7 +108,7 @@
             </div>
             <h1 data-translate="hero-title">Handcrafted Candles</h1>
             <p class="hero-subtitle" data-translate="hero-subtitle">Natural. Elegant. Made with Love in Nîmes, France</p>
-            <a href="products2.html" class="hero-btn" data-translate="hero-btn">Explore Collection</a>
+            <a href="{% url 'shop:products' %}" class="hero-btn" data-translate="hero-btn">Explore Collection</a>
         </div>
     </section>
 
@@ -133,7 +133,7 @@
                 <p class="product-desc">{{ product.description|truncatechars:90 }}</p>
                 <p class="product-composition">{{ product.category }}</p>
                 <p class="product-price">€{{ product.price }}</p>
-                <form action="{% url 'shop:add_to_cart' product.id %}" method="post" class="add-cart-form">
+                <form action="{% url 'shop:cart_add' product.id %}" method="post" class="add-cart-form">
                     {% csrf_token %}
                     <input type="hidden" name="quantity" value="1">
                     <button class="btn-add-cart" type="submit">
@@ -150,7 +150,7 @@
             {% endfor %}
         </section>
             <article class="Product4">
-                <a href="products2.html" class="product-link" aria-label="See all products">
+                <a href="{% url 'shop:products' %}" class="product-link" aria-label="See all products">
                     <h3 data-translate="product4-name">New Products Coming Soon</h3>
                 </a>
                 <p class="product-desc" data-translate="product4-desc">Stay tuned for our next release!</p>
@@ -161,9 +161,9 @@
         <div class="footer-content">
             <p>&copy; 2026 Mimosa Atelier. <span data-translate="footer-copyright">All rights reserved.</span></p>
             <nav class="footer-links">
-                <a href="confidential.html" data-translate="footer-privacy">Privacy Policy</a>
+                <a href="{% url 'shop:privacy' %}" data-translate="footer-privacy">Privacy Policy</a>
                 <a href="#" data-translate="footer-terms">Terms</a>
-                <a href="contact.html" data-translate="footer-contact">Contact</a>
+                <a href="{% url 'shop:contact' %}" data-translate="footer-contact">Contact</a>
             </nav>
             <div class="footer-social">
                 <a href="mailto:mimosa.atelier.france@gmail.com" data-translate="footer-email">Email</a>
@@ -181,7 +181,7 @@
             </div>
             <div class="cookie-buttons">
                 <button id="accept-cookies" class="btn-accept" data-translate="cookie-accept">Accept</button>
-                <a href="confidential.html" class="cookie-policy-link" data-translate="footer-privacy">Privacy Policy</a>
+                <a href="{% url 'shop:privacy' %}" class="cookie-policy-link" data-translate="footer-privacy">Privacy Policy</a>
                 <button id="decline-cookies" class="btn-decline" data-translate="cookie-decline">Decline</button>
             </div>
         </div>
