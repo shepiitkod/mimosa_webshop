@@ -130,6 +130,7 @@
                 <p class="product-desc" data-translate="product1-desc">Perfect for birthdays and weddings</p>
                 <p class="product-composition" data-translate="product1-composition">100% soy wax, natural fragrance</p>
                 <p class="product-price">€14,99</p>
+                <button class="btn-order" type="button" onclick="orderProduct('Bento Candle', 14.99, 'Bento Candles')">Заказать</button>
             </article>
 
 
@@ -143,6 +144,7 @@
                 <p class="product-desc" data-translate="product2-desc">Scented candle for atmosphere</p>
                 <p class="product-composition" data-translate="product2-composition">100% soy wax, natural fragrance</p>
                 <p class="product-price">€26.99</p>
+                <button class="btn-order" type="button" onclick="orderProduct('Bougie Parfumee', 26.99, 'Scented Candles')">Заказать</button>
             </article>
 
             <article id="product3" class="Product3">
@@ -155,6 +157,7 @@
                 <p class="product-desc" data-translate="product3-desc">Decorative rose-shaped candle</p>
                 <p class="product-composition" data-translate="product3-composition">100% soy wax</p>
                 <p class="product-price">€7.99</p>
+                <button class="btn-order" type="button" onclick="orderProduct('Decorative Candle Rose', 7.99, 'Decorative Candles')">Заказать</button>
             </article>
         </section>
             <article class="Product4">
@@ -201,6 +204,35 @@
 
 
     <script>
+    async function orderProduct(title, price, category) {
+        try {
+            const response = await fetch('/orders/create-from-product/', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title: title,
+                    price: price,
+                    category: category,
+                    quantity: 1
+                })
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                alert(result.error || 'Could not create order. Please sign in first.');
+                return;
+            }
+
+            alert('Заказ #' + result.order_id + ' создан успешно.');
+        } catch (error) {
+            alert('Ошибка сети при создании заказа.');
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         const languageSwitcher = document.querySelector('.language-switcher');
         const langCurrentBtn = document.querySelector('.lang-current');

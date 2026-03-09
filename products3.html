@@ -127,6 +127,7 @@
                     <button class="btn-add-cart" onclick="addToCart()">
                         <span data-translate="add-to-cart">Add to Cart</span>
                     </button>
+                    <button class="btn-order" type="button" onclick="orderCurrentProduct('Decorative Candle Rose', 7.99, 'Decorative Candles')">Заказать</button>
                     <button class="btn-wishlist" onclick="toggleWishlist(this)">
                         ♡
                     </button>
@@ -316,6 +317,37 @@
     function addToCart() {
         const quantity = document.getElementById('quantity').value;
         alert(`Added ${quantity} item(s) to cart!`);
+    }
+
+
+    async function orderCurrentProduct(title, price, category) {
+        const quantity = parseInt(document.getElementById('quantity').value, 10) || 1;
+
+        try {
+            const response = await fetch('/orders/create-from-product/', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title: title,
+                    price: price,
+                    category: category,
+                    quantity: quantity
+                })
+            });
+
+            const result = await response.json();
+            if (!response.ok) {
+                alert(result.error || 'Could not create order. Please sign in first.');
+                return;
+            }
+
+            alert(`Заказ #${result.order_id} создан. Сумма: €${result.total_amount}`);
+        } catch (error) {
+            alert('Ошибка сети при создании заказа.');
+        }
     }
 
 

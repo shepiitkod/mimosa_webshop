@@ -1354,12 +1354,36 @@ footer {
     box-shadow: 0 4px 16px rgba(212, 175, 55, 0.2);
 }
 
+.btn-order {
+    flex: 1;
+    padding: 16px 28px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #1a1a1a;
+    border: 1.5px solid rgba(0, 0, 0, 0.15);
+    border-radius: 50px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    letter-spacing: -0.3px;
+}
+
 .btn-add-cart:hover {
     transform: translateY(-4px) scale(1.05);
     box-shadow: 0 12px 32px rgba(212, 175, 55, 0.4);
 }
 
+.btn-order:hover {
+    transform: translateY(-4px) scale(1.05);
+    border-color: rgba(212, 175, 55, 0.6);
+    box-shadow: 0 12px 28px rgba(212, 175, 55, 0.25);
+}
+
 .btn-add-cart:active {
+    transform: translateY(-2px) scale(1.02);
+}
+
+.btn-order:active {
     transform: translateY(-2px) scale(1.02);
 }
 
@@ -2091,6 +2115,7 @@ opacity: 0.7;
     .about-card:hover,
     .profile-icon:hover,
     .btn-add-cart:hover,
+    .btn-order:hover,
     .btn-wishlist:hover {
         transform: none;
     }
@@ -2099,6 +2124,7 @@ opacity: 0.7;
     .related-card:hover,
     .about-card:hover,
     .btn-add-cart:hover,
+    .btn-order:hover,
     .btn-wishlist:hover {
         box-shadow: none;
     }
@@ -2280,6 +2306,7 @@ opacity: 0.7;
     }
 
     .product-page .btn-add-cart,
+    .product-page .btn-order,
     .product-page .btn-wishlist {
         width: 100%;
         min-height: 48px;
@@ -2678,6 +2705,7 @@ opacity: 0.7;
     }
 
     .product-page .btn-add-cart,
+    .product-page .btn-order,
     .product-page .btn-wishlist {
         min-height: 44px;
         border-radius: 12px;
@@ -3580,6 +3608,7 @@ opacity: 0.7;
     .lang-current,
     .hero-btn,
     .btn-add-cart,
+    .btn-order,
     .btn-decline,
     .btn-accept {
         touch-action: manipulation;
@@ -3668,6 +3697,7 @@ nav ul li a:focus-visible::after {
 
 .hero-btn,
 .btn-add-cart,
+.btn-order,
 .btn-accept,
 .btn-decline,
 .edit-btn,
@@ -3681,6 +3711,7 @@ nav ul li a:focus-visible::after {
 
 .hero-btn:hover,
 .btn-add-cart:hover,
+.btn-order:hover,
 .btn-accept:hover,
 .btn-decline:hover,
 .edit-btn:hover,
@@ -3710,6 +3741,12 @@ header figure::after {
     animation: candleFlicker 2.2s ease-in-out infinite;
     pointer-events: none;
     opacity: 0.78;
+    transition: opacity 220ms ease;
+}
+
+body.is-loaded header figure::after {
+    animation: none;
+    opacity: 0;
 }
 
 @keyframes candleFlicker {
@@ -3751,6 +3788,7 @@ header figure::after {
     .Product4:hover,
     .hero-btn:hover,
     .btn-add-cart:hover,
+    .btn-order:hover,
     .btn-accept:hover,
     .btn-decline:hover,
     .edit-btn:hover,
@@ -3787,6 +3825,7 @@ header figure::after {
     .Product4,
     .hero-btn,
     .btn-add-cart,
+    .btn-order,
     .btn-accept,
     .btn-decline,
     .edit-btn,
