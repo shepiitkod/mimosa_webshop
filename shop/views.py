@@ -6,11 +6,17 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 
 from .models import Order, OrderItem, Product
+
+
+@require_GET
+def index_view(request):
+	products = Product.objects.all()
+	return render(request, 'index.html', {'products': products})
 
 
 def _to_cents(amount: Decimal) -> int:

@@ -143,7 +143,8 @@ const translations = {
         'cookie-title': '🍪 We use cookies',
         'cookie-text': 'We use cookies to improve your experience on our site. By continuing, you accept our privacy policy.',
         'cookie-accept': 'Accept',
-        'cookie-decline': 'Decline'
+        'cookie-decline': 'Decline',
+        'order-now': 'Order Now'
     },
     
     fr: {
@@ -289,7 +290,8 @@ const translations = {
         'cookie-title': '🍪 Nous utilisons des cookies',
         'cookie-text': 'Nous utilisons des cookies pour améliorer votre expérience sur notre site. En continuant, vous acceptez notre politique de confidentialité.',
         'cookie-accept': 'Accepter',
-        'cookie-decline': 'Refuser'
+        'cookie-decline': 'Refuser',
+        'order-now': 'Commander'
     },
     
     ua: {
@@ -435,7 +437,8 @@ const translations = {
         'cookie-title': '🍪 Ми використовуємо cookies',
         'cookie-text': 'Ми використовуємо cookies для покращення вашого досвіду на нашому сайті. Продовжуючи, ви приймаєте нашу політику конфіденційності.',
         'cookie-accept': 'Прийняти',
-        'cookie-decline': 'Відхилити'
+        'cookie-decline': 'Відхилити',
+        'order-now': 'Замовити'
     }
 };
 

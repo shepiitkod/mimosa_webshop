@@ -128,7 +128,7 @@
                     <button class="btn-add-cart" onclick="addToCart()">
                         <span data-translate="add-to-cart">Add to Cart</span>
                     </button>
-                    <button class="btn-order" type="button" onclick="orderCurrentProduct('Bento Candle', 14.99, 'Bento Candles')">Заказать</button>
+                    <button class="btn-order" type="button" data-translate="order-now" onclick="orderCurrentProduct('Bento Candle', 14.99, 'Bento Candles')">Order Now</button>
                     <button class="btn-wishlist" onclick="toggleWishlist(this)">
                         ♡
                     </button>
@@ -229,6 +229,7 @@
             'handmade-yes': 'Yes',
             'quantity-label': 'Quantity:',
             'add-to-cart': 'Add to Cart',
+            'order-now': 'Order Now',
             'feature-natural': '100% Natural',
             'feature-eco': 'Eco-Friendly',
             'feature-handmade': 'Handmade',
@@ -262,6 +263,7 @@
             'handmade-yes': 'Oui',
             'quantity-label': 'Quantité:',
             'add-to-cart': 'Ajouter au Panier',
+            'order-now': 'Commander',
             'feature-natural': '100% Naturel',
             'feature-eco': 'Écologique',
             'feature-handmade': 'Fait Main',
@@ -296,6 +298,7 @@
             'handmade-yes': 'Так',
             'quantity-label': 'Кількість:',
             'add-to-cart': 'Додати в Кошик',
+            'order-now': 'Замовити',
             'feature-natural': '100% Натурально',
             'feature-eco': 'Екологічно',
             'feature-handmade': 'Ручна Робота',
@@ -365,6 +368,28 @@
 
     async function orderCurrentProduct(title, price, category) {
         const quantity = parseInt(document.getElementById('quantity').value, 10) || 1;
+        const lang = localStorage.getItem('selectedLanguage') || 'en';
+        const messages = {
+            en: {
+                created: 'Order #',
+                suffix: ' created. Total: EUR ',
+                networkError: 'Network error while creating order.',
+                genericError: 'Could not create order. Please sign in first.'
+            },
+            fr: {
+                created: 'Commande #',
+                suffix: ' creee. Total: EUR ',
+                networkError: 'Erreur reseau lors de la creation de la commande.',
+                genericError: 'Impossible de creer la commande. Connectez-vous d\'abord.'
+            },
+            ua: {
+                created: 'Замовлення #',
+                suffix: ' створено. Сума: EUR ',
+                networkError: 'Помилка мережі під час створення замовлення.',
+                genericError: 'Не вдалося створити замовлення. Спочатку увійдіть у профіль.'
+            }
+        };
+        const msg = messages[lang] || messages.en;
 
         try {
             const response = await fetch('/orders/create-from-product/', {
@@ -383,13 +408,13 @@
 
             const result = await response.json();
             if (!response.ok) {
-                alert(result.error || 'Could not create order. Please sign in first.');
+                alert(result.error || msg.genericError);
                 return;
             }
 
-            alert(`Заказ #${result.order_id} создан. Сумма: €${result.total_amount}`);
+            alert(msg.created + result.order_id + msg.suffix + result.total_amount);
         } catch (error) {
-            alert('Ошибка сети при создании заказа.');
+            alert(msg.networkError);
         }
     }
 
