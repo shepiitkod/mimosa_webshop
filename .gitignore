@@ -38,4 +38,6 @@ build/
 mimosa_backend/.env
 .env
 mimosa_backend/.env 
-mimosa_backend/.env 
+my_keys.txt
+.env
+DJANGO_SECRET_KEY=твой-секретный-ключ
