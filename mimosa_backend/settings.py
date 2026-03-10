@@ -24,9 +24,9 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'надежный-дефолтный
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = [h.strip() for h in os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',') if h.strip()]
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'mimosa-atelier.onrender.com,localhost,127.0.0.1').split(',')
 
-CSRF_TRUSTED_ORIGINS = [o.strip() for o in os.getenv('CSRF_TRUSTED_ORIGINS', 'http://localhost:8080,http://127.0.0.1:8080').split(',') if o.strip()]
+CSRF_TRUSTED_ORIGINS = ['https://mimosa-atelier.onrender.com']
 
 # Application definition
 
