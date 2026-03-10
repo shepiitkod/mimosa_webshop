@@ -1,0 +1,253 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mimosa Home Page</title>
+    <meta charset="UTF-8">
+    <meta name="Authors" content="Yuliia Sagan and Denys Shepitko">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="{% static 'assets/images/mimosatitle.ico' %}" type="image/x-icon">
+    <meta name="Keywords" content="Mimosa, Mimosa candles, Mimosa bio bougies, bougies artisanales bio, bougies naturelles, bougies parfumées, bougies écologiques, bougies végétales, bougies faites main, bougies durables, bougies respectueuses de l'environnement">
+    <meta name="Description" content="Découvrez Mimosa, votre destination pour des bougies artisanales bio, naturelles et parfumées. Nos bougies écologiques sont fabriquées à la main avec des ingrédients végétaux durables, offrant une expérience sensorielle unique tout en respectant l'environnement.">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <script src="{% static 'translations.js' %}"></script>
+    <script src="{% static 'animations.js' %}" defer></script>
+</head>
+
+<body>
+
+    <div class="language-switcher">
+        <button class="lang-current" type="button" aria-label="Toggle language menu" aria-expanded="false">EN</button>
+        <div class="lang-options" aria-label="Language options">
+            <button class="lang-btn active" data-lang="en" title="English" type="button">EN</button>
+            <button class="lang-btn" data-lang="fr" title="Français" type="button">FR</button>
+            <button class="lang-btn" data-lang="ua" title="Українська" type="button">UA</button>
+        </div>
+    </div>
+
+    <header>
+        <figure>
+            <a href="{% url 'shop:home' %}">
+                <img src="{% static 'assets/images/logobl2.ico' %}" alt="Mimosa Logo" width="250" height="80">
+            </a>
+        </figure>
+        <nav>
+            <ul>
+                <li><a href="{% url 'shop:home' %}" data-translate="nav-home">Home</a></li>
+                <li class="products-menu">
+                    <a href="{% url 'shop:products' %}" data-translate="nav-products">Products</a>
+                    <div class="dropdown-catalog" aria-label="Product categories">
+                        <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-all">All Products</a>
+                        <a href="{% url 'shop:product_bento' %}" class="dropdown-item" data-translate="nav-sub-bento">Bento Candles</a>
+                        <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-scented">Scented Candles</a>
+                        <a href="{% url 'shop:product_rose' %}" class="dropdown-item" data-translate="nav-sub-rose">Decorative Rose</a>
+                        <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-gifts">Gift Collections</a>
+                        <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-new">New Arrivals</a>
+                    </div>
+                </li>
+                <li><a href="{% url 'shop:about' %}" data-translate="nav-about">About Us</a></li>
+                <li><a href="{% url 'shop:contact' %}" data-translate="nav-contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="profile-icon">
+            <a href="{% url 'shop:profile' %}">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="8" r="4" stroke="black" stroke-width="2"/>
+    <path d="M4 20c0-4 4-6 8-6s8 2 8 6" 
+        stroke="black" 
+        stroke-width="2" 
+        stroke-linecap="round"/>
+    </svg>
+            </a>
+    </div>
+    </header>
+    <main>  
+    <h2 data-translate="privacy-policy-title">Privacy Policy</h2>
+    <p data-translate="privacy-policy-text">Last updated: March 1, 2026</p>
+    <h3 data-translate="privacy-intro">Atelier artisanal "MIMOSA" operates this website and provides services to offer you, the customer, with exclusive handcrafted candle products and information.</h3>
+
+    <h3 data-translate="privacy-read">Please read this Privacy Policy carefully. By using and accessing any of the Services, you acknowledge that you have read this Privacy Policy and understand the collection, use, and disclosure of your information as described in this Privacy Policy.</h3>
+
+    <h2 data-translate="personal-info-title">Personal Information We Collect or Process</h2>
+
+    <h3 data-translate="personal-info-text">When we use the term "personal information," we are referring to information that identifies or can reasonably be linked to you or another person. Personal information does not include information that is collected anonymously or that has been de-identified, so that it cannot identify or be reasonably linked to you. We may collect or process the following categories of personal information, including inferences drawn from this personal information, depending on how you interact with the Services, where you live, and as permitted or required by applicable law:</h3>
+
+    <h3 data-translate="contact-details">Contact details including your name, address, billing address, shipping address, phone number, and email address.</h3>
+    <h3 data-translate="financial-info">Financial information including credit card, debit card, and financial account numbers, payment card information, financial account information, transaction details, form of payment, payment confirmation and other payment details.</h3>
+    <h3 data-translate="account-info">Account information including your username, password, security questions, preferences and settings.</h3>
+    <h3 data-translate="transaction-info">Transaction information including the items you view, put in your cart, add to your wishlist, or purchase, return, exchange or cancel and your past transactions.</h3>
+    <h3 data-translate="communication-info">Communications with us including the information you include in communications with us, for example, when sending a customer support inquiry.</h3>
+    <h3 data-translate="device-info">Device information including information about your device, browser, or network connection, your IP address, and other unique identifiers.</h3>
+    <h3 data-translate="usage-info">Usage information including information regarding your interaction with the Services, including how and when you interact with or navigate the Services.</h3>
+
+    <h2 data-translate="personal-info-sources-title">Personal Information Sources</h2>
+
+    <h3 data-translate="personal-info-sources-text">We may collect personal information from the following sources:</h3>
+
+    <h3 data-translate="directly-from-you">Directly from you including when you create an account, visit or use the Services, communicate with us, or otherwise provide us with your personal information;</h3>
+    <h3 data-translate="automatically">Automatically through the Services including from your device when you use our products or services or visit our websites, and through the use of cookies and similar technologies;</h3>
+    <h3 data-translate="from-service-providers">From our service providers including when we engage them to enable certain technology and when they collect or process your personal information on our behalf;</h3>
+    <h3 data-translate="from-partners">From our partners or other third parties.</h3>
+
+    <h2 data-translate="how-we-use-title">How We Use Your Personal Information</h2>
+
+    <h3 data-translate="how-we-use-text">Depending on how you interact with us or which of the Services you use, we may use personal information for the following purposes:</h3>
+
+    <h3 data-translate="provide-services">Provide, Tailor, and Improve the Services. We use your personal information to provide you with the Services, including to perform our contract with you, to process your payments, to fulfill your orders, to remember your preferences and items you are interested in, to send notifications to you related to your account, to process purchases, returns, exchanges or other transactions, to create, maintain and otherwise manage your account, to arrange for shipping, to facilitate any returns and exchanges, to enable you to post reviews, and to create a customized shopping experience for you, such as recommending products related to your purchases. This may include using your personal information to better tailor and improve the Services.</h3>
+    
+    <h3 data-translate="marketing">Marketing and Advertising. We use your personal information for marketing and promotional purposes, such as to send marketing, advertising and promotional communications by email, text message or postal mail, and to show you online advertisements for products or services on the Services or other websites, including based on items you previously have purchased or added to your cart and other activity on the Services.</h3>
+    
+    <h3 data-translate="security">Security and Fraud Prevention. We use your personal information to authenticate your account, to provide a secure payment and shopping experience, detect, investigate or take action regarding possible fraudulent, illegal, unsafe, or malicious activity, protect public safety, and to secure our services. If you choose to use the Services and register an account, you are responsible for keeping your account credentials safe. We highly recommend that you do not share your username, password or other access details with anyone else.</h3>
+    
+    <h3 data-translate="communication">Communicating with You. We use your personal information to provide you with customer support, to be responsive to you, to provide effective services to you and to maintain our business relationship with you.</h3>
+    
+    <h3 data-translate="legal-reasons">Legal Reasons. We use your personal information to comply with applicable law or respond to valid legal process, including requests from law enforcement or government agencies, to investigate or participate in civil discovery, potential or actual litigation, or other adversarial legal proceedings, and to enforce or investigate potential violations of our terms or policies.</h3>
+
+    <h2 data-translate="disclose-title">How We Disclose Personal Information</h2>
+
+    <h3 data-translate="disclose-text">In certain circumstances, we may disclose your personal information to third parties for legitimate purposes subject to this Privacy Policy. Such circumstances may include:</h3>
+
+    <h3 data-translate="with-shopify">With trusted service providers who assist us with payment processing, order fulfillment, shipping, website hosting, and customer support.</h3>
+    
+    <h3 data-translate="with-partners">With logistics and shipping partners who are necessary to deliver your products and provide our services.</h3>
+    
+    <h3 data-translate="at-direction">When you direct, request us or otherwise consent to our disclosure of certain information to third parties, such as to ship you products or through your use of social media widgets or login integrations.</h3>
+    
+    <h3 data-translate="with-affiliates">With our affiliates or otherwise within our corporate group.</h3>
+    
+    <h3 data-translate="in-connection">In connection with a business transaction such as a merger or bankruptcy, to comply with any applicable legal obligations (including to respond to subpoenas, search warrants and similar requests), to enforce any applicable terms of service or policies, and to protect or defend the Services, our rights, and the rights of our users or others.</h3>
+
+    <h2 data-translate="shopify-title">Website Hosting and Service Providers</h2>
+
+    <h3 data-translate="shopify-text">Our website is hosted and maintained by professional hosting and service providers who process technical information about your access to our website. Your information may be transmitted to and processed by our service providers in countries other than where you reside.</h3>
+
+    <h2 data-translate="third-party-title">Third Party Websites and Links</h2>
+
+    <h3 data-translate="third-party-text">The Services may provide links to websites or other online platforms operated by third parties. If you follow links to sites not affiliated or controlled by us, you should review their privacy and security policies and other terms and conditions. We do not guarantee and are not responsible for the privacy or security of such sites, including the accuracy, completeness, or reliability of information found on these sites. Information you provide on public or semi-public venues, including information you share on third-party social networking platforms may also be viewable by other users of the Services and/or users of those third-party platforms without limitation as to its use by us or by a third party. Our inclusion of such links does not, by itself, imply any endorsement of the content on such platforms or of their owners or operators, except as disclosed on the Services.</h3>
+
+    <h2 data-translate="children-title">Children's Data/Privacy</h2>
+
+    <h3 data-translate="children-text">The Services are not intended to be used by children, and we do not knowingly collect any personal information about children under the age of majority in your jurisdiction. If you are the parent or guardian of a child who has provided us with their personal information, you may contact us using the contact details set out below to request that it be deleted. As of the Effective Date of this Privacy Policy, we do not have actual knowledge that we "share" or "sell" (as those terms are defined in applicable law) personal information of individuals under 16 years of age.</h3>
+
+    <h2 data-translate="security-title">Security and Retention of Your Information</h2>
+
+    <h3 data-translate="security-text">Please be aware that no security measures are perfect or impenetrable, and we cannot guarantee "perfect security." In addition, any information you send to us may not be secure while in transit. We recommend that you do not use unsecure channels to communicate sensitive or confidential information to us.</h3>
+
+    <h3 data-translate="retention-text">How long we retain your personal information depends on different factors, such as whether we need the information to maintain your account, to provide you with Services, comply with legal obligations, resolve disputes or enforce other applicable contracts and policies.</h3>
+
+    <h2 data-translate="rights-title">Your Rights and Choices</h2>
+
+    <h3 data-translate="rights-text">Depending on where you live, you may have some or all of the rights listed below in relation to your personal information. However, these rights are not absolute, may apply only in certain circumstances and, in certain cases, we may decline your request as permitted by law.</h3>
+
+    <h3 data-translate="right-access">Right to Access / Know. You may have a right to request access to personal information that we hold about you.</h3>
+    <h3 data-translate="right-delete">Right to Delete. You may have a right to request that we delete personal information we maintain about you.</h3>
+    <h3 data-translate="right-correct">Right to Correct. You may have a right to request that we correct inaccurate personal information we maintain about you.</h3>
+    <h3 data-translate="right-portability">Right of Portability. You may have a right to receive a copy of the personal information we hold about you and to request that we transfer it to a third party, in certain circumstances and with certain exceptions.</h3>
+    <h3 data-translate="managing-preferences">Managing Communication Preferences. We may send you promotional emails, and you may opt out of receiving these at any time by using the unsubscribe option displayed in our emails to you. If you opt out, we may still send you non-promotional emails, such as those about your account or orders that you have made.</h3>
+
+    <h3 data-translate="eea-rights">If you reside in the UK or European Economic Area, and subject to exceptions and limitations provided by local law, you may exercise the following rights in addition to the rights outlined above:</h3>
+    <h3 data-translate="objection">Objection to Processing and Restriction of Processing: You may have the right to ask us to stop or restrict our processing of personal information for certain purposes.</h3>
+    <h3 data-translate="withdrawal">Withdrawal of Consent: Where we rely on consent to process your personal information, you have the right to withdraw this consent. If you withdraw your consent, this will not affect the lawfulness of any processing based on your consent before its withdrawal.</h3>
+
+    <h3 data-translate="non-discrimination">We will not discriminate against you for exercising any of these rights. We may need to verify your identity before we can process your requests, as permitted or required under applicable law. In accordance with applicable laws, you may designate an authorized agent to make requests on your behalf to exercise your rights. Before accepting such a request from an agent, we will require that the agent provide proof you have authorized them to act on your behalf, and we may need you to verify your identity directly with us. We will respond to your request in a timely manner as required under applicable law.</h3>
+
+    <h2 data-translate="complaints-title">Complaints</h2>
+
+    <h3 data-translate="complaints-text">If you have complaints about how we process your personal information, please contact us using the contact details provided below. Depending on where you live, you may have the right to appeal our decision by contacting us using the contact details set out below, or lodge your complaint with your local data protection authority. For the EEA, you can find a list of the responsible data protection supervisory authorities here.</h3>
+
+    <h2 data-translate="international-title">International Transfers</h2>
+
+    <h3 data-translate="international-text">Please note that we may transfer, store and process your personal information outside the country you live in. If we transfer your personal information out of the European Economic Area or the United Kingdom, we will rely on recognized transfer mechanisms like the European Commission's Standard Contractual Clauses, or any equivalent contracts issued by the relevant competent authority of the UK, as relevant, unless the data transfer is to a country that has been determined to provide an adequate level of protection.</h3>
+
+    <h2 data-translate="changes-title">Changes to This Privacy Policy</h2>
+
+    <h3 data-translate="changes-text">We may update this Privacy Policy from time to time, including to reflect changes to our practices or for other operational, legal, or regulatory reasons. We will post the revised Privacy Policy on this website, update the "Last updated" date and provide notice as required by applicable law.</h3>
+
+    <h2 data-translate="contact-title">Contact Us</h2>
+
+    <h3 data-translate="contact-text">Should you have any questions about our privacy practices or this Privacy Policy, or if you would like to exercise any of the rights available to you, please call or email us at <a href="mailto:mimosa.atelier.france@gmail.com">mimosa.atelier.france@gmail.com</a> or contact us at 150 rue Ozi Etienne, Nimes, 30900, FR For the purpose of applicable data protection laws, we are the data controller of your personal information.</h3>
+    
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Mimosa Atelier. <span data-translate="footer-copyright">All rights reserved.</span></p>
+            <nav class="footer-links">
+                <a href="{% url 'shop:privacy' %}" data-translate="footer-privacy">Privacy Policy</a>
+                <a href="#" data-translate="footer-terms">Terms</a>
+                <a href="{% url 'shop:contact' %}" data-translate="footer-contact">Contact</a>
+            </nav>
+            <div class="footer-social">
+                <a href="mailto:mimosa.atelier.france@gmail.com" data-translate="footer-email">Email</a>
+                <a href="https://www.instagram.com/mimosa_atelier_france/" target="_blank" data-translate="footer-instagram">Instagram</a>
+            </div>
+        </div>
+        <p class="legal-text">Nîmes, France | SIRET: XXX XXX XXX</p>
+    </footer>
+          
+  
+
+
+
+
+
+          <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const languageSwitcher = document.querySelector('.language-switcher');
+            const langCurrentBtn = document.querySelector('.lang-current');
+
+            function updateCompactLanguageUI() {
+                if (!languageSwitcher || !langCurrentBtn) {
+                    return;
+                }
+
+                const activeBtn = languageSwitcher.querySelector('.lang-btn.active') || languageSwitcher.querySelector('.lang-btn');
+                if (!activeBtn) {
+                    return;
+                }
+
+                langCurrentBtn.textContent = activeBtn.textContent.trim();
+                langCurrentBtn.setAttribute('data-lang', activeBtn.getAttribute('data-lang') || 'en');
+            }
+
+            const savedLang = localStorage.getItem('selectedLanguage') || 'en';
+            switchLanguage(savedLang);
+            updateCompactLanguageUI();
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    switchLanguage(lang);
+                    setTimeout(function() {
+                        updateCompactLanguageUI();
+                        if (languageSwitcher && langCurrentBtn) {
+                            languageSwitcher.classList.remove('expanded');
+                            langCurrentBtn.setAttribute('aria-expanded', 'false');
+                        }
+                    }, 0);
+                });
+            });
+
+            if (languageSwitcher && langCurrentBtn) {
+                langCurrentBtn.addEventListener('click', function() {
+                    const isExpanded = languageSwitcher.classList.toggle('expanded');
+                    langCurrentBtn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+                });
+
+                document.addEventListener('click', function(event) {
+                    if (!languageSwitcher.contains(event.target)) {
+                        languageSwitcher.classList.remove('expanded');
+                        langCurrentBtn.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+        });
+    </script>
+
+      </body>
+
+
+
+</html>

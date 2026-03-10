@@ -1,0 +1,353 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mimosa Home Page</title>
+    <meta charset="UTF-8">
+    <meta name="Authors" content="Yuliia Sagan and Denys Shepitko">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="{% static 'assets/images/banner2.ico' %}" type="image/x-icon">
+    <meta name="Keywords" content="Mimosa, Mimosa candles, Mimosa bio bougies, bougies artisanales bio, bougies naturelles, bougies parfumées, bougies écologiques, bougies végétales, bougies faites main, bougies durables, bougies respectueuses de l'environnement">
+    <meta name="Description" content="Découvrez Mimosa, votre destination pour des bougies artisanales bio, naturelles et parfumées. Nos bougies écologiques sont fabriquées à la main avec des ingrédients végétaux durables, offrant une expérience sensorielle unique tout en respectant l'environnement.">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <script src="{% static 'translations.js' %}"></script>
+    <script src="{% static 'animations.js' %}" defer></script>
+</head>
+
+<body class="home-page">
+
+    <div class="language-switcher">
+        <button class="lang-current" type="button" aria-label="Toggle language menu" aria-expanded="false">EN</button>
+        <div class="lang-options" aria-label="Language options">
+            <button class="lang-btn active" data-lang="en" title="English" type="button">EN</button>
+            <button class="lang-btn" data-lang="fr" title="Français" type="button">FR</button>
+            <button class="lang-btn" data-lang="ua" title="Українська" type="button">UA</button>
+        </div>
+    </div>
+
+    <header>
+        <figure>
+            <a href="{% url 'shop:home' %}">
+                <img src="{% static 'assets/images/logobl2.ico' %}" alt="Mimosa Logo" width="250" height="80">
+            </a>
+        </figure>
+        <nav>
+            <ul>
+                <li><a href="{% url 'shop:home' %}" data-translate="nav-home">Home</a></li>
+                <li><a href="{% url 'shop:cart' %}">Cart ({{ cart_items_count }})</a></li>
+                <li class="products-menu">
+                    <a href="{% url 'shop:products' %}" data-translate="nav-products">Products</a>
+                    <div class="dropdown-catalog" aria-label="Product categories">
+                        <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-all">All Products</a>
+                        <a href="{% url 'shop:product_bento' %}" class="dropdown-item" data-translate="nav-sub-bento">Bento Candles</a>
+                        <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-scented">Scented Candles</a>
+                        <a href="{% url 'shop:product_rose' %}" class="dropdown-item" data-translate="nav-sub-rose">Decorative Rose</a>
+                        <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-gifts">Gift Collections</a>
+                        <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-new">New Arrivals</a>
+                    </div>
+                </li>
+                <li><a href="{% url 'shop:about' %}" data-translate="nav-about">About Us</a></li>
+                <li><a href="{% url 'shop:contact' %}" data-translate="nav-contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="profile-icon">
+            <a href="{% url 'shop:profile' %}">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="8" r="4" stroke="black" stroke-width="2"/>
+    <path d="M4 20c0-4 4-6 8-6s8 2 8 6" 
+        stroke="black" 
+        stroke-width="2" 
+        stroke-linecap="round"/>
+    </svg>
+            </a>
+    </div>
+    </header>
+
+    
+    <section class="hero">
+        <div class="hero-photos">
+            <img src="{% static 'assets/images/photo1.ico' %}" alt="Candle from collection 1" class="hero-photo hero-photo-1">
+            <img src="{% static 'assets/images/photo2.ico' %}" alt="Photo model for the new collection" class="hero-photo hero-photo-2">
+            <img src="{% static 'assets/images/photo3.ico' %}" alt="Candle from collection 2" class="hero-photo hero-photo-3">
+        </div>
+        <div class="hero-content">
+            <div class="hero-content-bg" aria-hidden="true">
+                <div class="hero-bg-track">
+                    <img src="{% static 'assets/images/MAIN1.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/MAIN2.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/MAIN3.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/MAIN4.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/MAIN5.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/MAIN6.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/MAIN7.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/MAIN8.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/MAIN9.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/MAIN10.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/MAIN11.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/MAIN12.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/photo1.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/photo2.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/photo3.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/MAIN1.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/MAIN2.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/MAIN3.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/MAIN4.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/MAIN5.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/MAIN6.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/MAIN7.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/MAIN8.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/MAIN9.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/MAIN10.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/MAIN11.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/MAIN12.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/photo1.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/photo2.ico' %}" alt="" class="hero-bg-photo">
+                    <img src="{% static 'assets/images/photo3.ico' %}" alt="" class="hero-bg-photo">
+                </div>
+            </div>
+            <h1 data-translate="hero-title">Handcrafted Candles</h1>
+            <p class="hero-subtitle" data-translate="hero-subtitle">Natural. Elegant. Made with Love in Nîmes, France</p>
+            <a href="{% url 'shop:products' %}" class="hero-btn" data-translate="hero-btn">Explore Collection</a>
+        </div>
+    </section>
+
+    <section class="about-snippet">
+        <h2 data-translate="about-snippet-title">Welcome to Mimosa Atelier</h2>
+        <p data-translate="about-snippet-text">Every candle is a story, crafted by hand with 100% natural soy wax and exclusive fragrances from Provence. We believe in beauty, sustainability, and the art of slow living.</p>
+    </section>
+
+    
+    <main>
+        <h2 class="section-title" data-translate="products-title">Our New Collection</h2>
+        
+        <section class="Products">
+            {% for product in products %}
+            <article id="product{{ product.id }}" class="Product1">
+                <a href="#" class="product-link" aria-label="{{ product.title }} details">
+                    <figure>
+                        <img src="{{ product.image.url }}" alt="{{ product.title }}">
+                    </figure>
+                    <h3>{{ product.title }}</h3>
+                </a>
+                <p class="product-desc">{{ product.description|truncatechars:90 }}</p>
+                <p class="product-composition">{{ product.category }}</p>
+                <p class="product-price">€{{ product.price }}</p>
+                <form action="{% url 'shop:cart_add' product.id %}" method="post" class="add-cart-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="quantity" value="1">
+                    <button class="btn-add-cart" type="submit">
+                        <span data-translate="add-to-cart">Add to Cart</span>
+                    </button>
+                </form>
+                <button class="btn-order" type="button" data-translate="order-now" onclick="orderProduct('{{ product.title|escapejs }}', '{{ product.price }}', '{{ product.category|escapejs }}')">Order Now</button>
+            </article>
+            {% empty %}
+            <article class="Product4">
+                <h3>No products yet</h3>
+                <p class="product-desc">Add products in admin panel to display them here.</p>
+            </article>
+            {% endfor %}
+        </section>
+            <article class="Product4">
+                <a href="{% url 'shop:products' %}" class="product-link" aria-label="See all products">
+                    <h3 data-translate="product4-name">New Products Coming Soon</h3>
+                </a>
+                <p class="product-desc" data-translate="product4-desc">Stay tuned for our next release!</p>
+            </article>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Mimosa Atelier. <span data-translate="footer-copyright">All rights reserved.</span></p>
+            <nav class="footer-links">
+                <a href="{% url 'shop:privacy' %}" data-translate="footer-privacy">Privacy Policy</a>
+                <a href="#" data-translate="footer-terms">Terms</a>
+                <a href="{% url 'shop:contact' %}" data-translate="footer-contact">Contact</a>
+            </nav>
+            <div class="footer-social">
+                <a href="mailto:mimosa.atelier.france@gmail.com" data-translate="footer-email">Email</a>
+                <a href="https://www.instagram.com/mimosa_atelier_france/" target="_blank" data-translate="footer-instagram">Instagram</a>
+            </div>
+        </div>
+        <p class="legal-text">Nîmes, France | SIRET: XXX XXX XXX</p>
+    </footer>
+
+    <div id="cookie-banner" class="cookie-banner">
+        <div class="cookie-content">
+            <div class="cookie-text">
+                <h3 data-translate="cookie-title">🍪 We use cookies</h3>
+                <p data-translate="cookie-text">We use cookies to improve your experience on our site. By continuing, you accept our privacy policy.</p>
+            </div>
+            <div class="cookie-buttons">
+                <button id="accept-cookies" class="btn-accept" data-translate="cookie-accept">Accept</button>
+                <a href="{% url 'shop:privacy' %}" class="cookie-policy-link" data-translate="footer-privacy">Privacy Policy</a>
+                <button id="decline-cookies" class="btn-decline" data-translate="cookie-decline">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <button id="back-to-top" class="back-to-top">
+        <span>↑</span>
+    </button>
+
+
+    <script>
+    function getOrderMessages() {
+        const lang = localStorage.getItem('selectedLanguage') || 'en';
+        if (lang === 'fr') {
+            return {
+                created: 'Commande #',
+                createdSuffix: ' creee avec succes.',
+                networkError: 'Erreur reseau lors de la creation de la commande.',
+                genericError: 'Impossible de creer la commande. Connectez-vous d\'abord.'
+            };
+        }
+        if (lang === 'ua') {
+            return {
+                created: 'Замовлення #',
+                createdSuffix: ' успішно створено.',
+                networkError: 'Помилка мережі під час створення замовлення.',
+                genericError: 'Не вдалося створити замовлення. Спочатку увійдіть у профіль.'
+            };
+        }
+        return {
+            created: 'Order #',
+            createdSuffix: ' created successfully.',
+            networkError: 'Network error while creating order.',
+            genericError: 'Could not create order. Please sign in first.'
+        };
+    }
+
+    async function orderProduct(title, price, category) {
+        const messages = getOrderMessages();
+        const normalizedPrice = parseFloat(String(price).replace(',', '.'));
+
+        if (Number.isNaN(normalizedPrice)) {
+            alert(messages.genericError);
+            return;
+        }
+
+        try {
+            const response = await fetch('/orders/create-from-product/', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title: title,
+                    price: normalizedPrice,
+                    category: category,
+                    quantity: 1
+                })
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                alert(result.error || messages.genericError);
+                return;
+            }
+
+            alert(messages.created + result.order_id + messages.createdSuffix);
+        } catch (error) {
+            alert(messages.networkError);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const languageSwitcher = document.querySelector('.language-switcher');
+        const langCurrentBtn = document.querySelector('.lang-current');
+
+        function updateCompactLanguageUI() {
+            if (!languageSwitcher || !langCurrentBtn) {
+                return;
+            }
+
+            const activeBtn = languageSwitcher.querySelector('.lang-btn.active') || languageSwitcher.querySelector('.lang-btn');
+            if (!activeBtn) {
+                return;
+            }
+
+            langCurrentBtn.textContent = activeBtn.textContent.trim();
+            langCurrentBtn.setAttribute('data-lang', activeBtn.getAttribute('data-lang') || 'en');
+        }
+
+        if (languageSwitcher && langCurrentBtn) {
+            updateCompactLanguageUI();
+
+            langCurrentBtn.addEventListener('click', function() {
+                const isExpanded = languageSwitcher.classList.toggle('expanded');
+                langCurrentBtn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+            });
+
+            languageSwitcher.querySelectorAll('.lang-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    // Let translations.js handle switching, then sync compact label and collapse menu.
+                    setTimeout(function() {
+                        updateCompactLanguageUI();
+                        languageSwitcher.classList.remove('expanded');
+                        langCurrentBtn.setAttribute('aria-expanded', 'false');
+                    }, 0);
+                });
+            });
+
+            document.addEventListener('click', function(event) {
+                if (!languageSwitcher.contains(event.target)) {
+                    languageSwitcher.classList.remove('expanded');
+                    langCurrentBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    languageSwitcher.classList.remove('expanded');
+                    langCurrentBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
+
+        const cookieBanner = document.getElementById('cookie-banner');
+        const acceptBtn = document.getElementById('accept-cookies');
+        const declineBtn = document.getElementById('decline-cookies');
+        
+        const cookieConsent = localStorage.getItem('cookieConsent');
+        
+        if (!cookieConsent) {
+            setTimeout(() => {
+                cookieBanner.classList.add('show');
+            }, 1000);
+        }
+        
+        acceptBtn.addEventListener('click', function() {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieBanner.classList.remove('show');
+        });
+        
+        declineBtn.addEventListener('click', function() {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieBanner.classList.remove('show');
+        });
+
+        const backToTopBtn = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Mimosa About Us</title>
+        <meta charset="UTF-8">
+        <meta name="Authors" content="Yuliia Sagan and Denys Shepitko">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="shortcut icon" href="{% static 'assets/images/mimosatitle.ico' %}" type="image/x-icon">
+        <meta name="Keywords" content="Mimosa, Mimosa candles, Mimosa bio bougies, bougies artisanales bio, bougies naturelles, bougies parfumées, bougies écologiques, bougies végétales, bougies faites main, bougies durables, bougies respectueuses de l'environnement">
+        <meta name="Keywordsru" content="Мимоза, свечи Мимоза, био свечи Мимоза, ручная работа свечей Мимоза, натуральные свечи Мимоза, ароматизированные свечи Мимоза, экологичные свечи Мимоза, вегетарианские свечи Мимоза, ручные свечи Мимоза, устойчивые свечи Мимоза, уважающие окружающую среду свечи Мимоза">
+        <meta name="Description" content="Découvrez Mimosa, votre destination pour des bougies artisanales bio, naturelles et parfumées. Nos bougies écologiques sont fabriquées à la main avec des ingrédients végétaux durables, offrant une expérience sensorielle unique tout en respectant l'environnement. Explorez notre collection de bougies faites main pour créer une ambiance chaleureuse et durable chez vous.">
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+        <script src="{% static 'translations.js' %}"></script>
+        <script src="{% static 'animations.js' %}" defer></script>
+
+</head>
+
+<body class="about-us-page">
+    <header>
+        <figure>
+            <a href="{% url 'shop:home' %}">
+                <img src="{% static 'assets/images/logobl2.ico' %}" alt="Mimosa Logo" width="250" height="80">
+            </a>
+        </figure>
+        <nav>
+            <ul>
+                <li><a href="{% url 'shop:home' %}">Home</a></li>
+                <li class="products-menu">
+                    <a href="{% url 'shop:products' %}">Products</a>
+                    <div class="dropdown-catalog" aria-label="Product categories">
+                        <a href="{% url 'shop:products' %}" class="dropdown-item">All Products</a>
+                        <a href="{% url 'shop:product_bento' %}" class="dropdown-item">Bento Candles</a>
+                        <a href="{% url 'shop:products' %}" class="dropdown-item">Scented Candles</a>
+                        <a href="{% url 'shop:product_rose' %}" class="dropdown-item">Decorative Rose</a>
+                        <a href="{% url 'shop:products' %}" class="dropdown-item">Gift Collections</a>
+                        <a href="{% url 'shop:products' %}" class="dropdown-item">New Arrivals</a>
+                    </div>
+                </li>
+                <li><a href="{% url 'shop:about' %}">About Us</a></li>
+                <li><a href="{% url 'shop:contact' %}">Contact</a></li>
+            </ul>
+        </nav>
+                <div class="profile-icon">
+            <a href="{% url 'shop:profile' %}">
+
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="12" cy="8" r="4" stroke="black" stroke-width="2"/>
+<path d="M4 20c0-4 4-6 8-6s8 2 8 6" 
+        stroke="black" 
+        stroke-width="2" 
+        stroke-linecap="round"/>
+</svg>
+            </a>
+</div>
+    </header>
+
+    <main class="about-page">
+    <section class="about-hero">
+        <h1>About Us</h1>
+    </section>
+
+<section class="about-card">
+        <h2>🌼 MIMOSA</h2>
+        <p>is the first flower to bloom in the South of France, announcing the return of light, warmth, and renewal. It is a powerful symbol of delicacy, resilience, and natural beauty. We believe that if something truly unique is to be created, it must be done with deep respect and care for nature and the environment that inspires us.</p>
+    </section>
+
+    <section class="about-card">
+        <h2>Our atelier</h2>
+        <p><strong>MIMOSA</strong> was founded in 2025 and is based in the very heart of beauty and fragrances — the South of France. Surrounded by sun, flowers, and timeless landscapes, we draw inspiration from the natural elegance of Provence, where craftsmanship and authenticity are a way of life.</p>
+    </section>
+
+    <section class="about-card">
+        <h2>What we create</h2>
+        <p><strong>MIMOSA</strong> specializes in the creation of three types of handmade candles:</p>
+        <ul>
+            <li>Scented candles, designed to create atmosphere and emotion</li>
+            <li>Interior (sculptural) candles, created as decorative objects</li>
+            <li>Bento candles, perfect for birthdays, celebrations, and weddings</li>
+        </ul>
+    </section>
+
+    <section class="about-card">
+        <h2>Our values</h2>
+        <p>Each candle is made entirely by hand, with great attention to form, balance, and harmony. We use eco-friendly raw materials certified to European quality standards, and exclusive fragrances created in Provence.</p>
+    </section>
+</main>
+
+
+
+
+
+<footer>
+    <div class="footer-content">
+        <p>&copy; 2026 Mimosa Atelier. Tous droits réservés.</p>
+        <nav class="footer-links">
+            <a href="{% url 'shop:privacy' %}">Politique de confidentialité</a>
+            <a href="#">CGV</a>
+            <a href="{% url 'shop:contact' %}">Contact</a>
+        </nav>
+        <div class="footer-social">
+            <a href="mailto:mimosa.atelier.france@gmail.com">Email</a>
+            <a href="https://www.instagram.com/mimosa_atelier_france/" target="_blank">Instagram</a>
+        </div>
+    </div>
+    <p class="legal-text">Nîmes, France | SIRET: XXX XXX XXX</p>
+</footer>
+
+
+<button id="back-to-top" class="back-to-top">
+    <span>↑</span>
+</button>
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    const backToTopBtn = document.getElementById('back-to-top');
+    
+
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+            backToTopBtn.classList.add('show');
+        } else {
+            backToTopBtn.classList.remove('show');
+        }
+    });
+    
+
+    backToTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+});
+
+
+
+
+
+</script>
+
+
+</body>
+
+</html>
