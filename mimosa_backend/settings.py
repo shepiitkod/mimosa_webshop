@@ -22,11 +22,11 @@ load_dotenv(BASE_DIR / '.env')
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'надежный-дефолтный-ключ')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEBUG = True
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'mimosa-atelier.onrender.com,localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = ['mimosa-atelier.onrender.com', '127.0.0.1', 'localhost', '.onrender.com']
 
-CSRF_TRUSTED_ORIGINS = ['https://mimosa-atelier.onrender.com']
+CSRF_TRUSTED_ORIGINS = ['https://mimosa-atelier.onrender.com', 'https://*.onrender.com']
 
 # Application definition
 
