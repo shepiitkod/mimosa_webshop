@@ -1,18 +1,84 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Регистрация</title>
+    <title>Mimosa | Регистрация</title>
+    <link rel="stylesheet" href="{% static 'auth.css' %}">
 </head>
-<body>
-    <h1>Регистрация</h1>
-    <form method="post" action="{% url 'shop:register_submit' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Зарегистрироваться</button>
-    </form>
-    <p><a href="{% url 'shop:login' %}">Уже есть аккаунт? Войти</a></p>
-    <p><a href="{% url 'shop:home' %}">На главную</a></p>
+<body class="auth-body">
+    <main class="auth-stage">
+        <div class="auth-glow auth-glow-1" aria-hidden="true"></div>
+        <div class="auth-glow auth-glow-2" aria-hidden="true"></div>
+
+        <section class="auth-card" aria-label="Форма регистрации Mimosa Atelier">
+            <aside class="auth-showcase">
+                <div class="auth-brand">
+                    <h1>Mimosa Atelier</h1>
+                    <p>Natural candles, graceful details and a calm design language inspired by Provence.</p>
+                </div>
+                <p class="auth-note">Создайте аккаунт и получите быстрый доступ к корзине, заказам и персональному профилю.</p>
+            </aside>
+
+            <div class="auth-form-pane">
+                <p class="auth-kicker">Create Account</p>
+                <h2 class="auth-title">Регистрация</h2>
+                <p class="auth-subtitle">Заполните поля ниже, чтобы создать аккаунт.</p>
+
+                {% if form.non_field_errors %}
+                <div class="auth-alert" role="alert">
+                    {{ form.non_field_errors }}
+                </div>
+                {% endif %}
+
+                <form method="post" action="{% url 'shop:register_submit' %}" class="auth-form" novalidate>
+                    {% csrf_token %}
+
+                    <div class="auth-field">
+                        <label for="{{ form.username.id_for_label }}">Логин</label>
+                        {{ form.username }}
+                        {% if form.username.help_text %}
+                        <p class="auth-help">{{ form.username.help_text|safe }}</p>
+                        {% endif %}
+                        {% if form.username.errors %}
+                        <ul class="auth-field-errors">{{ form.username.errors }}</ul>
+                        {% endif %}
+                    </div>
+
+                    <div class="auth-field">
+                        <label for="{{ form.password1.id_for_label }}">Пароль</label>
+                        {{ form.password1 }}
+                        {% if form.password1.help_text %}
+                        <p class="auth-help">{{ form.password1.help_text|safe }}</p>
+                        {% endif %}
+                        {% if form.password1.errors %}
+                        <ul class="auth-field-errors">{{ form.password1.errors }}</ul>
+                        {% endif %}
+                    </div>
+
+                    <div class="auth-field">
+                        <label for="{{ form.password2.id_for_label }}">Подтверждение пароля</label>
+                        {{ form.password2 }}
+                        {% if form.password2.help_text %}
+                        <p class="auth-help">{{ form.password2.help_text|safe }}</p>
+                        {% endif %}
+                        {% if form.password2.errors %}
+                        <ul class="auth-field-errors">{{ form.password2.errors }}</ul>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="auth-submit">Зарегистрироваться</button>
+                </form>
+
+                <div class="auth-links">
+                    <a href="{% url 'shop:login' %}">Уже есть аккаунт? Войти</a>
+                    <a href="{% url 'shop:home' %}">На главную</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="{% static 'auth.js' %}" defer></script>
 </body>
 </html>

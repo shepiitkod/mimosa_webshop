@@ -6,9 +6,11 @@ from django.conf import settings
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.db.models import Count
 from django.db import transaction
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.text import slugify
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 
@@ -100,6 +102,46 @@ def index_view(request):
 	products = Product.objects.all()
 	cart_count = sum(int(qty) for qty in _get_cart(request.session).values())
 	return render(request, 'index.html', {'products': products, 'cart_count': cart_count})
+
+
+@require_GET
+def products_catalog_view(request, category_slug=None):
+	products_qs = Product.objects.all().order_by('title')
+	counts_map = {
+		row['category']: row['total']
+		for row in Product.objects.values('category').annotate(total=Count('id'))
+	}
+
+	category_items = []
+	for name, _label in Product.CATEGORY_CHOICES:
+		category_items.append(
+			{
+				'name': name,
+				'slug': slugify(name),
+				'count': counts_map.get(name, 0),
+			}
+		)
+
+	active_category = None
+	if category_slug:
+		active_category = next((item for item in category_items if item['slug'] == category_slug), None)
+		if active_category:
+			products_qs = products_qs.filter(category=active_category['name'])
+
+	total_products_count = Product.objects.count()
+
+	cart_count = sum(int(qty) for qty in _get_cart(request.session).values())
+	return render(
+		request,
+		'products_catalog.html',
+		{
+			'products': products_qs,
+			'total_products_count': total_products_count,
+			'categories': category_items,
+			'active_category': active_category,
+			'cart_count': cart_count,
+		},
+	)
 
 
 @require_GET
@@ -270,7 +312,10 @@ def create_order_from_product(request):
 	if price <= 0:
 		return JsonResponse({'error': 'Price must be greater than zero.'}, status=400)
 
-	category = (payload.get('category') or 'General').strip() or 'General'
+	category = (payload.get('category') or Product.CATEGORY_NEW).strip() or Product.CATEGORY_NEW
+	allowed_categories = {value for value, _label in Product.CATEGORY_CHOICES}
+	if category not in allowed_categories:
+		category = Product.CATEGORY_NEW
 	description = (payload.get('description') or 'Product from storefront').strip() or 'Product from storefront'
 
 	with transaction.atomic():

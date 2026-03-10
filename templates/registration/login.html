@@ -1,18 +1,67 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вход</title>
+    <title>Mimosa | Вход</title>
+    <link rel="stylesheet" href="{% static 'auth.css' %}">
 </head>
-<body>
-    <h1>Вход</h1>
-    <form method="post" action="{% url 'shop:login_submit' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Войти</button>
-    </form>
-    <p><a href="{% url 'shop:register' %}">Создать аккаунт</a></p>
-    <p><a href="{% url 'shop:home' %}">На главную</a></p>
+<body class="auth-body">
+    <main class="auth-stage">
+        <div class="auth-glow auth-glow-1" aria-hidden="true"></div>
+        <div class="auth-glow auth-glow-2" aria-hidden="true"></div>
+
+        <section class="auth-card" aria-label="Форма входа Mimosa Atelier">
+            <aside class="auth-showcase">
+                <div class="auth-brand">
+                    <h1>Mimosa Atelier</h1>
+                    <p>Handmade candles from Nimes with natural fragrance and warm character.</p>
+                </div>
+                <p class="auth-note">Возвращайтесь в личный кабинет, чтобы управлять заказами и профилем в атмосфере Mimosa.</p>
+            </aside>
+
+            <div class="auth-form-pane">
+                <p class="auth-kicker">Mimosa Access</p>
+                <h2 class="auth-title">Вход в аккаунт</h2>
+                <p class="auth-subtitle">Введите логин и пароль, чтобы продолжить.</p>
+
+                {% if form.non_field_errors %}
+                <div class="auth-alert" role="alert">
+                    {{ form.non_field_errors }}
+                </div>
+                {% endif %}
+
+                <form method="post" action="{% url 'shop:login_submit' %}" class="auth-form" novalidate>
+                    {% csrf_token %}
+
+                    <div class="auth-field">
+                        <label for="{{ form.username.id_for_label }}">Логин</label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                        <ul class="auth-field-errors">{{ form.username.errors }}</ul>
+                        {% endif %}
+                    </div>
+
+                    <div class="auth-field">
+                        <label for="{{ form.password.id_for_label }}">Пароль</label>
+                        {{ form.password }}
+                        {% if form.password.errors %}
+                        <ul class="auth-field-errors">{{ form.password.errors }}</ul>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="auth-submit">Войти</button>
+                </form>
+
+                <div class="auth-links">
+                    <a href="{% url 'shop:register' %}">Создать аккаунт</a>
+                    <a href="{% url 'shop:home' %}">На главную</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="{% static 'auth.js' %}" defer></script>
 </body>
 </html>

@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mimosa | Products Catalog</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'catalog.css' %}">
+</head>
+<body class="catalog-page">
+    <header>
+        <figure>
+            <a href="{% url 'shop:home' %}">
+                <img src="{% static 'assets/images/logobl2.ico' %}" alt="Mimosa Logo" width="250" height="80">
+            </a>
+        </figure>
+        <nav>
+            <ul>
+                <li><a href="{% url 'shop:home' %}">Home</a></li>
+                <li><a href="{% url 'shop:products' %}">Products</a></li>
+                <li><a href="{% url 'shop:cart' %}">Cart ({{ cart_items_count }})</a></li>
+                <li><a href="{% url 'shop:about' %}">About Us</a></li>
+                <li><a href="{% url 'shop:contact' %}">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="catalog-layout">
+        <aside class="catalog-sidebar" aria-label="Product categories">
+            <h2>Categories</h2>
+            <a href="{% url 'shop:products' %}" class="catalog-cat-link {% if not active_category %}is-active{% endif %}">
+                <span>All Products</span>
+                <span class="catalog-cat-count">{{ total_products_count }}</span>
+            </a>
+            {% for category in categories %}
+            <a href="{% url 'shop:products_by_category' category.slug %}" class="catalog-cat-link {% if active_category and active_category.slug == category.slug %}is-active{% endif %}">
+                <span>{{ category.name }}</span>
+                <span class="catalog-cat-count">{{ category.count }}</span>
+            </a>
+            {% empty %}
+            <p class="catalog-empty-note">No categories yet. Add products from admin panel.</p>
+            {% endfor %}
+        </aside>
+
+        <section class="catalog-content" aria-label="Products list">
+            <div class="catalog-topbar">
+                <h1>
+                    {% if active_category %}
+                        {{ active_category.name }}
+                    {% else %}
+                        All Products
+                    {% endif %}
+                </h1>
+                <p>{{ products|length }} item{{ products|length|pluralize }}</p>
+            </div>
+
+            <div class="catalog-grid">
+                {% for product in products %}
+                <article class="catalog-card">
+                    <figure>
+                        <img src="{{ product.image.url }}" alt="{{ product.title }}">
+                    </figure>
+                    <div class="catalog-card-body">
+                        <p class="catalog-chip">{{ product.category }}</p>
+                        <h3>{{ product.title }}</h3>
+                        <p class="catalog-desc">{{ product.description|truncatechars:100 }}</p>
+                        <div class="catalog-card-bottom">
+                            <span class="catalog-price">EUR {{ product.price }}</span>
+                            <form action="{% url 'shop:cart_add' product.id %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="catalog-add-btn">Add</button>
+                            </form>
+                        </div>
+                    </div>
+                </article>
+                {% empty %}
+                <article class="catalog-card catalog-card-empty">
+                    <h3>No products in this category yet</h3>
+                    <p>Switch category in sidebar or add products from Django admin.</p>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+</body>
+</html>
