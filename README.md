@@ -59,5 +59,5 @@ SEO impovements
 
 
 
-[View Website](https://shepiitkod.github.io/mimosa_webshop/)
+[View Website](https://mimosa-atelier.onrender.com/)
 -----
