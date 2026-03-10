@@ -1,5 +1,36 @@
 *.pyc
 __pycache__/
 db.sqlite3
-.env
+env
 .DS_Store
+staticfiles/
+media/
+*.log
+*.pot
+*.mo
+*.swp
+.idea/
+.vscode/
+# If you have a local settings file, ignore it
+local_settings.py
+env/
+venv/
+ENV/
+*.env
+*.egg-info/
+dist/
+build/
+*.egg
+*.log
+*.pot
+*.mo
+*.swp
+*.swo
+*.bak
+*.tmp
+*.DS_Store
+# ...existing code...
+.env
+.env.*
+*.env
+# ...existing code...
