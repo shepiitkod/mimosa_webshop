@@ -39,7 +39,7 @@
                 <span class="catalog-cat-count">{{ category.count }}</span>
             </a>
             {% empty %}
-            <p class="catalog-empty-note">No categories yet. Add products from admin panel.</p>
+            <p class="catalog-empty-note">No categories available yet. Check back soon!</p>
             {% endfor %}
         </aside>
 
@@ -76,7 +76,7 @@
                 {% empty %}
                 <article class="catalog-card catalog-card-empty">
                     <h3>No products in this category yet</h3>
-                    <p>Switch category in sidebar or add products from Django admin.</p>
+                    <p>Try selecting a different category from the sidebar.</p>
                 </article>
                 {% endfor %}
             </div>
