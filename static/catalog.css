@@ -1,6 +1,8 @@
 .catalog-page {
     background: linear-gradient(145deg, #f8f3e7 0%, #efe3c6 55%, #dcc9a3 100%);
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .catalog-layout {
@@ -9,6 +11,11 @@
     display: grid;
     grid-template-columns: 290px 1fr;
     gap: 24px;
+    flex: 1;
+}
+
+.catalog-page footer {
+    margin-top: 24px;
 }
 
 .catalog-sidebar {

@@ -18,6 +18,8 @@
 body.auth-body {
     margin: 0;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     font-family: "Trebuchet MS", "Segoe UI", sans-serif;
     color: var(--mimosa-ink);
     background:
@@ -31,16 +33,48 @@ body.auth-body {
     position: relative;
     min-height: 100vh;
     width: 100%;
+    flex: 1;
     padding: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
+    isolation: isolate;
+}
+
+.auth-footer {
+    width: min(860px, calc(100% - 24px));
+    margin: 0 auto 14px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    font-size: 13px;
+    color: #5d523f;
+}
+
+.auth-footer p {
+    margin: 0;
+}
+
+.auth-footer a {
+    color: #5a4520;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(90, 69, 32, 0.35);
+}
+
+.auth-footer a:hover {
+    color: #3f2f13;
+    border-bottom-color: rgba(63, 47, 19, 0.72);
 }
 
 .auth-glow {
     position: absolute;
     border-radius: 999px;
-    filter: blur(2px);
+    will-change: transform, opacity;
     pointer-events: none;
 }
 
@@ -73,9 +107,10 @@ body.auth-body {
     overflow: hidden;
     border: 1px solid var(--mimosa-border);
     background: var(--mimosa-card);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     box-shadow: var(--mimosa-shadow);
+    transform: translateZ(0);
 }
 
 .auth-showcase {
@@ -88,6 +123,7 @@ body.auth-body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    transform: translateZ(0);
 }
 
 .auth-showcase::after {
@@ -261,6 +297,8 @@ body.auth-body {
     opacity: 0.88;
     animation: petalDrop linear infinite;
     pointer-events: none;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
 }
 
 @keyframes petalDrop {
@@ -305,8 +343,35 @@ body.auth-body {
         padding: 26px 22px;
     }
 
+    .auth-glow-1,
+    .auth-glow-2 {
+        opacity: 0.68;
+    }
+
     .auth-form-pane {
         padding: 24px 20px 26px;
+    }
+}
+
+@media (max-width: 560px) {
+    .auth-stage {
+        padding: 12px;
+    }
+
+    .auth-card {
+        border-radius: 18px;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
+    .auth-showcase {
+        min-height: 180px;
+    }
+
+    .auth-footer {
+        margin: 0 10px 10px;
+        width: auto;
+        justify-content: flex-start;
     }
 }
 

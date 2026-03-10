@@ -124,7 +124,7 @@
         <section class="Products">
             {% for product in products %}
             <article id="product{{ product.id }}" class="Product1">
-                <a href="#" class="product-link" aria-label="{{ product.title }} details">
+                <a href="{% url 'shop:product_detail' product.id product.title|slugify %}" class="product-link" aria-label="{{ product.title }} details">
                     <figure>
                         <img src="{{ product.image.url }}" alt="{{ product.title }}">
                     </figure>

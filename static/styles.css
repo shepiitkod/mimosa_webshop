@@ -3849,6 +3849,8 @@ body.is-loaded header figure::after {
     font-family: 'Inter', Arial, sans-serif;
     background: linear-gradient(160deg, #f5efe4 0%, #f8f3ea 45%, #efe7d7 100%);
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .profile-dashboard {
@@ -3856,6 +3858,7 @@ body.is-loaded header figure::after {
     margin: 42px auto 64px;
     display: grid;
     gap: 24px;
+    flex: 1;
 }
 
 .profile-user-card,

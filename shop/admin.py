@@ -5,9 +5,14 @@ from .models import CartItem, Order, OrderItem, Product
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-	list_display = ('id', 'title', 'category', 'price', 'stock')
+	list_display = ('id', 'title', 'category', 'price', 'stock', 'burn_time')
 	list_filter = ('category',)
-	search_fields = ('title', 'description', 'category')
+	search_fields = ('title', 'description', 'category', 'composition', 'wax_type')
+	fieldsets = (
+		('Basic', {'fields': ('title', 'description', 'category', 'price', 'stock')}),
+		('Gallery (up to 4 photos)', {'fields': ('image', 'image_2', 'image_3', 'image_4')}),
+		('Product Parameters', {'fields': ('composition', 'form_capacity', 'wax_type', 'burn_time')}),
+	)
 
 
 class OrderItemInline(admin.TabularInline):

@@ -44,7 +44,7 @@
                             {% endfor %}
                         </ul>
                         {% if order.status != 'paid' %}
-                        <form method="post" action="{% url 'shop:create_checkout_session' order.id %}">
+                        <form method="post" action="{% url 'shop:create_checkout_session_for_order' order.id %}">
                             {% csrf_token %}
                             <button type="submit" class="profile-pay-btn">Оплатить заказ</button>
                         </form>
@@ -57,5 +57,7 @@
             {% endif %}
         </section>
     </main>
+
+    {% include 'includes/footer.html' with footer_lang='ru' %}
 </body>
 </html>

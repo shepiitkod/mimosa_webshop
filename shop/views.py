@@ -37,8 +37,8 @@ def _create_stripe_session_for_order(request, order):
 	unit_amount = _to_cents(order.total_amount)
 
 	root_url = request.build_absolute_uri('/')
-	success_url = f"{root_url}payments/success/?session_id={{CHECKOUT_SESSION_ID}}"
-	cancel_url = f"{root_url}payments/cancel/"
+	success_url = f"{root_url}success/?session_id={{CHECKOUT_SESSION_ID}}"
+	cancel_url = f"{root_url}cancel/"
 
 	return stripe.checkout.Session.create(
 		mode='payment',
@@ -140,6 +140,30 @@ def products_catalog_view(request, category_slug=None):
 			'categories': category_items,
 			'active_category': active_category,
 			'cart_count': cart_count,
+		},
+	)
+
+
+@require_GET
+def product_detail_view(request, product_id, slug=None):
+	product = get_object_or_404(Product, id=product_id)
+	canonical_slug = slugify(product.title)
+	if slug != canonical_slug:
+		return redirect('shop:product_detail', product_id=product.id, slug=canonical_slug)
+
+	related_products = (
+		Product.objects.filter(category=product.category)
+		.exclude(id=product.id)
+		.order_by('title')[:4]
+	)
+
+	return render(
+		request,
+		'product_detail.html',
+		{
+			'product': product,
+			'canonical_slug': canonical_slug,
+			'related_products': related_products,
 		},
 	)
 
@@ -348,7 +372,40 @@ def create_order_from_product(request):
 
 @login_required
 @require_POST
-def create_checkout_session(request, order_id):
+def create_checkout_session(request):
+	items, total = _cart_summary(request.session)
+	if not items:
+		return redirect('shop:cart_detail')
+
+	with transaction.atomic():
+		order = Order.objects.create(
+			user=request.user,
+			total_amount=total,
+			status=Order.STATUS_PROCESSING,
+		)
+
+		for item in items:
+			OrderItem.objects.create(
+				order=order,
+				product=item['product'],
+				quantity=item['quantity'],
+				price_at_purchase=item['product'].price,
+			)
+
+	request.session['cart'] = {}
+	request.session.modified = True
+
+	try:
+		session = _create_stripe_session_for_order(request, order)
+	except ValueError as exc:
+		return HttpResponse(str(exc), status=500)
+
+	return redirect(session.url, permanent=False)
+
+
+@login_required
+@require_POST
+def create_checkout_session_for_order(request, order_id):
 	order = get_object_or_404(Order, id=order_id, user=request.user)
 
 	if order.status == Order.STATUS_PAID:
@@ -370,6 +427,16 @@ def payment_success(request):
 @require_GET
 def payment_cancel(request):
 	return render(request, 'payment_cancel.html')
+
+
+@require_GET
+def checkout_success(request):
+	return render(request, 'success.html')
+
+
+@require_GET
+def checkout_cancel(request):
+	return render(request, 'cancel.html')
 
 
 @csrf_exempt

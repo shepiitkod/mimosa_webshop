@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Оплата отменена</title>
+    <title>Оплата успешна</title>
     <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body class="home-page">
     <main class="about-snippet" style="margin-top: 80px; max-width: 760px;">
-        <h1>Оплата отменена</h1>
-        <p>Платеж не был завершен. Вы можете вернуться в корзину и попробовать снова.</p>
-        <a class="hero-btn" href="{% url 'shop:cart' %}">Вернуться в корзину</a>
+        <h1>Спасибо за покупку</h1>
+        <p>Оплата прошла успешно. Ваш заказ уже обрабатывается.</p>
+        <a class="hero-btn" href="{% url 'shop:profile' %}">Перейти в профиль</a>
     </main>
 
     {% include 'includes/footer.html' with footer_lang='ru' %}

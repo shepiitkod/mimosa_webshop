@@ -34,3 +34,8 @@ build/
 .env.*
 *.env
 # ...existing code...
+
+mimosa_backend/.env
+.env
+mimosa_backend/.env 
+mimosa_backend/.env 

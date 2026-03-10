@@ -9,14 +9,17 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    const petalsCount = 18;
+    const isMobile = window.matchMedia('(max-width: 860px)').matches;
+    const lowPower = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
+    const petalsCount = isMobile || lowPower ? 8 : 14;
+
     for (let i = 0; i < petalsCount; i += 1) {
         const petal = document.createElement('span');
         petal.className = 'auth-petal';
 
         const left = Math.random() * 100;
         const delay = Math.random() * 8;
-        const duration = 10 + Math.random() * 10;
+        const duration = (isMobile ? 12 : 10) + Math.random() * (isMobile ? 8 : 9);
         const drift = -30 + Math.random() * 60;
         const scale = 0.7 + Math.random() * 0.8;
 

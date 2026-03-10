@@ -1,12 +1,19 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Оплата успешна</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
-<body>
-    <h1>Оплата прошла успешно</h1>
-    <p><a href="{% url 'shop:profile' %}">Перейти в Мой профиль</a></p>
+<body class="home-page">
+    <main class="about-snippet" style="margin-top: 80px; max-width: 760px;">
+        <h1>Оплата прошла успешно</h1>
+        <p>Ваш платеж подтвержден. Заказ уже передан в обработку.</p>
+        <a class="hero-btn" href="{% url 'shop:profile' %}">Перейти в профиль</a>
+    </main>
+
+    {% include 'includes/footer.html' with footer_lang='ru' %}
 </body>
 </html>

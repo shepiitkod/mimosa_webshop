@@ -21,7 +21,14 @@ class Product(models.Model):
 	description = models.TextField()
 	price = models.DecimalField(max_digits=10, decimal_places=2)
 	image = models.ImageField(upload_to='products/')
+	image_2 = models.ImageField(upload_to='products/', blank=True, null=True)
+	image_3 = models.ImageField(upload_to='products/', blank=True, null=True)
+	image_4 = models.ImageField(upload_to='products/', blank=True, null=True)
 	category = models.CharField(max_length=120, choices=CATEGORY_CHOICES, default=CATEGORY_NEW)
+	composition = models.CharField(max_length=255, blank=True, default='')
+	form_capacity = models.CharField(max_length=120, blank=True, default='')
+	wax_type = models.CharField(max_length=120, blank=True, default='')
+	burn_time = models.CharField(max_length=120, blank=True, default='')
 	stock = models.PositiveIntegerField(default=0)
 
 	def __str__(self):

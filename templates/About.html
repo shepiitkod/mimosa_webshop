@@ -91,21 +91,7 @@
 
 
 
-<footer>
-    <div class="footer-content">
-        <p>&copy; 2026 Mimosa Atelier. Tous droits réservés.</p>
-        <nav class="footer-links">
-            <a href="{% url 'shop:privacy' %}">Politique de confidentialité</a>
-            <a href="#">CGV</a>
-            <a href="{% url 'shop:contact' %}">Contact</a>
-        </nav>
-        <div class="footer-social">
-            <a href="mailto:mimosa.atelier.france@gmail.com">Email</a>
-            <a href="https://www.instagram.com/mimosa_atelier_france/" target="_blank">Instagram</a>
-        </div>
-    </div>
-    <p class="legal-text">Nîmes, France | SIRET: XXX XXX XXX</p>
-</footer>
+{% include 'includes/footer.html' %}
 
 
 <button id="back-to-top" class="back-to-top">

@@ -59,19 +59,17 @@
                 {% for product in products %}
                 <article class="catalog-card">
                     <figure>
-                        <img src="{{ product.image.url }}" alt="{{ product.title }}">
+                        <a href="{% url 'shop:product_detail' product.id product.title|slugify %}" aria-label="{{ product.title }} details">
+                            <img src="{{ product.image.url }}" alt="{{ product.title }}">
+                        </a>
                     </figure>
                     <div class="catalog-card-body">
                         <p class="catalog-chip">{{ product.category }}</p>
-                        <h3>{{ product.title }}</h3>
+                        <h3><a href="{% url 'shop:product_detail' product.id product.title|slugify %}" style="text-decoration:none; color:inherit;">{{ product.title }}</a></h3>
                         <p class="catalog-desc">{{ product.description|truncatechars:100 }}</p>
                         <div class="catalog-card-bottom">
                             <span class="catalog-price">EUR {{ product.price }}</span>
-                            <form action="{% url 'shop:cart_add' product.id %}" method="post">
-                                {% csrf_token %}
-                                <input type="hidden" name="quantity" value="1">
-                                <button type="submit" class="catalog-add-btn">Add</button>
-                            </form>
+                            <a href="{% url 'shop:product_detail' product.id product.title|slugify %}" class="catalog-add-btn" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">View</a>
                         </div>
                     </div>
                 </article>
@@ -84,5 +82,7 @@
             </div>
         </section>
     </main>
+
+    {% include 'includes/footer.html' %}
 </body>
 </html>

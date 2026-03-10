@@ -124,7 +124,7 @@
         <section class="Products">
             {% for product in products %}
             <article id="product{{ product.id }}" class="Product1">
-                <a href="#" class="product-link" aria-label="{{ product.title }} details">
+                <a href="{% url 'shop:product_detail' product.id product.title|slugify %}" class="product-link" aria-label="{{ product.title }} details">
                     <figure>
                         <img src="{{ product.image.url }}" alt="{{ product.title }}">
                     </figure>
@@ -157,21 +157,7 @@
             </article>
     </main>
 
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2026 Mimosa Atelier. <span data-translate="footer-copyright">All rights reserved.</span></p>
-            <nav class="footer-links">
-                <a href="{% url 'shop:privacy' %}" data-translate="footer-privacy">Privacy Policy</a>
-                <a href="#" data-translate="footer-terms">Terms</a>
-                <a href="{% url 'shop:contact' %}" data-translate="footer-contact">Contact</a>
-            </nav>
-            <div class="footer-social">
-                <a href="mailto:mimosa.atelier.france@gmail.com" data-translate="footer-email">Email</a>
-                <a href="https://www.instagram.com/mimosa_atelier_france/" target="_blank" data-translate="footer-instagram">Instagram</a>
-            </div>
-        </div>
-        <p class="legal-text">Nîmes, France | SIRET: XXX XXX XXX</p>
-    </footer>
+    {% include 'includes/footer.html' %}
 
     <div id="cookie-banner" class="cookie-banner">
         <div class="cookie-content">

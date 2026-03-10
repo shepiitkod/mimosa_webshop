@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.title }} - Mimosa Atelier</title>
+    <meta name="description" content="{{ product.description|truncatechars:155 }}">
+    <meta property="og:title" content="{{ product.title }} - Mimosa Atelier">
+    <meta property="og:description" content="{{ product.description|truncatechars:155 }}">
+    <meta property="og:image" content="{{ product.image.url }}">
+    <meta property="og:type" content="product">
+    <link rel="canonical" href="{% url 'shop:product_detail' product.id canonical_slug %}">
+    <link rel="shortcut icon" href="{% static 'assets/images/logobl2.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <header>
+        <figure>
+            <a href="{% url 'shop:home' %}">
+                <img src="{% static 'assets/images/logobl2.ico' %}" alt="Mimosa Logo" width="250" height="80">
+            </a>
+        </figure>
+        <nav>
+            <ul>
+                <li><a href="{% url 'shop:home' %}">Home</a></li>
+                <li><a href="{% url 'shop:products' %}">Products</a></li>
+                <li><a href="{% url 'shop:cart' %}">Cart ({{ cart_items_count }})</a></li>
+                <li><a href="{% url 'shop:about' %}">About Us</a></li>
+                <li><a href="{% url 'shop:contact' %}">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="product-page">
+        <div class="breadcrumbs">
+            <a href="{% url 'shop:home' %}">Home</a>
+            <span>/</span>
+            <a href="{% url 'shop:products' %}">Products</a>
+            <span>/</span>
+            <span>{{ product.title }}</span>
+        </div>
+
+        <div class="product-container">
+            <div class="product-gallery">
+                <div class="main-image">
+                    <img id="mainProductImage" src="{{ product.image.url }}" alt="{{ product.title }}">
+                </div>
+                <div class="thumbnail-images">
+                    <img src="{{ product.image.url }}" alt="{{ product.title }}" class="thumbnail active" onclick="changeImage(this)">
+                    {% if product.image_2 %}
+                    <img src="{{ product.image_2.url }}" alt="{{ product.title }} photo 2" class="thumbnail" onclick="changeImage(this)">
+                    {% endif %}
+                    {% if product.image_3 %}
+                    <img src="{{ product.image_3.url }}" alt="{{ product.title }} photo 3" class="thumbnail" onclick="changeImage(this)">
+                    {% endif %}
+                    {% if product.image_4 %}
+                    <img src="{{ product.image_4.url }}" alt="{{ product.title }} photo 4" class="thumbnail" onclick="changeImage(this)">
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="product-info">
+                <h1>{{ product.title }}</h1>
+                <p class="product-price-large">EUR {{ product.price }}</p>
+                <p class="product-description">{{ product.description }}</p>
+
+                <div class="product-details">
+                    <h3>Product Details</h3>
+                    <ul>
+                        <li><strong>Category:</strong> {{ product.category }}</li>
+                        {% if product.composition %}<li><strong>Composition:</strong> {{ product.composition }}</li>{% endif %}
+                        {% if product.form_capacity %}<li><strong>Form Capacity:</strong> {{ product.form_capacity }}</li>{% endif %}
+                        {% if product.wax_type %}<li><strong>Wax:</strong> {{ product.wax_type }}</li>{% endif %}
+                        {% if product.burn_time %}<li><strong>Burn Time:</strong> {{ product.burn_time }}</li>{% endif %}
+                        <li><strong>Stock:</strong> {{ product.stock }}</li>
+                        <li><strong>SKU:</strong> #{{ product.id }}</li>
+                    </ul>
+                </div>
+
+                <form method="post" action="{% url 'shop:cart_add' product.id %}" class="product-actions">
+                    {% csrf_token %}
+                    <input type="number" name="quantity" value="1" min="1" class="quantity-input" style="width:92px; padding:12px; border-radius:12px; border:1px solid #d8c8a4;">
+                    <button class="btn-add-cart" type="submit">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+
+        {% if related_products %}
+        <section class="related-products">
+            <h2>More from {{ product.category }}</h2>
+            <div class="related-grid">
+                {% for item in related_products %}
+                <a class="related-card" href="{% url 'shop:product_detail' item.id item.title|slugify %}" style="cursor:pointer; text-decoration:none; color:inherit; display:block;">
+                    <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                    <h3>{{ item.title }}</h3>
+                    <p class="price">EUR {{ item.price }}</p>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+    </main>
+
+    {% include 'includes/footer.html' %}
+
+    <script>
+    function changeImage(thumbnail) {
+        const mainImage = document.getElementById('mainProductImage');
+        if (!mainImage) return;
+
+        mainImage.src = thumbnail.src;
+        document.querySelectorAll('.thumbnail').forEach((thumb) => thumb.classList.remove('active'));
+        thumbnail.classList.add('active');
+    }
+    </script>
+</body>
+</html>

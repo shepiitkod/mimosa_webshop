@@ -1,0 +1,40 @@
+{% if footer_mode == 'auth' %}
+<footer class="auth-footer">
+    {% if footer_lang == 'ru' %}
+    <p>&copy; 2026 Mimosa Atelier. Все права защищены.</p>
+    <a href="{% url 'shop:privacy' %}">Политика конфиденциальности</a>
+    <a href="{% url 'shop:contact' %}">Контакты</a>
+    {% else %}
+    <p>&copy; 2026 Mimosa Atelier. <span data-translate="footer-copyright">All rights reserved.</span></p>
+    <a href="{% url 'shop:privacy' %}" data-translate="footer-privacy">Privacy Policy</a>
+    <a href="{% url 'shop:contact' %}" data-translate="footer-contact">Contact</a>
+    {% endif %}
+</footer>
+{% else %}
+<footer>
+    <div class="footer-content">
+        {% if footer_lang == 'ru' %}
+        <p>&copy; 2026 Mimosa Atelier. Все права защищены.</p>
+        <nav class="footer-links">
+            <a href="{% url 'shop:privacy' %}">Политика конфиденциальности</a>
+            <a href="{% url 'shop:contact' %}">Контакты</a>
+        </nav>
+        <div class="footer-social">
+            <a href="mailto:mimosa.atelier.france@gmail.com">Email</a>
+            <a href="https://www.instagram.com/mimosa_atelier_france/" target="_blank" rel="noopener">Instagram</a>
+        </div>
+        {% else %}
+        <p>&copy; 2026 Mimosa Atelier. <span data-translate="footer-copyright">All rights reserved.</span></p>
+        <nav class="footer-links">
+            <a href="{% url 'shop:privacy' %}" data-translate="footer-privacy">Privacy Policy</a>
+            <a href="#" data-translate="footer-terms">Terms</a>
+            <a href="{% url 'shop:contact' %}" data-translate="footer-contact">Contact</a>
+        </nav>
+        <div class="footer-social">
+            <a href="mailto:mimosa.atelier.france@gmail.com" data-translate="footer-email">Email</a>
+            <a href="https://www.instagram.com/mimosa_atelier_france/" target="_blank" rel="noopener" data-translate="footer-instagram">Instagram</a>
+        </div>
+        {% endif %}
+    </div>
+</footer>
+{% endif %}
