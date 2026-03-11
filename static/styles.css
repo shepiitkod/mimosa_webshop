@@ -29,7 +29,7 @@ main {
 
 body {
     font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: linear-gradient(180deg, #fef9f0 0%, #f8f3e8 100%);
+    background: linear-gradient(180deg, #fffdf5 0%, #f8f3e8 100%);
     color: #2a2a2a;
     line-height: 1.6;
     overflow-x: hidden;
@@ -4188,6 +4188,8 @@ body.is-loaded header figure::after {
     align-items: center;
     gap: 24px;
     padding: 18px 32px;
+    background: rgba(255, 253, 245, 0.94);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.16);
 }
 
 .site-header__brand,
@@ -4228,38 +4230,68 @@ body.is-loaded header figure::after {
 }
 
 .site-header .language-switcher {
-    position: static;
-    top: auto;
-    right: auto;
-    transform: none;
-    align-self: auto;
+    position: relative;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     margin: 0;
-    padding: 8px;
-    gap: 0;
-    z-index: auto;
-    background: rgba(255, 255, 255, 0.88);
-    border: 1px solid rgba(255, 255, 255, 0.92);
-    border-radius: 999px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    z-index: 30;
 }
 
 .site-header .lang-current {
-    display: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 56px;
+    height: 36px;
+    border: 1px solid rgba(212, 175, 55, 0.28);
+    border-radius: 999px;
+    background: linear-gradient(135deg, #f0e4c8, #ecdcb8);
+    color: #2f2618;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    cursor: pointer;
 }
 
 .site-header .language-switcher .lang-options {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
     display: flex;
-    flex-direction: row;
-    gap: 8px;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px;
+    border-radius: 14px;
+    background: rgba(255, 253, 245, 0.98);
+    border: 1px solid rgba(212, 175, 55, 0.22);
+    box-shadow: 0 10px 28px rgba(120, 90, 36, 0.12);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-5px);
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+}
+
+.site-header .language-switcher:hover .lang-options,
+.site-header .language-switcher:focus-within .lang-options,
+.site-header .language-switcher.expanded .lang-options {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
 }
 
 .site-header .language-switcher .lang-btn {
-    width: 40px;
-    height: 40px;
-    font-size: 11px;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    background: rgba(255, 255, 255, 0.96);
+    color: #3d3222;
+    font-size: 10px;
+    font-weight: 700;
 }
 
 .site-header .profile-icon {
@@ -4398,5 +4430,16 @@ body.is-loaded header figure::after {
         width: 44px;
         height: 44px;
     }
+}
+
+/* Atelier storefront card polish */
+.home-page .Products {
+    gap: 34px;
+}
+
+.home-page .Products > article {
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(212, 175, 55, 0.16);
+    box-shadow: 0 14px 32px rgba(114, 87, 40, 0.11);
 }
 
