@@ -3,7 +3,6 @@ certifi==2026.2.25
 charset-normalizer==3.4.5
 dj-database-url
 Django==6.0.3
-django-jazzmin==3.0.3
 gunicorn==25.1.0
 idna==3.11
 packaging==26.0
