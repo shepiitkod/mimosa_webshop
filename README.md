@@ -2,6 +2,28 @@
 
 # 🕯️ Mimosa Atelier - Artisan Scented Candles
 
+```
+    .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+    .                                                                   .
+    .             (  )               (  )               (  )            .
+    .            ( :: )             ( :: )             ( :: )           .
+    .             \__/               \__/               \__/            .
+    .              ||                 ||                 ||              .
+    .           .-====-.           .-====-.           .-====-.          .
+    .         .'  __    '.       .'  __    '.       .'  __    '.        .
+    .        /   /  \     \     /   /  \     \     /   /  \     \       .
+    .       |   | () |     |   |   | () |     |   |   | () |     |      .
+    .       |   |____|     |   |   |____|     |   |   |____|     |      .
+    .       |    ____    __|   |    ____    __|   |    ____    __|      .
+    .       |   / __ \  /_/    |   / __ \  /_/    |   / __ \  /_/       .
+    .       |  /_/  \_\_/      |  /_/  \_\_/      |  /_/  \_\_/         .
+    .       |      __          |      __          |      __             .
+    .       |_____/ /_____     |_____/ /_____     |_____/ /_____        .
+    .      /______/_______/   /______/_______/   /______/_______/       .
+    .                                                                   .
+    .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+```
+
 ✨ 🌿 Handcrafted elegance with a French soul.
 
 </div>
@@ -15,6 +37,7 @@ Mimosa Atelier is a boutique candle brand focused on aesthetic, handcrafted piec
 • 🌿 Multilingual interface: FR / EN / UA / RU  
 • ✨ Newsletter subscription flow  
 • 🕯️ PostgreSQL-powered data storage  
+• 💳 Stripe Checkout with webhook-based payment sync  
 • 🌿 Responsive design for desktop, tablet, and mobile
 
 ## Tech Stack
@@ -39,7 +62,10 @@ python manage.py runserver
 ## Environment Variables
 
 • `DATABASE_URL`  
-• `SECRET_KEY`
+• `DJANGO_SECRET_KEY`  
+• `STRIPE_PUBLIC_KEY`  
+• `STRIPE_SECRET_KEY`  
+• `STRIPE_WEBHOOK_SECRET`
 
 ## Roadmap
 
@@ -47,8 +73,8 @@ python manage.py runserver
 - [x] Multilingual content support (FR/EN/UA/RU)
 - [x] Newsletter subscription
 - [x] PostgreSQL integration and production deployment
-- [ ] Stripe payments integration
-- [ ] Full checkout workflow enhancements
+- [x] Stripe payments integration (Checkout + webhook + success fallback)
+- [x] Full checkout workflow enhancements
 - [ ] Order tracking dashboard
 
 Made with ✨ for the Mimosa startup

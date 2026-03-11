@@ -10,7 +10,11 @@
 <body class="home-page">
     <main class="about-snippet" style="margin-top: 80px; max-width: 760px;">
         <h1>Спасибо за покупку</h1>
-        <p>Оплата прошла успешно. Ваш заказ уже обрабатывается.</p>
+        {% if payment_verified %}
+        <p>Оплата подтверждена. Ваш заказ уже обрабатывается.</p>
+        {% else %}
+        <p>Мы получили подтверждение от Stripe и завершаем синхронизацию заказа. Обновите профиль через несколько секунд.</p>
+        {% endif %}
         <a class="hero-btn" href="{% url 'shop:profile' %}">Перейти в профиль</a>
     </main>
 

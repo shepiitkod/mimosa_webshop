@@ -1,0 +1,72 @@
+/* Django Admin - Image Preview Fixes */
+
+/* Limit image field preview size in forms */
+.field-image img,
+.field-image_2 img,
+.field-image_3 img,
+.field-image_4 img {
+	max-width: 300px;
+	max-height: 300px;
+	width: auto;
+	height: auto;
+	display: block;
+	margin: 10px 0;
+	border-radius: 4px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* File input styling */
+.vImageField {
+	display: block;
+	margin: 8px 0;
+}
+
+/* Fieldset styling for gallery section */
+fieldset.collapsed h2,
+fieldset h2 {
+	padding: 8px 10px;
+	margin: 0;
+}
+
+/* Gallery container */
+.field-image,
+.field-image_2,
+.field-image_3,
+.field-image_4 {
+	margin-bottom: 15px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #e8e8e8;
+}
+
+.field-image:last-child,
+.field-image_4 {
+	border-bottom: none;
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
+/* Admin form layout */
+.form-row {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 10px;
+}
+
+@media (min-width: 1000px) {
+	.form-row {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+/* Prevent images from breaking admin layout */
+img[class*="vThumbnailImage"] {
+	max-width: 300px !important;
+	height: auto !important;
+}
+
+/* Admin submit area positioning */
+.submit-row {
+	padding: 10px 0;
+	margin-top: 20px;
+	border-top: 1px solid #e8e8e8;
+}

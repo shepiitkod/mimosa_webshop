@@ -25,12 +25,14 @@ urlpatterns = [
     path('', include('shop.urls')),
 ]
 
+# Serve media files in development
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-if settings.DEBUG or not settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+# Always serve static files (WhiteNoise handles in production)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
+# Fallback for production (WhiteNoise primary, this is backup)
 if not settings.DEBUG:
     urlpatterns += [
         re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),

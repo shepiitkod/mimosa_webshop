@@ -1,26 +1,40 @@
-*.pyc
+# Python
 __pycache__/
-db.sqlite3
-env
-.DS_Store
-staticfiles/
-media/
-*.log
-*.pot
-*.mo
-*.swp
-.idea/
-.vscode/
-# If you have a local settings file, ignore it
-local_settings.py
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
 env/
 venv/
 ENV/
+.venv/
+
+# Django
+db.sqlite3
+staticfiles/
+media/
+local_settings.py
+
+# Secrets and local environment files
+.env
+.env.*
 *.env
+my_keys.txt
+mimosa_backend/.env
+
+# Build and packaging
 *.egg-info/
+*.egg
 dist/
 build/
-*.egg
+
+# Editors and OS
+.idea/
+.vscode/
+.DS_Store
+
+# Logs and temp
 *.log
 *.pot
 *.mo
@@ -28,16 +42,3 @@ build/
 *.swo
 *.bak
 *.tmp
-*.DS_Store
-# ...existing code...
-.env
-.env.*
-*.env
-# ...existing code...
-
-mimosa_backend/.env
-.env
-mimosa_backend/.env 
-my_keys.txt
-.env
-DJANGO_SECRET_KEY=твой-секретный-ключ

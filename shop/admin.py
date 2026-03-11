@@ -1,11 +1,12 @@
 from django.contrib import admin
+from django.utils.html import format_html
 
 from .models import CartItem, NewsletterUser, Order, OrderItem, Product
 
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-	list_display = ('id', 'title', 'category', 'price', 'stock', 'burn_time')
+	list_display = ('id', 'title', 'category', 'price', 'stock', 'image_preview')
 	list_filter = ('category',)
 	search_fields = ('title', 'description', 'category', 'composition', 'wax_type')
 	fieldsets = (
@@ -13,6 +14,34 @@ class ProductAdmin(admin.ModelAdmin):
 		('Gallery (up to 4 photos)', {'fields': ('image', 'image_2', 'image_3', 'image_4')}),
 		('Product Parameters', {'fields': ('composition', 'form_capacity', 'wax_type', 'burn_time')}),
 	)
+	readonly_fields = ('image_preview', 'image_2_preview', 'image_3_preview', 'image_4_preview')
+
+	def image_preview(self, obj):
+		if obj.image:
+			return format_html('<img src="{}" style="max-width: 250px; max-height: 250px; border-radius: 4px;" />', obj.image.url)
+		return "No image"
+	image_preview.short_description = 'Image Preview'
+
+	def image_2_preview(self, obj):
+		if obj.image_2:
+			return format_html('<img src="{}" style="max-width: 250px; max-height: 250px; border-radius: 4px;" />', obj.image_2.url)
+		return "No image"
+	image_2_preview.short_description = 'Image 2 Preview'
+
+	def image_3_preview(self, obj):
+		if obj.image_3:
+			return format_html('<img src="{}" style="max-width: 250px; max-height: 250px; border-radius: 4px;" />', obj.image_3.url)
+		return "No image"
+	image_3_preview.short_description = 'Image 3 Preview'
+
+	def image_4_preview(self, obj):
+		if obj.image_4:
+			return format_html('<img src="{}" style="max-width: 250px; max-height: 250px; border-radius: 4px;" />', obj.image_4.url)
+		return "No image"
+	image_4_preview.short_description = 'Image 4 Preview'
+
+	class Media:
+		css = {'all': ('admin_custom.css',)}
 
 
 class OrderItemInline(admin.TabularInline):

@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 {% load static %}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,11 +10,14 @@
 <body class="profile-dashboard-page">
     <header style="display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid #ddd;">
         <h1 style="margin: 0;">Mimosa Atelier</h1>
-        <div class="lang-switcher" style="display: flex; gap: 8px;">
-            <button class="lang-btn active" data-lang="en" title="English" type="button">EN</button>
-            <button class="lang-btn" data-lang="fr" title="Français" type="button">FR</button>
-            <button class="lang-btn" data-lang="ua" title="Українська" type="button">UA</button>
-            <button class="lang-btn" data-lang="ru" title="Русский" type="button">RU</button>
+        <div class="language-switcher" style="display: flex; gap: 8px;" aria-label="Language switcher">
+            <button class="lang-current" type="button" aria-label="Toggle language menu" aria-expanded="false">EN</button>
+            <div class="lang-options" aria-label="Language options">
+                <button class="lang-btn active" data-lang="en" title="English" type="button">EN</button>
+                <button class="lang-btn" data-lang="fr" title="Français" type="button">FR</button>
+                <button class="lang-btn" data-lang="ua" title="Українська" type="button">UA</button>
+                <button class="lang-btn" data-lang="ru" title="Русский" type="button">RU</button>
+            </div>
         </div>
     </header>
     
@@ -46,8 +49,8 @@
                                 <span class="order-status-badge status-neutral">{{ order.get_status_display }}</span>
                             {% endif %}
                         </div>
-                        <p class="order-meta"><span data-translate-attr="data-label">Date:</span> {{ order.created_at }}</p>
-                        <p class="order-meta"><span data-translate-attr="data-label">Amount:</span> EUR {{ order.total_amount }}</p>
+                        <p class="order-meta"><span data-translate="order-date">Date:</span> {{ order.created_at }}</p>
+                        <p class="order-meta"><span data-translate="order-amount">Amount:</span> EUR {{ order.total_amount }}</p>
                         <ul class="order-items-list">
                             {% for item in order.items.all %}
                                 <li>{{ item.product.title }} x {{ item.quantity }} (EUR {{ item.price_at_purchase }})</li>

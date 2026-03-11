@@ -23,11 +23,14 @@
                 <li><a href="{% url 'shop:about' %}">About Us</a></li>
                 <li><a href="{% url 'shop:contact' %}">Contact</a></li>
             </ul>
-            <div class="lang-switcher" style="margin-left: auto; display: flex; gap: 8px;">
-                <button class="lang-btn active" data-lang="en" title="English" type="button">EN</button>
-                <button class="lang-btn" data-lang="fr" title="Français" type="button">FR</button>
-                <button class="lang-btn" data-lang="ua" title="Українська" type="button">UA</button>
-                <button class="lang-btn" data-lang="ru" title="Русский" type="button">RU</button>
+            <div class="language-switcher" style="margin-left: auto; display: flex; gap: 8px;" aria-label="Language switcher">
+                <button class="lang-current" type="button" aria-label="Toggle language menu" aria-expanded="false">EN</button>
+                <div class="lang-options" aria-label="Language options">
+                    <button class="lang-btn active" data-lang="en" title="English" type="button">EN</button>
+                    <button class="lang-btn" data-lang="fr" title="Français" type="button">FR</button>
+                    <button class="lang-btn" data-lang="ua" title="Українська" type="button">UA</button>
+                    <button class="lang-btn" data-lang="ru" title="Русский" type="button">RU</button>
+                </div>
             </div>
         </nav>
     </header>

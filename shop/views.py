@@ -13,6 +13,7 @@ from django.db.models import Count
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.text import slugify
+from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 
@@ -38,9 +39,8 @@ def _create_stripe_session_for_order(request, order):
 	stripe.api_key = settings.STRIPE_SECRET_KEY
 	unit_amount = _to_cents(order.total_amount)
 
-	root_url = request.build_absolute_uri('/')
-	success_url = f"{root_url}success/?session_id={{CHECKOUT_SESSION_ID}}"
-	cancel_url = f"{root_url}cancel/"
+	success_url = f"{request.build_absolute_uri(reverse('shop:success'))}?session_id={{CHECKOUT_SESSION_ID}}"
+	cancel_url = request.build_absolute_uri(reverse('shop:cancel'))
 
 	return stripe.checkout.Session.create(
 		mode='payment',
@@ -63,6 +63,37 @@ def _create_stripe_session_for_order(request, order):
 		success_url=success_url,
 		cancel_url=cancel_url,
 	)
+
+
+def _mark_order_paid_from_checkout_session(session_id: str) -> bool:
+	if not session_id or not settings.STRIPE_SECRET_KEY:
+		return False
+
+	stripe.api_key = settings.STRIPE_SECRET_KEY
+
+	try:
+		session_data = stripe.checkout.Session.retrieve(session_id)
+	except Exception:
+		return False
+
+	metadata = session_data.get('metadata', {}) if hasattr(session_data, 'get') else {}
+	order_id = metadata.get('order_id') if metadata else None
+	if not order_id and hasattr(session_data, 'get'):
+		order_id = session_data.get('client_reference_id')
+
+	if not order_id:
+		return False
+
+	try:
+		order = Order.objects.get(id=order_id)
+	except (Order.DoesNotExist, ValueError, TypeError):
+		return False
+
+	if order.status != Order.STATUS_PAID:
+		order.status = Order.STATUS_PAID
+		order.save(update_fields=['status'])
+
+	return True
 
 
 def _get_cart(session):
@@ -433,7 +464,9 @@ def payment_cancel(request):
 
 @require_GET
 def checkout_success(request):
-	return render(request, 'success.html')
+	session_id = request.GET.get('session_id', '')
+	payment_verified = _mark_order_paid_from_checkout_session(session_id)
+	return render(request, 'success.html', {'payment_verified': payment_verified})
 
 
 @require_GET
@@ -460,6 +493,10 @@ def stripe_webhook(request):
 
 	if event['type'] == 'checkout.session.completed':
 		session_data = event['data']['object']
+		payment_status = session_data.get('payment_status')
+		if payment_status and payment_status != 'paid':
+			return JsonResponse({'status': 'ignored', 'reason': 'payment not completed'})
+
 		metadata = session_data.get('metadata', {})
 		order_id = metadata.get('order_id') or session_data.get('client_reference_id')
 
