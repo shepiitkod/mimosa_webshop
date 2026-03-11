@@ -148,6 +148,22 @@ const translations = {
         'contact-title': 'Contact Us',
         'contact-text': 'Should you have any questions about our privacy practices or this Privacy Policy, or if you would like to exercise any of the rights available to you, please call or email us at mimosa.atelier.france@gmail.com or contact us at 150 rue Ozi Etienne, Nimes, 30900, FR For the purpose of applicable data protection laws, we are the data controller of your personal information.',
         
+        'cart-empty-title': 'Cart is empty',
+        'cart-empty-text': 'Add items from the home page.',
+        'cart-go-to-products': 'Go to products',
+        'cart-checkout': 'Place order',
+        
+        'profile-title': 'My Profile',
+        'profile-orders': 'My Orders',
+        'profile-cart-link': 'Cart',
+        'profile-home-link': 'Home',
+        'profile-logout': 'Logout',
+        'order-label': 'Order',
+        'order-status-delivered': 'Delivered',
+        'order-status-transit': 'In Transit',
+        'order-status-pending': 'Pending',
+        'order-date': 'Date:',
+        'order-amount': 'Amount:',
         
         'footer-copyright': 'All rights reserved.',
         'footer-privacy': 'Privacy Policy',
@@ -155,6 +171,16 @@ const translations = {
         'footer-contact': 'Contact',
         'footer-email': 'Email',
         'footer-instagram': 'Instagram',
+        'newsletter-title': 'Join the Mimosa Atelier',
+        'newsletter-subtitle': 'Be the first to know about new scent collections, artisan stories, and exclusive offers.',
+        'newsletter-placeholder': 'Your email address',
+        'newsletter-btn': 'SUBSCRIBE',
+        'newsletter-success': 'Thank you for joining our journey!',
+        'newsletter-already-subscribed': 'You are already subscribed with this email.',
+        'newsletter-invalid-email': 'Please enter a valid email address.',
+        'newsletter-email-required': 'Email is required.',
+        'newsletter-generic-error': 'Something went wrong. Please try again.',
+        'newsletter-network-error': 'Network error. Please try again.',
         
         
         'cookie-title': '🍪 We use cookies',
@@ -312,6 +338,22 @@ const translations = {
         'contact-title': 'Nous Contacter',
         'contact-text': 'Si vous avez des questions sur nos pratiques de confidentialité ou cette Politique de Confidentialité, ou si vous souhaitez exercer l\'un des droits qui vous sont offerts, veuillez nous appeler ou nous envoyer un e-mail à mimosa.atelier.france@gmail.com ou nous contacter à 150 rue Ozi Etienne, Nimes, 30900, FR. Aux fins de la loi applicable en matière de protection des données, nous sommes le responsable du traitement de vos informations personnelles.',
         
+        'cart-empty-title': 'Panier vide',
+        'cart-empty-text': 'Ajoutez des articles depuis la page d\'accueil.',
+        'cart-go-to-products': 'Aller aux produits',
+        'cart-checkout': 'Passer la commande',
+        
+        'profile-title': 'Mon Profil',
+        'profile-orders': 'Mes Commandes',
+        'profile-cart-link': 'Panier',
+        'profile-home-link': 'Accueil',
+        'profile-logout': 'Déconnexion',
+        'order-label': 'Commande',
+        'order-status-delivered': 'Livré',
+        'order-status-transit': 'En Transit',
+        'order-status-pending': 'En Attente',
+        'order-date': 'Date:',
+        'order-amount': 'Montant:',
         
         'footer-copyright': 'Tous droits réservés.',
         'footer-privacy': 'Politique de Confidentialité',
@@ -319,7 +361,16 @@ const translations = {
         'footer-contact': 'Contact',
         'footer-email': 'Email',
         'footer-instagram': 'Instagram',
-        
+        'newsletter-title': 'Rejoignez Mimosa Atelier',
+        'newsletter-subtitle': 'Soyez le premier à découvrir nos nouvelles collections de parfums, les histoires de nos artisans et nos offres exclusives.',
+        'newsletter-placeholder': 'Votre adresse email',
+        'newsletter-btn': 'S\'ABONNER',
+        'newsletter-success': 'Merci de nous avoir rejoints dans ce voyage !',
+        'newsletter-already-subscribed': 'Vous êtes déjà abonné avec cet email.',
+        'newsletter-invalid-email': 'Veuillez entrer une adresse email valide.',
+        'newsletter-email-required': 'L\'email est requis.',
+        'newsletter-generic-error': 'Une erreur est survenue. Veuillez réessayer.',
+        'newsletter-network-error': 'Erreur réseau. Veuillez réessayer.',
         
         'cookie-title': '🍪 Nous utilisons des cookies',
         'cookie-text': 'Nous utilisons des cookies pour améliorer votre expérience sur notre site. En continuant, vous acceptez notre politique de confidentialité.',
@@ -476,6 +527,22 @@ const translations = {
         'contact-title': 'Зв\'яжіться з Нами',
         'contact-text': 'Якщо у вас є питання про наші практики конфіденційності або цю Політику конфіденційності, або якщо вам хочеться здійснити будь-які права, які вам доступні, будь ласка, позаніть нас або надішліть нам e-mail на mimosa.atelier.france@gmail.com або зв\'яжіться з нами за адресою 150 rue Ozi Etienne, Nimes, 30900, FR. Для цілей чинного законодавства про захист даних ми є контролером обробки вашої особистої інформації.',
         
+        'cart-empty-title': 'Кошик порожній',
+        'cart-empty-text': 'Додайте товари з домашної сторінки.',
+        'cart-go-to-products': 'Перейти до товарів',
+        'cart-checkout': 'Розмістити замовлення',
+        
+        'profile-title': 'Мій Профіль',
+        'profile-orders': 'Мої Замовлення',
+        'profile-cart-link': 'Кошик',
+        'profile-home-link': 'Головна',
+        'profile-logout': 'Вийти',
+        'order-label': 'Замовлення',
+        'order-status-delivered': 'Доставлено',
+        'order-status-transit': 'У Дорозі',
+        'order-status-pending': 'Очікування',
+        'order-date': 'Дата:',
+        'order-amount': 'Сума:',
         
         'footer-copyright': 'Всі права захищені.',
         'footer-privacy': 'Політика Конфіденційності',
@@ -483,13 +550,233 @@ const translations = {
         'footer-contact': 'Контакти',
         'footer-email': 'Електронна пошта',
         'footer-instagram': 'Instagram',
-        
+        'newsletter-title': 'Приєднайтеся до Mimosa Atelier',
+        'newsletter-subtitle': 'Будьте першими, хто дізнається про нові колекції ароматів, історії наших майстрів та виключні пропозиції.',
+        'newsletter-placeholder': 'Ваша адреса електронної пошти',
+        'newsletter-btn': 'ПІДПИСАТИСЯ',
+        'newsletter-success': 'Дякуємо, що приєдналися до нашої подорожі!',
+        'newsletter-already-subscribed': 'Ви вже підписані на цей email.',
+        'newsletter-invalid-email': 'Будь ласка, введіть дійсну адресу електронної пошти.',
+        'newsletter-email-required': 'Email є обов\'язковим.',
+        'newsletter-generic-error': 'Щось пішло не так. Спробуйте ще раз.',
+        'newsletter-network-error': 'Помилка мережі. Спробуйте ще раз.',
         
         'cookie-title': '🍪 Ми використовуємо cookies',
         'cookie-text': 'Ми використовуємо cookies для покращення вашого досвіду на нашому сайті. Продовжуючи, ви приймаєте нашу політику конфіденційності.',
         'cookie-accept': 'Прийняти',
         'cookie-decline': 'Відхилити',
         'order-now': 'Замовити'
+    },
+    
+    ru: {
+        
+        'nav-home': 'Главная',
+        'nav-products': 'Товары',
+        'nav-about': 'О нас',
+        'nav-contact': 'Контакты',
+        'nav-sub-all': 'Все товары',
+        'nav-sub-bento': 'Свечи Bento',
+        'nav-sub-scented': 'Ароматические свечи',
+        'nav-sub-rose': 'Декоративная роза',
+        'nav-sub-gifts': 'Подарочные коллекции',
+        'nav-sub-new': 'Новинки',
+        
+        
+        'hero-title': 'Свечи ручной работы',
+        'hero-subtitle': 'Натуральные. Элегантные. Сделаны с любовью в Ниме, Франция',
+        'hero-btn': 'Посмотреть коллекцию',
+        
+        
+        'about-snippet-title': 'Добро пожаловать в Mimosa Atelier',
+        'about-snippet-text': 'Каждая свеча — это история, созданная вручную из 100% натурального соевого воска и эксклюзивных ароматов из Прованса. Мы верим в красоту, устойчивость и искусство медленной жизни.',
+        
+        
+        'products-title': 'Наша новая коллекция',
+        'product1-name': 'Свеча Bento',
+        'product1-desc': 'Идеально для дней рождения и свадеб',
+        'product1-composition': '100% соевый воск, натуральный аромат',
+        
+        'product2-name': 'Ароматическая свеча',
+        'product2-desc': 'Ароматическая свеча для атмосферы',
+        'product2-composition': '100% соевый воск, натуральный аромат',
+        'product2-full-desc': 'Скульптурный свет: где геометрия встречает спокойствие. Изготовлена вручную с уникальной 3D-сетчатой текстурой, эта соевая свеча сочетает архитектурно смелый дизайн с теплым органическим свечением. Предмет интерьера, предназначенный для возвышения вашего пространства и переопределения современного спокойствия.',
+        
+        'product3-name': 'Декоративная свеча "Роза"',
+        'product3-desc': 'Декоративная свеча в форме розы',
+        'product3-composition': '100% соевый воск',
+        'product1-full-desc': 'Компактная элегантность в стиле Bento. Изготовлена вручную из соевого воска с нежными нотками жасмина и цветков вишни. Идеально для подарков и особых случаев.',
+        'product3-full-desc': 'Нежная свеча в форме розы, изготовленная из 100% соевого воска. Элегантная и декоративная, идеально подходит для композиций и романтического интерьера.',
+        'product4-name': 'Новые товары скоро будут доступны',
+        'product4-desc': 'Следите за обновлениями!',
+        'details-title': 'Детали товара',
+        'composition-label': 'Состав:',
+        'burn-time-label': 'Время горения:',
+        'burn-time': '~40 часов',
+        'weight-label': 'Вес:',
+        'scent-label': 'Ароматические ноты:',
+        'scent-notes': 'Лаванда, Ваниль, Сандаловое дерево',
+        'handmade-label': 'Ручная работа:',
+        'handmade-yes': 'Да',
+        'quantity-label': 'Количество:',
+        'add-to-cart': 'Добавить в корзину',
+        'feature-natural': '100% Натуральный',
+        'feature-eco': 'Экологичный',
+        'feature-handmade': 'Ручная работа',
+        'related-title': 'Вам также может понравиться',
+        
+        
+        'login-title': 'Вход в аккаунт',
+        'login-subtitle': 'Введите логин и пароль для входа.',
+        'login-label': 'Логин',
+        'password-label': 'Пароль',
+        'login-btn': 'Войти',
+        'register-link': 'Создать аккаунт',
+        'home-link': 'На главную',
+        'login-kicker': 'Mimosa Access',
+        'login-brand-desc': 'Ручные свечи из Нима с натуральным ароматом и теплым характером.',
+        'login-note': 'Вернитесь в личный кабинет, чтобы управлять заказами и профилем в атмосфере Mimosa.',
+        
+        'register-title': 'Регистрация',
+        'register-subtitle': 'Заполните поля ниже, чтобы создать аккаунт.',
+        'register-kicker': 'Создать аккаунт',
+        'register-brand-desc': 'Натуральные свечи, изящные детали и спокойный дизайн, вдохновленный Провансом.',
+        'register-note': 'Создайте аккаунт и получите быстрый доступ к корзине, заказам и персональному профилю.',
+        'register-btn': 'Зарегистрироваться',
+        'register-link-login': 'Уже есть аккаунт? Войти',
+        'password1-label': 'Пароль',
+        'password2-label': 'Подтверждение пароля',
+        
+        
+        'privacy-policy-title': 'Политика конфиденциальности',
+        'privacy-policy-text': 'Последнее обновление: 2 марта 2026 г.',
+        'privacy-intro': 'Atelier artisanal "MIMOSA" работает на этом веб-сайте и предоставляет услуги для предложения вам, клиенту, эксклюзивные изделия из ручных свечей и информацию ("Услуги"). Данная Политика конфиденциальности описывает, как мы собираем, используем и раскрываем вашу личную информацию при посещении нашего веб-сайта, совершении покупки или ином общении с нами. При конфликте между нашими Условиями обслуживания и данной Политикой конфиденциальности, данная Политика конфиденциальности применяется в отношении сбора, обработки и раскрытия вашей личной информации.',
+        
+        'privacy-read': 'Пожалуйста, внимательно прочитайте эту Политику конфиденциальности. Используя и получая доступ к любым из Услуг, вы подтверждаете, что прочитали эту Политику конфиденциальности и понимаете сбор, использование и раскрытие вашей информации, как описано в данной Политике конфиденциальности.',
+        
+        'personal-info-title': 'Личная информация, которую мы собираем или обрабатываем',
+        'personal-info-text': 'Когда мы используем термин "личная информация", мы имеем в виду информацию, которая идентифицирует вас или может быть разумно связана с вами или другим лицом. Личная информация не включает информацию, собранную анонимно или дезидентифицированную, чтобы она не могла идентифицировать вас или быть разумно связана с вами. Мы можем собирать или обрабатывать следующие категории личной информации:',
+        
+        'contact-details': 'Контактные данные, включая ваше имя, адрес, платежный адрес, адрес доставки, номер телефона и адрес электронной почты.',
+        'financial-info': 'Финансовая информация, включая номера кредитных карт, способ оплаты и сведения о подтверждении платежа.',
+        'account-info': 'Информация об аккаунте, включая ваше имя пользователя, пароль, вопросы безопасности, предпочтения и параметры.',
+        'transaction-info': 'Информация о заказе, включая товары, которые вы интересуетесь или покупаете, детали подтверждения заказа, статус доставки и историю покупок.',
+        'communication-info': 'Общение с нами, включая информацию, которую вы включаете в сообщения нам, например при отправке запроса в службу поддержки.',
+        'device-info': 'Информация об устройстве, включая информацию о вашем устройстве, браузере или сетевом подключении, ваш IP-адрес и другие уникальные идентификаторы.',
+        'usage-info': 'Информация об использовании, включая информацию о вашем взаимодействии с Услугами, включая то, как и когда вы взаимодействуете с Услугами или перемещаетесь по ним.',
+        
+        'personal-info-sources-title': 'Источники личной информации',
+        'personal-info-sources-text': 'Мы собираем личную информацию из следующих источников:',
+        'directly-from-you': 'Непосредственно от вас, когда вы предоставляете информацию на нашем веб-сайте, связываетесь с нами по электронной почте или телефону, размещаете заказ или создаете аккаунт;',
+        'automatically': 'Автоматически при посещении нашего веб-сайта через файлы cookie и аналогичные технологии отслеживания, которые помогают нам понять, как вы используете наши Услуги;',
+        'from-service-providers': 'От поставщиков услуг, которые помогают нам в обработке платежей, доставке, хостинге веб-сайтов и поддержке клиентов;',
+        'from-partners': 'От обработчиков платежей и партнеров по доставке, которые необходимы для доставки товаров и услуг вам.',
+        
+        'how-we-use-title': 'Как мы используем вашу личную информацию',
+        'how-we-use-text': 'Мы используем вашу личную информацию для следующих целей:',
+        
+        'provide-services': 'Предоставление и улучшение услуг. Мы используем вашу личную информацию для обработки заказов, доставки товаров, ответа на запросы, ведения вашего аккаунта, отправки подтверждений заказов и обновлений доставки, а также для улучшения нашего веб-сайта и услуг на основе вашей обратной связи и взаимодействия.',
+        
+        'marketing': 'Маркетинг и коммуникации. С вашего согласия мы можем отправлять вам маркетинговые сообщения о новых товарах, специальных предложениях и акциях по электронной почте или другим способам. Вы можете отказаться от этих сообщений в любой момент.',
+        
+        'security': 'Безопасность и защита. Мы используем вашу личную информацию для выявления и предотвращения мошенничества, защиты безопасности нашего веб-сайта и услуг, а также соблюдения юридических обязательств.',
+        
+        'communication': 'Поддержка клиентов. Мы используем вашу личную информацию для предоставления обслуживания клиентов, ответа на ваши запросы и поддержания наших деловых отношений с вами.',
+        
+        'legal-reasons': 'Соблюдение закона. Мы используем вашу личную информацию для соблюдения применимого законодательства, нормативных актов и судебных процессов, а также для обеспечения соблюдения наших Условий обслуживания.',
+        
+        'disclose-title': 'Как мы раскрываем вашу личную информацию',
+        'disclose-text': 'Мы можем раскрывать вашу личную информацию в следующих случаях:',
+        
+        'with-shopify': 'С надежными поставщиками услуг, которые помогают нам в обработке платежей, выполнении заказов, доставке, хостинге веб-сайтов и поддержке клиентов. Эти партнеры обязаны по контракту защищать вашу информацию.',
+        
+        'with-partners': 'С партнерами по логистике и доставке, необходимыми для доставки ваших товаров. Эти партнеры получают только информацию, необходимую для завершения доставки.',
+        
+        'at-direction': 'Когда вы просите нас поделиться вашей информацией или когда вы даете согласие на определенные цели.',
+        
+        'with-affiliates': 'С нашими дочерними компаниями и связанными юридическими лицами, если они помогают в предоставлении наших Услуг.',
+        
+        'in-connection': 'В связи с коммерческой сделкой, слиянием или поглощением, для соблюдения юридических обязательств или для защиты наших прав, конфиденциальности, безопасности или имущества.',
+        
+        'shopify-title': 'Хостинг веб-сайтов и поставщики услуг',
+        'shopify-text': 'Наш веб-сайт размещается и обслуживается профессиональными поставщиками хостинга и услуг, которые обрабатывают техническую информацию о вашем доступе к нашему веб-сайту. Ваша информация может быть передана и обработана нашими поставщиками услуг в странах, отличных от вашей страны проживания. Эти поставщики связаны соглашениями о конфиденциальности и не имеют права использовать вашу информацию в своих целях.',
+        
+        'third-party-title': 'Веб-сайты третьих лиц и ссылки',
+        'third-party-text': 'Наш веб-сайт может содержать ссылки на веб-сайты третьих лиц, включая социальные сети. Мы не несем ответственности за практику конфиденциальности этих внешних сайтов. Если вы переходите по ссылкам на сайты, не контролируемые нами, мы рекомендуем вам ознакомиться с их политикой конфиденциальности перед предоставлением информации.',
+        
+        'children-title': 'Конфиденциальность детей',
+        'children-text': 'Наши Услуги не предназначены для детей младше 13 лет. Мы не сознательно собираем личную информацию у детей младше 13 лет. Если мы узнаем, что собрали информацию от ребенка младше 13 лет, мы незамедлительно удалим эту информацию. Родители или опекуны, обеспокоенные конфиденциальностью своего ребенка, могут связаться с нами по адресу указанному ниже.',
+        
+        'security-title': 'Безопасность вашей информации',
+        'security-text': 'Мы применяем надлежащие технические и организационные меры для защиты вашей личной информации от несанкционированного доступа, изменения, раскрытия или уничтожения. Однако ни один метод передачи через Интернет не является 100% безопасным, и мы не можем гарантировать абсолютную безопасность.',
+        
+        'retention-text': 'Мы сохраняем вашу личную информацию столько времени, сколько необходимо для предоставления наших Услуг, выполнения заказов, соблюдения юридических обязательств и разрешения любых споров.',
+        
+        'rights-title': 'Ваши права и выбор конфиденциальности',
+        'rights-text': 'В зависимости от вашего места жительства вы можете иметь определенные права в отношении вашей личной информации, при условии применимого законодательства:',
+        
+        'right-access': 'Право на доступ. Вы можете запросить доступ к личной информации, которую мы храним о вас.',
+        'right-delete': 'Право на удаление. Вы можете запросить удаление вашей личной информации, с определенными исключениями.',
+        'right-correct': 'Право на исправление. Вы можете запросить исправление неточной личной информации.',
+        'right-portability': 'Право на передачу данных. Вы можете запросить копию вашей информации в портативном формате.',
+        'managing-preferences': 'Предпочтения в маркетинге. Вы можете отказаться от маркетинговых сообщений в любой момент, щелкнув ссылку отписки в наших электронных письмах или связавшись с нами напрямую.',
+        
+        'eea-rights': 'Если вы находитесь в Европейской экономической зоне или Великобритании, вы можете иметь дополнительные права в соответствии с GDPR, включая:',
+        'objection': 'Право на возражение. Вы можете возразить против обработки вашей личной информации в определенных целях.',
+        'withdrawal': 'Право на отзыв согласия. Когда мы полагаемся на согласие, вы можете отозвать его в любой момент.',
+        
+        'non-discrimination': 'Мы не будем дискриминировать вас за осуществление ваших прав конфиденциальности. Вы можете отправить запросы по адресу указанному ниже. Мы ответим на ваш запрос в сроки, требуемые применимым законодательством.',
+        
+        'complaints-title': 'Жалобы',
+        'complaints-text': 'Если у вас есть жалобы на то, как мы обрабатываем вашу личную информацию, свяжитесь с нами по адресу указанному ниже. В зависимости от вашего местоположения, вы можете иметь право обжаловать наше решение, связавшись с нами по адресу указанному ниже, или подать жалобу в ваш местный орган защиты данных.',
+        
+        'international-title': 'Международные передачи',
+        'international-text': 'Пожалуйста, обратите внимание, что мы можем передавать, хранить и обрабатывать вашу личную информацию за пределами страны, где вы живете. Если мы передаем вашу личную информацию из Европейской экономической зоны или Великобритании, мы полагаемся на признанные механизмы передачи, такие как Стандартные договорные положения Европейской комиссии, или любые эквивалентные контракты, выданные соответствующим компетентным органом Великобритании.',
+        
+        'changes-title': 'Изменения в данной Политике конфиденциальности',
+        'changes-text': 'Мы можем обновлять данную Политику конфиденциальности с течением времени, включая отражение изменений в наших практиках или по другим операционным, юридическим или нормативным причинам. Мы разместим пересмотренную Политику конфиденциальности на этом веб-сайте, обновим дату "Последнего обновления" и предоставим уведомление, как того требует применимое законодательство.',
+        
+        'contact-title': 'Свяжитесь с нами',
+        'contact-text': 'Если у вас есть вопросы о наших практиках конфиденциальности или данной Политике конфиденциальности, или если вы хотите осуществить какие-либо имеющиеся у вас права, свяжитесь с нами по адресу mimosa.atelier.france@gmail.com или по адресу 150 rue Ozi Etienne, Nimes, 30900, FR. Для целей применимого законодательства о защите данных мы являемся контролером ваших личных данных.',
+        
+        'cart-empty-title': 'Корзина пуста',
+        'cart-empty-text': 'Добавьте товары с главной страницы.',
+        'cart-go-to-products': 'Перейти к товарам',
+        'cart-checkout': 'Оформить заказ',
+        
+        'profile-title': 'Мой профиль',
+        'profile-orders': 'Мои заказы',
+        'profile-cart-link': 'Корзина',
+        'profile-home-link': 'Главная',
+        'profile-logout': 'Выйти',
+        'order-label': 'Заказ',
+        'order-status-delivered': 'Доставлен',
+        'order-status-transit': 'В пути',
+        'order-status-pending': 'Ожидание',
+        'order-date': 'Дата:',
+        'order-amount': 'Сумма:',
+        
+        'footer-copyright': 'Все права защищены.',
+        'footer-privacy': 'Политика конфиденциальности',
+        'footer-terms': 'Условия',
+        'footer-contact': 'Контакты',
+        'footer-email': 'Электронная почта',
+        'footer-instagram': 'Instagram',
+        'newsletter-title': 'Присоединитесь к Mimosa Atelier',
+        'newsletter-subtitle': 'Будьте первыми, кто узнает о новых ароматных коллекциях, историях наших мастеров и эксклюзивных предложениях.',
+        'newsletter-placeholder': 'Ваш адрес электронной почты',
+        'newsletter-btn': 'ПОДПИСАТЬСЯ',
+        'newsletter-success': 'Спасибо, что присоединились к нашему путешествию!',
+        'newsletter-already-subscribed': 'Вы уже подписаны на этот email.',
+        'newsletter-invalid-email': 'Пожалуйста, введите правильный адрес электронной почты.',
+        'newsletter-email-required': 'Email обязателен.',
+        'newsletter-generic-error': 'Что-то пошло не так. Попробуйте снова.',
+        'newsletter-network-error': 'Ошибка сети. Попробуйте снова.',
+        
+        'cookie-title': '🍪 Мы используем cookie',
+        'cookie-text': 'Мы используем cookie для улучшения вашего опыта на нашем сайте. Продолжая использовать сайт, вы принимаете нашу политику конфиденциальности.',
+        'cookie-accept': 'Принять',
+        'cookie-decline': 'Отклонить',
+        'order-now': 'Заказать'
     }
 };
 
@@ -510,6 +797,13 @@ function switchLanguage(lang) {
         const key = element.getAttribute('data-translate');
         if (translations[lang] && translations[lang][key]) {
             element.textContent = translations[lang][key];
+        }
+    });
+
+    document.querySelectorAll('[data-placeholder]').forEach(element => {
+        const key = element.getAttribute('data-placeholder');
+        if (translations[lang] && translations[lang][key]) {
+            element.setAttribute('placeholder', translations[lang][key]);
         }
     });
 }

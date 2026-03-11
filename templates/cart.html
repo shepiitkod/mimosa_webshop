@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,6 +20,12 @@
                 <li><a href="{% url 'shop:profile' %}">My Profile</a></li>
                 <li><a href="{% url 'shop:logout' %}">Logout</a></li>
             </ul>
+            <div class="lang-switcher" style="margin-left: auto; display: flex; gap: 8px;">
+                <button class="lang-btn active" data-lang="en" title="English" type="button">EN</button>
+                <button class="lang-btn" data-lang="fr" title="Français" type="button">FR</button>
+                <button class="lang-btn" data-lang="ua" title="Українська" type="button">UA</button>
+                <button class="lang-btn" data-lang="ru" title="Русский" type="button">RU</button>
+            </div>
         </nav>
     </header>
 
@@ -54,18 +60,20 @@
                 <h2>Итого: EUR {{ cart_total }}</h2>
                 <form method="post" action="{% url 'shop:create_checkout_session' %}">
                     {% csrf_token %}
-                    <button type="submit" class="hero-btn">Оформить заказ</button>
+                    <button type="submit" class="hero-btn" data-translate="cart-checkout">Place order</button>
                 </form>
             </section>
         {% else %}
             <section class="about-snippet">
-                <h2>Корзина пуста</h2>
-                <p>Добавьте товары с главной страницы.</p>
-                <a class="hero-btn" href="{% url 'shop:home' %}">Перейти к товарам</a>
+                <h2 data-translate="cart-empty-title">Cart is empty</h2>
+                <p data-translate="cart-empty-text">Add items from the home page.</p>
+                <a class="hero-btn" href="{% url 'shop:home' %}" data-translate="cart-go-to-products">Go to products</a>
             </section>
         {% endif %}
     </main>
 
-    {% include 'includes/footer.html' with footer_lang='ru' %}
+    {% include 'includes/footer.html' %}
+    
+    <script src="{% static 'translations.js' %}" defer></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import CartItem, Order, OrderItem, Product
+from .models import CartItem, NewsletterUser, Order, OrderItem, Product
 
 
 @admin.register(Product)
@@ -38,3 +38,11 @@ class OrderItemAdmin(admin.ModelAdmin):
 class CartItemAdmin(admin.ModelAdmin):
 	list_display = ('id', 'user', 'product', 'quantity', 'created_at')
 	search_fields = ('user__username', 'product__title')
+
+
+@admin.register(NewsletterUser)
+class NewsletterUserAdmin(admin.ModelAdmin):
+	list_display = ('email', 'date_added')
+	search_fields = ('email',)
+	readonly_fields = ('date_added',)
+	ordering = ('-date_added',)

@@ -1,10 +1,10 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mimosa | Вход</title>
+    <title>Mimosa | Login</title>
     <link rel="stylesheet" href="{% static 'auth.css' %}">
 </head>
 <body class="auth-body">
@@ -12,19 +12,19 @@
         <div class="auth-glow auth-glow-1" aria-hidden="true"></div>
         <div class="auth-glow auth-glow-2" aria-hidden="true"></div>
 
-        <section class="auth-card" aria-label="Форма входа Mimosa Atelier">
+        <section class="auth-card" aria-label="Login form for Mimosa Atelier">
             <aside class="auth-showcase">
                 <div class="auth-brand">
                     <h1>Mimosa Atelier</h1>
-                    <p>Handmade candles from Nimes with natural fragrance and warm character.</p>
+                    <p data-translate="login-brand-desc">Handmade candles from Nimes with natural fragrance and warm character.</p>
                 </div>
-                <p class="auth-note">Возвращайтесь в личный кабинет, чтобы управлять заказами и профилем в атмосфере Mimosa.</p>
+                <p class="auth-note" data-translate="login-note">Return to your personal account to manage orders and profile in the atmosphere of Mimosa.</p>
             </aside>
 
             <div class="auth-form-pane">
-                <p class="auth-kicker">Mimosa Access</p>
-                <h2 class="auth-title">Вход в аккаунт</h2>
-                <p class="auth-subtitle">Введите логин и пароль, чтобы продолжить.</p>
+                <p class="auth-kicker" data-translate="login-kicker">Mimosa Access</p>
+                <h2 class="auth-title" data-translate="login-title">Sign in to account</h2>
+                <p class="auth-subtitle" data-translate="login-subtitle">Enter your username and password to continue.</p>
 
                 {% if form.non_field_errors %}
                 <div class="auth-alert" role="alert">
@@ -36,7 +36,7 @@
                     {% csrf_token %}
 
                     <div class="auth-field">
-                        <label for="{{ form.username.id_for_label }}">Логин</label>
+                        <label for="{{ form.username.id_for_label }}" data-translate="login-label">Username</label>
                         {{ form.username }}
                         {% if form.username.errors %}
                         <ul class="auth-field-errors">{{ form.username.errors }}</ul>
@@ -44,19 +44,19 @@
                     </div>
 
                     <div class="auth-field">
-                        <label for="{{ form.password.id_for_label }}">Пароль</label>
+                        <label for="{{ form.password.id_for_label }}" data-translate="password-label">Password</label>
                         {{ form.password }}
                         {% if form.password.errors %}
                         <ul class="auth-field-errors">{{ form.password.errors }}</ul>
                         {% endif %}
                     </div>
 
-                    <button type="submit" class="auth-submit">Войти</button>
+                    <button type="submit" class="auth-submit" data-translate="login-btn">Sign In</button>
                 </form>
 
                 <div class="auth-links">
-                    <a href="{% url 'shop:register' %}">Создать аккаунт</a>
-                    <a href="{% url 'shop:home' %}">На главную</a>
+                    <a href="{% url 'shop:register' %}" data-translate="register-link">Create an account</a>
+                    <a href="{% url 'shop:home' %}" data-translate="home-link">Go to home</a>
                 </div>
             </div>
         </section>
@@ -65,5 +65,6 @@
     {% include 'includes/footer.html' with footer_mode='auth' footer_lang='ru' %}
 
     <script src="{% static 'auth.js' %}" defer></script>
+    <script src="{% static 'translations.js' %}" defer></script>
 </body>
 </html>

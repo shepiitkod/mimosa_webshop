@@ -1,43 +1,53 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой профиль</title>
+    <title>My Profile</title>
     <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body class="profile-dashboard-page">
+    <header style="display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid #ddd;">
+        <h1 style="margin: 0;">Mimosa Atelier</h1>
+        <div class="lang-switcher" style="display: flex; gap: 8px;">
+            <button class="lang-btn active" data-lang="en" title="English" type="button">EN</button>
+            <button class="lang-btn" data-lang="fr" title="Français" type="button">FR</button>
+            <button class="lang-btn" data-lang="ua" title="Українська" type="button">UA</button>
+            <button class="lang-btn" data-lang="ru" title="Русский" type="button">RU</button>
+        </div>
+    </header>
+    
     <main class="profile-dashboard">
         <section class="profile-user-card">
             <div class="profile-avatar">{{ request.user.username|first|upper }}</div>
-            <h1>Мой профиль</h1>
+            <h1 data-translate="profile-title">My Profile</h1>
             <p class="profile-user-name">@{{ request.user.username }}</p>
             <div class="profile-nav-links">
-                <a href="{% url 'shop:cart' %}">Корзина</a>
-                <a href="{% url 'shop:home' %}">Главная</a>
-                <a href="{% url 'shop:logout' %}">Выйти</a>
+                <a href="{% url 'shop:cart' %}" data-translate="profile-cart-link">Cart</a>
+                <a href="{% url 'shop:home' %}" data-translate="profile-home-link">Home</a>
+                <a href="{% url 'shop:logout' %}" data-translate="profile-logout">Logout</a>
             </div>
         </section>
 
         <section class="profile-orders-card">
-            <h2>Мои заказы</h2>
+            <h2 data-translate="profile-orders">My Orders</h2>
             {% if orders %}
                 <div class="orders-list">
                 {% for order in orders %}
                     <article class="order-card">
                         <div class="order-card-top">
-                            <h3>Заказ #{{ order.id }}</h3>
+                            <h3><span data-translate="order-label">Order</span> #{{ order.id }}</h3>
                             {% if order.status == 'delivered' %}
-                                <span class="order-status-badge status-delivered">Delivered</span>
+                                <span class="order-status-badge status-delivered" data-translate="order-status-delivered">Delivered</span>
                             {% elif order.status == 'shipped' %}
-                                <span class="order-status-badge status-transit">In Transit</span>
+                                <span class="order-status-badge status-transit" data-translate="order-status-transit">In Transit</span>
                             {% else %}
                                 <span class="order-status-badge status-neutral">{{ order.get_status_display }}</span>
                             {% endif %}
                         </div>
-                        <p class="order-meta">Дата: {{ order.created_at }}</p>
-                        <p class="order-meta">Сумма: EUR {{ order.total_amount }}</p>
+                        <p class="order-meta"><span data-translate-attr="data-label">Date:</span> {{ order.created_at }}</p>
+                        <p class="order-meta"><span data-translate-attr="data-label">Amount:</span> EUR {{ order.total_amount }}</p>
                         <ul class="order-items-list">
                             {% for item in order.items.all %}
                                 <li>{{ item.product.title }} x {{ item.quantity }} (EUR {{ item.price_at_purchase }})</li>
@@ -46,18 +56,20 @@
                         {% if order.status != 'paid' %}
                         <form method="post" action="{% url 'shop:create_checkout_session_for_order' order.id %}">
                             {% csrf_token %}
-                            <button type="submit" class="profile-pay-btn">Оплатить заказ</button>
+                            <button type="submit" class="profile-pay-btn">Pay Order</button>
                         </form>
                         {% endif %}
                     </article>
                 {% endfor %}
                 </div>
             {% else %}
-                <p class="profile-empty-state">Заказов пока нет.</p>
+                <p class="profile-empty-state">No orders yet.</p>
             {% endif %}
         </section>
     </main>
 
-    {% include 'includes/footer.html' with footer_lang='ru' %}
+    {% include 'includes/footer.html' %}
+    
+    <script src="{% static 'translations.js' %}" defer></script>
 </body>
 </html>

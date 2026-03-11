@@ -1,10 +1,10 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mimosa | Регистрация</title>
+    <title>Mimosa | Register</title>
     <link rel="stylesheet" href="{% static 'auth.css' %}">
 </head>
 <body class="auth-body">
@@ -12,19 +12,19 @@
         <div class="auth-glow auth-glow-1" aria-hidden="true"></div>
         <div class="auth-glow auth-glow-2" aria-hidden="true"></div>
 
-        <section class="auth-card" aria-label="Форма регистрации Mimosa Atelier">
+        <section class="auth-card" aria-label="Registration form for Mimosa Atelier">
             <aside class="auth-showcase">
                 <div class="auth-brand">
                     <h1>Mimosa Atelier</h1>
-                    <p>Natural candles, graceful details and a calm design language inspired by Provence.</p>
+                    <p data-translate="register-brand-desc">Natural candles, graceful details and a calm design language inspired by Provence.</p>
                 </div>
-                <p class="auth-note">Создайте аккаунт и получите быстрый доступ к корзине, заказам и персональному профилю.</p>
+                <p class="auth-note" data-translate="register-note">Create an account and get quick access to cart, orders and personal profile.</p>
             </aside>
 
             <div class="auth-form-pane">
-                <p class="auth-kicker">Create Account</p>
-                <h2 class="auth-title">Регистрация</h2>
-                <p class="auth-subtitle">Заполните поля ниже, чтобы создать аккаунт.</p>
+                <p class="auth-kicker" data-translate="register-kicker">Create Account</p>
+                <h2 class="auth-title" data-translate="register-title">Registration</h2>
+                <p class="auth-subtitle" data-translate="register-subtitle">Fill in the fields below to create an account.</p>
 
                 {% if form.non_field_errors %}
                 <div class="auth-alert" role="alert">
@@ -36,7 +36,7 @@
                     {% csrf_token %}
 
                     <div class="auth-field">
-                        <label for="{{ form.username.id_for_label }}">Логин</label>
+                        <label for="{{ form.username.id_for_label }}" data-translate="login-label">Username</label>
                         {{ form.username }}
                         {% if form.username.help_text %}
                         <p class="auth-help">{{ form.username.help_text|safe }}</p>
@@ -47,7 +47,7 @@
                     </div>
 
                     <div class="auth-field">
-                        <label for="{{ form.password1.id_for_label }}">Пароль</label>
+                        <label for="{{ form.password1.id_for_label }}" data-translate="password1-label">Password</label>
                         {{ form.password1 }}
                         {% if form.password1.help_text %}
                         <p class="auth-help">{{ form.password1.help_text|safe }}</p>
@@ -58,7 +58,7 @@
                     </div>
 
                     <div class="auth-field">
-                        <label for="{{ form.password2.id_for_label }}">Подтверждение пароля</label>
+                        <label for="{{ form.password2.id_for_label }}" data-translate="password2-label">Confirm password</label>
                         {{ form.password2 }}
                         {% if form.password2.help_text %}
                         <p class="auth-help">{{ form.password2.help_text|safe }}</p>
@@ -68,12 +68,12 @@
                         {% endif %}
                     </div>
 
-                    <button type="submit" class="auth-submit">Зарегистрироваться</button>
+                    <button type="submit" class="auth-submit" data-translate="register-btn">Register</button>
                 </form>
 
                 <div class="auth-links">
-                    <a href="{% url 'shop:login' %}">Уже есть аккаунт? Войти</a>
-                    <a href="{% url 'shop:home' %}">На главную</a>
+                    <a href="{% url 'shop:login' %}" data-translate="register-link-login">Already have an account? Sign in</a>
+                    <a href="{% url 'shop:home' %}" data-translate="home-link">Go to home</a>
                 </div>
             </div>
         </section>
@@ -82,5 +82,6 @@
     {% include 'includes/footer.html' with footer_mode='auth' footer_lang='ru' %}
 
     <script src="{% static 'auth.js' %}" defer></script>
+    <script src="{% static 'translations.js' %}" defer></script>
 </body>
 </html>

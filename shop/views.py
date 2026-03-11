@@ -6,15 +6,17 @@ from django.conf import settings
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
+from django.db import IntegrityError, transaction
 from django.db.models import Count
-from django.db import transaction
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.text import slugify
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 
-from .models import Order, OrderItem, Product
+from .models import NewsletterUser, Order, OrderItem, Product
 
 
 def _to_cents(amount: Decimal) -> int:
@@ -470,3 +472,37 @@ def stripe_webhook(request):
 				return JsonResponse({'error': 'Order not found.'}, status=404)
 
 	return JsonResponse({'status': 'ok'})
+
+
+@require_POST
+def subscribe_newsletter(request):
+	"""Handle newsletter subscription via AJAX."""
+	try:
+		data = json.loads(request.body)
+		email = data.get('email', '').strip().lower()
+
+		if not email:
+			return JsonResponse({'success': False, 'error': 'Email is required.'}, status=400)
+
+		try:
+			validate_email(email)
+		except ValidationError:
+			return JsonResponse({'success': False, 'error': 'Please enter a valid email address.'}, status=400)
+
+		if NewsletterUser.objects.filter(email__iexact=email).exists():
+			return JsonResponse({'success': False, 'error': 'Email already subscribed'}, status=400)
+
+		try:
+			NewsletterUser.objects.create(email=email)
+		except IntegrityError:
+			return JsonResponse({'success': False, 'error': 'Email already subscribed'}, status=400)
+
+		return JsonResponse({
+			'success': True,
+			'message': 'Thank you for joining our journey!'
+		})
+
+	except json.JSONDecodeError:
+		return JsonResponse({'success': False, 'error': 'Invalid JSON'}, status=400)
+	except Exception as exc:
+		return JsonResponse({'success': False, 'error': str(exc)}, status=500)

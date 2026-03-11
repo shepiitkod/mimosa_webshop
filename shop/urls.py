@@ -34,4 +34,5 @@ urlpatterns = [
     path('payments/success/', views.payment_success, name='payment_success'),
     path('payments/cancel/', views.payment_cancel, name='payment_cancel'),
     path('payments/webhook/stripe/', views.stripe_webhook, name='stripe_webhook'),
+    path('newsletter/subscribe/', views.subscribe_newsletter, name='subscribe_newsletter'),
 ]

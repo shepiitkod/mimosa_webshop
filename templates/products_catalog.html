@@ -23,6 +23,12 @@
                 <li><a href="{% url 'shop:about' %}">About Us</a></li>
                 <li><a href="{% url 'shop:contact' %}">Contact</a></li>
             </ul>
+            <div class="lang-switcher" style="margin-left: auto; display: flex; gap: 8px;">
+                <button class="lang-btn active" data-lang="en" title="English" type="button">EN</button>
+                <button class="lang-btn" data-lang="fr" title="Français" type="button">FR</button>
+                <button class="lang-btn" data-lang="ua" title="Українська" type="button">UA</button>
+                <button class="lang-btn" data-lang="ru" title="Русский" type="button">RU</button>
+            </div>
         </nav>
     </header>
 
@@ -84,5 +90,7 @@
     </main>
 
     {% include 'includes/footer.html' %}
+    
+    <script src="{% static 'translations.js' %}" defer></script>
 </body>
 </html>
