@@ -1,173 +1,662 @@
-/* Mimosa Admin Refresh */
+/* ============================================
+   MIMOSA ATELIER — Django Admin  (DARK EDITION)
+   Targets Jazzmin (AdminLTE) + Django admin base
+   Inspired by Vercel / Linear dashboard aesthetics
+   ============================================ */
+
+/* ---- Design tokens ---- */
 :root {
-	--mimosa-gold: #d1ad62;
-	--mimosa-ink: #2f2a24;
-	--mimosa-sand: #f7f1e7;
-	--mimosa-glass: rgba(255, 255, 255, 0.75);
+    --admin-bg:         #111111;
+    --admin-surface:    #1a1a1a;
+    --admin-elevated:   #222222;
+    --admin-hover:      #2a2a2a;
+    --admin-border:     rgba(255, 255, 255, 0.08);
+    --admin-border2:    rgba(255, 255, 255, 0.14);
+    --admin-text:       #e8e8e8;
+    --admin-text-muted: #888888;
+    --admin-accent:     #c9a84c;
+    --admin-accent-soft: rgba(201, 168, 76, 0.15);
+    --admin-accent-glow: rgba(201, 168, 76, 0.3);
+    --admin-shadow:     0 4px 20px rgba(0, 0, 0, 0.6);
+    --admin-radius:     14px;
 }
 
-body {
-	background: radial-gradient(circle at 0% 0%, #fff8ea 0%, #f8f3ea 35%, #f4efe6 100%);
+/* ============================================
+   PAGE BASE
+   ============================================ */
+body,
+.wrapper,
+.content-wrapper {
+    background: var(--admin-bg) !important;
+    color: var(--admin-text) !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
 }
 
 #content-wrapper,
 .content-wrapper {
-	animation: adminFadeIn 0.35s ease-out;
+    animation: adminFadeIn 0.35s ease-out;
 }
 
 @keyframes adminFadeIn {
-	from {
-		opacity: 0;
-		transform: translateY(8px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
+/* ============================================
+   SIDEBAR
+   ============================================ */
+.main-sidebar,
+.sidebar-dark-primary,
+.sidebar-dark-warning {
+    background: #151515 !important;
+    border-right: 1px solid var(--admin-border) !important;
+    box-shadow: none !important;
+}
+
+.sidebar .nav-link,
+.sidebar .nav-sidebar .nav-link {
+    color: #999 !important;
+    border-radius: 10px !important;
+    margin: 2px 6px !important;
+    transition: all 0.2s ease !important;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-sidebar .nav-link:hover,
+.sidebar .nav-link.active,
+.sidebar .nav-sidebar .nav-link.active {
+    background: var(--admin-hover) !important;
+    color: var(--admin-accent) !important;
+}
+
+.sidebar .nav-link .nav-icon,
+.sidebar .nav-icon {
+    color: inherit !important;
+}
+
+.brand-link {
+    background: #151515 !important;
+    border-bottom: 1px solid var(--admin-border) !important;
+    padding: 16px 20px !important;
+}
+
+.brand-link:hover { background: var(--admin-surface) !important; }
+
+.brand-text {
+    color: var(--admin-text) !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+}
+
+.sidebar-mini.sidebar-collapse .brand-text,
+.sidebar .user-panel .info a {
+    color: var(--admin-text) !important;
+}
+
+.nav-treeview {
+    background: transparent !important;
+}
+
+.nav-treeview .nav-link {
+    padding-left: 28px !important;
+    font-size: 13px !important;
+    color: #777 !important;
+}
+
+/* Sidebar search */
+.sidebar-search-results .list-group-item,
+.sidebar .form-control {
+    background: var(--admin-elevated) !important;
+    border-color: var(--admin-border) !important;
+    color: var(--admin-text) !important;
+}
+
+/* ============================================
+   TOP NAVBAR
+   ============================================ */
+.main-header.navbar {
+    background: var(--admin-surface) !important;
+    border-bottom: 1px solid var(--admin-border) !important;
+    box-shadow: var(--admin-shadow) !important;
+}
+
+.main-header .navbar-nav .nav-link,
+.main-header .navbar-nav .nav-link i {
+    color: var(--admin-text-muted) !important;
+    transition: color 0.2s ease !important;
+}
+
+.main-header .navbar-nav .nav-link:hover {
+    color: var(--admin-text) !important;
+}
+
+/* search bar in top nav */
+.main-header .form-control {
+    background: var(--admin-elevated) !important;
+    border-color: var(--admin-border) !important;
+    color: var(--admin-text) !important;
+    border-radius: 10px !important;
+}
+
+/* ============================================
+   CARDS & MODULES
+   ============================================ */
 .card,
 .module,
 .change-list .results,
 .change-form .card {
-	border-radius: 14px;
-	border: 1px solid rgba(0, 0, 0, 0.06);
-	box-shadow: 0 8px 22px rgba(24, 20, 14, 0.08);
-	backdrop-filter: blur(4px);
-	background: var(--mimosa-glass);
+    background: var(--admin-surface) !important;
+    border: 1px solid var(--admin-border) !important;
+    border-radius: var(--admin-radius) !important;
+    box-shadow: var(--admin-shadow) !important;
+    color: var(--admin-text) !important;
 }
 
 .card-header,
-.module h2 {
-	border-radius: 14px 14px 0 0;
-	letter-spacing: 0.2px;
+.module h2,
+.card .card-header {
+    background: var(--admin-elevated) !important;
+    border-bottom: 1px solid var(--admin-border) !important;
+    color: var(--admin-text) !important;
+    border-radius: var(--admin-radius) var(--admin-radius) 0 0 !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.2px !important;
 }
 
+.card-footer {
+    background: var(--admin-elevated) !important;
+    border-top: 1px solid var(--admin-border) !important;
+    border-radius: 0 0 var(--admin-radius) var(--admin-radius) !important;
+}
+
+/* Small stat cards on dashboard */
+.small-box {
+    background: var(--admin-elevated) !important;
+    border: 1px solid var(--admin-border) !important;
+    border-radius: var(--admin-radius) !important;
+    color: var(--admin-text) !important;
+    box-shadow: var(--admin-shadow) !important;
+    transition: all 0.25s ease !important;
+}
+
+.small-box:hover {
+    border-color: var(--admin-border2) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7) !important;
+    transform: translateY(-3px) !important;
+}
+
+.small-box p,
+.small-box h3 { color: var(--admin-text) !important; }
+
+.small-box .icon { color: rgba(255, 255, 255, 0.06) !important; }
+
+.small-box .small-box-footer {
+    background: rgba(0, 0, 0, 0.25) !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    border-top: 1px solid var(--admin-border) !important;
+}
+
+.small-box .small-box-footer:hover {
+    color: var(--admin-text) !important;
+    background: rgba(0, 0, 0, 0.4) !important;
+}
+
+/* ============================================
+   TABLES
+   ============================================ */
+table,
+.results table {
+    background: transparent !important;
+    color: var(--admin-text) !important;
+    border-color: var(--admin-border) !important;
+}
+
+thead th,
+table thead tr th {
+    background: var(--admin-elevated) !important;
+    color: var(--admin-text-muted) !important;
+    border-bottom: 1px solid var(--admin-border2) !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+    text-transform: uppercase !important;
+}
+
+tbody tr {
+    border-bottom: 1px solid var(--admin-border) !important;
+    transition: background 0.15s ease !important;
+}
+
+tbody tr:hover {
+    background: var(--admin-hover) !important;
+}
+
+tbody tr td {
+    color: var(--admin-text) !important;
+    border-color: var(--admin-border) !important;
+}
+
+/* Row striping */
+tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.015) !important;
+}
+
+/* ============================================
+   FORMS & INPUTS
+   ============================================ */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="url"],
+input[type="search"],
+input[type="date"],
+input[type="datetime-local"],
+textarea,
+select,
+.form-control,
+.vTextField,
+.vURLField,
+.vDateField,
+.vLargeTextField {
+    background: var(--admin-elevated) !important;
+    border: 1px solid var(--admin-border) !important;
+    border-radius: 10px !important;
+    color: var(--admin-text) !important;
+    font-family: 'Inter', -apple-system, sans-serif !important;
+    font-size: 14px !important;
+    padding: 10px 13px !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+.form-control:focus {
+    border-color: var(--admin-accent) !important;
+    box-shadow: 0 0 0 3px var(--admin-accent-soft) !important;
+    outline: none !important;
+    background: #252525 !important;
+}
+
+input::placeholder,
+textarea::placeholder { color: #555 !important; }
+
+label,
+.form-group label,
+.fieldset label {
+    color: var(--admin-text-muted) !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.4px !important;
+    text-transform: uppercase !important;
+}
+
+fieldset {
+    border: 1px solid var(--admin-border) !important;
+    border-radius: var(--admin-radius) !important;
+    padding: 16px !important;
+}
+
+fieldset h2,
+fieldset legend {
+    color: var(--admin-text) !important;
+    font-weight: 600 !important;
+}
+
+.help-block,
+.helptext,
+.help {
+    color: var(--admin-text-muted) !important;
+    font-size: 12px !important;
+}
+
+/* inline errors */
+.errorlist li,
+.errornote {
+    color: #fca5a5 !important;
+    background: rgba(248, 113, 113, 0.08) !important;
+    border: 1px solid rgba(248, 113, 113, 0.25) !important;
+    border-radius: 8px !important;
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
 .btn,
 button,
 input[type="submit"],
 .submit-row input,
 .object-tools a {
-	border-radius: 10px !important;
-	transition: transform 0.18s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    font-family: 'Inter', -apple-system, sans-serif !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    letter-spacing: 0.2px !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
 }
 
-.btn:hover,
-button:hover,
-input[type="submit"]:hover,
-.submit-row input:hover,
+.btn-primary,
+input[type="submit"],
+.submit-row input[type="submit"] {
+    background: linear-gradient(135deg, var(--admin-accent) 0%, #a88830 100%) !important;
+    color: #111 !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    box-shadow: 0 4px 14px var(--admin-accent-glow) !important;
+}
+
+.btn-primary:hover,
+input[type="submit"]:hover {
+    filter: brightness(1.1) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 20px var(--admin-accent-glow) !important;
+}
+
+.btn-secondary,
+.btn-default,
+.object-tools a,
+.deletelink {
+    background: var(--admin-elevated) !important;
+    color: var(--admin-text) !important;
+    border: 1px solid var(--admin-border2) !important;
+}
+
+.btn-secondary:hover,
+.btn-default:hover,
 .object-tools a:hover {
-	transform: translateY(-1px);
-	box-shadow: 0 6px 16px rgba(44, 35, 22, 0.18);
+    background: var(--admin-hover) !important;
+    border-color: var(--admin-accent) !important;
+    color: var(--admin-accent) !important;
+    transform: translateY(-1px) !important;
 }
 
-.change-list table tbody tr {
-	transition: background-color 0.2s ease, transform 0.12s ease;
+.deletelink,
+.btn-danger {
+    background: rgba(248, 113, 113, 0.12) !important;
+    color: #fca5a5 !important;
+    border-color: rgba(248, 113, 113, 0.3) !important;
 }
 
-.change-list table tbody tr:hover {
-	background-color: #fff9ef;
+.deletelink:hover {
+    background: rgba(248, 113, 113, 0.2) !important;
 }
 
-a,
-.breadcrumb a,
-.sidebar a {
-	transition: color 0.2s ease;
+/* ============================================
+   SUBMIT ROW
+   ============================================ */
+.submit-row {
+    background: var(--admin-surface) !important;
+    border-top: 1px solid var(--admin-border) !important;
+    padding: 14px 16px !important;
+    margin-top: 20px !important;
+    border-radius: 0 0 var(--admin-radius) var(--admin-radius) !important;
+    display: flex !important;
+    gap: 10px !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
 }
 
-a:hover,
-.breadcrumb a:hover,
-.sidebar a:hover {
-	color: var(--mimosa-gold) !important;
+/* ============================================
+   BREADCRUMBS
+   ============================================ */
+.breadcrumb,
+ol.breadcrumb {
+    background: transparent !important;
+    padding: 0 !important;
 }
 
-.sidebar-dark-primary,
-.main-sidebar {
-	background: linear-gradient(180deg, #342b1f 0%, #2a2319 100%) !important;
+.breadcrumb-item,
+.breadcrumb li {
+    color: var(--admin-text-muted) !important;
+    font-size: 13px !important;
 }
 
-.main-header.navbar {
-	border-bottom: 1px solid rgba(209, 173, 98, 0.35);
-	box-shadow: 0 2px 14px rgba(0, 0, 0, 0.08);
+.breadcrumb-item a,
+.breadcrumb li a {
+    color: var(--admin-text-muted) !important;
+    transition: color 0.2s ease !important;
 }
 
-/* Django Admin - Image Preview Fixes */
+.breadcrumb-item a:hover,
+.breadcrumb li a:hover {
+    color: var(--admin-accent) !important;
+}
 
-/* Limit image field preview size in forms */
+.breadcrumb-item.active { color: var(--admin-text) !important; }
+
+/* ============================================
+   PAGINATION
+   ============================================ */
+.paginator,
+.pagination {
+    background: transparent !important;
+    color: var(--admin-text) !important;
+}
+
+.paginator a,
+.page-link {
+    background: var(--admin-elevated) !important;
+    border-color: var(--admin-border) !important;
+    color: var(--admin-text-muted) !important;
+    border-radius: 8px !important;
+    margin: 0 2px !important;
+    transition: all 0.2s ease !important;
+}
+
+.paginator a:hover,
+.page-link:hover {
+    background: var(--admin-hover) !important;
+    color: var(--admin-accent) !important;
+    border-color: var(--admin-accent) !important;
+}
+
+.paginator .this-page,
+.page-item.active .page-link {
+    background: var(--admin-accent) !important;
+    color: #111 !important;
+    border-color: var(--admin-accent) !important;
+    font-weight: 700 !important;
+}
+
+/* ============================================
+   FILTERS
+   ============================================ */
+#changelist-filter,
+.change-list #changelist-filter {
+    background: var(--admin-surface) !important;
+    border: 1px solid var(--admin-border) !important;
+    border-radius: var(--admin-radius) !important;
+    padding: 16px !important;
+}
+
+#changelist-filter h2,
+#changelist-filter h3 {
+    color: var(--admin-text) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.4px !important;
+    text-transform: uppercase !important;
+}
+
+#changelist-filter a {
+    color: var(--admin-text-muted) !important;
+    transition: color 0.2s ease !important;
+}
+
+#changelist-filter a:hover,
+#changelist-filter li.selected a {
+    color: var(--admin-accent) !important;
+}
+
+/* ============================================
+   MESSAGES / ALERTS
+   ============================================ */
+.messages li,
+.messagelist li,
+.alert {
+    border-radius: 12px !important;
+    padding: 12px 16px !important;
+    font-size: 14px !important;
+    border: 1px solid !important;
+}
+
+.messages .success,
+.alert-success {
+    background: rgba(74, 222, 128, 0.08) !important;
+    border-color: rgba(74, 222, 128, 0.25) !important;
+    color: #86efac !important;
+}
+
+.messages .error,
+.alert-danger {
+    background: rgba(248, 113, 113, 0.08) !important;
+    border-color: rgba(248, 113, 113, 0.25) !important;
+    color: #fca5a5 !important;
+}
+
+.messages .info,
+.alert-info {
+    background: var(--admin-accent-soft) !important;
+    border-color: rgba(201, 168, 76, 0.3) !important;
+    color: var(--admin-accent) !important;
+}
+
+.messages .warning,
+.alert-warning {
+    background: rgba(251, 191, 36, 0.08) !important;
+    border-color: rgba(251, 191, 36, 0.25) !important;
+    color: #fde68a !important;
+}
+
+/* ============================================
+   IMAGE PREVIEWS
+   ============================================ */
 .field-image img,
 .field-image_2 img,
 .field-image_3 img,
 .field-image_4 img {
-	max-width: 300px;
-	max-height: 300px;
-	width: auto;
-	height: auto;
-	display: block;
-	margin: 10px 0;
-	border-radius: 4px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 280px;
+    max-height: 280px;
+    width: auto;
+    height: auto;
+    display: block;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: 1px solid var(--admin-border2);
+    box-shadow: var(--admin-shadow);
 }
 
-/* File input styling */
+img[class*="vThumbnailImage"] {
+    max-width: 280px !important;
+    height: auto !important;
+    border-radius: 10px !important;
+}
+
 .vImageField {
-	display: block;
-	margin: 8px 0;
+    display: block;
+    margin: 8px 0;
 }
 
-/* Fieldset styling for gallery section */
-fieldset.collapsed h2,
-fieldset h2 {
-	padding: 8px 10px;
-	margin: 0;
-}
-
-/* Gallery container */
+/* ============================================
+   FIELD GROUPING
+   ============================================ */
 .field-image,
 .field-image_2,
 .field-image_3,
 .field-image_4 {
-	margin-bottom: 15px;
-	padding-bottom: 15px;
-	border-bottom: 1px solid #e8e8e8;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--admin-border);
 }
 
 .field-image:last-child,
-.field-image_4 {
-	border-bottom: none;
-	margin-bottom: 0;
-	padding-bottom: 0;
-}
+.field-image_4 { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 
-/* Admin form layout */
 .form-row {
-	display: grid;
-	grid-template-columns: 1fr;
-	gap: 10px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
 }
 
 @media (min-width: 1000px) {
-	.form-row {
-		grid-template-columns: 1fr 1fr;
-	}
+    .form-row { grid-template-columns: 1fr 1fr; }
 }
 
-/* Prevent images from breaking admin layout */
-img[class*="vThumbnailImage"] {
-	max-width: 300px !important;
-	height: auto !important;
+/* ============================================
+   MISC DJANGO ADMIN OVERRIDES
+   ============================================ */
+a,
+.breadcrumb a,
+.sidebar a {
+    transition: color 0.2s ease;
 }
 
-/* Admin submit area positioning */
-.submit-row {
-	padding: 10px 0;
-	margin-top: 20px;
-	border-top: 1px solid #e8e8e8;
+a:hover { color: var(--admin-accent) !important; }
+
+.selector-available h2,
+.selector-chosen h2 {
+    background: var(--admin-elevated) !important;
+    color: var(--admin-text) !important;
+    border-color: var(--admin-border) !important;
 }
 
+select[multiple] {
+    background: var(--admin-elevated) !important;
+    color: var(--admin-text) !important;
+}
+
+.selector .selector-available,
+.selector .selector-chosen {
+    background: var(--admin-elevated) !important;
+    border-color: var(--admin-border) !important;
+}
+
+/* Inline admin groups */
+.inline-group {
+    background: var(--admin-surface) !important;
+    border: 1px solid var(--admin-border) !important;
+    border-radius: var(--admin-radius) !important;
+}
+
+.inline-related h3 {
+    background: var(--admin-elevated) !important;
+    color: var(--admin-text) !important;
+    border-bottom: 1px solid var(--admin-border) !important;
+    border-radius: var(--admin-radius) var(--admin-radius) 0 0 !important;
+    padding: 10px 14px !important;
+}
+
+/* Tabular inline rows */
+.tabular .module table thead th {
+    background: var(--admin-elevated) !important;
+    color: var(--admin-text-muted) !important;
+}
+
+/* Calendar widget */
+.calendarbox,
+.clockbox {
+    background: var(--admin-surface) !important;
+    border-color: var(--admin-border) !important;
+    color: var(--admin-text) !important;
+}
+
+/* ============================================
+   ACCESSIBILITY & REDUCED MOTION
+   ============================================ */
 @media (prefers-reduced-motion: reduce) {
-	* {
-		animation-duration: 0.01ms !important;
-		animation-iteration-count: 1 !important;
-		transition-duration: 0.01ms !important;
-	}
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+:focus-visible {
+    outline: 2px solid var(--admin-accent) !important;
+    outline-offset: 3px !important;
+    border-radius: 4px !important;
 }

@@ -1,38 +1,73 @@
+/* ============================================
+   MIMOSA ATELIER — Catalog  (DARK EDITION)
+   ============================================ */
+
+:root {
+    --bg-base:      #111111;
+    --bg-surface:   #1a1a1a;
+    --bg-elevated:  #222222;
+    --bg-hover:     #2a2a2a;
+    --text-primary: #f0f0f0;
+    --text-secondary: #a0a0a0;
+    --text-muted:   #666666;
+    --accent:       #c9a84c;
+    --accent-soft:  rgba(201, 168, 76, 0.15);
+    --border:       rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(255, 255, 255, 0.16);
+    --shadow-sm:    0 2px  8px rgba(0, 0, 0, 0.4);
+    --shadow-md:    0 6px 20px rgba(0, 0, 0, 0.5);
+    --shadow-lg:    0 14px 40px rgba(0, 0, 0, 0.6);
+    --s-xs: 8px;
+    --s-sm: 16px;
+    --s-md: 24px;
+    --s-lg: 40px;
+    --s-xl: 64px;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --t-base: 0.25s ease;
+}
+
+/* ---- Page shell ---- */
 .catalog-page {
-    background: linear-gradient(145deg, #f8f3e7 0%, #efe3c6 55%, #dcc9a3 100%);
+    background: var(--bg-base);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-}
-
-.catalog-layout {
-    width: min(1200px, 96vw);
-    margin: 28px auto 70px;
-    display: grid;
-    grid-template-columns: 290px 1fr;
-    gap: 24px;
-    flex: 1;
+    font-family: var(--font);
+    color: var(--text-primary);
 }
 
 .catalog-page footer {
-    margin-top: 24px;
+    margin-top: auto;
 }
 
+/* ---- Layout ---- */
+.catalog-layout {
+    width: min(1200px, 96vw);
+    margin: 28px auto 80px;
+    display: grid;
+    grid-template-columns: 270px 1fr;
+    gap: 22px;
+    flex: 1;
+}
+
+/* ---- Sidebar ---- */
 .catalog-sidebar {
-    background: rgba(255, 255, 255, 0.82);
-    border: 1px solid rgba(255, 255, 255, 0.92);
-    border-radius: 20px;
-    box-shadow: 0 12px 28px rgba(66, 49, 12, 0.12);
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: var(--shadow-sm);
     padding: 20px;
     position: sticky;
-    top: 110px;
+    top: 80px;
     height: fit-content;
 }
 
 .catalog-sidebar h2 {
-    margin: 0 0 12px;
-    font-size: 22px;
-    color: #2d2417;
+    margin: 0 0 14px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
 }
 
 .catalog-cat-link {
@@ -41,50 +76,62 @@
     justify-content: space-between;
     gap: 10px;
     text-decoration: none;
-    color: #4d3f24;
-    border: 1px solid rgba(88, 70, 24, 0.14);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 10px 12px;
-    margin-bottom: 9px;
-    background: rgba(255, 255, 255, 0.74);
-    transition: all 170ms ease;
+    padding: 10px 13px;
+    margin-bottom: 8px;
+    background: var(--bg-elevated);
+    font-size: 14px;
+    font-weight: 500;
+    transition: all var(--t-base);
 }
 
 .catalog-cat-link:hover {
     transform: translateX(3px);
-    border-color: rgba(200, 154, 51, 0.55);
+    border-color: var(--border-hover);
+    color: var(--text-primary);
 }
 
 .catalog-cat-link.is-active {
-    background: linear-gradient(140deg, #efd38f, #e8bf63);
-    color: #2d230e;
-    border-color: rgba(188, 136, 21, 0.6);
+    background: var(--bg-hover);
+    color: var(--accent);
+    border-color: rgba(201, 168, 76, 0.35);
 }
 
 .catalog-cat-count {
-    min-width: 28px;
-    height: 24px;
+    min-width: 26px;
+    height: 22px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 99px;
-    font-size: 12px;
+    border-radius: 999px;
+    font-size: 11px;
     font-weight: 700;
-    background: rgba(255, 255, 255, 0.8);
+    background: var(--bg-base);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+}
+
+.catalog-cat-link.is-active .catalog-cat-count {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-color: rgba(201, 168, 76, 0.3);
 }
 
 .catalog-empty-note {
-    color: #77684d;
+    color: var(--text-muted);
     font-size: 13px;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
+/* ---- Main content pane ---- */
 .catalog-content {
-    background: rgba(255, 255, 255, 0.72);
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    border-radius: 20px;
-    box-shadow: 0 12px 28px rgba(66, 49, 12, 0.12);
-    padding: 22px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: var(--shadow-sm);
+    padding: 24px;
 }
 
 .catalog-topbar {
@@ -92,54 +139,68 @@
     align-items: baseline;
     justify-content: space-between;
     gap: 12px;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--border);
 }
 
 .catalog-topbar h1 {
     margin: 0;
-    font-size: 34px;
-    color: #1f180d;
+    font-size: clamp(24px, 4vw, 34px);
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
 }
 
 .catalog-topbar p {
     margin: 0;
-    color: #6d5f44;
+    color: var(--text-muted);
     font-size: 14px;
 }
 
+/* ---- Cards grid ---- */
 .catalog-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(235px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
     gap: 16px;
 }
 
 .catalog-card {
     border-radius: 16px;
     overflow: hidden;
-    border: 1px solid rgba(100, 76, 24, 0.14);
-    background: rgba(255, 255, 255, 0.88);
-    transition: transform 180ms ease, box-shadow 180ms ease;
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .catalog-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 14px 24px rgba(73, 54, 14, 0.18);
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--border-hover);
 }
 
 .catalog-card figure {
     margin: 0;
     aspect-ratio: 4 / 3;
-    background: #f4efe5;
+    background: var(--bg-base);
+    overflow: hidden;
 }
 
 .catalog-card img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    filter: brightness(0.85);
+    transition: transform 0.35s ease, filter 0.25s ease;
+}
+
+.catalog-card:hover img {
+    transform: scale(1.07);
+    filter: brightness(1);
 }
 
 .catalog-card-body {
-    padding: 12px;
+    padding: 14px;
 }
 
 .catalog-chip {
@@ -148,27 +209,30 @@
     border-radius: 999px;
     font-size: 11px;
     font-weight: 700;
-    padding: 5px 9px;
-    color: #6b531f;
-    background: #f6e7bf;
+    padding: 4px 10px;
+    color: var(--accent);
+    background: var(--accent-soft);
+    letter-spacing: 0.3px;
 }
 
 .catalog-card h3 {
     margin: 0 0 6px;
-    font-size: 18px;
-    color: #2f2514;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.2px;
 }
 
 .catalog-desc {
     margin: 0;
-    color: #635a48;
+    color: var(--text-muted);
     font-size: 13px;
-    line-height: 1.45;
-    min-height: 40px;
+    line-height: 1.5;
+    min-height: 38px;
 }
 
 .catalog-card-bottom {
-    margin-top: 12px;
+    margin-top: 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -178,33 +242,36 @@
 .catalog-price {
     font-size: 18px;
     font-weight: 800;
-    color: #5f481a;
+    color: var(--accent);
 }
 
 .catalog-add-btn {
     border: none;
     border-radius: 999px;
-    padding: 8px 14px;
+    padding: 8px 16px;
+    font-size: 13px;
     font-weight: 700;
     cursor: pointer;
-    color: #2b210f;
-    background: linear-gradient(140deg, #efcf84, #e0b251);
-    transition: transform 140ms ease, filter 140ms ease;
+    color: #111;
+    background: linear-gradient(135deg, var(--accent) 0%, #a88830 100%);
+    transition: transform 0.18s ease, filter 0.18s ease;
 }
 
 .catalog-add-btn:hover {
-    transform: translateY(-1px);
-    filter: brightness(1.04);
+    transform: translateY(-2px) scale(1.04);
+    filter: brightness(1.1);
 }
 
 .catalog-card-empty {
-    padding: 18px;
+    padding: 20px;
 }
 
 .catalog-card-empty h3 {
     margin-top: 0;
+    color: var(--text-secondary);
 }
 
+/* ---- Responsive ---- */
 @media (max-width: 920px) {
     .catalog-layout {
         grid-template-columns: 1fr;
@@ -212,5 +279,11 @@
 
     .catalog-sidebar {
         position: static;
+    }
+}
+
+@media (max-width: 480px) {
+    .catalog-grid {
+        grid-template-columns: 1fr;
     }
 }
