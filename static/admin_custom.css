@@ -10,12 +10,23 @@
     --mimosa-muted: #9ea8bf;
 }
 
+html,
+body,
+body.login,
+input,
+textarea,
+select,
+button {
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
 body,
 body.login,
 #container,
 #content {
     background: radial-gradient(circle at 15% 10%, #1b2332 0%, #101521 38%, var(--mimosa-bg) 100%);
     color: var(--mimosa-text);
+    line-height: 1.55;
 }
 
 #header {
@@ -88,6 +99,18 @@ h5,
 h6 {
     color: var(--mimosa-text);
 }
+
+p,
+li,
+td,
+th,
+label {
+    font-size: 14px;
+}
+
+h1 { font-size: 28px; }
+h2 { font-size: 22px; }
+h3 { font-size: 18px; }
 
 input[type="text"],
 input[type="password"],
@@ -181,6 +204,54 @@ body.login #container {
     display: none !important;
 }
 
+/* Admin index: clearer two-panel layout with readable right sidebar */
+body.dashboard #content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 22px;
+    align-items: start;
+}
+
+body.dashboard #content-main {
+    min-width: 0;
+}
+
+body.dashboard #content-related {
+    display: block;
+    float: none;
+    width: auto;
+    margin: 0;
+    position: sticky;
+    top: 86px;
+    background: linear-gradient(180deg, #1a2231 0%, #151c2a 100%);
+    border: 1px solid var(--mimosa-border);
+    border-radius: 10px;
+    padding: 14px 16px;
+}
+
+body.dashboard #content-related h2 {
+    margin: 0 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--mimosa-border);
+    font-size: 18px;
+}
+
+body.dashboard #recent-actions-module h3,
+body.dashboard #recent-actions-module p,
+body.dashboard #recent-actions-module li {
+    color: var(--mimosa-text);
+    font-size: 14px;
+}
+
+body.dashboard #recent-actions-module li {
+    padding: 8px 0;
+    border-bottom: 1px dashed rgba(158, 168, 191, 0.25);
+}
+
+body.dashboard #recent-actions-module li:last-child {
+    border-bottom: none;
+}
+
 #content,
 #content-main,
 .dashboard .module {
@@ -203,5 +274,15 @@ body.login #container {
     #content-main,
     .dashboard .module {
         animation: none;
+    }
+}
+
+@media (max-width: 1100px) {
+    body.dashboard #content {
+        grid-template-columns: 1fr;
+    }
+
+    body.dashboard #content-related {
+        position: static;
     }
 }
