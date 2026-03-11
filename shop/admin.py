@@ -40,9 +40,6 @@ class ProductAdmin(admin.ModelAdmin):
 		return "No image"
 	image_4_preview.short_description = 'Image 4 Preview'
 
-	class Media:
-		css = {'all': ('admin_custom.css',)}
-
 
 class OrderItemInline(admin.TabularInline):
 	model = OrderItem

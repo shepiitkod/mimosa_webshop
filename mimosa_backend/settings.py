@@ -46,7 +46,6 @@ if not DEBUG:
 
 INSTALLED_APPS = [
     'cloudinary_storage',
-    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -171,47 +170,3 @@ LOGIN_REDIRECT_URL = '/profile/'
 LOGOUT_REDIRECT_URL = '/'
 
 
-JAZZMIN_SETTINGS = {
-    'site_title': 'Mimosa Atelier Admin',
-    'site_header': 'Mimosa Atelier Admin',
-    'site_brand': 'Mimosa Atelier Admin',
-    'welcome_sign': 'Welcome to Mimosa Atelier Admin',
-    'copyright': 'Mimosa Atelier © 2026',
-
-    'search_model': [
-        'auth.User',
-        'shop.Product',
-        'shop.Order',
-    ],
-
-    'icons': {
-        'shop.product': 'fas fa-flower',
-        'shop.order': 'fas fa-shopping-cart',
-        'auth.user': 'fas fa-users',
-    },
-
-    'show_sidebar': True,
-    'navigation_expanded': True,
-    'custom_css': 'admin_custom.css',
-    'custom_js': 'admin_custom.js',
-}
-
-
-JAZZMIN_UI_TWEAKS = {
-    'theme': 'default',
-    'dark_mode_theme': None,
-    'navbar': 'navbar-white navbar-light',
-    'no_navbar_border': False,
-    'navbar_fixed': True,
-    'sidebar': 'sidebar-light-warning',
-    'sidebar_fixed': True,
-    'sidebar_nav_small_text': False,
-    'sidebar_disable_expand': False,
-    'sidebar_nav_child_indent': True,
-    'sidebar_nav_compact_style': False,
-    'sidebar_nav_legacy_style': False,
-    'sidebar_nav_flat_style': False,
-    'brand_colour': 'navbar-warning',
-    'accent': 'accent-warning',
-    'footer_fixed': True,
-}
