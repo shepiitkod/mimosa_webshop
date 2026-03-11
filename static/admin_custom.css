@@ -213,12 +213,16 @@ body.dashboard #content {
 }
 
 body.dashboard #content-main {
+    float: none;
+    width: auto;
+    margin: 0;
     min-width: 0;
 }
 
 body.dashboard #content-related {
     display: block;
     float: none;
+    clear: none;
     width: auto;
     margin: 0;
     position: sticky;
@@ -250,6 +254,42 @@ body.dashboard #recent-actions-module li {
 
 body.dashboard #recent-actions-module li:last-child {
     border-bottom: none;
+}
+
+/* Dashboard blocks: tidy cards and readable rows */
+body.dashboard .module {
+    margin-bottom: 16px;
+}
+
+body.dashboard .module table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+body.dashboard .module th,
+body.dashboard .module td {
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(158, 168, 191, 0.18);
+    vertical-align: middle;
+}
+
+body.dashboard .module tr:last-child th,
+body.dashboard .module tr:last-child td {
+    border-bottom: none;
+}
+
+body.dashboard .module td a,
+body.dashboard .module th a {
+    font-weight: 500;
+}
+
+body.dashboard .module td {
+    color: var(--mimosa-muted);
+}
+
+body.dashboard .module td a.addlink,
+body.dashboard .module td a.changelink {
+    margin-left: 8px;
 }
 
 #content,
