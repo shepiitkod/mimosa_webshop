@@ -10,9 +10,6 @@ class ProductAdmin(admin.ModelAdmin):
 	list_filter = ('category',)
 	search_fields = ('title', 'description', 'category', 'composition', 'wax_type')
 
-	class Media:
-		css = {'all': ('admin_custom.css',)}
-		js = ('admin_custom.js',)
 	fieldsets = (
 		('Basic', {'fields': ('title', 'description', 'category', 'price', 'stock')}),
 		('Gallery (up to 4 photos)', {'fields': ('image', 'image_2', 'image_3', 'image_4')}),

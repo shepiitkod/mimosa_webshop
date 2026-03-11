@@ -1,25 +1,113 @@
-/* Mimosa Admin Refresh */
+/* Mimosa Admin: vanilla base + yellow accents */
 :root {
-    --mimosa-gold: #d1ad62;
-    --mimosa-ink: #2f2a24;
-    --mimosa-sand: #f7f1e7;
-    --mimosa-glass: rgba(255, 255, 255, 0.75);
+    --mimosa-yellow: #d7ad4f;
+    --mimosa-yellow-soft: #f0e4c8;
+    --mimosa-ink: #2a2a2a;
+    --mimosa-cream: #faf6ee;
 }
 
-body {
-    background: radial-gradient(circle at 0% 0%, #fff8ea 0%, #f8f3ea 35%, #f4efe6 100%);
+body,
+body.login {
+    background: linear-gradient(180deg, #fffdf8 0%, #f8f4ea 100%);
 }
 
-#content-wrapper,
-.content-wrapper,
-#content {
-    animation: adminFadeIn 0.35s ease-out;
+#header {
+    background: #fff;
+    border-bottom: 1px solid #ebe3d3;
+    color: var(--mimosa-ink);
+}
+
+#branding h1,
+#branding h1 a,
+#header a:link,
+#header a:visited {
+    color: var(--mimosa-ink);
+}
+
+div.breadcrumbs {
+    background: var(--mimosa-cream);
+    border-bottom: 1px solid #ece4d5;
+}
+
+div.breadcrumbs a {
+    color: #8d6f2d;
+}
+
+.module,
+.results,
+.dashboard .module {
+    border-radius: 10px;
+    border: 1px solid #ece4d5;
+    overflow: hidden;
+}
+
+.module h2,
+.module caption,
+.inline-group h2 {
+    background: linear-gradient(135deg, var(--mimosa-yellow-soft), #f6ecd7);
+    color: var(--mimosa-ink);
+}
+
+input[type="submit"],
+input[type="button"],
+button,
+.button,
+.submit-row input,
+.object-tools a,
+a.button {
+    border-radius: 8px;
+    border: 1px solid #c9a457;
+    background: linear-gradient(135deg, #ecdcb8, #f0e4c8);
+    color: #2a2a2a;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover,
+button:hover,
+.button:hover,
+.submit-row input:hover,
+.object-tools a:hover,
+a.button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(185, 145, 52, 0.22);
+    filter: brightness(1.03);
+}
+
+a,
+th a,
+.selector-chosen h2 {
+    color: #8d6f2d;
+}
+
+a:hover,
+th a:hover {
+    color: #6f561f;
+}
+
+/* Keep login box elegant and minimal */
+body.login #container {
+    border: 1px solid #ece4d5;
+    border-radius: 12px;
+    box-shadow: 0 10px 24px rgba(80, 60, 20, 0.08);
+}
+
+/* Remove dark-mode toggle icon to avoid accidental switch */
+.theme-toggle {
+    display: none !important;
+}
+
+/* Gentle page reveal */
+#content,
+#content-main,
+.dashboard .module {
+    animation: adminFadeIn 0.25s ease-out;
 }
 
 @keyframes adminFadeIn {
     from {
         opacity: 0;
-        transform: translateY(8px);
+        transform: translateY(6px);
     }
     to {
         opacity: 1;
@@ -27,178 +115,10 @@ body {
     }
 }
 
-.card,
-.module,
-.change-list .results,
-.change-form .card {
-    border-radius: 14px;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    box-shadow: 0 8px 22px rgba(24, 20, 14, 0.08);
-    backdrop-filter: blur(4px);
-    background: var(--mimosa-glass);
-}
-
-.card-header,
-.module h2,
-.module caption {
-    border-radius: 14px 14px 0 0;
-    letter-spacing: 0.2px;
-    background: var(--mimosa-gold) !important;
-    color: #fff !important;
-}
-
-/* Buttons — gold with hover animations */
-.btn,
-button,
-input[type="submit"],
-input[type="button"],
-.submit-row input,
-.object-tools a,
-.addlink,
-.changelink {
-    border-radius: 10px !important;
-    transition: transform 0.18s ease, box-shadow 0.2s ease, background-color 0.2s ease, filter 0.2s ease;
-}
-
-.btn:hover,
-button:hover,
-input[type="submit"]:hover,
-input[type="button"]:hover,
-.submit-row input:hover,
-.object-tools a:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 6px 16px rgba(44, 35, 22, 0.18);
-    filter: brightness(1.08);
-}
-
-/* Gold accent for primary action buttons */
-input[type="submit"],
-.submit-row input[type="submit"],
-.object-tools a {
-    background: var(--mimosa-gold) !important;
-    border-color: var(--mimosa-gold) !important;
-    color: #fff !important;
-}
-
-/* Table rows */
-.change-list table tbody tr {
-    transition: background-color 0.2s ease;
-}
-
-.change-list table tbody tr:hover {
-    background-color: #fff9ef;
-}
-
-/* Links */
-a,
-.breadcrumb a,
-.sidebar a {
-    transition: color 0.2s ease;
-}
-
-a:hover,
-.breadcrumb a:hover {
-    color: var(--mimosa-gold) !important;
-}
-
-/* Django admin header bar */
-#header {
-    background: linear-gradient(135deg, #2f2a24 0%, #4a3f30 100%) !important;
-    color: #fff !important;
-    border-bottom: 2px solid var(--mimosa-gold);
-    padding: 14px 40px;
-}
-
-#header a:link,
-#header a:visited {
-    color: var(--mimosa-gold) !important;
-}
-
-#branding h1,
-#branding h1 a {
-    color: var(--mimosa-gold) !important;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-}
-
-/* Breadcrumbs */
-div.breadcrumbs {
-    background: #f0e8d8;
-    border-bottom: 1px solid rgba(209, 173, 98, 0.25);
-    color: var(--mimosa-ink);
-    padding: 10px 40px;
-}
-
-div.breadcrumbs a {
-    color: var(--mimosa-gold) !important;
-}
-
-/* Nav sidebar */
-#nav-sidebar {
-    background: #faf6ef;
-    border-right: 1px solid rgba(209, 173, 98, 0.2);
-}
-
-/* Submit row spacing */
-.submit-row {
-    padding: 12px 0;
-    margin-top: 20px;
-    border-top: 1px solid #e8e0d0;
-}
-
-/* Table */
-#result_list th {
-    background: #f5eedf;
-    color: var(--mimosa-ink);
-    border-bottom: 2px solid rgba(209, 173, 98, 0.3);
-    padding: 10px 8px;
-}
-
-#result_list td {
-    padding: 10px 8px;
-    vertical-align: middle;
-}
-
-/* Image preview */
-.field-image img,
-.field-image_2 img,
-.field-image_3 img,
-.field-image_4 img {
-    max-width: 300px;
-    max-height: 300px;
-    width: auto;
-    height: auto;
-    display: block;
-    margin: 10px 0;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-}
-
-.vImageField {
-    display: block;
-    margin: 8px 0;
-}
-
-.field-image,
-.field-image_2,
-.field-image_3,
-.field-image_4 {
-    margin-bottom: 15px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #e8e0d0;
-}
-
-.field-image:last-child,
-.field-image_4 {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-}
-
 @media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+    #content,
+    #content-main,
+    .dashboard .module {
+        animation: none;
     }
 }
