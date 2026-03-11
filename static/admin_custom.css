@@ -1,3 +1,96 @@
+/* Mimosa Admin Refresh */
+:root {
+	--mimosa-gold: #d1ad62;
+	--mimosa-ink: #2f2a24;
+	--mimosa-sand: #f7f1e7;
+	--mimosa-glass: rgba(255, 255, 255, 0.75);
+}
+
+body {
+	background: radial-gradient(circle at 0% 0%, #fff8ea 0%, #f8f3ea 35%, #f4efe6 100%);
+}
+
+#content-wrapper,
+.content-wrapper {
+	animation: adminFadeIn 0.35s ease-out;
+}
+
+@keyframes adminFadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(8px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.card,
+.module,
+.change-list .results,
+.change-form .card {
+	border-radius: 14px;
+	border: 1px solid rgba(0, 0, 0, 0.06);
+	box-shadow: 0 8px 22px rgba(24, 20, 14, 0.08);
+	backdrop-filter: blur(4px);
+	background: var(--mimosa-glass);
+}
+
+.card-header,
+.module h2 {
+	border-radius: 14px 14px 0 0;
+	letter-spacing: 0.2px;
+}
+
+.btn,
+button,
+input[type="submit"],
+.submit-row input,
+.object-tools a {
+	border-radius: 10px !important;
+	transition: transform 0.18s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.btn:hover,
+button:hover,
+input[type="submit"]:hover,
+.submit-row input:hover,
+.object-tools a:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 6px 16px rgba(44, 35, 22, 0.18);
+}
+
+.change-list table tbody tr {
+	transition: background-color 0.2s ease, transform 0.12s ease;
+}
+
+.change-list table tbody tr:hover {
+	background-color: #fff9ef;
+}
+
+a,
+.breadcrumb a,
+.sidebar a {
+	transition: color 0.2s ease;
+}
+
+a:hover,
+.breadcrumb a:hover,
+.sidebar a:hover {
+	color: var(--mimosa-gold) !important;
+}
+
+.sidebar-dark-primary,
+.main-sidebar {
+	background: linear-gradient(180deg, #342b1f 0%, #2a2319 100%) !important;
+}
+
+.main-header.navbar {
+	border-bottom: 1px solid rgba(209, 173, 98, 0.35);
+	box-shadow: 0 2px 14px rgba(0, 0, 0, 0.08);
+}
+
 /* Django Admin - Image Preview Fixes */
 
 /* Limit image field preview size in forms */
@@ -69,4 +162,12 @@ img[class*="vThumbnailImage"] {
 	padding: 10px 0;
 	margin-top: 20px;
 	border-top: 1px solid #e8e8e8;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	* {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
 }
