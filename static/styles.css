@@ -1,3 +1,5 @@
+/* DEBUG: remove after confirming CSS loads on Render */
+body { border: 10px solid red !important; }
 
 html {
     width: 100%;
