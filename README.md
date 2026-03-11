@@ -1,10 +1,57 @@
-# Updated README
+# mimosa_webshop
+🕯 Mimosa — Atelier Artisanal Website
+-----
 
-This file contains important information about the mimosa webshop. Please refer to the different sections for details.
+First version of the official website for Mimosa Atelier Artisanal, a handcrafted decorative candle brand focused on aesthetics, softness, and premium presentation.
 
-## Features
-- Feature 1
-- Feature 2
+This project represents a clean and minimal product showcase built to reflect the brand's identity — light, elegant, and modern.
+-----
 
-## License
-This project is licensed under the MIT License.
+✨ About the Project
+
+The website is designed as a visual-first landing page with a strong focus on:
+
+- Soft color palette and premium feel
+- Product-centered layout
+- Minimalist navigation
+- Multi-language interface (EN / FR / UA)
+- Clean and structured front-end architecture
+
+The goal of this version is to establish an online presence and create a strong visual foundation for future e-commerce expansion.
+-----
+
+🛠 Tech Stack
+
+- HTML5
+- CSS3
+- Responsive Layout
+- Vanilla JavaScript (if applicable)
+
+-----
+
+🎯 Version 1 Goals
+
+- Present the brand identity
+- Showcase handcrafted candle collections
+- Build a clean and elegant UI
+- Prepare structure for future scalability
+
+-----
+
+🚀 Future Improvements
+
+- Shopping cart functionality
+- Payment integration
+- Admin panel / CMS
+- Performance optimization
+- SEO improvements
+
+[View Website](https://mimosa-atelier.onrender.com/)
+
+-----
+
+## Render Deploy Notes
+
+- Build Command: `python manage.py collectstatic --noinput`
+- Start Command: `gunicorn mimosa_backend.wsgi`
+- Static files are served by WhiteNoise from the collected `staticfiles/` directory.
