@@ -17,23 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import include, path, re_path
-from django.views.static import serve
+from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('shop.urls')),
 ]
 
-# Serve media files in development
+# Serve media files in development only (WhiteNoise handles static in all envs)
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-# Always serve static files (WhiteNoise handles in production)
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-# Fallback for production (WhiteNoise primary, this is backup)
-if not settings.DEBUG:
-    urlpatterns += [
-        re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
-    ]
