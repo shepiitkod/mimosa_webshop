@@ -16,53 +16,7 @@
 </head>
 
 <body>
-
-    <div class="language-switcher">
-        <button class="lang-current" type="button" aria-label="Toggle language menu" aria-expanded="false">EN</button>
-        <div class="lang-options" aria-label="Language options">
-            <button class="lang-btn active" data-lang="en" title="English" type="button">EN</button>
-            <button class="lang-btn" data-lang="fr" title="Français" type="button">FR</button>
-            <button class="lang-btn" data-lang="ua" title="Українська" type="button">UA</button>
-            <button class="lang-btn" data-lang="ru" title="Русский" type="button">RU</button>
-        </div>
-    </div>
-
-    <header>
-        <figure>
-            <a href="{% url 'shop:home' %}">
-                <img src="{% static 'assets/images/logobl2.ico' %}" alt="Mimosa Logo" width="250" height="80">
-            </a>
-        </figure>
-        <nav>
-            <ul>
-                <li><a href="{% url 'shop:home' %}" data-translate="nav-home">Home</a></li>
-                <li class="products-menu">
-                    <a href="{% url 'shop:products' %}" data-translate="nav-products">Products</a>
-                    <div class="dropdown-catalog" aria-label="Product categories">
-                        <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-all">All Products</a>
-                        <a href="{% url 'shop:product_bento' %}" class="dropdown-item" data-translate="nav-sub-bento">Bento Candles</a>
-                        <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-scented">Scented Candles</a>
-                        <a href="{% url 'shop:product_rose' %}" class="dropdown-item" data-translate="nav-sub-rose">Decorative Rose</a>
-                        <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-gifts">Gift Collections</a>
-                        <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-new">New Arrivals</a>
-                    </div>
-                </li>
-                <li><a href="{% url 'shop:about' %}" data-translate="nav-about">About Us</a></li>
-                <li><a href="{% url 'shop:contact' %}" data-translate="nav-contact">Contact</a></li>
-            </ul>
-        </nav>
-        <div class="profile-icon">
-            <a href="{% url 'shop:profile' %}">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="8" r="4" stroke="black" stroke-width="2"/>
-    <path d="M4 20c0-4 4-6 8-6s8 2 8 6" 
-        stroke="black" 
-        stroke-width="2" 
-        stroke-linecap="round"/>
-    </svg>
-            </a>
-    </div>
-    </header>
+    {% include 'includes/header.html' %}
     <main>  
     <h2 data-translate="privacy-policy-title">Privacy Policy</h2>
     <p data-translate="privacy-policy-text">Last updated: March 1, 2026</p>
@@ -174,66 +128,8 @@
     {% include 'includes/footer.html' %}
           
   
-
-
-
-
-
-          <script>
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const languageSwitcher = document.querySelector('.language-switcher');
-            const langCurrentBtn = document.querySelector('.lang-current');
-
-            function updateCompactLanguageUI() {
-                if (!languageSwitcher || !langCurrentBtn) {
-                    return;
-                }
-
-                const activeBtn = languageSwitcher.querySelector('.lang-btn.active') || languageSwitcher.querySelector('.lang-btn');
-                if (!activeBtn) {
-                    return;
-                }
-
-                langCurrentBtn.textContent = activeBtn.textContent.trim();
-                langCurrentBtn.setAttribute('data-lang', activeBtn.getAttribute('data-lang') || 'en');
-            }
-
-            const savedLang = localStorage.getItem('selectedLanguage') || 'en';
-            switchLanguage(savedLang);
-            updateCompactLanguageUI();
-            
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const lang = this.getAttribute('data-lang');
-                    switchLanguage(lang);
-                    setTimeout(function() {
-                        updateCompactLanguageUI();
-                        if (languageSwitcher && langCurrentBtn) {
-                            languageSwitcher.classList.remove('expanded');
-                            langCurrentBtn.setAttribute('aria-expanded', 'false');
-                        }
-                    }, 0);
-                });
-            });
-
-            if (languageSwitcher && langCurrentBtn) {
-                langCurrentBtn.addEventListener('click', function() {
-                    const isExpanded = languageSwitcher.classList.toggle('expanded');
-                    langCurrentBtn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
-                });
-
-                document.addEventListener('click', function(event) {
-                    if (!languageSwitcher.contains(event.target)) {
-                        languageSwitcher.classList.remove('expanded');
-                        langCurrentBtn.setAttribute('aria-expanded', 'false');
-                    }
-                });
-            }
-        });
-    </script>
-
       </body>
+</body>
 
 
 

@@ -375,53 +375,7 @@
 
             alert(msg.created + result.order_id + msg.suffix + result.total_amount);
         } catch (error) {
-            alert(msg.networkError);
-        }
-    }
-
-
-    function toggleWishlist(button) {
-        if (button.textContent === '♡') {
-            button.textContent = '♥';
-            button.style.color = '#ff4757';
-        } else {
-            button.textContent = '♡';
-            button.style.color = '#5a5a5a';
-        }
-    }
-
-
-    document.addEventListener('DOMContentLoaded', function() {
-
-        const languageSwitcher = document.querySelector('.language-switcher');
-        const langCurrentBtn = document.querySelector('.lang-current');
-
-        function updateCompactLanguageUI() {
-            if (!languageSwitcher || !langCurrentBtn) {
-                return;
-            }
-
-            const activeBtn = languageSwitcher.querySelector('.lang-btn.active') || languageSwitcher.querySelector('.lang-btn');
-            if (!activeBtn) {
-                return;
-            }
-
-            langCurrentBtn.textContent = activeBtn.textContent.trim();
-            langCurrentBtn.setAttribute('data-lang', activeBtn.getAttribute('data-lang') || 'en');
-        }
-
-
-        const savedLang = localStorage.getItem('selectedLanguage') || 'en';
-        switchLanguage(savedLang);
-        updateCompactLanguageUI();
-
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                switchLanguage(this.getAttribute('data-lang'));
-                setTimeout(function() {
-                    updateCompactLanguageUI();
-                    if (languageSwitcher && langCurrentBtn) {
-                        languageSwitcher.classList.remove('expanded');
+            {% include 'includes/header.html' %}
                         langCurrentBtn.setAttribute('aria-expanded', 'false');
                     }
                 }, 0);

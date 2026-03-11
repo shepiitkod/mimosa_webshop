@@ -806,6 +806,22 @@ function switchLanguage(lang) {
             element.setAttribute('placeholder', translations[lang][key]);
         }
     });
+
+    updateCompactLanguageUI();
+}
+
+
+function updateCompactLanguageUI() {
+    document.querySelectorAll('.language-switcher').forEach(languageSwitcher => {
+        const langCurrentBtn = languageSwitcher.querySelector('.lang-current');
+        const activeBtn = languageSwitcher.querySelector('.lang-btn.active') || languageSwitcher.querySelector('.lang-btn');
+
+        if (!langCurrentBtn || !activeBtn) {
+            return;
+        }
+
+        langCurrentBtn.textContent = activeBtn.textContent.trim();
+    });
 }
 
 
@@ -817,6 +833,65 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.addEventListener('click', function() {
             const lang = this.getAttribute('data-lang');
             switchLanguage(lang);
+
+            document.querySelectorAll('.language-switcher').forEach(languageSwitcher => {
+                const langCurrentBtn = languageSwitcher.querySelector('.lang-current');
+                languageSwitcher.classList.remove('expanded');
+                if (langCurrentBtn) {
+                    langCurrentBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+    });
+
+    document.querySelectorAll('.language-switcher').forEach(languageSwitcher => {
+        const langCurrentBtn = languageSwitcher.querySelector('.lang-current');
+
+        if (!langCurrentBtn) {
+            return;
+        }
+
+        langCurrentBtn.addEventListener('click', function(event) {
+            event.stopPropagation();
+            const isExpanded = languageSwitcher.classList.toggle('expanded');
+            langCurrentBtn.setAttribute('aria-expanded', String(isExpanded));
+        });
+
+        languageSwitcher.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                languageSwitcher.classList.remove('expanded');
+                langCurrentBtn.setAttribute('aria-expanded', 'false');
+            });
+        });
+    });
+
+    document.addEventListener('click', function(event) {
+        document.querySelectorAll('.language-switcher.expanded').forEach(languageSwitcher => {
+            if (languageSwitcher.contains(event.target)) {
+                return;
+            }
+
+            languageSwitcher.classList.remove('expanded');
+
+            const langCurrentBtn = languageSwitcher.querySelector('.lang-current');
+            if (langCurrentBtn) {
+                langCurrentBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+    });
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key !== 'Escape') {
+            return;
+        }
+
+        document.querySelectorAll('.language-switcher.expanded').forEach(languageSwitcher => {
+            languageSwitcher.classList.remove('expanded');
+
+            const langCurrentBtn = languageSwitcher.querySelector('.lang-current');
+            if (langCurrentBtn) {
+                langCurrentBtn.setAttribute('aria-expanded', 'false');
+            }
         });
     });
 });
