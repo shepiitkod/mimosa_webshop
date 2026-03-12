@@ -6,6 +6,7 @@
     <a href="{% url 'shop:contact' %}" data-translate="footer-contact">Contact</a>
 </footer>
 {% else %}
+{% if request.resolver_match.url_name == 'home' or request.resolver_match.url_name == 'contact' %}
 <section class="newsletter-section">
     <div class="newsletter-container">
         <div class="newsletter-content">
@@ -29,6 +30,7 @@
         </form>
     </div>
 </section>
+{% endif %}
 
 <footer>
     <div class="footer-content">
@@ -44,5 +46,7 @@
         </div>
     </div>
 </footer>
+{% if request.resolver_match.url_name == 'home' or request.resolver_match.url_name == 'contact' %}
 <script src="{% static 'newsletter.js' %}" defer></script>
+{% endif %}
 {% endif %}
