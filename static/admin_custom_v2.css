@@ -508,3 +508,31 @@ body[class*=" app-"] #user-tools a {
         margin-top: 12px;
     }
 }
+
+/* Premium Upgrade: admin buttons and immediate blocks only */
+.module,
+#recent-actions-module {
+    border: 1px solid #efe6c8;
+    border-radius: 14px;
+    padding: 25px;
+}
+
+.button,
+input[type="submit"],
+.add-group,
+#search-form .button {
+    background: #f4d03f;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4), 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    transition: all 0.4s ease;
+}
+
+.button:hover,
+input[type="submit"]:hover,
+.add-group:hover,
+#search-form .button:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 10px rgba(244, 208, 63, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4), 0 2px 4px rgba(0, 0, 0, 0.1);
+}
