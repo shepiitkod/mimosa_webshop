@@ -1,42 +1,104 @@
-/* Admin-only cleanup: isolated to Django admin body classes/selectors */
+/*
+  Clean Django admin theme.
+  Strictly scoped to admin-only selectors so frontend pages are untouched.
+*/
 body.app-admin,
 body.dashboard,
 body.login,
 body[class^="app-"],
 body[class*=" app-"],
 #django-admin-selectors {
-    --admin-bg: #f5f6f8;
-    --admin-panel: #ffffff;
-    --admin-border: #d9dce1;
+    --admin-bg: #f4f6f8;
+    --admin-surface: #ffffff;
+    --admin-surface-2: #f8fafc;
+    --admin-border: #d8dee6;
     --admin-text: #1f2937;
-    --admin-muted: #4b5563;
+    --admin-muted: #5b6678;
     --admin-link: #0b57d0;
+    --admin-link-hover: #0a45a8;
+    --admin-focus: #9db9ea;
 }
 
+/* Base containers and typography contrast */
 body.app-admin,
 body.dashboard,
 body.login,
 body[class^="app-"],
-body[class*=" app-"],
+body[class*=" app-"] {
+    background: var(--admin-bg) !important;
+    color: var(--admin-text) !important;
+}
+
 body.app-admin #container,
 body.dashboard #container,
 body.login #container,
 body[class^="app-"] #container,
-body[class*=" app-"] #container {
-    background: var(--admin-bg);
-    color: var(--admin-text);
-}
-
+body[class*=" app-"] #container,
 body.app-admin #content,
 body.dashboard #content,
 body[class^="app-"] #content,
 body[class*=" app-"] #content {
-    background: transparent;
-    color: var(--admin-text);
-    box-shadow: none;
+    background: transparent !important;
+    color: var(--admin-text) !important;
+    box-shadow: none !important;
 }
 
-/* Restore Django admin dashboard two-column structure */
+/* Header, breadcrumb, and left nav readability */
+body.app-admin #header,
+body.dashboard #header,
+body[class^="app-"] #header,
+body[class*=" app-"] #header {
+    background: #2f5978 !important;
+    border-bottom: 1px solid #274960 !important;
+}
+
+body.app-admin #header a,
+body.dashboard #header a,
+body[class^="app-"] #header a,
+body[class*=" app-"] #header a,
+body.app-admin #branding h1,
+body.app-admin #branding h1 a,
+body.dashboard #branding h1,
+body.dashboard #branding h1 a {
+    color: #f4f9ff !important;
+}
+
+body.app-admin div.breadcrumbs,
+body.dashboard div.breadcrumbs,
+body[class^="app-"] div.breadcrumbs,
+body[class*=" app-"] div.breadcrumbs {
+    background: #eaf0f5 !important;
+    color: var(--admin-muted) !important;
+    border-bottom: 1px solid var(--admin-border) !important;
+}
+
+body.app-admin div.breadcrumbs a,
+body.dashboard div.breadcrumbs a,
+body[class^="app-"] div.breadcrumbs a,
+body[class*=" app-"] div.breadcrumbs a {
+    color: var(--admin-link) !important;
+}
+
+body.app-admin #nav-sidebar,
+body.dashboard #nav-sidebar,
+body[class^="app-"] #nav-sidebar,
+body[class*=" app-"] #nav-sidebar {
+    background: #0f1720 !important;
+    border-right: 1px solid #1e2a36 !important;
+}
+
+body.app-admin #nav-sidebar a,
+body.dashboard #nav-sidebar a,
+body[class^="app-"] #nav-sidebar a,
+body[class*=" app-"] #nav-sidebar a,
+body.app-admin #nav-sidebar th,
+body.app-admin #nav-sidebar td,
+body.dashboard #nav-sidebar th,
+body.dashboard #nav-sidebar td {
+    color: #d6e0ea !important;
+}
+
+/* Restore expected dashboard structure (main + recent actions) */
 body.dashboard #content-main {
     float: left;
     width: 74%;
@@ -46,8 +108,8 @@ body.dashboard #content-main {
 body.dashboard #content-related {
     float: right;
     width: 24%;
-    position: static;
     margin: 0;
+    position: static;
 }
 
 body.dashboard #content::after {
@@ -56,7 +118,7 @@ body.dashboard #content::after {
     clear: both;
 }
 
-/* Clean, readable panels and table blocks */
+/* Common panels: clean 1px borders, no visual noise */
 body.app-admin .module,
 body.dashboard .module,
 body[class^="app-"] .module,
@@ -69,11 +131,15 @@ body.app-admin .results,
 body.dashboard .results,
 body[class^="app-"] .results,
 body[class*=" app-"] .results,
-body.dashboard #content-related {
-    background: var(--admin-panel);
-    border: 1px solid var(--admin-border);
-    border-radius: 0;
-    box-shadow: none;
+body.dashboard #content-related,
+body.app-admin #changelist-filter,
+body.dashboard #changelist-filter,
+body[class^="app-"] #changelist-filter,
+body[class*=" app-"] #changelist-filter {
+    background: var(--admin-surface) !important;
+    border: 1px solid var(--admin-border) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
 }
 
 body.app-admin .module h2,
@@ -81,10 +147,21 @@ body.dashboard .module h2,
 body[class^="app-"] .module h2,
 body[class*=" app-"] .module h2,
 body.dashboard #content-related h2,
-body.dashboard .module caption {
-    background: #f0f2f5;
-    color: var(--admin-text);
-    border-bottom: 1px solid var(--admin-border);
+body.app-admin .module caption,
+body.dashboard .module caption,
+body.app-admin #changelist-filter h2,
+body.dashboard #changelist-filter h2 {
+    background: var(--admin-surface-2) !important;
+    color: var(--admin-text) !important;
+    border-bottom: 1px solid var(--admin-border) !important;
+}
+
+/* Table readability */
+body.app-admin table,
+body.dashboard table,
+body[class^="app-"] table,
+body[class*=" app-"] table {
+    background: var(--admin-surface) !important;
 }
 
 body.app-admin th,
@@ -99,7 +176,8 @@ body[class^="app-"] label,
 body[class*=" app-"] th,
 body[class*=" app-"] td,
 body[class*=" app-"] label {
-    color: var(--admin-text);
+    color: var(--admin-text) !important;
+    border-color: var(--admin-border) !important;
 }
 
 body.app-admin .quiet,
@@ -107,25 +185,27 @@ body.dashboard .quiet,
 body[class^="app-"] .quiet,
 body[class*=" app-"] .quiet,
 body.dashboard #recent-actions-module p,
-body.dashboard #recent-actions-module li {
-    color: var(--admin-muted);
+body.dashboard #recent-actions-module li,
+body.app-admin #changelist-filter li,
+body.dashboard #changelist-filter li {
+    color: var(--admin-muted) !important;
 }
 
+/* Links and controls contrast */
 body.app-admin a,
 body.dashboard a,
 body[class^="app-"] a,
 body[class*=" app-"] a {
-    color: var(--admin-link);
+    color: var(--admin-link) !important;
 }
 
 body.app-admin a:hover,
 body.dashboard a:hover,
 body[class^="app-"] a:hover,
 body[class*=" app-"] a:hover {
-    color: #003ea8;
+    color: var(--admin-link-hover) !important;
 }
 
-/* Inputs/buttons: keep contrast and remove decorative effects */
 body.app-admin input,
 body.app-admin select,
 body.app-admin textarea,
@@ -138,10 +218,26 @@ body[class^="app-"] textarea,
 body[class*=" app-"] input,
 body[class*=" app-"] select,
 body[class*=" app-"] textarea {
-    background: #ffffff;
-    color: var(--admin-text);
-    border: 1px solid var(--admin-border);
-    box-shadow: none;
+    background: #ffffff !important;
+    color: var(--admin-text) !important;
+    border: 1px solid var(--admin-border) !important;
+    box-shadow: none !important;
+}
+
+body.app-admin input:focus,
+body.app-admin select:focus,
+body.app-admin textarea:focus,
+body.dashboard input:focus,
+body.dashboard select:focus,
+body.dashboard textarea:focus,
+body[class^="app-"] input:focus,
+body[class^="app-"] select:focus,
+body[class^="app-"] textarea:focus,
+body[class*=" app-"] input:focus,
+body[class*=" app-"] select:focus,
+body[class*=" app-"] textarea:focus {
+    outline: 2px solid var(--admin-focus) !important;
+    outline-offset: 0;
 }
 
 body.app-admin .button,
@@ -156,13 +252,28 @@ body[class^="app-"] input[type="button"],
 body[class*=" app-"] .button,
 body[class*=" app-"] input[type="submit"],
 body[class*=" app-"] input[type="button"] {
-    background: #f8f9fb;
-    color: var(--admin-text);
-    border: 1px solid var(--admin-border);
-    border-radius: 0;
-    box-shadow: none;
-    text-shadow: none;
-    transform: none;
+    background: #f8fafc !important;
+    color: var(--admin-text) !important;
+    border: 1px solid var(--admin-border) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    transform: none !important;
+}
+
+/* Changelist alignment and filter column stability */
+body.app-admin #changelist,
+body.dashboard #changelist,
+body[class^="app-"] #changelist,
+body[class*=" app-"] #changelist {
+    overflow: hidden;
+}
+
+body.app-admin #changelist #changelist-form,
+body.dashboard #changelist #changelist-form,
+body[class^="app-"] #changelist #changelist-form,
+body[class*=" app-"] #changelist #changelist-form {
+    margin-right: 0;
 }
 
 @media (max-width: 1024px) {
