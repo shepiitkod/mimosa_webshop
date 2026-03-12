@@ -147,20 +147,29 @@ body.dashboard #content,
 body[class^="app-"] #content,
 body[class*=" app-"] #content {
     padding: 20px 24px !important;
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box;
+}
+
+body.dashboard #content {
+    width: 100% !important;
+    max-width: none !important;
 }
 
 body.dashboard #content-main {
     float: left;
-    width: 74%;
+    width: 70%;
     margin-right: 0;
-    padding-right: 18px;
+    padding-right: 2%;
     box-sizing: border-box;
 }
 
 body.dashboard #content-related {
     float: right;
-    width: 26%;
+    width: 25%;
     margin: 0;
+    margin-left: 2%;
     box-sizing: border-box;
 }
 
@@ -196,7 +205,7 @@ body.app-admin .module,
 body.dashboard .module,
 body[class^="app-"] .module,
 body[class*=" app-"] .module {
-    margin-bottom: 18px;
+    margin-bottom: 20px;
 }
 
 body.app-admin .module h2,
@@ -211,6 +220,10 @@ body.dashboard #changelist-filter h2 {
     background: var(--admin-surface-soft) !important;
     color: var(--admin-text) !important;
     border-bottom: 1px solid var(--admin-border) !important;
+    padding: 12px 16px;
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.2;
 }
 
 /* Recent actions breathing room */
@@ -362,6 +375,13 @@ body[class*=" app-"] #toolbar {
     padding: 10px 12px !important;
     margin: 0 0 12px !important;
     box-shadow: none !important;
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 body.app-admin #changelist-search input[type="text"],
@@ -369,7 +389,16 @@ body.dashboard #changelist-search input[type="text"],
 body[class^="app-"] #changelist-search input[type="text"],
 body[class*=" app-"] #changelist-search input[type="text"] {
     min-height: 34px;
-    margin-right: 8px;
+    margin-right: 0;
+    flex: 1 1 320px;
+    width: auto;
+}
+
+body.app-admin #changelist-search input[type="submit"],
+body.dashboard #changelist-search input[type="submit"],
+body[class^="app-"] #changelist-search input[type="submit"],
+body[class*=" app-"] #changelist-search input[type="submit"] {
+    flex: 0 0 auto;
 }
 
 /* Keep module/changelist rows readable */
