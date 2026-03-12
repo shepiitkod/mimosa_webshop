@@ -521,18 +521,19 @@ def stripe_webhook(request):
 		if order_id:
 			try:
 				order = Order.objects.get(id=order_id)
-
-				# Temporarily disabled address persistence to isolate checkout issues.
-				# shipping_details = session_data.get('shipping_details')
-				# if shipping_details and shipping_details.get('address'):
-				# 	address_data = shipping_details.get('address')
-				# 	order.shipping_address = address_data.get('line1', '')
-				# 	order.city = address_data.get('city', '')
-				# 	order.postal_code = address_data.get('postal_code', '')
-				# 	order.country = address_data.get('country', '')
-
 				order.status = Order.STATUS_PAID
 				order.save(update_fields=['status'])
+
+				shipping_details = session_data.get('shipping_details') or {}
+				address_data = shipping_details.get('address') or {}
+				if address_data:
+					try:
+						order.shipping_address = address_data.get('line1', '')
+						order.city = address_data.get('city', '')
+						order.postal_code = address_data.get('postal_code', '')
+						order.save(update_fields=['shipping_address', 'city', 'postal_code'])
+					except Exception as e:
+						print(f'Webhook shipping save failed for order {order.id}: {e}')
 			except Order.DoesNotExist:
 				return JsonResponse({'error': 'Order not found.'}, status=404)
 

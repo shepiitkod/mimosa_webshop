@@ -49,7 +49,7 @@ class OrderItemInline(admin.TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-	list_display = ('id', 'user', 'total_price', 'city', 'address_short', 'status', 'created_at')
+	list_display = ('id', 'user', 'total_price', 'shipping_address', 'city', 'postal_code', 'status', 'created_at')
 	list_editable = ('status',)
 	list_filter = ('status', 'created_at', 'country')
 	search_fields = ('id', 'user__username', 'shipping_address', 'city', 'postal_code')
