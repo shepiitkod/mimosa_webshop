@@ -1,6 +1,7 @@
 from decimal import Decimal, InvalidOperation
 import json
 import traceback
+from typing import Optional
 
 import stripe
 from django.conf import settings
@@ -45,6 +46,8 @@ def _create_stripe_session_for_order(request, order):
 
 	return stripe.checkout.Session.create(
 		payment_method_types=['card'],
+		client_reference_id=str(order.id),
+		metadata={'order_id': str(order.id)},
 		line_items=[
 			{
 				'price_data': {
@@ -59,10 +62,26 @@ def _create_stripe_session_for_order(request, order):
 			}
 		],
 		mode='payment',
+		allow_promotion_codes=True,
 		shipping_address_collection={'allowed_countries': ['FR', 'UA', 'GB', 'US']},
 		success_url=success_url,
 		cancel_url=cancel_url,
 	)
+
+
+def _amount_total_to_decimal(session_data) -> Optional[Decimal]:
+	"""Return Stripe amount_total in Decimal major units (e.g., EUR), if available."""
+	if not session_data or not hasattr(session_data, 'get'):
+		return None
+
+	amount_total = session_data.get('amount_total')
+	if amount_total is None:
+		return None
+
+	try:
+		return (Decimal(str(amount_total)) / Decimal('100')).quantize(Decimal('0.01'))
+	except (InvalidOperation, TypeError, ValueError):
+		return None
 
 
 def _mark_order_paid_from_checkout_session(session_id: str) -> bool:
@@ -89,6 +108,14 @@ def _mark_order_paid_from_checkout_session(session_id: str) -> bool:
 	except (Order.DoesNotExist, ValueError, TypeError):
 		return False
 
+	updated_fields = []
+
+	# Persist final Stripe amount (after promo codes/discounts) to the order.
+	final_amount = _amount_total_to_decimal(session_data)
+	if final_amount is not None and order.total_amount != final_amount:
+		order.total_amount = final_amount
+		updated_fields.append('total_amount')
+
 	# Persist shipping details coming from Stripe Checkout.
 	shipping_details = session_data.get('shipping_details')
 	if shipping_details and shipping_details.get('address'):
@@ -97,16 +124,14 @@ def _mark_order_paid_from_checkout_session(session_id: str) -> bool:
 		order.city = address_data.get('city', '')
 		order.postal_code = address_data.get('postal_code', '')
 		order.country = address_data.get('country', '')
+		updated_fields.extend(['shipping_address', 'city', 'postal_code', 'country'])
 
 	if order.status != Order.STATUS_PAID:
 		order.status = Order.STATUS_PAID
-		order.save()
-	elif shipping_details and shipping_details.get('address'):
-		# Save updated shipping data even if the order was already marked as paid.
-		order.save(update_fields=['shipping_address', 'city', 'postal_code', 'country'])
-	else:
-		# If status is already paid, no update needed
-		pass
+		updated_fields.append('status')
+
+	if updated_fields:
+		order.save(update_fields=sorted(set(updated_fields)))
 
 	return True
 
@@ -521,8 +546,15 @@ def stripe_webhook(request):
 		if order_id:
 			try:
 				order = Order.objects.get(id=order_id)
+
+				final_amount = _amount_total_to_decimal(session_data)
+				updated_fields = []
+				if final_amount is not None and order.total_amount != final_amount:
+					order.total_amount = final_amount
+					updated_fields.append('total_amount')
+
 				order.status = Order.STATUS_PAID
-				order.save(update_fields=['status'])
+				updated_fields.append('status')
 
 				shipping_details = session_data.get('shipping_details') or {}
 				address_data = shipping_details.get('address') or {}
@@ -531,9 +563,13 @@ def stripe_webhook(request):
 						order.shipping_address = address_data.get('line1', '')
 						order.city = address_data.get('city', '')
 						order.postal_code = address_data.get('postal_code', '')
-						order.save(update_fields=['shipping_address', 'city', 'postal_code'])
+						order.country = address_data.get('country', '')
+						updated_fields.extend(['shipping_address', 'city', 'postal_code', 'country'])
 					except Exception as e:
 						print(f'Webhook shipping save failed for order {order.id}: {e}')
+
+				if updated_fields:
+					order.save(update_fields=sorted(set(updated_fields)))
 			except Order.DoesNotExist:
 				return JsonResponse({'error': 'Order not found.'}, status=404)
 

@@ -41,6 +41,8 @@ class PaymentSyncTests(TestCase):
 		with patch('shop.views.stripe.checkout.Session.create') as create_mock:
 			create_mock.return_value = SimpleNamespace(url='https://checkout.stripe.com/c/pay/cs_test_mock')
 			response = self.client.post(reverse('shop:create_checkout_session'))
+			create_kwargs = create_mock.call_args.kwargs
+			self.assertTrue(create_kwargs.get('allow_promotion_codes'))
 
 		self.assertEqual(response.status_code, 302)
 		self.assertIn('checkout.stripe.com', response.url)
@@ -52,12 +54,14 @@ class PaymentSyncTests(TestCase):
 			retrieve_mock.return_value = {
 				'metadata': {'order_id': str(created_order.id)},
 				'client_reference_id': str(created_order.id),
+				'amount_total': 1000,
 			}
 			success_response = self.client.get(reverse('shop:success'), {'session_id': 'cs_test_mock'})
 
 		self.assertEqual(success_response.status_code, 200)
 		created_order.refresh_from_db()
 		self.assertEqual(created_order.status, Order.STATUS_PAID)
+		self.assertEqual(created_order.total_amount, Decimal('10.00'))
 
 	def test_checkout_success_marks_order_paid_from_session(self):
 		self.client.login(username='payer', password='test12345')
@@ -66,12 +70,14 @@ class PaymentSyncTests(TestCase):
 			retrieve_mock.return_value = {
 				'metadata': {'order_id': str(self.order.id)},
 				'client_reference_id': str(self.order.id),
+				'amount_total': 1125,
 			}
 			response = self.client.get(reverse('shop:success'), {'session_id': 'cs_test_123'})
 
 		self.assertEqual(response.status_code, 200)
 		self.order.refresh_from_db()
 		self.assertEqual(self.order.status, Order.STATUS_PAID)
+		self.assertEqual(self.order.total_amount, Decimal('11.25'))
 
 	def test_stripe_webhook_marks_order_paid(self):
 		payload = {
@@ -80,6 +86,7 @@ class PaymentSyncTests(TestCase):
 				'object': {
 					'metadata': {'order_id': str(self.order.id)},
 					'payment_status': 'paid',
+					'amount_total': 900,
 				}
 			}
 		}
@@ -96,6 +103,7 @@ class PaymentSyncTests(TestCase):
 		self.assertEqual(response.status_code, 200)
 		self.order.refresh_from_db()
 		self.assertEqual(self.order.status, Order.STATUS_PAID)
+		self.assertEqual(self.order.total_amount, Decimal('9.00'))
 
 	def test_stripe_webhook_ignores_unpaid_session(self):
 		payload = {
