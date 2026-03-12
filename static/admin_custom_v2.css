@@ -22,6 +22,27 @@ body[class*=" app-"],
     --admin-link-active: #5f4900;
 }
 
+/* Neutralize Django dark-theme variables when a dark class is still present. */
+html.theme-dark body.app-admin,
+html.theme-dark body.dashboard,
+html.theme-dark body.login,
+html[data-theme="dark"] body.app-admin,
+html[data-theme="dark"] body.dashboard,
+html[data-theme="dark"] body.login {
+    --body-bg: var(--admin-bg);
+    --darkened-bg: var(--admin-surface-soft);
+    --body-fg: var(--admin-text);
+    --body-quiet-color: var(--admin-muted);
+    --header-bg: var(--admin-header);
+    --header-color: var(--admin-text);
+    --breadcrumbs-bg: var(--admin-surface-soft);
+    --breadcrumbs-fg: var(--admin-muted);
+    --link-fg: var(--admin-link);
+    --link-hover-color: var(--admin-link-active);
+    --hairline-color: var(--admin-border);
+    --border-color: var(--admin-border);
+}
+
 /* Base workspace */
 body.app-admin,
 body.dashboard,
@@ -320,6 +341,97 @@ body[class^="app-"] #changelist-filter,
 body[class*=" app-"] #changelist-filter {
     margin-left: 16px;
     padding: 10px 12px;
+}
+
+/* Fix black search/actions bars and align controls */
+body.app-admin #changelist-search,
+body.dashboard #changelist-search,
+body[class^="app-"] #changelist-search,
+body[class*=" app-"] #changelist-search,
+body.app-admin #changelist .actions,
+body.dashboard #changelist .actions,
+body[class^="app-"] #changelist .actions,
+body[class*=" app-"] #changelist .actions,
+body.app-admin #toolbar,
+body.dashboard #toolbar,
+body[class^="app-"] #toolbar,
+body[class*=" app-"] #toolbar {
+    background: var(--admin-surface) !important;
+    color: var(--admin-text) !important;
+    border: 1px solid var(--admin-border) !important;
+    padding: 10px 12px !important;
+    margin: 0 0 12px !important;
+    box-shadow: none !important;
+}
+
+body.app-admin #changelist-search input[type="text"],
+body.dashboard #changelist-search input[type="text"],
+body[class^="app-"] #changelist-search input[type="text"],
+body[class*=" app-"] #changelist-search input[type="text"] {
+    min-height: 34px;
+    margin-right: 8px;
+}
+
+/* Keep module/changelist rows readable */
+body.app-admin .module table,
+body.dashboard .module table,
+body[class^="app-"] .module table,
+body[class*=" app-"] .module table,
+body.app-admin #result_list,
+body.dashboard #result_list,
+body[class^="app-"] #result_list,
+body[class*=" app-"] #result_list {
+    background: var(--admin-surface) !important;
+}
+
+body.app-admin .module tbody tr,
+body.dashboard .module tbody tr,
+body[class^="app-"] .module tbody tr,
+body[class*=" app-"] .module tbody tr,
+body.app-admin #result_list tbody tr,
+body.dashboard #result_list tbody tr,
+body[class^="app-"] #result_list tbody tr,
+body[class*=" app-"] #result_list tbody tr {
+    background: #fffefb !important;
+}
+
+body.app-admin .module tbody tr:nth-child(even),
+body.dashboard .module tbody tr:nth-child(even),
+body[class^="app-"] .module tbody tr:nth-child(even),
+body[class*=" app-"] .module tbody tr:nth-child(even),
+body.app-admin #result_list tbody tr:nth-child(even),
+body.dashboard #result_list tbody tr:nth-child(even),
+body[class^="app-"] #result_list tbody tr:nth-child(even),
+body[class*=" app-"] #result_list tbody tr:nth-child(even) {
+    background: #fff9ec !important;
+}
+
+body.app-admin .module th,
+body.dashboard .module th,
+body[class^="app-"] .module th,
+body[class*=" app-"] .module th,
+body.app-admin #result_list thead th,
+body.dashboard #result_list thead th,
+body[class^="app-"] #result_list thead th,
+body[class*=" app-"] #result_list thead th {
+    background: var(--admin-surface-soft) !important;
+    color: var(--admin-text) !important;
+}
+
+/* Make top-right user tools readable on soft header */
+body.app-admin #user-tools,
+body.dashboard #user-tools,
+body[class^="app-"] #user-tools,
+body[class*=" app-"] #user-tools {
+    color: var(--admin-muted) !important;
+}
+
+body.app-admin #user-tools a,
+body.dashboard #user-tools a,
+body[class^="app-"] #user-tools a,
+body[class*=" app-"] #user-tools a {
+    color: var(--admin-text) !important;
+    font-weight: 500;
 }
 
 @media (max-width: 1024px) {
