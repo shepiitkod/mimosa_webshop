@@ -1,5 +1,7 @@
 from django.contrib import admin
+from django.db.models import Sum
 from django.utils.html import format_html
+from decimal import Decimal
 
 from .models import CartItem, NewsletterUser, Order, OrderItem, Product
 
@@ -49,6 +51,7 @@ class OrderItemInline(admin.TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
+	change_list_template = 'admin/shop/order/change_list.html'
 	list_display = ('id', 'user', 'total_price', 'shipping_address', 'city', 'postal_code', 'status', 'created_at')
 	list_editable = ('status',)
 	list_filter = ('status', 'created_at', 'country')
@@ -73,6 +76,30 @@ class OrderAdmin(admin.ModelAdmin):
 	
 	address_short.short_description = 'Address'
 	address_short.admin_order_field = 'shipping_address'
+
+	def changelist_view(self, request, extra_context=None):
+		extra_context = extra_context or {}
+		response = super().changelist_view(request, extra_context=extra_context)
+
+		if not hasattr(response, 'context_data'):
+			return response
+
+		cl = response.context_data.get('cl')
+		if not cl:
+			return response
+
+		# Use the filtered changelist queryset so stats match active admin filters/search.
+		paid_total = cl.queryset.filter(status=Order.STATUS_PAID).aggregate(total=Sum('total_amount'))['total'] or Decimal('0.00')
+		commission = (paid_total * Decimal('0.10')).quantize(Decimal('0.01'))
+		client_revenue = (paid_total - commission).quantize(Decimal('0.01'))
+
+		response.context_data['commission_stats'] = {
+			'total_revenue': paid_total,
+			'my_commission': commission,
+			'client_revenue': client_revenue,
+		}
+
+		return response
 
 
 @admin.register(OrderItem)

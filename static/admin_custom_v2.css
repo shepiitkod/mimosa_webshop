@@ -355,6 +355,57 @@ body[class*=" app-"] input[type="button"]:hover {
     box-shadow: 0 0 12px rgba(220, 180, 0, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.3) !important;
 }
 
+/* Orders analytics cards on the changelist page */
+body.app-shop.model-order.change-list .commission-dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin: 0 0 10px;
+}
+
+body.app-shop.model-order.change-list .commission-card {
+    background: linear-gradient(180deg, #fffcf2 0%, #fff9e8 100%);
+    border: 1px solid #efe2b7;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 10px rgba(107, 84, 20, 0.08);
+    border-top: 4px solid #c6a531;
+}
+
+body.app-shop.model-order.change-list .commission-card h3 {
+    margin: 0 0 8px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #746a58 !important;
+}
+
+body.app-shop.model-order.change-list .commission-card .value {
+    margin: 0;
+    font-size: 30px;
+    line-height: 1.05;
+    font-weight: 700;
+    color: #2f2a22 !important;
+}
+
+body.app-shop.model-order.change-list .commission-card.revenue {
+    border-top-color: #8b6b00;
+}
+
+body.app-shop.model-order.change-list .commission-card.commission {
+    border-top-color: #6a8a2e;
+}
+
+body.app-shop.model-order.change-list .commission-card.client {
+    border-top-color: #b07d20;
+}
+
+body.app-shop.model-order.change-list .commission-note {
+    margin: 0 0 16px;
+    color: #746a58 !important;
+    font-size: 12px;
+}
+
 /* Changelist table/filter spacing */
 body.app-admin #changelist,
 body.dashboard #changelist,

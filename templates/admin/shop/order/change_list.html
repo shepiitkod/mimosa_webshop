@@ -1,0 +1,23 @@
+{% extends "admin/change_list.html" %}
+
+{% block content %}
+{% if commission_stats %}
+<div class="commission-dashboard" aria-label="Revenue analytics dashboard">
+  <div class="commission-card revenue">
+    <h3>Total Revenue</h3>
+    <p class="value">${{ commission_stats.total_revenue|floatformat:2 }}</p>
+  </div>
+  <div class="commission-card commission">
+    <h3>My Commission (10%)</h3>
+    <p class="value">${{ commission_stats.my_commission|floatformat:2 }}</p>
+  </div>
+  <div class="commission-card client">
+    <h3>Client Revenue (90%)</h3>
+    <p class="value">${{ commission_stats.client_revenue|floatformat:2 }}</p>
+  </div>
+</div>
+<p class="commission-note">Based on paid orders in the current filters.</p>
+{% endif %}
+
+{{ block.super }}
+{% endblock %}
