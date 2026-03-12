@@ -91,20 +91,21 @@ def _mark_order_paid_from_checkout_session(session_id: str) -> bool:
 		return False
 
 	# Extract shipping details from Stripe session
-	shipping_details = session_data.get('shipping_details')
-	if shipping_details and shipping_details.get('address'):
-		address_data = shipping_details.get('address')
-		order.address = address_data.get('line1', '')
-		order.city = address_data.get('city', '')
-		order.postal_code = address_data.get('postal_code', '')
-		order.country = address_data.get('country', '')
+	# TEMPORARILY DISABLED - uncomment after running: python manage.py migrate
+	# shipping_details = session_data.get('shipping_details')
+	# if shipping_details and shipping_details.get('address'):
+	# 	address_data = shipping_details.get('address')
+	# 	order.address = address_data.get('line1', '')
+	# 	order.city = address_data.get('city', '')
+	# 	order.postal_code = address_data.get('postal_code', '')
+	# 	order.country = address_data.get('country', '')
 
 	if order.status != Order.STATUS_PAID:
 		order.status = Order.STATUS_PAID
 		order.save()
 	else:
-		# If status is already paid, just save the address fields
-		order.save(update_fields=['address', 'city', 'postal_code', 'country'])
+		# If status is already paid, no update needed
+		pass
 
 	return True
 
@@ -518,13 +519,14 @@ def stripe_webhook(request):
 				order = Order.objects.get(id=order_id)
 				
 				# Extract shipping details from Stripe session
-				shipping_details = session_data.get('shipping_details')
-				if shipping_details and shipping_details.get('address'):
-					address_data = shipping_details.get('address')
-					order.address = address_data.get('line1', '')
-					order.city = address_data.get('city', '')
-					order.postal_code = address_data.get('postal_code', '')
-					order.country = address_data.get('country', '')
+				# TEMPORARILY DISABLED - uncomment after running: python manage.py migrate
+				# shipping_details = session_data.get('shipping_details')
+				# if shipping_details and shipping_details.get('address'):
+				# 	address_data = shipping_details.get('address')
+				# 	order.address = address_data.get('line1', '')
+				# 	order.city = address_data.get('city', '')
+				# 	order.postal_code = address_data.get('postal_code', '')
+				# 	order.country = address_data.get('country', '')
 				
 				order.status = Order.STATUS_PAID
 				order.save()
