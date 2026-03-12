@@ -1,25 +1,28 @@
 /*
-  Clean Django admin theme.
-  Strictly scoped to admin-only selectors so frontend pages are untouched.
+  Mimosa Boutique Admin (light only)
+  Scoped strictly to Django admin selectors.
 */
+
 body.app-admin,
 body.dashboard,
 body.login,
 body[class^="app-"],
 body[class*=" app-"],
 #django-admin-selectors {
-    --admin-bg: #f4f6f8;
+    --mimosa-yellow: #f4d03f;
+    --mimosa-yellow-strong: #ffd700;
+    --admin-bg: #fffdf8;
     --admin-surface: #ffffff;
-    --admin-surface-2: #f8fafc;
-    --admin-border: #d8dee6;
-    --admin-text: #1f2937;
-    --admin-muted: #5b6678;
-    --admin-link: #0b57d0;
-    --admin-link-hover: #0a45a8;
-    --admin-focus: #9db9ea;
+    --admin-surface-soft: #f7f4ed;
+    --admin-header: #f3efe6;
+    --admin-border: #e3ddcf;
+    --admin-text: #2f2a22;
+    --admin-muted: #746a58;
+    --admin-link: #8b6b00;
+    --admin-link-active: #5f4900;
 }
 
-/* Base containers and typography contrast */
+/* Base workspace */
 body.app-admin,
 body.dashboard,
 body.login,
@@ -43,13 +46,13 @@ body[class*=" app-"] #content {
     box-shadow: none !important;
 }
 
-/* Header, breadcrumb, and left nav readability */
+/* Soft neutral header */
 body.app-admin #header,
 body.dashboard #header,
 body[class^="app-"] #header,
 body[class*=" app-"] #header {
-    background: #2f5978 !important;
-    border-bottom: 1px solid #274960 !important;
+    background: var(--admin-header) !important;
+    border-bottom: 1px solid var(--admin-border) !important;
 }
 
 body.app-admin #header a,
@@ -60,56 +63,84 @@ body.app-admin #branding h1,
 body.app-admin #branding h1 a,
 body.dashboard #branding h1,
 body.dashboard #branding h1 a {
-    color: #f4f9ff !important;
+    color: var(--admin-text) !important;
 }
 
+/* Keep nav and crumbs light */
 body.app-admin div.breadcrumbs,
 body.dashboard div.breadcrumbs,
 body[class^="app-"] div.breadcrumbs,
 body[class*=" app-"] div.breadcrumbs {
-    background: #eaf0f5 !important;
+    background: var(--admin-surface-soft) !important;
     color: var(--admin-muted) !important;
     border-bottom: 1px solid var(--admin-border) !important;
-}
-
-body.app-admin div.breadcrumbs a,
-body.dashboard div.breadcrumbs a,
-body[class^="app-"] div.breadcrumbs a,
-body[class*=" app-"] div.breadcrumbs a {
-    color: var(--admin-link) !important;
 }
 
 body.app-admin #nav-sidebar,
 body.dashboard #nav-sidebar,
 body[class^="app-"] #nav-sidebar,
 body[class*=" app-"] #nav-sidebar {
-    background: #0f1720 !important;
-    border-right: 1px solid #1e2a36 !important;
+    background: #fffaf0 !important;
+    border-right: 1px solid var(--admin-border) !important;
 }
 
 body.app-admin #nav-sidebar a,
 body.dashboard #nav-sidebar a,
 body[class^="app-"] #nav-sidebar a,
-body[class*=" app-"] #nav-sidebar a,
-body.app-admin #nav-sidebar th,
-body.app-admin #nav-sidebar td,
-body.dashboard #nav-sidebar th,
-body.dashboard #nav-sidebar td {
-    color: #d6e0ea !important;
+body[class*=" app-"] #nav-sidebar a {
+    color: var(--admin-text) !important;
 }
 
-/* Restore expected dashboard structure (main + recent actions) */
+/* Active links use Mimosa yellow accent */
+body.app-admin a,
+body.dashboard a,
+body[class^="app-"] a,
+body[class*=" app-"] a {
+    color: var(--admin-link) !important;
+}
+
+body.app-admin a:hover,
+body.dashboard a:hover,
+body[class^="app-"] a:hover,
+body[class*=" app-"] a:hover,
+body.app-admin a:focus,
+body.dashboard a:focus,
+body[class^="app-"] a:focus,
+body[class*=" app-"] a:focus {
+    color: var(--admin-link-active) !important;
+}
+
+body.app-admin #nav-sidebar .current-model,
+body.dashboard #nav-sidebar .current-model,
+body[class^="app-"] #nav-sidebar .current-model,
+body[class*=" app-"] #nav-sidebar .current-model,
+body.app-admin #nav-sidebar .current-model a,
+body.dashboard #nav-sidebar .current-model a {
+    background: #fff3bf !important;
+    color: var(--admin-link-active) !important;
+}
+
+/* Layout spacing to prevent overlap */
+body.app-admin #content,
+body.dashboard #content,
+body[class^="app-"] #content,
+body[class*=" app-"] #content {
+    padding: 20px 24px !important;
+}
+
 body.dashboard #content-main {
     float: left;
     width: 74%;
     margin-right: 0;
+    padding-right: 18px;
+    box-sizing: border-box;
 }
 
 body.dashboard #content-related {
     float: right;
-    width: 24%;
+    width: 26%;
     margin: 0;
-    position: static;
+    box-sizing: border-box;
 }
 
 body.dashboard #content::after {
@@ -118,7 +149,7 @@ body.dashboard #content::after {
     clear: both;
 }
 
-/* Common panels: clean 1px borders, no visual noise */
+/* Panels and modules */
 body.app-admin .module,
 body.dashboard .module,
 body[class^="app-"] .module,
@@ -133,13 +164,18 @@ body[class^="app-"] .results,
 body[class*=" app-"] .results,
 body.dashboard #content-related,
 body.app-admin #changelist-filter,
-body.dashboard #changelist-filter,
-body[class^="app-"] #changelist-filter,
-body[class*=" app-"] #changelist-filter {
+body.dashboard #changelist-filter {
     background: var(--admin-surface) !important;
     border: 1px solid var(--admin-border) !important;
-    border-radius: 0 !important;
     box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+body.app-admin .module,
+body.dashboard .module,
+body[class^="app-"] .module,
+body[class*=" app-"] .module {
+    margin-bottom: 18px;
 }
 
 body.app-admin .module h2,
@@ -151,19 +187,35 @@ body.app-admin .module caption,
 body.dashboard .module caption,
 body.app-admin #changelist-filter h2,
 body.dashboard #changelist-filter h2 {
-    background: var(--admin-surface-2) !important;
+    background: var(--admin-surface-soft) !important;
     color: var(--admin-text) !important;
     border-bottom: 1px solid var(--admin-border) !important;
 }
 
-/* Table readability */
-body.app-admin table,
-body.dashboard table,
-body[class^="app-"] table,
-body[class*=" app-"] table {
-    background: var(--admin-surface) !important;
+/* Recent actions breathing room */
+body.dashboard #recent-actions-module,
+body.dashboard #recent-actions-module ul,
+body.dashboard #recent-actions-module li {
+    margin: 0;
+    padding: 0;
 }
 
+body.dashboard #recent-actions-module {
+    padding: 14px 16px;
+}
+
+body.dashboard #recent-actions-module li {
+    list-style: none;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0ebdd;
+    color: var(--admin-muted) !important;
+}
+
+body.dashboard #recent-actions-module li:last-child {
+    border-bottom: none;
+}
+
+/* Typography and table readability */
 body.app-admin th,
 body.app-admin td,
 body.app-admin label,
@@ -184,28 +236,12 @@ body.app-admin .quiet,
 body.dashboard .quiet,
 body[class^="app-"] .quiet,
 body[class*=" app-"] .quiet,
-body.dashboard #recent-actions-module p,
-body.dashboard #recent-actions-module li,
 body.app-admin #changelist-filter li,
 body.dashboard #changelist-filter li {
     color: var(--admin-muted) !important;
 }
 
-/* Links and controls contrast */
-body.app-admin a,
-body.dashboard a,
-body[class^="app-"] a,
-body[class*=" app-"] a {
-    color: var(--admin-link) !important;
-}
-
-body.app-admin a:hover,
-body.dashboard a:hover,
-body[class^="app-"] a:hover,
-body[class*=" app-"] a:hover {
-    color: var(--admin-link-hover) !important;
-}
-
+/* Inputs */
 body.app-admin input,
 body.app-admin select,
 body.app-admin textarea,
@@ -224,66 +260,92 @@ body[class*=" app-"] textarea {
     box-shadow: none !important;
 }
 
-body.app-admin input:focus,
-body.app-admin select:focus,
-body.app-admin textarea:focus,
-body.dashboard input:focus,
-body.dashboard select:focus,
-body.dashboard textarea:focus,
-body[class^="app-"] input:focus,
-body[class^="app-"] select:focus,
-body[class^="app-"] textarea:focus,
-body[class*=" app-"] input:focus,
-body[class*=" app-"] select:focus,
-body[class*=" app-"] textarea:focus {
-    outline: 2px solid var(--admin-focus) !important;
-    outline-offset: 0;
-}
-
+/* Critical buttons: Mimosa yellow with smooth hover */
 body.app-admin .button,
+body.app-admin .default,
 body.app-admin input[type="submit"],
 body.app-admin input[type="button"],
 body.dashboard .button,
+body.dashboard .default,
 body.dashboard input[type="submit"],
 body.dashboard input[type="button"],
 body[class^="app-"] .button,
+body[class^="app-"] .default,
 body[class^="app-"] input[type="submit"],
 body[class^="app-"] input[type="button"],
 body[class*=" app-"] .button,
+body[class*=" app-"] .default,
 body[class*=" app-"] input[type="submit"],
 body[class*=" app-"] input[type="button"] {
-    background: #f8fafc !important;
-    color: var(--admin-text) !important;
-    border: 1px solid var(--admin-border) !important;
-    border-radius: 0 !important;
+    background: linear-gradient(180deg, var(--mimosa-yellow), var(--mimosa-yellow-strong)) !important;
+    color: #2f2a22 !important;
+    border: 1px solid #d3b300 !important;
+    border-radius: 4px !important;
     box-shadow: none !important;
     text-shadow: none !important;
-    transform: none !important;
+    transition: all 0.3s ease;
 }
 
-/* Changelist alignment and filter column stability */
+body.app-admin .button:hover,
+body.app-admin .default:hover,
+body.app-admin input[type="submit"]:hover,
+body.app-admin input[type="button"]:hover,
+body.dashboard .button:hover,
+body.dashboard .default:hover,
+body.dashboard input[type="submit"]:hover,
+body.dashboard input[type="button"]:hover,
+body[class^="app-"] .button:hover,
+body[class^="app-"] .default:hover,
+body[class^="app-"] input[type="submit"]:hover,
+body[class^="app-"] input[type="button"]:hover,
+body[class*=" app-"] .button:hover,
+body[class*=" app-"] .default:hover,
+body[class*=" app-"] input[type="submit"]:hover,
+body[class*=" app-"] input[type="button"]:hover {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 6px 14px rgba(212, 181, 0, 0.28) !important;
+}
+
+/* Changelist table/filter spacing */
 body.app-admin #changelist,
 body.dashboard #changelist,
 body[class^="app-"] #changelist,
 body[class*=" app-"] #changelist {
-    overflow: hidden;
+    margin-top: 12px;
 }
 
-body.app-admin #changelist #changelist-form,
-body.dashboard #changelist #changelist-form,
-body[class^="app-"] #changelist #changelist-form,
-body[class*=" app-"] #changelist #changelist-form {
-    margin-right: 0;
+body.app-admin #changelist-filter,
+body.dashboard #changelist-filter,
+body[class^="app-"] #changelist-filter,
+body[class*=" app-"] #changelist-filter {
+    margin-left: 16px;
+    padding: 10px 12px;
 }
 
 @media (max-width: 1024px) {
+    body.app-admin #content,
+    body.dashboard #content,
+    body[class^="app-"] #content,
+    body[class*=" app-"] #content {
+        padding: 16px;
+    }
+
     body.dashboard #content-main,
     body.dashboard #content-related {
         float: none;
         width: 100%;
+        padding-right: 0;
     }
 
     body.dashboard #content-related {
         margin-top: 16px;
+    }
+
+    body.app-admin #changelist-filter,
+    body.dashboard #changelist-filter,
+    body[class^="app-"] #changelist-filter,
+    body[class*=" app-"] #changelist-filter {
+        margin-left: 0;
+        margin-top: 12px;
     }
 }
