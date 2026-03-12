@@ -1,5 +1,6 @@
 from decimal import Decimal, InvalidOperation
 import json
+import traceback
 
 import stripe
 from django.conf import settings
@@ -43,8 +44,7 @@ def _create_stripe_session_for_order(request, order):
 	cancel_url = request.build_absolute_uri(reverse('shop:cancel'))
 
 	return stripe.checkout.Session.create(
-		mode='payment',
-		automatic_payment_methods={'enabled': True},
+		payment_method_types=['card'],
 		line_items=[
 			{
 				'price_data': {
@@ -58,9 +58,7 @@ def _create_stripe_session_for_order(request, order):
 				'quantity': 1,
 			}
 		],
-		metadata={'order_id': str(order.id)},
-		client_reference_id=str(order.id),
-		customer_email=order.user.email or None,
+		mode='payment',
 		shipping_address_collection={'allowed_countries': ['FR', 'UA', 'GB', 'US']},
 		success_url=success_url,
 		cancel_url=cancel_url,
@@ -351,8 +349,9 @@ def order_create(request):
 
 	try:
 		session = _create_stripe_session_for_order(request, order)
-	except ValueError as exc:
-		return HttpResponse(str(exc), status=500)
+	except Exception as e:
+		print(str(e))
+		return HttpResponse(str(e), status=500)
 
 	return redirect(session.url, permanent=False)
 
@@ -423,34 +422,35 @@ def create_order_from_product(request):
 @login_required
 @require_POST
 def create_checkout_session(request):
-	items, total = _cart_summary(request.session)
-	if not items:
-		return redirect('shop:cart_detail')
+	try:
+		items, total = _cart_summary(request.session)
+		if not items:
+			return redirect('shop:cart_detail')
 
-	with transaction.atomic():
-		order = Order.objects.create(
-			user=request.user,
-			total_amount=total,
-			status=Order.STATUS_PROCESSING,
-		)
-
-		for item in items:
-			OrderItem.objects.create(
-				order=order,
-				product=item['product'],
-				quantity=item['quantity'],
-				price_at_purchase=item['product'].price,
+		with transaction.atomic():
+			order = Order.objects.create(
+				user=request.user,
+				total_amount=total,
+				status=Order.STATUS_PROCESSING,
 			)
 
-	request.session['cart'] = {}
-	request.session.modified = True
+			for item in items:
+				OrderItem.objects.create(
+					order=order,
+					product=item['product'],
+					quantity=item['quantity'],
+					price_at_purchase=item['product'].price,
+				)
 
-	try:
+		request.session['cart'] = {}
+		request.session.modified = True
+
 		session = _create_stripe_session_for_order(request, order)
-	except ValueError as exc:
-		return HttpResponse(str(exc), status=500)
-
-	return redirect(session.url, permanent=False)
+		return redirect(session.url, permanent=False)
+	except Exception as e:
+		error_message = traceback.format_exc()
+		print(error_message)
+		return HttpResponse(f'<pre>{error_message}</pre>', status=200)
 
 
 @login_required
@@ -463,8 +463,9 @@ def create_checkout_session_for_order(request, order_id):
 
 	try:
 		session = _create_stripe_session_for_order(request, order)
-	except ValueError as exc:
-		return HttpResponse(str(exc), status=500)
+	except Exception as e:
+		print(str(e))
+		return HttpResponse(str(e), status=500)
 
 	return redirect(session.url, permanent=False)
 
@@ -520,17 +521,18 @@ def stripe_webhook(request):
 		if order_id:
 			try:
 				order = Order.objects.get(id=order_id)
-				
-				shipping_details = session_data.get('shipping_details')
-				if shipping_details and shipping_details.get('address'):
-					address_data = shipping_details.get('address')
-					order.shipping_address = address_data.get('line1', '')
-					order.city = address_data.get('city', '')
-					order.postal_code = address_data.get('postal_code', '')
-					order.country = address_data.get('country', '')
-				
+
+				# Temporarily disabled address persistence to isolate checkout issues.
+				# shipping_details = session_data.get('shipping_details')
+				# if shipping_details and shipping_details.get('address'):
+				# 	address_data = shipping_details.get('address')
+				# 	order.shipping_address = address_data.get('line1', '')
+				# 	order.city = address_data.get('city', '')
+				# 	order.postal_code = address_data.get('postal_code', '')
+				# 	order.country = address_data.get('country', '')
+
 				order.status = Order.STATUS_PAID
-				order.save()
+				order.save(update_fields=['status'])
 			except Order.DoesNotExist:
 				return JsonResponse({'error': 'Order not found.'}, status=404)
 
