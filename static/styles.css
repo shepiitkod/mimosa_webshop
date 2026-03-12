@@ -3688,6 +3688,120 @@ nav ul li a:focus-visible::after {
     transition: transform 240ms ease;
 }
 
+/* Newsletter section: restore missing footer subscription styling */
+.newsletter-section {
+    width: min(1120px, calc(100% - 40px));
+    margin: 56px auto 22px;
+    padding: 34px 30px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, rgba(252, 248, 236, 0.95), rgba(246, 236, 214, 0.95));
+    border: 1px solid rgba(225, 205, 158, 0.45);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08);
+}
+
+.newsletter-container {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 24px;
+    align-items: center;
+}
+
+.newsletter-title {
+    margin: 0 0 10px;
+    font-size: clamp(26px, 3.2vw, 34px);
+    font-weight: 700;
+    color: #1f1a12;
+}
+
+.newsletter-subtitle {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #5a513f;
+}
+
+.newsletter-form {
+    width: 100%;
+}
+
+.newsletter-input-wrapper {
+    display: flex;
+    gap: 10px;
+    padding: 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(210, 189, 142, 0.45);
+}
+
+.newsletter-input {
+    flex: 1;
+    min-width: 0;
+    height: 50px;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 0 14px;
+    font-size: 15px;
+    color: #2a2419;
+}
+
+.newsletter-input::placeholder {
+    color: #8a806a;
+}
+
+.newsletter-btn {
+    height: 50px;
+    padding: 0 24px;
+    border: 1px solid rgba(196, 160, 80, 0.8);
+    border-radius: 999px;
+    background: linear-gradient(135deg, #ecdcb8, #f0e4c8);
+    color: #2a2a2a;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.24s ease, box-shadow 0.24s ease, filter 0.24s ease;
+}
+
+.newsletter-btn:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.04);
+    box-shadow: 0 8px 20px rgba(201, 169, 97, 0.34);
+}
+
+.newsletter-message {
+    min-height: 22px;
+    margin-top: 10px;
+    font-size: 13px;
+    color: #6c614c;
+}
+
+@media (max-width: 900px) {
+    .newsletter-section {
+        width: calc(100% - 24px);
+        margin: 36px auto 16px;
+        padding: 22px 16px;
+        border-radius: 16px;
+    }
+
+    .newsletter-container {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .newsletter-input-wrapper {
+        flex-direction: column;
+        border-radius: 14px;
+        padding: 10px;
+    }
+
+    .newsletter-btn,
+    .newsletter-input {
+        width: 100%;
+    }
+}
+
 .Products > .Product1:hover img,
 .Products > .Product2:hover img,
 .Products > .Product3:hover img,
