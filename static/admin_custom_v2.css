@@ -197,10 +197,10 @@ body[class*=" app-"] .results,
 body.dashboard #content-related,
 body.app-admin #changelist-filter,
 body.dashboard #changelist-filter {
-    background: var(--admin-surface) !important;
-    border: 1px solid var(--admin-border) !important;
+    background: #fcfaf0 !important;
+    border: 1px solid #efe6c8 !important;
     box-shadow: none !important;
-    border-radius: 8px !important;
+    border-radius: 12px !important;
     overflow: hidden;
 }
 
@@ -238,7 +238,7 @@ body.dashboard #recent-actions-module li {
 }
 
 body.dashboard #recent-actions-module {
-    padding: 14px 16px;
+    padding: 20px 25px;
 }
 
 body.dashboard #recent-actions-module li {
@@ -320,12 +320,17 @@ body[class*=" app-"] .button,
 body[class*=" app-"] .default,
 body[class*=" app-"] input[type="submit"],
 body[class*=" app-"] input[type="button"] {
-    background: linear-gradient(180deg, var(--mimosa-yellow), var(--mimosa-yellow-strong)) !important;
-    color: #2f2a22 !important;
-    border: 1px solid #d3b300 !important;
+    background: linear-gradient(160deg, #f7e67a 0%, #e8c84a 60%, #d4a900 100%) !important;
+    color: #3a2e00 !important;
+    border: 1px solid #c5a000 !important;
     border-radius: 20px !important;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.1) !important;
     text-shadow: none !important;
+    font-family: 'Poppins', 'Lato', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
     transition: all 0.3s ease;
 }
 
@@ -346,8 +351,8 @@ body[class*=" app-"] .default:hover,
 body[class*=" app-"] input[type="submit"]:hover,
 body[class*=" app-"] input[type="button"]:hover {
     transform: translateY(-1px) scale(1.02);
-    filter: brightness(1.1);
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5), inset 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+    filter: brightness(1.08);
+    box-shadow: 0 0 12px rgba(220, 180, 0, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.3) !important;
 }
 
 /* Changelist table/filter spacing */
@@ -382,12 +387,15 @@ body[class*=" app-"] #toolbar {
     background: var(--admin-surface) !important;
     color: var(--admin-text) !important;
     border: 1px solid var(--admin-border) !important;
-    padding: 10px 12px !important;
+    padding: 16px 20px !important;
     margin: 0 0 12px !important;
     box-shadow: none !important;
     width: 100% !important;
     max-width: none !important;
     box-sizing: border-box;
+    background: #fcfaf0 !important;
+    border: 1px solid #efe6c8 !important;
+    border-radius: 12px !important;
     display: flex;
     align-items: center;
     gap: 10px;
