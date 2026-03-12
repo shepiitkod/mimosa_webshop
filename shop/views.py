@@ -60,6 +60,7 @@ def _create_stripe_session_for_order(request, order):
 		metadata={'order_id': str(order.id)},
 		client_reference_id=str(order.id),
 		customer_email=order.user.email or None,
+		shipping_address_collection={'allowed_countries': ['AF', 'AX', 'AL', 'DZ', 'AS', 'AD', 'AO', 'AI', 'AQ', 'AG', 'AR', 'AM', 'AW', 'AU', 'AT', 'AZ', 'BS', 'BH', 'BD', 'BB', 'BY', 'BE', 'BZ', 'BJ', 'BM', 'BT', 'BO', 'BA', 'BW', 'BV', 'BR', 'IO', 'BN', 'BG', 'BF', 'BI', 'KH', 'CM', 'CA', 'CV', 'KY', 'CF', 'TD', 'CL', 'CN', 'CX', 'CC', 'CO', 'KM', 'CG', 'CD', 'CK', 'CR', 'CI', 'HR', 'CU', 'CY', 'CZ', 'DK', 'DJ', 'DM', 'DO', 'EC', 'EG', 'SV', 'GQ', 'ER', 'EE', 'ET', 'FK', 'FO', 'FJ', 'FI', 'FR', 'GF', 'PF', 'TF', 'GA', 'GM', 'GE', 'DE', 'GH', 'GI', 'GR', 'GL', 'GD', 'GP', 'GU', 'GT', 'GN', 'GW', 'GY', 'HT', 'HM', 'HN', 'HK', 'HU', 'IS', 'IN', 'ID', 'IR', 'IQ', 'IE', 'IL', 'IT', 'JM', 'JP', 'JE', 'JO', 'KZ', 'KE', 'KI', 'KP', 'KR', 'KW', 'KG', 'LA', 'LV', 'LB', 'LS', 'LR', 'LY', 'LI', 'LT', 'LU', 'MO', 'MK', 'MG', 'MW', 'MY', 'MV', 'ML', 'MT', 'MH', 'MQ', 'MR', 'MU', 'YT', 'MX', 'FM', 'MD', 'MC', 'MN', 'ME', 'MS', 'MA', 'MZ', 'MM', 'NA', 'NR', 'NP', 'NL', 'AN', 'NC', 'NZ', 'NI', 'NE', 'NG', 'NU', 'NF', 'MP', 'NO', 'OM', 'PK', 'PW', 'PA', 'PG', 'PY', 'PE', 'PH', 'PN', 'PL', 'PT', 'PR', 'QA', 'RE', 'RO', 'RU', 'RW', 'BL', 'SH', 'KN', 'LC', 'MF', 'PM', 'VC', 'WS', 'SM', 'ST', 'SA', 'SN', 'RS', 'SC', 'SL', 'SG', 'SK', 'SI', 'SB', 'SO', 'ZA', 'ES', 'LK', 'SD', 'SR', 'SJ', 'SZ', 'SE', 'CH', 'SY', 'TW', 'TJ', 'TZ', 'TH', 'TL', 'TG', 'TK', 'TO', 'TT', 'TN', 'TR', 'TM', 'TV', 'AE', 'GB', 'US', 'UY', 'UZ', 'VU', 'VE', 'VN', 'VG', 'VI', 'WF', 'EH', 'YE', 'ZM', 'ZW']},
 		success_url=success_url,
 		cancel_url=cancel_url,
 	)
@@ -89,9 +90,21 @@ def _mark_order_paid_from_checkout_session(session_id: str) -> bool:
 	except (Order.DoesNotExist, ValueError, TypeError):
 		return False
 
+	# Extract shipping details from Stripe session
+	shipping_details = session_data.get('shipping_details')
+	if shipping_details and shipping_details.get('address'):
+		address_data = shipping_details.get('address')
+		order.address = address_data.get('line1', '')
+		order.city = address_data.get('city', '')
+		order.postal_code = address_data.get('postal_code', '')
+		order.country = address_data.get('country', '')
+
 	if order.status != Order.STATUS_PAID:
 		order.status = Order.STATUS_PAID
-		order.save(update_fields=['status'])
+		order.save()
+	else:
+		# If status is already paid, just save the address fields
+		order.save(update_fields=['address', 'city', 'postal_code', 'country'])
 
 	return True
 
@@ -503,8 +516,18 @@ def stripe_webhook(request):
 		if order_id:
 			try:
 				order = Order.objects.get(id=order_id)
+				
+				# Extract shipping details from Stripe session
+				shipping_details = session_data.get('shipping_details')
+				if shipping_details and shipping_details.get('address'):
+					address_data = shipping_details.get('address')
+					order.address = address_data.get('line1', '')
+					order.city = address_data.get('city', '')
+					order.postal_code = address_data.get('postal_code', '')
+					order.country = address_data.get('country', '')
+				
 				order.status = Order.STATUS_PAID
-				order.save(update_fields=['status'])
+				order.save()
 			except Order.DoesNotExist:
 				return JsonResponse({'error': 'Order not found.'}, status=404)
 

@@ -49,17 +49,30 @@ class OrderItemInline(admin.TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-	list_display = ('id', 'user', 'total_price', 'status', 'created_at')
+	list_display = ('id', 'user', 'total_price', 'city', 'address_short', 'status', 'created_at')
 	list_editable = ('status',)
-	list_filter = ('status', 'created_at')
-	search_fields = ('id', 'user__username')
+	list_filter = ('status', 'created_at', 'country')
+	search_fields = ('id', 'user__username', 'address', 'city', 'postal_code')
 	inlines = [OrderItemInline]
+	fieldsets = (
+		('Order Info', {'fields': ('user', 'total_amount', 'status', 'created_at')}),
+		('Shipping Address', {'fields': ('address', 'city', 'postal_code', 'country')}),
+	)
+	readonly_fields = ('created_at',)
 
 	def total_price(self, obj):
 		return obj.total_amount
 
 	total_price.short_description = 'Total price'
 	total_price.admin_order_field = 'total_amount'
+
+	def address_short(self, obj):
+		if obj.address:
+			return f"{obj.address}"[:50] + ("..." if len(obj.address) > 50 else "")
+		return "-"
+	
+	address_short.short_description = 'Address'
+	address_short.admin_order_field = 'address'
 
 
 @admin.register(OrderItem)
