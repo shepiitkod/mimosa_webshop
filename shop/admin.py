@@ -49,10 +49,17 @@ class OrderItemInline(admin.TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-	list_display = ('id', 'user', 'created_at', 'total_amount', 'status')
+	list_display = ('id', 'user', 'total_price', 'status', 'created_at')
+	list_editable = ('status',)
 	list_filter = ('status', 'created_at')
-	search_fields = ('user__username', 'user__email')
+	search_fields = ('id', 'user__username')
 	inlines = [OrderItemInline]
+
+	def total_price(self, obj):
+		return obj.total_amount
+
+	total_price.short_description = 'Total price'
+	total_price.admin_order_field = 'total_amount'
 
 
 @admin.register(OrderItem)
