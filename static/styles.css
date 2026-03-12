@@ -4080,8 +4080,13 @@ body.is-loaded header figure::after {
 }
 
 .status-transit {
-    background: #ddebff;
-    color: #1f5fc1;
+    background: #f4d03f;
+    color: #5e4900;
+}
+
+.status-pending {
+    background: #ececec;
+    color: #5a5a5a;
 }
 
 .status-neutral {

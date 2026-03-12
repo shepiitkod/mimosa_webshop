@@ -42,9 +42,11 @@
                         <div class="order-card-top">
                             <h3><span data-translate="order-label">Order</span> #{{ order.id }}</h3>
                             {% if order.status == 'delivered' %}
-                                <span class="order-status-badge status-delivered" data-translate="order-status-delivered">Delivered</span>
-                            {% elif order.status == 'shipped' %}
-                                <span class="order-status-badge status-transit" data-translate="order-status-transit">In Transit</span>
+                                <span class="order-status-badge status-delivered">{{ order.get_status_display }}</span>
+                            {% elif order.status == 'shipped' or order.status == 'in_transit' %}
+                                <span class="order-status-badge status-transit">{{ order.get_status_display }}</span>
+                            {% elif order.status == 'processing' or order.status == 'pending' %}
+                                <span class="order-status-badge status-pending">{{ order.get_status_display }}</span>
                             {% else %}
                                 <span class="order-status-badge status-neutral">{{ order.get_status_display }}</span>
                             {% endif %}
