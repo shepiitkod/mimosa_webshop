@@ -74,6 +74,7 @@ body[class^="app-"] #header,
 body[class*=" app-"] #header {
     background: var(--admin-header) !important;
     border-bottom: 1px solid var(--admin-border) !important;
+    border-radius: 0 0 8px 8px !important;
 }
 
 body.app-admin #header a,
@@ -103,6 +104,7 @@ body[class^="app-"] #nav-sidebar,
 body[class*=" app-"] #nav-sidebar {
     background: #fffaf0 !important;
     border-right: 1px solid var(--admin-border) !important;
+    border-radius: 0 8px 8px 0 !important;
 }
 
 body.app-admin #nav-sidebar a,
@@ -198,7 +200,8 @@ body.dashboard #changelist-filter {
     background: var(--admin-surface) !important;
     border: 1px solid var(--admin-border) !important;
     box-shadow: none !important;
-    border-radius: 0 !important;
+    border-radius: 8px !important;
+    overflow: hidden;
 }
 
 body.app-admin .module,
@@ -240,9 +243,15 @@ body.dashboard #recent-actions-module {
 
 body.dashboard #recent-actions-module li {
     list-style: none;
-    padding: 8px 0;
+    padding: 8px 10px;
     border-bottom: 1px solid #f0ebdd;
+    border-radius: 4px;
     color: var(--admin-muted) !important;
+    transition: background 0.2s ease;
+}
+
+body.dashboard #recent-actions-module li:hover {
+    background: #fdfdfd;
 }
 
 body.dashboard #recent-actions-module li:last-child {
@@ -314,8 +323,8 @@ body[class*=" app-"] input[type="button"] {
     background: linear-gradient(180deg, var(--mimosa-yellow), var(--mimosa-yellow-strong)) !important;
     color: #2f2a22 !important;
     border: 1px solid #d3b300 !important;
-    border-radius: 4px !important;
-    box-shadow: none !important;
+    border-radius: 20px !important;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1) !important;
     text-shadow: none !important;
     transition: all 0.3s ease;
 }
@@ -337,7 +346,8 @@ body[class*=" app-"] .default:hover,
 body[class*=" app-"] input[type="submit"]:hover,
 body[class*=" app-"] input[type="button"]:hover {
     transform: translateY(-1px) scale(1.02);
-    box-shadow: 0 6px 14px rgba(212, 181, 0, 0.28) !important;
+    filter: brightness(1.1);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5), inset 0 1px 3px rgba(0, 0, 0, 0.1) !important;
 }
 
 /* Changelist table/filter spacing */
