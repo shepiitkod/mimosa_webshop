@@ -44,6 +44,7 @@ def _create_stripe_session_for_order(request, order):
 
 	return stripe.checkout.Session.create(
 		mode='payment',
+		automatic_payment_methods={'enabled': True},
 		line_items=[
 			{
 				'price_data': {
@@ -60,7 +61,7 @@ def _create_stripe_session_for_order(request, order):
 		metadata={'order_id': str(order.id)},
 		client_reference_id=str(order.id),
 		customer_email=order.user.email or None,
-		shipping_address_collection={'allowed_countries': ['FR', 'UA', 'US', 'GB']},
+		shipping_address_collection={'allowed_countries': ['FR', 'UA', 'GB', 'US']},
 		success_url=success_url,
 		cancel_url=cancel_url,
 	)
