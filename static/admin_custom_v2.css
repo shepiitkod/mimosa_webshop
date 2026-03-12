@@ -510,29 +510,64 @@ body[class*=" app-"] #user-tools a {
 }
 
 /* Premium Upgrade: admin buttons and immediate blocks only */
-.module,
-#recent-actions-module {
-    border: 1px solid #efe6c8;
-    border-radius: 14px;
-    padding: 25px;
+body.app-admin .module,
+body.dashboard .module,
+body[class^="app-"] .module,
+body[class*=" app-"] .module,
+body.dashboard #recent-actions-module {
+    border: 1px solid #efe6c8 !important;
+    border-radius: 14px !important;
+    padding: 25px !important;
 }
 
-.button,
-input[type="submit"],
-.add-group,
-#search-form .button {
-    background: #f4d03f;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4), 0 2px 4px rgba(0, 0, 0, 0.1);
+body.app-admin .button,
+body.dashboard .button,
+body[class^="app-"] .button,
+body[class*=" app-"] .button,
+body.app-admin input[type="submit"],
+body.dashboard input[type="submit"],
+body[class^="app-"] input[type="submit"],
+body[class*=" app-"] input[type="submit"],
+body.app-admin .addlink,
+body.dashboard .addlink,
+body[class^="app-"] .addlink,
+body[class*=" app-"] .addlink,
+body.app-admin .changelink,
+body.dashboard .changelink,
+body[class^="app-"] .changelink,
+body[class*=" app-"] .changelink,
+body.app-admin #changelist-search input[type="submit"],
+body.dashboard #changelist-search input[type="submit"],
+body[class^="app-"] #changelist-search input[type="submit"],
+body[class*=" app-"] #changelist-search input[type="submit"] {
+    background: #f4d03f !important;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
     text-transform: uppercase;
     font-weight: 600;
     letter-spacing: 1.2px;
     transition: all 0.4s ease;
 }
 
-.button:hover,
-input[type="submit"]:hover,
-.add-group:hover,
-#search-form .button:hover {
+body.app-admin .button:hover,
+body.dashboard .button:hover,
+body[class^="app-"] .button:hover,
+body[class*=" app-"] .button:hover,
+body.app-admin input[type="submit"]:hover,
+body.dashboard input[type="submit"]:hover,
+body[class^="app-"] input[type="submit"]:hover,
+body[class*=" app-"] input[type="submit"]:hover,
+body.app-admin .addlink:hover,
+body.dashboard .addlink:hover,
+body[class^="app-"] .addlink:hover,
+body[class*=" app-"] .addlink:hover,
+body.app-admin .changelink:hover,
+body.dashboard .changelink:hover,
+body[class^="app-"] .changelink:hover,
+body[class*=" app-"] .changelink:hover,
+body.app-admin #changelist-search input[type="submit"]:hover,
+body.dashboard #changelist-search input[type="submit"]:hover,
+body[class^="app-"] #changelist-search input[type="submit"]:hover,
+body[class*=" app-"] #changelist-search input[type="submit"]:hover {
     transform: scale(1.03);
-    box-shadow: 0 0 10px rgba(244, 208, 63, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4), 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(244, 208, 63, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
 }
