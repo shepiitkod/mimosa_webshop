@@ -1,328 +1,178 @@
-/* Mimosa Admin: dark base + soft yellow action buttons */
-:root {
-    --mimosa-yellow: #d8b15a;
-    --mimosa-yellow-soft: #f0e4c8;
-    --mimosa-bg: #0d1018;
-    --mimosa-panel: #171c28;
-    --mimosa-panel-2: #1d2432;
-    --mimosa-border: #2a3244;
-    --mimosa-text: #d6dceb;
-    --mimosa-muted: #9ea8bf;
-}
-
-html,
-body,
+/* Admin-only cleanup: isolated to Django admin body classes/selectors */
+body.app-admin,
+body.dashboard,
 body.login,
-input,
-textarea,
-select,
-button {
-    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+body[class^="app-"],
+body[class*=" app-"],
+#django-admin-selectors {
+    --admin-bg: #f5f6f8;
+    --admin-panel: #ffffff;
+    --admin-border: #d9dce1;
+    --admin-text: #1f2937;
+    --admin-muted: #4b5563;
+    --admin-link: #0b57d0;
 }
 
-body,
+body.app-admin,
+body.dashboard,
 body.login,
-#container,
-#content {
-    background: radial-gradient(circle at 15% 10%, #1b2332 0%, #101521 38%, var(--mimosa-bg) 100%);
-    color: var(--mimosa-text);
-    line-height: 1.55;
+body[class^="app-"],
+body[class*=" app-"],
+body.app-admin #container,
+body.dashboard #container,
+body.login #container,
+body[class^="app-"] #container,
+body[class*=" app-"] #container {
+    background: var(--admin-bg);
+    color: var(--admin-text);
 }
 
-#header {
-    background: #141a26;
-    border-bottom: 1px solid var(--mimosa-border);
+body.app-admin #content,
+body.dashboard #content,
+body[class^="app-"] #content,
+body[class*=" app-"] #content {
+    background: transparent;
+    color: var(--admin-text);
+    box-shadow: none;
 }
 
-#branding h1,
-#branding h1 a,
-#header a:link,
-#header a:visited {
-    color: var(--mimosa-text);
-}
-
-div.breadcrumbs {
-    background: #121826;
-    border-bottom: 1px solid var(--mimosa-border);
-    color: var(--mimosa-muted);
-}
-
-div.breadcrumbs a {
-    color: var(--mimosa-yellow-soft);
-}
-
-#nav-sidebar {
-    background: #111726;
-    border-right: 1px solid var(--mimosa-border);
-}
-
-#nav-sidebar a,
-#nav-sidebar th,
-#nav-sidebar td {
-    color: var(--mimosa-text);
-}
-
-#nav-sidebar .current-model {
-    background: rgba(216, 177, 90, 0.14);
-}
-
-.module,
-.results,
-.dashboard .module,
-.change-list .results,
-fieldset,
-.inline-group {
-    background: linear-gradient(180deg, var(--mimosa-panel) 0%, var(--mimosa-panel-2) 100%);
-    border: 1px solid var(--mimosa-border);
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.module h2,
-.module caption,
-.inline-group h2 {
-    background: #20283a;
-    color: var(--mimosa-text);
-    border-bottom: 1px solid var(--mimosa-border);
-}
-
-th,
-td,
-label,
-p,
-li,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    color: var(--mimosa-text);
-}
-
-p,
-li,
-td,
-th,
-label {
-    font-size: 14px;
-}
-
-h1 { font-size: 28px; }
-h2 { font-size: 22px; }
-h3 { font-size: 18px; }
-
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="number"],
-input[type="url"],
-textarea,
-select,
-.vTextField,
-.vLargeTextField {
-    background: #0f1522;
-    border: 1px solid #303a50;
-    color: #ecf1ff;
-}
-
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="email"]:focus,
-input[type="number"]:focus,
-input[type="url"]:focus,
-textarea:focus,
-select:focus {
-    border-color: var(--mimosa-yellow);
-    box-shadow: 0 0 0 2px rgba(216, 177, 90, 0.24);
-    outline: none;
-}
-
-/* Soft yellow buttons with smooth animation */
-input[type="submit"],
-input[type="button"],
-button,
-.button,
-.submit-row input,
-.object-tools a,
-a.button,
-.addlink,
-.changelink {
-    border-radius: 9px;
-    border: 1px solid #c8a152;
-    background: linear-gradient(135deg, #ecdcb8, #f0e4c8);
-    color: #2a2a2a !important;
-    transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
-}
-
-input[type="submit"]:hover,
-input[type="button"]:hover,
-button:hover,
-.button:hover,
-.submit-row input:hover,
-.object-tools a:hover,
-a.button:hover,
-.addlink:hover,
-.changelink:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 7px 16px rgba(201, 162, 79, 0.28);
-    filter: brightness(1.04);
-}
-
-input[type="submit"]:active,
-input[type="button"]:active,
-button:active,
-.button:active,
-.submit-row input:active,
-.object-tools a:active,
-a.button:active,
-.addlink:active,
-.changelink:active {
-    transform: translateY(0) scale(0.99);
-}
-
-a,
-th a,
-.selector-chosen h2 {
-    color: var(--mimosa-yellow-soft);
-}
-
-a:hover,
-th a:hover {
-    color: #f7e8c8;
-}
-
-/* Keep login panel dark and clean */
-body.login #container {
-    background: linear-gradient(180deg, #171d2b 0%, #111725 100%);
-    border: 1px solid var(--mimosa-border);
-    border-radius: 12px;
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.35);
-}
-
-.theme-toggle {
-    display: none !important;
-}
-
-/* Admin index: clearer two-panel layout with readable right sidebar */
-body.dashboard #content {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 340px;
-    gap: 22px;
-    align-items: start;
-}
-
+/* Restore Django admin dashboard two-column structure */
 body.dashboard #content-main {
-    float: none;
-    width: auto;
-    margin: 0;
-    min-width: 0;
+    float: left;
+    width: 74%;
+    margin-right: 0;
 }
 
 body.dashboard #content-related {
-    display: block;
-    float: none;
-    clear: none;
-    width: auto;
+    float: right;
+    width: 24%;
+    position: static;
     margin: 0;
-    position: sticky;
-    top: 86px;
-    background: linear-gradient(180deg, #1a2231 0%, #151c2a 100%);
-    border: 1px solid var(--mimosa-border);
-    border-radius: 10px;
-    padding: 14px 16px;
 }
 
-body.dashboard #content-related h2 {
-    margin: 0 0 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--mimosa-border);
-    font-size: 18px;
+body.dashboard #content::after {
+    content: "";
+    display: table;
+    clear: both;
 }
 
-body.dashboard #recent-actions-module h3,
+/* Clean, readable panels and table blocks */
+body.app-admin .module,
+body.dashboard .module,
+body[class^="app-"] .module,
+body[class*=" app-"] .module,
+body.app-admin fieldset,
+body.dashboard fieldset,
+body[class^="app-"] fieldset,
+body[class*=" app-"] fieldset,
+body.app-admin .results,
+body.dashboard .results,
+body[class^="app-"] .results,
+body[class*=" app-"] .results,
+body.dashboard #content-related {
+    background: var(--admin-panel);
+    border: 1px solid var(--admin-border);
+    border-radius: 0;
+    box-shadow: none;
+}
+
+body.app-admin .module h2,
+body.dashboard .module h2,
+body[class^="app-"] .module h2,
+body[class*=" app-"] .module h2,
+body.dashboard #content-related h2,
+body.dashboard .module caption {
+    background: #f0f2f5;
+    color: var(--admin-text);
+    border-bottom: 1px solid var(--admin-border);
+}
+
+body.app-admin th,
+body.app-admin td,
+body.app-admin label,
+body.dashboard th,
+body.dashboard td,
+body.dashboard label,
+body[class^="app-"] th,
+body[class^="app-"] td,
+body[class^="app-"] label,
+body[class*=" app-"] th,
+body[class*=" app-"] td,
+body[class*=" app-"] label {
+    color: var(--admin-text);
+}
+
+body.app-admin .quiet,
+body.dashboard .quiet,
+body[class^="app-"] .quiet,
+body[class*=" app-"] .quiet,
 body.dashboard #recent-actions-module p,
 body.dashboard #recent-actions-module li {
-    color: var(--mimosa-text);
-    font-size: 14px;
+    color: var(--admin-muted);
 }
 
-body.dashboard #recent-actions-module li {
-    padding: 8px 0;
-    border-bottom: 1px dashed rgba(158, 168, 191, 0.25);
+body.app-admin a,
+body.dashboard a,
+body[class^="app-"] a,
+body[class*=" app-"] a {
+    color: var(--admin-link);
 }
 
-body.dashboard #recent-actions-module li:last-child {
-    border-bottom: none;
+body.app-admin a:hover,
+body.dashboard a:hover,
+body[class^="app-"] a:hover,
+body[class*=" app-"] a:hover {
+    color: #003ea8;
 }
 
-/* Dashboard blocks: tidy cards and readable rows */
-body.dashboard .module {
-    margin-bottom: 16px;
+/* Inputs/buttons: keep contrast and remove decorative effects */
+body.app-admin input,
+body.app-admin select,
+body.app-admin textarea,
+body.dashboard input,
+body.dashboard select,
+body.dashboard textarea,
+body[class^="app-"] input,
+body[class^="app-"] select,
+body[class^="app-"] textarea,
+body[class*=" app-"] input,
+body[class*=" app-"] select,
+body[class*=" app-"] textarea {
+    background: #ffffff;
+    color: var(--admin-text);
+    border: 1px solid var(--admin-border);
+    box-shadow: none;
 }
 
-body.dashboard .module table {
-    width: 100%;
-    border-collapse: collapse;
+body.app-admin .button,
+body.app-admin input[type="submit"],
+body.app-admin input[type="button"],
+body.dashboard .button,
+body.dashboard input[type="submit"],
+body.dashboard input[type="button"],
+body[class^="app-"] .button,
+body[class^="app-"] input[type="submit"],
+body[class^="app-"] input[type="button"],
+body[class*=" app-"] .button,
+body[class*=" app-"] input[type="submit"],
+body[class*=" app-"] input[type="button"] {
+    background: #f8f9fb;
+    color: var(--admin-text);
+    border: 1px solid var(--admin-border);
+    border-radius: 0;
+    box-shadow: none;
+    text-shadow: none;
+    transform: none;
 }
 
-body.dashboard .module th,
-body.dashboard .module td {
-    padding: 12px 14px;
-    border-bottom: 1px solid rgba(158, 168, 191, 0.18);
-    vertical-align: middle;
-}
-
-body.dashboard .module tr:last-child th,
-body.dashboard .module tr:last-child td {
-    border-bottom: none;
-}
-
-body.dashboard .module td a,
-body.dashboard .module th a {
-    font-weight: 500;
-}
-
-body.dashboard .module td {
-    color: var(--mimosa-muted);
-}
-
-body.dashboard .module td a.addlink,
-body.dashboard .module td a.changelink {
-    margin-left: 8px;
-}
-
-#content,
-#content-main,
-.dashboard .module {
-    animation: adminFadeIn 0.26s ease-out;
-}
-
-@keyframes adminFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(6px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    #content,
-    #content-main,
-    .dashboard .module {
-        animation: none;
-    }
-}
-
-@media (max-width: 1100px) {
-    body.dashboard #content {
-        grid-template-columns: 1fr;
+@media (max-width: 1024px) {
+    body.dashboard #content-main,
+    body.dashboard #content-related {
+        float: none;
+        width: 100%;
     }
 
     body.dashboard #content-related {
-        position: static;
+        margin-top: 16px;
     }
 }
