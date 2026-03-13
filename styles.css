@@ -3997,3 +3997,43 @@ body.is-loaded header figure::after {
     color: #645a4d;
 }
 
+
+.product-card .btn, 
+.product-item button, 
+.product-item .btn,
+.btn-add-to-cart,
+.btn-order {
+    width: 100% !important;
+    height: 48px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.2s ease-in-out;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.btn-add-to-cart {
+    background-color: #e6dbc4 !important;
+    color: #1a1a1a !important;
+}
+
+.btn-order, .btn-secondary {
+    background-color: transparent !important;
+    border: 1.5px solid #1a1a1a !important;
+    color: #1a1a1a !important;
+}
+
+.product-card .btn:hover,
+.btn-add-to-cart:hover,
+.btn-order:hover {
+    filter: brightness(0.9);
+    transform: translateY(-1px);
+}
+
