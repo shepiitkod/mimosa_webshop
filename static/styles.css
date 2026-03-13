@@ -1339,7 +1339,8 @@ footer {
     margin-bottom: 40px;
 }
 
-.btn-add-cart {
+.btn-add-cart,
+.btn-add-to-cart {
     flex: 1;
     padding: 16px 36px;
     background: linear-gradient(135deg, #ecdcb8, #f0e4c8);
@@ -1368,7 +1369,8 @@ footer {
     letter-spacing: -0.3px;
 }
 
-.btn-add-cart:hover {
+.btn-add-cart:hover,
+.btn-add-to-cart:hover {
     transform: translateY(-4px) scale(1.05);
     box-shadow: 0 12px 32px rgba(212, 175, 55, 0.4);
 }
@@ -1379,7 +1381,8 @@ footer {
     box-shadow: 0 12px 28px rgba(212, 175, 55, 0.25);
 }
 
-.btn-add-cart:active {
+.btn-add-cart:active,
+.btn-add-to-cart:active {
     transform: translateY(-2px) scale(1.02);
 }
 
@@ -1970,6 +1973,7 @@ opacity: 0.7;
     }
 
     .btn-add-cart,
+    .btn-add-to-cart,
     .btn-wishlist,
     .quantity-selector button {
         min-height: 48px;
@@ -2115,6 +2119,7 @@ opacity: 0.7;
     .about-card:hover,
     .profile-icon:hover,
     .btn-add-cart:hover,
+    .btn-add-to-cart:hover,
     .btn-order:hover,
     .btn-wishlist:hover {
         transform: none;
@@ -2124,6 +2129,7 @@ opacity: 0.7;
     .related-card:hover,
     .about-card:hover,
     .btn-add-cart:hover,
+    .btn-add-to-cart:hover,
     .btn-order:hover,
     .btn-wishlist:hover {
         box-shadow: none;
@@ -2306,6 +2312,7 @@ opacity: 0.7;
     }
 
     .product-page .btn-add-cart,
+    .product-page .btn-add-to-cart,
     .product-page .btn-order,
     .product-page .btn-wishlist {
         width: 100%;
@@ -2705,6 +2712,7 @@ opacity: 0.7;
     }
 
     .product-page .btn-add-cart,
+    .product-page .btn-add-to-cart,
     .product-page .btn-order,
     .product-page .btn-wishlist {
         min-height: 44px;
@@ -3608,6 +3616,7 @@ opacity: 0.7;
     .lang-current,
     .hero-btn,
     .btn-add-cart,
+    .btn-add-to-cart,
     .btn-order,
     .btn-decline,
     .btn-accept {
@@ -3811,6 +3820,7 @@ nav ul li a:focus-visible::after {
 
 .hero-btn,
 .btn-add-cart,
+.btn-add-to-cart,
 .btn-order,
 .btn-accept,
 .btn-decline,
@@ -3825,6 +3835,7 @@ nav ul li a:focus-visible::after {
 
 .hero-btn:hover,
 .btn-add-cart:hover,
+.btn-add-to-cart:hover,
 .btn-order:hover,
 .btn-accept:hover,
 .btn-decline:hover,
