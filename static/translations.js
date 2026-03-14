@@ -9,7 +9,7 @@ const translations = {
         'nav-sub-all': 'All Products',
         'nav-sub-bento': 'Bento Candles',
         'nav-sub-scented': 'Scented Candles',
-        'nav-sub-rose': 'Decorative Rose',
+        'nav-sub-rose': 'Decorative Candles',
         'nav-sub-gifts': 'Gift Collections',
         'nav-sub-new': 'New Arrivals',
         
@@ -199,7 +199,7 @@ const translations = {
         'nav-sub-all': 'Tous les produits',
         'nav-sub-bento': 'Bougies Bento',
         'nav-sub-scented': 'Bougies parfumées',
-        'nav-sub-rose': 'Rose décorative',
+        'nav-sub-rose': 'Bougies Décoratives',
         'nav-sub-gifts': 'Collections cadeaux',
         'nav-sub-new': 'Nouveautés',
         
@@ -388,7 +388,7 @@ const translations = {
         'nav-sub-all': 'Усі товари',
         'nav-sub-bento': 'Свічки Bento',
         'nav-sub-scented': 'Ароматичні свічки',
-        'nav-sub-rose': 'Декоративна троянда',
+        'nav-sub-rose': 'Декоративні свічки',
         'nav-sub-gifts': 'Подарункові колекції',
         'nav-sub-new': 'Новинки',
         
@@ -577,7 +577,7 @@ const translations = {
         'nav-sub-all': 'Все товары',
         'nav-sub-bento': 'Свечи Bento',
         'nav-sub-scented': 'Ароматические свечи',
-        'nav-sub-rose': 'Декоративная роза',
+        'nav-sub-rose': 'Декоративные свечи',
         'nav-sub-gifts': 'Подарочные коллекции',
         'nav-sub-new': 'Новинки',
         

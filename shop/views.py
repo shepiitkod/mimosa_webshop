@@ -22,6 +22,11 @@ from django.views.decorators.http import require_GET, require_POST
 from .models import NewsletterUser, Order, OrderItem, Product
 
 
+CATEGORY_SLUG_ALIASES = {
+	'decorative-rose': 'decorative-candles',
+}
+
+
 def _to_cents(amount: Decimal) -> int:
 	try:
 		normalized = Decimal(amount).quantize(Decimal('0.01'))
@@ -179,6 +184,13 @@ def index_view(request):
 
 @require_GET
 def products_catalog_view(request, category_slug=None):
+	if category_slug in CATEGORY_SLUG_ALIASES:
+		return redirect(
+			'shop:products_by_category',
+			category_slug=CATEGORY_SLUG_ALIASES[category_slug],
+			permanent=True,
+		)
+
 	products_qs = Product.objects.all().order_by('title')
 	counts_map = {
 		row['category']: row['total']

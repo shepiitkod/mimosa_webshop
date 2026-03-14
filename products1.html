@@ -41,7 +41,7 @@
                             <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-all">All Products</a>
                             <a href="{% url 'shop:product_bento' %}" class="dropdown-item" data-translate="nav-sub-bento">Bento Candles</a>
                             <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-scented">Scented Candles</a>
-                            <a href="{% url 'shop:product_rose' %}" class="dropdown-item" data-translate="nav-sub-rose">Decorative Rose</a>
+                            <a href="{% url 'shop:product_decorative_candles' %}" class="dropdown-item" data-translate="nav-sub-rose">Decorative Candles</a>
                             <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-gifts">Gift Collections</a>
                             <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-new">New Arrivals</a>
                         </div>
@@ -163,7 +163,7 @@
                     <p class="price">€10.99</p>
                 </article>
 
-                <article class="related-card" onclick="window.location.href='{% url 'shop:product_rose' %}'">
+                <article class="related-card" onclick="window.location.href='{% url 'shop:product_decorative_candles' %}'">
                     <img src="{% static 'assets/images/rose.ico' %}" alt="Bougie Rose">
                     <h3 data-translate="product3-name">Bougie Rose</h3>
                     <p class="price">€7.99</p>

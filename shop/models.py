@@ -5,14 +5,14 @@ from django.db import models
 class Product(models.Model):
 	CATEGORY_BENTO = 'Bento Candles'
 	CATEGORY_SCENTED = 'Scented Candles'
-	CATEGORY_ROSE = 'Decorative Rose'
+	CATEGORY_ROSE = 'Decorative Candles'
 	CATEGORY_GIFTS = 'Gift Collections'
 	CATEGORY_NEW = 'New Arrivals'
 
 	CATEGORY_CHOICES = [
 		(CATEGORY_BENTO, 'Bento Candles'),
 		(CATEGORY_SCENTED, 'Scented Candles'),
-		(CATEGORY_ROSE, 'Decorative Rose'),
+		(CATEGORY_ROSE, 'Decorative Candles'),
 		(CATEGORY_GIFTS, 'Gift Collections'),
 		(CATEGORY_NEW, 'New Arrivals'),
 	]
