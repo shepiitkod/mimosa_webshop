@@ -45,6 +45,12 @@ def _create_stripe_session_for_order(request, order):
 
 	stripe.api_key = settings.STRIPE_SECRET_KEY
 	unit_amount = _to_cents(order.total_amount)
+	hs_codes = sorted(
+		{
+			(item.product.hs_code or '340600')
+			for item in order.items.select_related('product').all()
+		}
+	)
 
 	success_url = f"{request.build_absolute_uri(reverse('shop:success'))}?session_id={{CHECKOUT_SESSION_ID}}"
 	cancel_url = request.build_absolute_uri(reverse('shop:cancel'))
@@ -52,7 +58,11 @@ def _create_stripe_session_for_order(request, order):
 	return stripe.checkout.Session.create(
 		payment_method_types=['card'],
 		client_reference_id=str(order.id),
-		metadata={'order_id': str(order.id)},
+		metadata={
+			'order_id': str(order.id),
+			'hs_codes': ','.join(hs_codes),
+			'primary_hs_code': hs_codes[0] if hs_codes else '340600',
+		},
 		line_items=[
 			{
 				'price_data': {

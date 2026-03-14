@@ -25,6 +25,7 @@ class Product(models.Model):
 	image_3 = models.ImageField(upload_to='products/', blank=True, null=True)
 	image_4 = models.ImageField(upload_to='products/', blank=True, null=True)
 	category = models.CharField(max_length=120, choices=CATEGORY_CHOICES, default=CATEGORY_NEW)
+	hs_code = models.CharField(max_length=20, blank=True, null=True, default='340600')
 	composition = models.CharField(max_length=255, blank=True, default='')
 	form_capacity = models.CharField(max_length=120, blank=True, default='')
 	wax_type = models.CharField(max_length=120, blank=True, default='')

@@ -8,12 +8,12 @@ from .models import CartItem, NewsletterUser, Order, OrderItem, Product
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-	list_display = ('id', 'title', 'category', 'price', 'stock', 'image_preview')
+	list_display = ('id', 'title', 'category', 'hs_code', 'price', 'stock', 'image_preview')
 	list_filter = ('category',)
-	search_fields = ('title', 'description', 'category', 'composition', 'wax_type')
+	search_fields = ('title', 'description', 'category', 'hs_code', 'composition', 'wax_type')
 
 	fieldsets = (
-		('Basic', {'fields': ('title', 'description', 'category', 'price', 'stock')}),
+		('Basic', {'fields': ('title', 'description', 'category', 'hs_code', 'price', 'stock')}),
 		('Gallery (up to 4 photos)', {'fields': ('image', 'image_2', 'image_3', 'image_4')}),
 		('Product Parameters', {'fields': ('composition', 'form_capacity', 'wax_type', 'burn_time')}),
 	)
