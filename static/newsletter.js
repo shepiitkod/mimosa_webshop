@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
 
     if (!form) return;
+    if (form.dataset.newsletterBound === '1') return;
+    form.dataset.newsletterBound = '1';
 
     // Helper function to get current language
     function getCurrentLanguage() {
@@ -18,6 +20,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
+
+        messageDiv.textContent = '';
+        messageDiv.className = 'newsletter-message';
 
         const email = emailInput.value.trim();
 
@@ -83,6 +88,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitBtn.style.opacity = '1';
             }
         }
+    });
+
+    emailInput.addEventListener('input', function() {
+        messageDiv.textContent = '';
+        messageDiv.className = 'newsletter-message';
     });
 
     /**
