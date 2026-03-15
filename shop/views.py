@@ -61,6 +61,7 @@ def _build_site_url(path: str) -> str:
 def _create_stripe_session_for_order(request, order):
 	stripe.api_key = _get_validated_stripe_secret_key()
 	order_items = list(order.items.select_related('product').all())
+	customer_email = (getattr(request.user, 'email', '') or '').strip()
 
 	if not order_items:
 		raise ValueError('Cannot create a Stripe session for an order with no items.')
@@ -95,9 +96,9 @@ def _create_stripe_session_for_order(request, order):
 	]
 
 	allow_promotion_codes = True
-	print(f"Creating session with allow_promotion_codes={allow_promotion_codes}")
+	print(f"DEBUG: Session created for {customer_email} with allow_promo=True")
 
-	return stripe.checkout.Session.create(
+	session_payload = {
 		client_reference_id=str(order.id),
 		metadata={
 			'order_id': str(order.id),
@@ -113,7 +114,13 @@ def _create_stripe_session_for_order(request, order):
 		success_url=success_url,
 		cancel_url=cancel_url,
 		idempotency_key=f'order_checkout_{order.id}',
-	)
+	}
+
+	# Do not pass discounts when allow_promotion_codes=True.
+	if customer_email:
+		session_payload['customer_email'] = customer_email
+
+	return stripe.checkout.Session.create(**session_payload)
 
 
 def _amount_total_to_decimal(session_data) -> Optional[Decimal]:
