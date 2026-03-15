@@ -1,8 +1,0 @@
-branch=main
-[main ac08a0b] Fix Stripe Live checkout promo-code session handling
- 1 file changed, 26 insertions(+), 11 deletions(-)
-commit_exit=0
-To https://github.com/shepiitkod/mimosa_webshop.git
-   e188994..ac08a0b  main -> main
-push_exit=0
-ac08a0b42b1dd51de2ec46772d43c6ed5cc94957

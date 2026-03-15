@@ -1,4 +1,0 @@
-branch=main
-status_before:
-?? .git_commit_push_log.txt
-?? .git_commit_push_log_2.txt
