@@ -27,6 +27,18 @@ CATEGORY_SLUG_ALIASES = {
 }
 
 
+def _get_validated_stripe_secret_key() -> str:
+	"""Return configured Stripe secret key and enforce Live key in production."""
+	secret_key = (settings.STRIPE_SECRET_KEY or '').strip()
+	if not secret_key:
+		raise ValueError('Stripe secret key is not configured.')
+	if not secret_key.startswith('sk_'):
+		raise ValueError('Stripe secret key has invalid format.')
+	if not settings.DEBUG and not secret_key.startswith('sk_live_'):
+		raise ValueError('Stripe Live mode requires STRIPE_SECRET_KEY starting with sk_live_.')
+	return secret_key
+
+
 def _to_cents(amount: Decimal) -> int:
 	try:
 		normalized = Decimal(amount).quantize(Decimal('0.01'))
@@ -47,10 +59,7 @@ def _build_site_url(path: str) -> str:
 
 
 def _create_stripe_session_for_order(request, order):
-	if not settings.STRIPE_SECRET_KEY:
-		raise ValueError('Stripe secret key is not configured.')
-
-	stripe.api_key = settings.STRIPE_SECRET_KEY
+	stripe.api_key = _get_validated_stripe_secret_key()
 	order_items = list(order.items.select_related('product').all())
 
 	if not order_items:
@@ -85,7 +94,8 @@ def _create_stripe_session_for_order(request, order):
 		for item in order_items
 	]
 
-	print('DEBUG: Promo codes enabled in session')
+	allow_promotion_codes = True
+	print(f"Creating session with allow_promotion_codes={allow_promotion_codes}")
 
 	return stripe.checkout.Session.create(
 		client_reference_id=str(order.id),
@@ -97,11 +107,12 @@ def _create_stripe_session_for_order(request, order):
 		line_items=line_items,
 		mode='payment',
 		payment_method_types=['card'],
-		allow_promotion_codes=True,
+		allow_promotion_codes=allow_promotion_codes,
 		billing_address_collection='auto',
 		shipping_address_collection={'allowed_countries': ['FR', 'UA', 'GB', 'US']},
 		success_url=success_url,
 		cancel_url=cancel_url,
+		idempotency_key=f'order_checkout_{order.id}',
 	)
 
 
@@ -121,10 +132,13 @@ def _amount_total_to_decimal(session_data) -> Optional[Decimal]:
 
 
 def _mark_order_paid_from_checkout_session(session_id: str) -> bool:
-	if not session_id or not settings.STRIPE_SECRET_KEY:
+	if not session_id:
 		return False
 
-	stripe.api_key = settings.STRIPE_SECRET_KEY
+	try:
+		stripe.api_key = _get_validated_stripe_secret_key()
+	except ValueError:
+		return False
 
 	try:
 		session_data = stripe.checkout.Session.retrieve(session_id)
@@ -583,12 +597,13 @@ def checkout_cancel(request):
 @csrf_exempt
 @require_POST
 def stripe_webhook(request):
-	if not settings.STRIPE_SECRET_KEY:
-		return JsonResponse({'error': 'Stripe secret key is not configured.'}, status=500)
 	if not settings.STRIPE_WEBHOOK_SECRET:
 		return JsonResponse({'error': 'Stripe webhook secret is not configured.'}, status=500)
 
-	stripe.api_key = settings.STRIPE_SECRET_KEY
+	try:
+		stripe.api_key = _get_validated_stripe_secret_key()
+	except ValueError as exc:
+		return JsonResponse({'error': str(exc)}, status=500)
 	payload = request.body
 	sig_header = request.META.get('HTTP_STRIPE_SIGNATURE', '')
 
