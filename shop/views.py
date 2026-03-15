@@ -39,6 +39,13 @@ def _to_cents(amount: Decimal) -> int:
 	return cents
 
 
+def _build_site_url(path: str) -> str:
+	base_url = (settings.SITE_URL or '').rstrip('/')
+	if not base_url:
+		raise ValueError('Site URL is not configured.')
+	return f'{base_url}{path}'
+
+
 def _create_stripe_session_for_order(request, order):
 	if not settings.STRIPE_SECRET_KEY:
 		raise ValueError('Stripe secret key is not configured.')
@@ -52,8 +59,8 @@ def _create_stripe_session_for_order(request, order):
 		}
 	)
 
-	success_url = f"{request.build_absolute_uri(reverse('shop:success'))}?session_id={{CHECKOUT_SESSION_ID}}"
-	cancel_url = request.build_absolute_uri(reverse('shop:cancel'))
+	success_url = f"{_build_site_url(reverse('shop:success'))}?session_id={{CHECKOUT_SESSION_ID}}"
+	cancel_url = _build_site_url(reverse('shop:cart'))
 
 	return stripe.checkout.Session.create(
 		payment_method_types=['card'],

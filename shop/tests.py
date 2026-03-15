@@ -13,6 +13,7 @@ from .models import Order, Product
 @override_settings(
 	STRIPE_SECRET_KEY='sk_test_dummy',
 	STRIPE_WEBHOOK_SECRET='whsec_dummy',
+	SITE_URL='https://mimosa-atelier.com',
 	SECURE_SSL_REDIRECT=False,
 	DEBUG=True,
 )
@@ -43,6 +44,11 @@ class PaymentSyncTests(TestCase):
 			response = self.client.post(reverse('shop:create_checkout_session'))
 			create_kwargs = create_mock.call_args.kwargs
 			self.assertTrue(create_kwargs.get('allow_promotion_codes'))
+			self.assertEqual(
+				create_kwargs.get('success_url'),
+				'https://mimosa-atelier.com/success/?session_id={CHECKOUT_SESSION_ID}',
+			)
+			self.assertEqual(create_kwargs.get('cancel_url'), 'https://mimosa-atelier.com/cart/')
 
 		self.assertEqual(response.status_code, 302)
 		self.assertIn('checkout.stripe.com', response.url)
