@@ -98,29 +98,31 @@ def _create_stripe_session_for_order(request, order):
 	allow_promotion_codes = True
 	print(f"DEBUG: Session created for {customer_email} with allow_promo=True")
 
-	session_payload = {
-		client_reference_id=str(order.id),
-		metadata={
+	create_kwargs = {
+		'client_reference_id': str(order.id),
+		'metadata': {
 			'order_id': str(order.id),
 			'hs_codes': ','.join(hs_codes),
 			'primary_hs_code': hs_codes[0] if hs_codes else '340600',
 		},
-		line_items=line_items,
-		mode='payment',
-		payment_method_types=['card'],
-		allow_promotion_codes=allow_promotion_codes,
-		billing_address_collection='auto',
-		shipping_address_collection={'allowed_countries': ['FR', 'UA', 'GB', 'US']},
-		success_url=success_url,
-		cancel_url=cancel_url,
-		idempotency_key=f'order_checkout_{order.id}',
+		'line_items': line_items,
+		'mode': 'payment',
+		'payment_method_types': ['card'],
+		'allow_promotion_codes': allow_promotion_codes,
+		'billing_address_collection': 'auto',
+		'shipping_address_collection': {'allowed_countries': ['FR', 'UA', 'GB', 'US']},
+		'success_url': success_url,
+		'cancel_url': cancel_url,
 	}
 
 	# Do not pass discounts when allow_promotion_codes=True.
 	if customer_email:
-		session_payload['customer_email'] = customer_email
+		create_kwargs['customer_email'] = customer_email
 
-	return stripe.checkout.Session.create(**session_payload)
+	return stripe.checkout.Session.create(
+		idempotency_key=f'order_checkout_{order.id}',
+		**create_kwargs,
+	)
 
 
 def _amount_total_to_decimal(session_data) -> Optional[Decimal]:
