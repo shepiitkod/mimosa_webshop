@@ -505,10 +505,12 @@ def create_checkout_session(request):
 					price_at_purchase=item['product'].price,
 				)
 
+		session = _create_stripe_session_for_order(request, order)
+
+		# Clear the cart only after Stripe confirmed the session successfully.
 		request.session['cart'] = {}
 		request.session.modified = True
 
-		session = _create_stripe_session_for_order(request, order)
 		return redirect(session.url, permanent=False)
 	except Exception as e:
 		print(traceback.format_exc())
