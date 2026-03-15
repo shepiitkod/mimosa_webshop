@@ -52,6 +52,10 @@ def _create_stripe_session_for_order(request, order):
 
 	stripe.api_key = settings.STRIPE_SECRET_KEY
 	order_items = list(order.items.select_related('product').all())
+
+	if not order_items:
+		raise ValueError('Cannot create a Stripe session for an order with no items.')
+
 	hs_codes = sorted(
 		{
 			(item.product.hs_code or '340600')
@@ -59,8 +63,13 @@ def _create_stripe_session_for_order(request, order):
 		}
 	)
 
-	success_url = request.build_absolute_uri(reverse('shop:success')) + '?session_id={CHECKOUT_SESSION_ID}'
-	cancel_url = request.build_absolute_uri(reverse('shop:cart'))
+	# build_absolute_uri on Render (behind a TLS-terminating proxy) returns http://.
+	# Stripe Live mode requires https://, so we force it.
+	def _https(url: str) -> str:
+		return url.replace('http://', 'https://', 1) if url.startswith('http://') else url
+
+	success_url = _https(request.build_absolute_uri(reverse('shop:success'))) + '?session_id={CHECKOUT_SESSION_ID}'
+	cancel_url = _https(request.build_absolute_uri(reverse('shop:cart')))
 
 	line_items = [
 		{
@@ -69,7 +78,7 @@ def _create_stripe_session_for_order(request, order):
 				'product_data': {
 					'name': item.product.title,
 				},
-				'unit_amount': _to_cents(item.price_at_purchase),
+				'unit_amount': int(round(item.product.price * 100)),
 			},
 			'quantity': item.quantity,
 		}
@@ -508,14 +517,19 @@ def create_checkout_session(request):
 	# connection open during a network call.
 	try:
 		stripe_session = _create_stripe_session_for_order(request, order)
+	except stripe.error.StripeError as e:
+		order.delete()
+		print(traceback.format_exc())
+		return HttpResponse(
+			f'<h2>Stripe error</h2><pre>{e.user_message or str(e)}</pre>',
+			status=500,
+		)
 	except Exception:
-		# Roll back the orphan order so duplicate orders don't pile up.
 		order.delete()
 		error_detail = traceback.format_exc()
 		print(error_detail)
-		# Return the raw error so it's visible during debugging.
 		return HttpResponse(
-			f'<h2>Stripe error — checkout could not be created</h2><pre>{error_detail}</pre>',
+			f'<h2>Checkout error</h2><pre>{error_detail}</pre>',
 			status=500,
 		)
 
