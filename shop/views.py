@@ -85,6 +85,8 @@ def _create_stripe_session_for_order(request, order):
 		for item in order_items
 	]
 
+	print('DEBUG: Promo codes enabled in session')
+
 	return stripe.checkout.Session.create(
 		client_reference_id=str(order.id),
 		metadata={
