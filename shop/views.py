@@ -59,8 +59,8 @@ def _create_stripe_session_for_order(request, order):
 		}
 	)
 
-	success_url = f"{_build_site_url(reverse('shop:success'))}?session_id={{CHECKOUT_SESSION_ID}}"
-	cancel_url = _build_site_url(reverse('shop:cart'))
+	success_url = request.build_absolute_uri(reverse('shop:success')) + '?session_id={CHECKOUT_SESSION_ID}'
+	cancel_url = request.build_absolute_uri(reverse('shop:cart'))
 
 	line_items = [
 		{
@@ -485,36 +485,44 @@ def create_order_from_product(request):
 @login_required
 @require_POST
 def create_checkout_session(request):
-	try:
-		items, total = _cart_summary(request.session)
-		if not items:
-			return redirect('shop:cart_detail')
+	items, total = _cart_summary(request.session)
+	if not items:
+		return redirect('shop:cart_detail')
 
-		with transaction.atomic():
-			order = Order.objects.create(
-				user=request.user,
-				total_amount=total,
-				status=Order.STATUS_PROCESSING,
+	# Create the order in DB first so we have an order_id for Stripe metadata.
+	with transaction.atomic():
+		order = Order.objects.create(
+			user=request.user,
+			total_amount=total,
+			status=Order.STATUS_PROCESSING,
+		)
+		for item in items:
+			OrderItem.objects.create(
+				order=order,
+				product=item['product'],
+				quantity=item['quantity'],
+				price_at_purchase=item['product'].price,
 			)
 
-			for item in items:
-				OrderItem.objects.create(
-					order=order,
-					product=item['product'],
-					quantity=item['quantity'],
-					price_at_purchase=item['product'].price,
-				)
+	# Create Stripe session outside the DB transaction to avoid holding the
+	# connection open during a network call.
+	try:
+		stripe_session = _create_stripe_session_for_order(request, order)
+	except Exception:
+		# Roll back the orphan order so duplicate orders don't pile up.
+		order.delete()
+		error_detail = traceback.format_exc()
+		print(error_detail)
+		# Return the raw error so it's visible during debugging.
+		return HttpResponse(
+			f'<h2>Stripe error — checkout could not be created</h2><pre>{error_detail}</pre>',
+			status=500,
+		)
 
-		session = _create_stripe_session_for_order(request, order)
-
-		# Clear the cart only after Stripe confirmed the session successfully.
-		request.session['cart'] = {}
-		request.session.modified = True
-
-		return redirect(session.url, permanent=False)
-	except Exception as e:
-		print(traceback.format_exc())
-		return redirect('shop:cart_detail')
+	# Cart is cleared only after Stripe confirmed the session.
+	request.session['cart'] = {}
+	request.session.modified = True
+	return redirect(stripe_session.url, permanent=False)
 
 
 @login_required
