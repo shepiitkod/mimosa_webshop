@@ -11,7 +11,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.db import IntegrityError, transaction
-from django.db.models import Count
+from django.db.models import Count, Prefetch
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.text import slugify
@@ -51,11 +51,12 @@ def _create_stripe_session_for_order(request, order):
 		raise ValueError('Stripe secret key is not configured.')
 
 	stripe.api_key = settings.STRIPE_SECRET_KEY
+	order_items = list(order.items.select_related('product').all())
 	unit_amount = _to_cents(order.total_amount)
 	hs_codes = sorted(
 		{
 			(item.product.hs_code or '340600')
-			for item in order.items.select_related('product').all()
+			for item in order_items
 		}
 	)
 
@@ -76,7 +77,7 @@ def _create_stripe_session_for_order(request, order):
 					'currency': 'eur',
 					'product_data': {
 						'name': f'Order #{order.id}',
-						'description': f'Order contains {order.items.count()} item(s)',
+						'description': f'Order contains {len(order_items)} item(s)',
 					},
 					'unit_amount': unit_amount,
 				},
@@ -335,7 +336,13 @@ def logout_view(request):
 @login_required
 @require_GET
 def profile_view(request):
-	orders = Order.objects.filter(user=request.user).prefetch_related('items__product').order_by('-created_at')
+	orders = (
+		Order.objects.filter(user=request.user)
+		.prefetch_related(
+			Prefetch('items', queryset=OrderItem.objects.select_related('product'))
+		)
+		.order_by('-created_at')
+	)
 	return render(request, 'profile.html', {'orders': orders})
 
 
