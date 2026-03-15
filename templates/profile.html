@@ -74,6 +74,9 @@
     </main>
 
     {% include 'includes/footer.html' %}
+    <script>
+        window.STRIPE_PUBLISHABLE_KEY = "{{ STRIPE_PUBLISHABLE_KEY|escapejs }}";
+    </script>
     
     <script src="{% static 'translations.js' %}" defer></script>
 </body>
