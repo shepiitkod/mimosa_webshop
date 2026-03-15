@@ -3,7 +3,7 @@ services:
     name: mimosa-webshop
     env: python
     plan: free
-    buildCommand: pip install -r requirements.txt && python3 manage.py collectstatic --noinput && python3 manage.py migrate
+    buildCommand: pip install -r requirements.txt && python3 manage.py collectstatic --noinput --upload-unhashed-files && python3 manage.py migrate
     startCommand: gunicorn mimosa_backend.wsgi:application
     envVars:
       - key: PYTHON_VERSION
