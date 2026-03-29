@@ -399,6 +399,73 @@ nav ul li a:hover::before {
     font-weight: 400;
 }
 
+/* Homepage: promotional card between hero and welcome block */
+.promo-banner {
+    --promo-bg: #f9f7f2;
+    --promo-accent: #e6dcc3;
+    --promo-text: #1a1a1a;
+    --promo-muted: #3d3d3d;
+    padding: 3.5rem 1.5rem 2.75rem;
+    max-width: 1120px;
+    margin: 0 auto;
+}
+
+.promo-banner__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: clamp(1.75rem, 4vw, 3rem);
+    padding: clamp(1.75rem, 3.5vw, 2.75rem) clamp(1.5rem, 4vw, 3rem);
+    background: var(--promo-bg);
+    border-radius: 40px;
+    border: 1px solid rgba(230, 220, 195, 0.85);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06), 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.promo-banner__content {
+    flex: 1 1 280px;
+    max-width: 32rem;
+    text-align: left;
+}
+
+.promo-banner__title {
+    font-size: clamp(1.75rem, 4vw, 2.375rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    color: var(--promo-text);
+    line-height: 1.15;
+    margin-bottom: 1rem;
+}
+
+.promo-banner__text {
+    font-size: clamp(1rem, 2.2vw, 1.125rem);
+    line-height: 1.75;
+    color: var(--promo-muted);
+    margin-bottom: 1.75rem;
+    font-weight: 400;
+}
+
+.promo-banner__cta {
+    margin-top: 0.25rem;
+}
+
+.promo-banner__media {
+    flex: 1 1 260px;
+    min-width: 0;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.1);
+    background: var(--promo-accent);
+}
+
+.promo-banner__media img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+
 
 main h2 {
     font-size: 28px;
@@ -1920,6 +1987,35 @@ opacity: 0.7;
         line-height: 1.7;
     }
 
+    .promo-banner {
+        padding: 2.25rem 14px 1.75rem;
+    }
+
+    .promo-banner__inner {
+        flex-direction: column;
+        border-radius: 28px;
+        padding: 1.5rem 1.25rem;
+        gap: 1.5rem;
+    }
+
+    .promo-banner__content {
+        max-width: none;
+        text-align: center;
+        order: 2;
+    }
+
+    .promo-banner__media {
+        order: 1;
+        width: 100%;
+        border-radius: 22px;
+    }
+
+    .promo-banner__cta {
+        width: 100%;
+        max-width: 320px;
+        text-align: center;
+    }
+
     .section-title {
         font-size: clamp(30px, 8vw, 38px);
         margin: 36px 0 26px;
@@ -2552,6 +2648,24 @@ opacity: 0.7;
     .about-snippet p {
         font-size: 14px;
         line-height: 1.55;
+    }
+
+    .promo-banner {
+        padding: 1.5rem 10px 1.25rem;
+    }
+
+    .promo-banner__inner {
+        border-radius: 22px;
+        padding: 1.25rem 1rem;
+    }
+
+    .promo-banner__title {
+        margin-bottom: 0.65rem;
+    }
+
+    .promo-banner__text {
+        margin-bottom: 1.25rem;
+        font-size: 0.95rem;
     }
 
     .section-title {
@@ -3537,6 +3651,7 @@ opacity: 0.7;
     .product-page,
     .profile-page,
     .about-snippet,
+    .promo-banner,
     .profile-hero-panel,
     .profile-grid,
     .Product4 {

@@ -21,7 +21,11 @@ const translations = {
         
         'about-snippet-title': 'Welcome to Mimosa Atelier',
         'about-snippet-text': 'Every candle is a story, crafted by hand with 100% natural soy wax and exclusive fragrances from Provence. We believe in beauty, sustainability, and the art of slow living.',
-        
+
+        'promo-title': 'Spring Collection',
+        'promo-text': 'Limited scents and handcrafted pieces for the season — discover them before they are gone.',
+        'promo-cta': 'Shop the offer',
+
         
         'products-title': 'Our New Collection',
         'product1-name': 'Bento Bougie',
@@ -185,7 +189,11 @@ const translations = {
         
         'about-snippet-title': 'Bienvenue chez Mimosa Atelier',
         'about-snippet-text': 'Chaque bougie est une histoire, fabriquée à la main avec de la cire de soja 100% naturelle et des fragrances exclusives de Provence. Nous croyons en la beauté, la durabilité et l\'art de vivre lentement.',
-        
+
+        'promo-title': 'Collection de Printemps',
+        'promo-text': 'Parfums limités et pièces artisanales pour la saison — découvrez-les avant qu\'il ne soit trop tard.',
+        'promo-cta': 'Découvrir l\'offre',
+
         
         'products-title': 'Notre Nouvelle Collection',
         'product1-name': 'Bento Bougie',
@@ -349,7 +357,11 @@ const translations = {
         
         'about-snippet-title': 'Ласкаво просимо до Mimosa Atelier',
         'about-snippet-text': 'Кожна свічка — це історія, виготовлена вручну зі 100% натурального соєвого воску та ексклюзивних ароматів з Провансу. Ми віримо в красу, сталість та мистецтво повільного життя.',
-        
+
+        'promo-title': 'Весняна колекція',
+        'promo-text': 'Обмежені аромати та речі ручної роботи на сезон — встигніть до закінчення.',
+        'promo-cta': 'Переглянути пропозицію',
+
         
         'products-title': 'Наша Нова Колекція',
         'product1-name': 'Свічка Бенто',
