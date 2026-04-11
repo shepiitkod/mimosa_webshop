@@ -15,12 +15,7 @@
             <li class="products-menu">
                 <a href="{% url 'shop:products' %}" data-translate="nav-products">Products</a>
                 <div class="dropdown-catalog" aria-label="Product categories">
-                    <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-all">All Products</a>
-                    <a href="{% url 'shop:product_bento' %}" class="dropdown-item" data-translate="nav-sub-bento">Bento Candles</a>
-                    <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-scented">Scented Candles</a>
-                    <a href="{% url 'shop:product_decorative_candles' %}" class="dropdown-item" data-translate="nav-sub-rose">Decorative Candles</a>
-                    <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-gifts">Gift Collections</a>
-                    <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-new">New Arrivals</a>
+                    {% include 'includes/nav_catalog_dropdown.html' %}
                 </div>
             </li>
             <li><a href="{% url 'shop:about' %}" data-translate="nav-about">About Us</a></li>

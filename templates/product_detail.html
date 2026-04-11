@@ -15,28 +15,13 @@
     <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body>
-    <header>
-        <figure>
-            <a href="{% url 'shop:home' %}">
-                <img src="{% static 'assets/images/logobl2.ico' %}" alt="Mimosa Logo" width="250" height="80">
-            </a>
-        </figure>
-        <nav>
-            <ul>
-                <li><a href="{% url 'shop:home' %}">Home</a></li>
-                <li><a href="{% url 'shop:products' %}">Products</a></li>
-                <li><a href="{% url 'shop:cart' %}">Cart ({{ cart_items_count }})</a></li>
-                <li><a href="{% url 'shop:about' %}">About Us</a></li>
-                <li><a href="{% url 'shop:contact' %}">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+    {% include 'includes/header.html' with header_show_cart=True %}
 
     <main class="product-page">
         <div class="breadcrumbs">
-            <a href="{% url 'shop:home' %}">Home</a>
+            <a href="{% url 'shop:home' %}" data-translate="nav-home">Home</a>
             <span>/</span>
-            <a href="{% url 'shop:products' %}">Products</a>
+            <a href="{% url 'shop:products' %}" data-translate="nav-products">Products</a>
             <span>/</span>
             <span>{{ product.title }}</span>
         </div>
@@ -65,30 +50,57 @@
                 <p class="product-price-large">EUR {{ product.price }}</p>
                 <p class="product-description">{{ product.description }}</p>
 
+                {% if product.category == "Bento Candles" %}
+                {% include 'includes/bento_color_picker.html' with bento_white_src=product.image.url %}
+                {% endif %}
+
                 <div class="product-details">
-                    <h3>Product Details</h3>
-                    <ul>
-                        <li><strong>Category:</strong> {{ product.category }}</li>
-                        {% if product.composition %}<li><strong>Composition:</strong> {{ product.composition }}</li>{% endif %}
-                        {% if product.form_capacity %}<li><strong>Form Capacity:</strong> {{ product.form_capacity }}</li>{% endif %}
-                        {% if product.wax_type %}<li><strong>Wax:</strong> {{ product.wax_type }}</li>{% endif %}
-                        {% if product.burn_time %}<li><strong>Burn Time:</strong> {{ product.burn_time }}</li>{% endif %}
-                        <li><strong>Stock:</strong> {{ product.stock }}</li>
-                        <li><strong>SKU:</strong> #{{ product.id }}</li>
+                    <h3 data-translate="details-title">Product Details</h3>
+                    <ul class="product-specs-primary">
+                        <li>
+                            <strong><span data-translate="detail-parfum-label">Fragrance:</span></strong>
+                            {% if product.scent %}{{ product.scent }}{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}
+                        </li>
+                        <li>
+                            <strong><span data-translate="detail-meche-label">Wick:</span></strong>
+                            {% if product.wick %}{{ product.wick }}{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}
+                        </li>
+                        <li>
+                            <strong><span data-translate="detail-poids-label">Weight:</span></strong>
+                            {% if product.weight %}{{ product.weight }}{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}
+                        </li>
+                        <li>
+                            <strong><span data-translate="burn-time-label">Burn time:</span></strong>
+                            {% if product.burn_time %}{{ product.burn_time }}{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}
+                        </li>
+                    </ul>
+                    <ul class="product-specs-secondary">
+                        <li><strong><span data-translate="detail-category-label">Category:</span></strong> {{ product.category }}</li>
+                        {% if product.composition %}
+                        <li><strong><span data-translate="composition-label">Composition:</span></strong> {{ product.composition }}</li>
+                        {% endif %}
+                        {% if product.form_capacity %}
+                        <li><strong><span data-translate="detail-form-label">Form / capacity:</span></strong> {{ product.form_capacity }}</li>
+                        {% endif %}
+                        {% if product.wax_type %}
+                        <li><strong><span data-translate="detail-wax-label">Wax:</span></strong> {{ product.wax_type }}</li>
+                        {% endif %}
+                        <li><strong><span data-translate="detail-stock-label">Stock:</span></strong> {{ product.stock }}</li>
+                        <li><strong><span data-translate="detail-sku-label">SKU:</span></strong> #{{ product.id }}</li>
                     </ul>
                 </div>
 
                 <form method="post" action="{% url 'shop:cart_add' product.id %}" class="product-actions">
                     {% csrf_token %}
                     <input type="number" name="quantity" value="1" min="1" class="quantity-input" style="width:92px; padding:12px; border-radius:12px; border:1px solid #d8c8a4;">
-                    <button class="btn-add-to-cart" type="submit">Add to Cart</button>
+                    <button class="btn-add-to-cart" type="submit"><span data-translate="add-to-cart">Add to Cart</span></button>
                 </form>
             </div>
         </div>
 
         {% if related_products %}
         <section class="related-products">
-            <h2>More from {{ product.category }}</h2>
+            <h2 data-translate="related-title">You May Also Like</h2>
             <div class="related-grid">
                 {% for item in related_products %}
                 <a class="related-card" href="{% url 'shop:product_detail' item.id item.title|slugify %}" style="cursor:pointer; text-decoration:none; color:inherit; display:block;">
@@ -114,5 +126,9 @@
         thumbnail.classList.add('active');
     }
     </script>
+    <script src="{% static 'translations.js' %}"></script>
+    {% if product.category == "Bento Candles" %}
+    <script src="{% static 'bento_color_picker.js' %}" defer></script>
+    {% endif %}
 </body>
 </html>

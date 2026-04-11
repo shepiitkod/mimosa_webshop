@@ -3,18 +3,14 @@ from django.db import models
 
 
 class Product(models.Model):
+	CATEGORY_GIFTS = 'Gift Collections'
 	CATEGORY_BENTO = 'Bento Candles'
 	CATEGORY_SCENTED = 'Scented Candles'
-	CATEGORY_ROSE = 'Decorative Candles'
-	CATEGORY_GIFTS = 'Gift Collections'
-	CATEGORY_NEW = 'New Arrivals'
 
 	CATEGORY_CHOICES = [
+		(CATEGORY_GIFTS, 'Gift Collections'),
 		(CATEGORY_BENTO, 'Bento Candles'),
 		(CATEGORY_SCENTED, 'Scented Candles'),
-		(CATEGORY_ROSE, 'Decorative Candles'),
-		(CATEGORY_GIFTS, 'Gift Collections'),
-		(CATEGORY_NEW, 'New Arrivals'),
 	]
 
 	title = models.CharField(max_length=255)
@@ -24,11 +20,21 @@ class Product(models.Model):
 	image_2 = models.ImageField(upload_to='products/', blank=True, null=True)
 	image_3 = models.ImageField(upload_to='products/', blank=True, null=True)
 	image_4 = models.ImageField(upload_to='products/', blank=True, null=True)
-	category = models.CharField(max_length=120, choices=CATEGORY_CHOICES, default=CATEGORY_NEW)
+	category = models.CharField(max_length=120, choices=CATEGORY_CHOICES, default=CATEGORY_SCENTED)
 	hs_code = models.CharField(max_length=20, blank=True, null=True, default='340600')
 	composition = models.CharField(max_length=255, blank=True, default='')
 	form_capacity = models.CharField(max_length=120, blank=True, default='')
 	wax_type = models.CharField(max_length=120, blank=True, default='')
+	# Specs shown on every product detail (Parfum, Mèche, Poids, Temps de combustion)
+	scent = models.CharField('Parfum / fragrance', max_length=255, blank=True, default='')
+	wick = models.CharField('Mèche / wick', max_length=255, blank=True, default='')
+	weight = models.CharField(
+		'Poids / weight',
+		max_length=120,
+		blank=True,
+		default='',
+		help_text='Displayed on product page (e.g. 200 g, 0.42 kg).',
+	)
 	burn_time = models.CharField(max_length=120, blank=True, default='')
 	stock = models.PositiveIntegerField(default=0)
 

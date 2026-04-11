@@ -23,7 +23,9 @@ from .models import NewsletterUser, Order, OrderItem, Product
 
 
 CATEGORY_SLUG_ALIASES = {
-	'decorative-rose': 'decorative-candles',
+	'decorative-rose': 'scented-candles',
+	'decorative-candles': 'scented-candles',
+	'new-arrivals': 'scented-candles',
 }
 
 
@@ -231,7 +233,8 @@ def _cart_summary(session):
 
 @require_GET
 def index_view(request):
-	products = Product.objects.all()
+	# Home: show the three most recently added products (by id) under "Our New Collection".
+	products = Product.objects.all().order_by('-id')[:3]
 	cart_count = sum(int(qty) for qty in _get_cart(request.session).values())
 	return render(request, 'index.html', {'products': products, 'cart_count': cart_count})
 
@@ -329,7 +332,8 @@ def product_bento_view(request):
 
 @require_GET
 def product_rose_view(request):
-	return render(request, 'products3.html')
+	"""Legacy decorative product page URL — catalogue now has three categories only."""
+	return redirect('shop:products_by_category', category_slug='scented-candles')
 
 
 @require_GET
@@ -482,10 +486,10 @@ def create_order_from_product(request):
 	if price <= 0:
 		return JsonResponse({'error': 'Price must be greater than zero.'}, status=400)
 
-	category = (payload.get('category') or Product.CATEGORY_NEW).strip() or Product.CATEGORY_NEW
+	category = (payload.get('category') or Product.CATEGORY_SCENTED).strip() or Product.CATEGORY_SCENTED
 	allowed_categories = {value for value, _label in Product.CATEGORY_CHOICES}
 	if category not in allowed_categories:
-		category = Product.CATEGORY_NEW
+		category = Product.CATEGORY_SCENTED
 	description = (payload.get('description') or 'Product from storefront').strip() or 'Product from storefront'
 
 	with transaction.atomic():

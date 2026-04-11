@@ -10,12 +10,23 @@ from .models import CartItem, NewsletterUser, Order, OrderItem, Product
 class ProductAdmin(admin.ModelAdmin):
 	list_display = ('id', 'title', 'category', 'hs_code', 'price', 'stock', 'image_preview')
 	list_filter = ('category',)
-	search_fields = ('title', 'description', 'category', 'hs_code', 'composition', 'wax_type')
+	search_fields = (
+		'title', 'description', 'category', 'hs_code',
+		'composition', 'wax_type', 'scent', 'wick', 'weight',
+	)
 
 	fieldsets = (
 		('Basic', {'fields': ('title', 'description', 'category', 'hs_code', 'price', 'stock')}),
 		('Gallery (up to 4 photos)', {'fields': ('image', 'image_2', 'image_3', 'image_4')}),
-		('Product Parameters', {'fields': ('composition', 'form_capacity', 'wax_type', 'burn_time')}),
+		(
+			'Product Parameters',
+			{
+				'fields': (
+					'scent', 'wick', 'weight', 'burn_time',
+					'composition', 'form_capacity', 'wax_type',
+				),
+			},
+		),
 	)
 	readonly_fields = ('image_preview', 'image_2_preview', 'image_3_preview', 'image_4_preview')
 

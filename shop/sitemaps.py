@@ -22,11 +22,9 @@ class CategorySitemap(Sitemap):
 
     def items(self):
         return [
+            'gift-collections',
             'bento-candles',
             'scented-candles',
-            'decorative-candles',
-            'gift-collections',
-            'new-arrivals',
         ]
 
     def location(self, item):

@@ -115,13 +115,13 @@
                 <p class="product-desc">New products will be available shortly. Stay tuned!</p>
             </article>
             {% endfor %}
-        </section>
             <article class="Product4">
                 <a href="{% url 'shop:products' %}" class="product-link" aria-label="See all products">
                     <h3 data-translate="product4-name">New Products Coming Soon</h3>
                 </a>
                 <p class="product-desc" data-translate="product4-desc">Stay tuned for our next release!</p>
             </article>
+        </section>
     </main>
 
     {% include 'includes/footer.html' %}
@@ -156,6 +156,8 @@
                 genericError: 'Impossible de creer la commande. Connectez-vous d\'abord.'
             };
         }
+        if (lang === 'ua') {
+            return {
                 created: 'Замовлення #',
                 createdSuffix: ' успішно створено.',
                 networkError: 'Помилка мережі під час створення замовлення.',

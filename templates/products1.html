@@ -11,10 +11,11 @@
     <meta name="Description" content="Bento candle – perfect for birthdays and weddings.">
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     <script src="{% static 'animations.js' %}" defer></script>
+    <script src="{% static 'bento_color_picker.js' %}" defer></script>
 </head>
 
 <body>
-    {% include 'includes/header.html' %}
+    {% include 'includes/header.html' with header_show_cart=True %}
 
     
     <main class="product-page">
@@ -34,9 +35,9 @@
                     <img id="mainProductImage" src="{% static 'assets/images/bento.ico' %}" alt="Bento Candle">
                 </div>
                 <div class="thumbnail-images">
-                    <img src="{% static 'assets/images/PR23.ICO' %}" alt="View 1" class="thumbnail active" onclick="changeImage(this)">
-                    <img src="{% static 'assets/images/PRO2.ICO' %}" alt="View 2" class="thumbnail" onclick="changeImage(this)">
-                    <img src="{% static 'assets/images/PRO24.ICO' %}" alt="View 3" class="thumbnail" onclick="changeImage(this)">
+                    <img src="{% static 'assets/images/bento.ico' %}" alt="Bento candle — main view" class="thumbnail active" onclick="changeImage(this)">
+                    <img src="{% static 'assets/images/MAIN10.ico' %}" alt="Bento candle — detail from collection" class="thumbnail" onclick="changeImage(this)">
+                    <img src="{% static 'assets/images/MAIN11.ico' %}" alt="Bento candle — lifestyle from collection" class="thumbnail" onclick="changeImage(this)">
                 </div>
             </div>
 
@@ -54,6 +55,8 @@
                 <p class="product-description" data-translate="product1-full-desc">
                 Compact elegance in a bento-style candle. Handmade from soy wax and scented with delicate notes of jasmine and cherry blossom. Ideal for gifts and special occasions.
                 </p>
+
+                {% include 'includes/bento_color_picker.html' %}
 
                 
                 <div class="product-details">
@@ -105,24 +108,6 @@
                 </div>
             </div>
         </div>
-
-        
-        <section class="related-products">
-            <h2 data-translate="related-title">You May Also Like</h2>
-            <div class="related-grid">
-                <article class="related-card" onclick="window.location.href='{% url 'shop:product_bento' %}'">
-                    <img src="{% static 'assets/images/bento.ico' %}" alt="Bento Bougie">
-                    <h3 data-translate="product1-name">Bento Bougie</h3>
-                    <p class="price">€10.99</p>
-                </article>
-
-                <article class="related-card" onclick="window.location.href='{% url 'shop:product_decorative_candles' %}'">
-                    <img src="{% static 'assets/images/rose.ico' %}" alt="Bougie Rose">
-                    <h3 data-translate="product3-name">Bougie Rose</h3>
-                    <p class="price">€7.99</p>
-                </article>
-            </div>
-        </section>
     </main>
 
     
@@ -154,6 +139,9 @@
         en: {
             'nav-home': 'Home',
             'nav-products': 'Products',
+            'nav-sub-gifts': 'Gift Collections',
+            'nav-sub-bento': 'Bento Candles',
+            'nav-sub-scented': 'Scented Candles',
             'nav-about': 'About Us',
             'nav-contact': 'Contact',
             'product2-name': 'Aroma Candle Mimosa',
@@ -173,10 +161,8 @@
             'feature-natural': '100% Natural',
             'feature-eco': 'Eco-Friendly',
             'feature-handmade': 'Handmade',
-            'related-title': 'You May Also Like',
             'product1-name': 'Bento Bougie',
             'product1-full-desc': 'Compact elegance in a bento-style candle. Handmade from soy wax and scented with delicate notes of jasmine and cherry blossom. Ideal for gifts and special occasions.',
-            'product3-name': 'Decorative Candle "Rose"',
             'footer-copyright': 'All rights reserved.',
             'footer-privacy': 'Privacy Policy',
             'footer-terms': 'Terms',
@@ -184,11 +170,21 @@
             'cookie-title': '🍪 We use cookies',
             'cookie-text': 'We use cookies to improve your experience on our site.',
             'cookie-accept': 'Accept',
-            'cookie-decline': 'Decline'
+            'cookie-decline': 'Decline',
+            'bento-color-label': 'Color',
+            'bento-color-white': 'White',
+            'bento-color-pink': 'Pink',
+            'bento-color-blue': 'Light blue',
+            'bento-color-yellow': 'Yellow',
+            'bento-color-lettuce': 'Lettuce green',
+            'bento-color-beige': 'Beige'
         },
         fr: {
             'nav-home': 'Accueil',
             'nav-products': 'Produits',
+            'nav-sub-gifts': 'Collections cadeaux',
+            'nav-sub-bento': 'Bougies Bento',
+            'nav-sub-scented': 'Bougies parfumées',
             'nav-about': 'À propos',
             'nav-contact': 'Contact',
             'product2-name': 'Bougie Parfumée Mimosa',
@@ -207,10 +203,8 @@
             'feature-natural': '100% Naturel',
             'feature-eco': 'Écologique',
             'feature-handmade': 'Fait Main',
-            'related-title': 'Vous Aimerez Aussi',
             'product1-name': 'Bento Bougie',
             'product1-full-desc': 'Élégance compacte dans une bougie style bento. Fabriquée à la main en cire de soja et parfumée de délicates notes de jasmin et de fleurs de cerisier. Idéale pour les cadeaux et les occasions spéciales.',
-            'product3-name': 'Bougie décorative "Rose"',
             'footer-copyright': 'Tous droits réservés.',
             'footer-privacy': 'Politique de confidentialité',
             'footer-terms': 'CGV',
@@ -218,11 +212,21 @@
             'cookie-title': '🍪 Nous utilisons des cookies',
             'cookie-text': 'Nous utilisons des cookies pour améliorer votre expérience.',
             'cookie-accept': 'Accepter',
-            'cookie-decline': 'Refuser'
+            'cookie-decline': 'Refuser',
+            'bento-color-label': 'Couleur',
+            'bento-color-white': 'Blanc',
+            'bento-color-pink': 'Rose',
+            'bento-color-blue': 'Bleu ciel',
+            'bento-color-yellow': 'Jaune',
+            'bento-color-lettuce': 'Vert salade',
+            'bento-color-beige': 'Beige'
         },
         ua: {
             'nav-home': 'Головна',
             'nav-products': 'Продукти',
+            'nav-sub-gifts': 'Подарункові колекції',
+            'nav-sub-bento': 'Свічки Bento',
+            'nav-sub-scented': 'Ароматичні свічки',
             'nav-about': 'Про нас',
             'nav-contact': 'Контакти',
             'product2-name': 'Ароматична Свічка Мімоза',
@@ -242,10 +246,8 @@
             'feature-natural': '100% Натурально',
             'feature-eco': 'Екологічно',
             'feature-handmade': 'Ручна Робота',
-            'related-title': 'Вам Також Сподобається',
             'product1-name': 'Свічка Бенто',
             'product1-full-desc': 'Компактна елегантність у свічці бенто. Виготовлена вручну зі соєвого воску та ароматизована ніжними нотами жасмину та цвітіння вишні. Ідеально підходить для подарунків та особливих подій.',
-            'product3-name': 'Декоративна свічка "Троянда"',
             'footer-copyright': 'Всі права захищені.',
             'footer-privacy': 'Політика конфіденційності',
             'footer-terms': 'Умови',
@@ -253,7 +255,26 @@
             'cookie-title': '🍪 Ми використовуємо cookies',
             'cookie-text': 'Ми використовуємо cookies для покращення вашого досвіду.',
             'cookie-accept': 'Прийняти',
-            'cookie-decline': 'Відхилити'
+            'cookie-decline': 'Відхилити',
+            'bento-color-label': 'Колір',
+            'bento-color-white': 'Білий',
+            'bento-color-pink': 'Рожевий',
+            'bento-color-blue': 'Блакитний',
+            'bento-color-yellow': 'Жовтий',
+            'bento-color-lettuce': 'Салатовий',
+            'bento-color-beige': 'Бежевий'
+        },
+        ru: {
+            'nav-sub-gifts': 'Подарочные коллекции',
+            'nav-sub-bento': 'Свечи Bento',
+            'nav-sub-scented': 'Ароматические свечи',
+            'bento-color-label': 'Цвет',
+            'bento-color-white': 'Белый',
+            'bento-color-pink': 'Розовый',
+            'bento-color-blue': 'Голубой',
+            'bento-color-yellow': 'Жёлтый',
+            'bento-color-lettuce': 'Салатовый',
+            'bento-color-beige': 'Бежевый'
         }
     };
 
@@ -268,8 +289,9 @@
         });
         document.querySelectorAll('[data-translate]').forEach(element => {
             const key = element.getAttribute('data-translate');
-            if (translations[lang] && translations[lang][key]) {
-                element.textContent = translations[lang][key];
+            const pack = Object.assign({}, translations.en, translations[lang] || {});
+            if (pack[key]) {
+                element.textContent = pack[key];
             }
         });
     }

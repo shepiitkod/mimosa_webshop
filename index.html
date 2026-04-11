@@ -17,7 +17,7 @@
 
 <body class="home-page">
 
-    <div class="language-switcher">
+    <div class="language-switcher"> 
         <button class="lang-current" type="button" aria-label="Toggle language menu" aria-expanded="false">EN</button>
         <div class="lang-options" aria-label="Language options">
             <button class="lang-btn active" data-lang="en" title="English" type="button">EN</button>
@@ -161,13 +161,13 @@
                 <p class="product-desc">Add products in admin panel to display them here.</p>
             </article>
             {% endfor %}
-        </section>
             <article class="Product4">
                 <a href="{% url 'shop:products' %}" class="product-link" aria-label="See all products">
                     <h3 data-translate="product4-name">New Products Coming Soon</h3>
                 </a>
                 <p class="product-desc" data-translate="product4-desc">Stay tuned for our next release!</p>
             </article>
+        </section>
     </main>
 
     <footer>

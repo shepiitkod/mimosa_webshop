@@ -81,9 +81,9 @@
                     <img id="mainProductImage" src="{% static 'assets/images/bento.ico' %}" alt="Bento Candle">
                 </div>
                 <div class="thumbnail-images">
-                    <img src="{% static 'assets/images/PR23.ICO' %}" alt="View 1" class="thumbnail active" onclick="changeImage(this)">
-                    <img src="{% static 'assets/images/PRO2.ICO' %}" alt="View 2" class="thumbnail" onclick="changeImage(this)">
-                    <img src="{% static 'assets/images/PRO24.ICO' %}" alt="View 3" class="thumbnail" onclick="changeImage(this)">
+                    <img src="{% static 'assets/images/bento.ico' %}" alt="Bento candle — main view" class="thumbnail active" onclick="changeImage(this)">
+                    <img src="{% static 'assets/images/MAIN10.ico' %}" alt="Bento candle — detail from collection" class="thumbnail" onclick="changeImage(this)">
+                    <img src="{% static 'assets/images/MAIN11.ico' %}" alt="Bento candle — lifestyle from collection" class="thumbnail" onclick="changeImage(this)">
                 </div>
             </div>
 
@@ -152,24 +152,6 @@
                 </div>
             </div>
         </div>
-
-        
-        <section class="related-products">
-            <h2 data-translate="related-title">You May Also Like</h2>
-            <div class="related-grid">
-                <article class="related-card" onclick="window.location.href='{% url 'shop:product_bento' %}'">
-                    <img src="{% static 'assets/images/bento.ico' %}" alt="Bento Bougie">
-                    <h3 data-translate="product1-name">Bento Bougie</h3>
-                    <p class="price">€10.99</p>
-                </article>
-
-                <article class="related-card" onclick="window.location.href='{% url 'shop:product_decorative_candles' %}'">
-                    <img src="{% static 'assets/images/rose.ico' %}" alt="Bougie Rose">
-                    <h3 data-translate="product3-name">Bougie Rose</h3>
-                    <p class="price">€7.99</p>
-                </article>
-            </div>
-        </section>
     </main>
 
     
@@ -234,10 +216,8 @@
             'feature-natural': '100% Natural',
             'feature-eco': 'Eco-Friendly',
             'feature-handmade': 'Handmade',
-            'related-title': 'You May Also Like',
             'product1-name': 'Bento Bougie',
             'product1-full-desc': 'Compact elegance in a bento-style candle. Handmade from soy wax and scented with delicate notes of jasmine and cherry blossom. Ideal for gifts and special occasions.',
-            'product3-name': 'Decorative Candle "Rose"',
             'footer-copyright': 'All rights reserved.',
             'footer-privacy': 'Privacy Policy',
             'footer-terms': 'Terms',
@@ -268,10 +248,8 @@
             'feature-natural': '100% Naturel',
             'feature-eco': 'Écologique',
             'feature-handmade': 'Fait Main',
-            'related-title': 'Vous Aimerez Aussi',
             'product1-name': 'Bento Bougie',
             'product1-full-desc': 'Élégance compacte dans une bougie style bento. Fabriquée à la main en cire de soja et parfumée de délicates notes de jasmin et de fleurs de cerisier. Idéale pour les cadeaux et les occasions spéciales.',
-            'product3-name': 'Bougie décorative "Rose"',
             'footer-copyright': 'Tous droits réservés.',
             'footer-privacy': 'Politique de confidentialité',
             'footer-terms': 'CGV',
@@ -303,10 +281,8 @@
             'feature-natural': '100% Натурально',
             'feature-eco': 'Екологічно',
             'feature-handmade': 'Ручна Робота',
-            'related-title': 'Вам Також Сподобається',
             'product1-name': 'Свічка Бенто',
             'product1-full-desc': 'Компактна елегантність у свічці бенто. Виготовлена вручну зі соєвого воску та ароматизована ніжними нотами жасмину та цвітіння вишні. Ідеально підходить для подарунків та особливих подій.',
-            'product3-name': 'Декоративна свічка "Троянда"',
             'footer-copyright': 'Всі права захищені.',
             'footer-privacy': 'Політика конфіденційності',
             'footer-terms': 'Умови',

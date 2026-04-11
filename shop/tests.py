@@ -25,6 +25,7 @@ class PaymentSyncTests(TestCase):
 			description='Test description',
 			price=Decimal('12.50'),
 			image='products/test.jpg',
+			category=Product.CATEGORY_SCENTED,
 		)
 		self.order = Order.objects.create(
 			user=self.user,

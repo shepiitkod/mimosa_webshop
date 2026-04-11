@@ -1,0 +1,31 @@
+{% load static %}
+{# Выбор цвета бенто: при появлении отдельных фото замените data-main-src у кнопок. #}
+<div class="bento-color-picker" role="radiogroup" aria-labelledby="bento-color-heading">
+    <p id="bento-color-heading" class="bento-color-picker__title" data-translate="bento-color-label">Color</p>
+    <div class="bento-color-picker__swatches">
+        <button type="button" class="bento-swatch is-active" data-main-src="{% if bento_white_src %}{{ bento_white_src }}{% else %}{% static 'assets/images/bento.ico' %}{% endif %}" style="--swatch:#ffffff" aria-checked="true" role="radio" title="White">
+            <span class="bento-swatch__dot" style="background:#ffffff;border:1px solid #ccc"></span>
+            <span class="bento-swatch__label" data-translate="bento-color-white">White</span>
+        </button>
+        <button type="button" class="bento-swatch" data-main-src="{% static 'assets/images/MAIN10.ico' %}" style="--swatch:#f8b8d8" aria-checked="false" role="radio" title="Pink">
+            <span class="bento-swatch__dot" style="background:#f8b8d8"></span>
+            <span class="bento-swatch__label" data-translate="bento-color-pink">Pink</span>
+        </button>
+        <button type="button" class="bento-swatch" data-main-src="{% static 'assets/images/MAIN11.ico' %}" style="--swatch:#a8d8f0" aria-checked="false" role="radio" title="Light blue">
+            <span class="bento-swatch__dot" style="background:#a8d8f0"></span>
+            <span class="bento-swatch__label" data-translate="bento-color-blue">Light blue</span>
+        </button>
+        <button type="button" class="bento-swatch" data-main-src="{% static 'assets/images/MAIN12.ico' %}" style="--swatch:#ffe566" aria-checked="false" role="radio" title="Yellow">
+            <span class="bento-swatch__dot" style="background:#ffe566"></span>
+            <span class="bento-swatch__label" data-translate="bento-color-yellow">Yellow</span>
+        </button>
+        <button type="button" class="bento-swatch" data-main-src="{% static 'assets/images/MAIN9.ico' %}" style="--swatch:#c8e6c9" aria-checked="false" role="radio" title="Lettuce green">
+            <span class="bento-swatch__dot" style="background:#c8e6c9"></span>
+            <span class="bento-swatch__label" data-translate="bento-color-lettuce">Lettuce green</span>
+        </button>
+        <button type="button" class="bento-swatch" data-main-src="{% static 'assets/images/bento.ico' %}" style="--swatch:#e8dcc8" aria-checked="false" role="radio" title="Beige">
+            <span class="bento-swatch__dot" style="background:#e8dcc8;border:1px solid #c9b89a"></span>
+            <span class="bento-swatch__label" data-translate="bento-color-beige">Beige</span>
+        </button>
+    </div>
+</div>

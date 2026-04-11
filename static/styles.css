@@ -1343,6 +1343,71 @@ footer {
     font-weight: 600;
 }
 
+.product-specs-primary {
+    margin-bottom: 0.5rem;
+}
+
+.product-specs-secondary {
+    margin-top: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+/* Bento candle color picker */
+.bento-color-picker {
+    margin: 1.25rem 0 1.5rem;
+}
+
+.bento-color-picker__title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 0.65rem;
+}
+
+.bento-color-picker__swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem 0.75rem;
+}
+
+.bento-swatch {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.45rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bento-swatch:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.bento-swatch.is-active {
+    box-shadow: 0 0 0 2px #d4b5a0;
+    background: rgba(212, 181, 160, 0.12);
+}
+
+.bento-swatch__dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.bento-swatch__label {
+    font-size: 0.72rem;
+    color: #5a5a5a;
+    max-width: 4.5rem;
+    text-align: center;
+    line-height: 1.2;
+}
+
 
 .quantity-section {
     margin-bottom: 30px;
@@ -3510,6 +3575,18 @@ opacity: 0.7;
 }
 
 /* Homepage hero photo marquee: continuous scroll right to left. */
+/* Prevent main from stretching to fill the viewport (empty “infinite” area below products). */
+.home-page main {
+    flex: 0 1 auto;
+}
+
+.home-page .Products > .Product4 {
+    grid-column: 1 / -1;
+    max-width: 520px;
+    margin: 0 auto;
+    justify-self: center;
+}
+
 .home-page .hero {
     position: relative;
     overflow: hidden;
