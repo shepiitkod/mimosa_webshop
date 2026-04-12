@@ -327,7 +327,8 @@ def confidential_view(request):
 
 @require_GET
 def product_bento_view(request):
-	return render(request, 'products1.html')
+	"""Legacy URL /products/bento/ — serve the live Bento category from the catalogue."""
+	return redirect('shop:products_by_category', category_slug=slugify(Product.CATEGORY_BENTO))
 
 
 @require_GET

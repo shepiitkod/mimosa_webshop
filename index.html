@@ -112,15 +112,21 @@
         </div>
     </section>
 
-    <section class="promo-banner" aria-labelledby="promo-banner-heading">
+    <section class="promo-banner promo-banner--contest" aria-labelledby="promo-banner-heading">
         <div class="promo-banner__inner">
             <div class="promo-banner__content">
-                <h2 id="promo-banner-heading" class="promo-banner__title" data-translate="promo-title">Spring Collection</h2>
-                <p class="promo-banner__text" data-translate="promo-text">Limited scents and handcrafted pieces for the season — discover them before they are gone.</p>
-                <a href="{% url 'shop:products' %}" class="hero-btn promo-banner__cta" data-translate="promo-cta">Shop the offer</a>
+                <p class="promo-banner__eyebrow" data-translate="promo-eyebrow">Contest</p>
+                <h2 id="promo-banner-heading" class="promo-banner__title" data-translate="promo-title">Win this candle bouquet</h2>
+                <p class="promo-banner__text" data-translate="promo-text">Place a single order of €50 or more and you are automatically entered into our draw to win this exclusive handcrafted candle bouquet.</p>
+                <a href="{% url 'shop:products' %}" class="hero-btn promo-banner__cta" data-translate="promo-cta">Shop the collection</a>
             </div>
-            <div class="promo-banner__media">
-                <img src="{% static 'assets/images/MAIN1.ico' %}" alt="Mimosa Atelier handcrafted candle — promotional feature" width="640" height="480" loading="lazy" decoding="async">
+            <div class="promo-banner__gallery">
+                <figure class="promo-banner__media">
+                    <img src="{% static 'assets/images/MAIN1.ico' %}" alt="Handcrafted numbered candles from Mimosa Atelier" width="400" height="500" loading="lazy" decoding="async">
+                </figure>
+                <figure class="promo-banner__media">
+                    <img src="{% static 'assets/images/contest-bouquet.png' %}" alt="Prize: floral handcrafted candle bouquet" width="400" height="500" loading="lazy" decoding="async">
+                </figure>
             </div>
         </div>
     </section>

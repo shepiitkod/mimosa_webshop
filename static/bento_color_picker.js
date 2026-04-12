@@ -1,13 +1,10 @@
 /**
- * Bento candle color swatches: updates #mainProductImage src from data-main-src.
+ * Bento candle color swatches: visual selection only (highlights active button).
  */
 (function () {
   document.addEventListener('DOMContentLoaded', function () {
     const root = document.querySelector('.bento-color-picker');
     if (!root) return;
-
-    const main = document.getElementById('mainProductImage');
-    if (!main) return;
 
     const swatches = root.querySelectorAll('.bento-swatch');
 
@@ -20,8 +17,6 @@
 
     swatches.forEach(function (btn) {
       btn.addEventListener('click', function () {
-        const src = btn.getAttribute('data-main-src');
-        if (src) main.src = src;
         setActive(btn);
       });
     });

@@ -22,9 +22,10 @@ const translations = {
         'about-snippet-title': 'Welcome to Mimosa Atelier',
         'about-snippet-text': 'Every candle is a story, crafted by hand with 100% natural soy wax and exclusive fragrances from Provence. We believe in beauty, sustainability, and the art of slow living.',
 
-        'promo-title': 'Spring Collection',
-        'promo-text': 'Limited scents and handcrafted pieces for the season — discover them before they are gone.',
-        'promo-cta': 'Shop the offer',
+        'promo-eyebrow': 'Contest',
+        'promo-title': 'Win this candle bouquet',
+        'promo-text': 'Place a single order of €50 or more and you are automatically entered into our draw to win this exclusive handcrafted candle bouquet.',
+        'promo-cta': 'Shop the collection',
 
         
         'products-title': 'Our New Collection',
@@ -234,9 +235,10 @@ const translations = {
         'about-snippet-title': 'Bienvenue chez Mimosa Atelier',
         'about-snippet-text': 'Chaque bougie est une histoire, fabriquée à la main avec de la cire de soja 100% naturelle et des fragrances exclusives de Provence. Nous croyons en la beauté, la durabilité et l\'art de vivre lentement.',
 
-        'promo-title': 'Collection de Printemps',
-        'promo-text': 'Parfums limités et pièces artisanales pour la saison — découvrez-les avant qu\'il ne soit trop tard.',
-        'promo-cta': 'Découvrir l\'offre',
+        'promo-eyebrow': 'Concours',
+        'promo-title': 'Gagnez ce bouquet de bougies',
+        'promo-text': 'Pour toute commande d\'un montant de 50 € ou plus, vous participez automatiquement au tirage au sort pour remporter ce bouquet de bougies artisanales.',
+        'promo-cta': 'Voir la boutique',
 
         
         'products-title': 'Notre Nouvelle Collection',
@@ -445,9 +447,10 @@ const translations = {
         'about-snippet-title': 'Ласкаво просимо до Mimosa Atelier',
         'about-snippet-text': 'Кожна свічка — це історія, виготовлена вручну зі 100% натурального соєвого воску та ексклюзивних ароматів з Провансу. Ми віримо в красу, сталість та мистецтво повільного життя.',
 
-        'promo-title': 'Весняна колекція',
-        'promo-text': 'Обмежені аромати та речі ручної роботи на сезон — встигніть до закінчення.',
-        'promo-cta': 'Переглянути пропозицію',
+        'promo-eyebrow': 'Розіграш',
+        'promo-title': 'Виграйте букет свічок',
+        'promo-text': 'Оформіть одне замовлення від 50 євро — і ви автоматично берете участь у розіграші цього ексклюзивного букета зі свічок ручної роботи.',
+        'promo-cta': 'До товарів',
 
         
         'products-title': 'Наша Нова Колекція',
@@ -651,6 +654,11 @@ const translations = {
         'hero-title': 'Свечи ручной работы',
         'hero-subtitle': 'Натуральные. Элегантные. Сделаны с любовью в Ниме, Франция',
         'hero-btn': 'Посмотреть коллекцию',
+
+        'promo-eyebrow': 'Конкурс',
+        'promo-title': 'Выиграйте букет из свечей',
+        'promo-text': 'Оформите один заказ от 50 евро — и вы автоматически участвуете в розыгрыше этого эксклюзивного букета из свечей ручной работы.',
+        'promo-cta': 'В каталог',
         
         
         'about-snippet-title': 'Добро пожаловать в Mimosa Atelier',
