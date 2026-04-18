@@ -14,9 +14,10 @@ const translations = {
         'nav-sub-new': 'New Arrivals',
         
         
-        'hero-title': 'Handcrafted Candles',
-        'hero-subtitle': 'Natural. Elegant. Made with Love in Nîmes, France',
+        'hero-title': 'The art of bespoke couture.',
+        'hero-subtitle': 'Handcrafted candles, natural soy wax, fragrances from Provence. Nîmes, France.',
         'hero-btn': 'Explore Collection',
+        'fab-consultation': 'Book a Consultation',
         
         
         'about-snippet-title': 'Welcome to Mimosa Atelier',
@@ -28,7 +29,7 @@ const translations = {
         'promo-cta': 'Shop the collection',
 
         
-        'products-title': 'Our New Collection',
+        'products-title': 'Portfolio',
         'product1-name': 'Bento Bougie',
         'product1-desc': 'Perfect for birthdays and weddings',
         'product1-composition': '100% soy wax, natural fragrance',
@@ -227,9 +228,10 @@ const translations = {
         'nav-sub-new': 'Nouveautés',
         
         
-        'hero-title': 'Bougies Artisanales',
-        'hero-subtitle': 'Naturelles. Élégantes. Faites avec Amour à Nîmes, France',
+        'hero-title': 'L\'art de la couture sur mesure.',
+        'hero-subtitle': 'Bougies artisanales, cire de soja et fragrances de Provence. Nîmes, France.',
         'hero-btn': 'Découvrir la Collection',
+        'fab-consultation': 'Réserver une consultation',
         
         
         'about-snippet-title': 'Bienvenue chez Mimosa Atelier',
@@ -241,7 +243,7 @@ const translations = {
         'promo-cta': 'Voir la boutique',
 
         
-        'products-title': 'Notre Nouvelle Collection',
+        'products-title': 'Portfolio',
         'product1-name': 'Bento Bougie',
         'product1-desc': 'Parfait pour anniversaires et mariages',
         'product1-composition': '100% cire de soja, parfum naturel',
@@ -439,9 +441,10 @@ const translations = {
         'nav-sub-new': 'Новинки',
         
         
-        'hero-title': 'Свічки ручної роботи',
-        'hero-subtitle': 'Натуральні. Елегантні. Створені з любов\'ю в Німі, Франція',
+        'hero-title': 'Мистецтво кутюру на замовлення.',
+        'hero-subtitle': 'Свічки ручної роботи, соєвий віск, аромати Провансу. Нім, Франція.',
         'hero-btn': 'Переглянути колекцію',
+        'fab-consultation': 'Записатися на консультацію',
         
         
         'about-snippet-title': 'Ласкаво просимо до Mimosa Atelier',
@@ -453,7 +456,7 @@ const translations = {
         'promo-cta': 'До товарів',
 
         
-        'products-title': 'Наша Нова Колекція',
+        'products-title': 'Портфоліо',
         'product1-name': 'Свічка Бенто',
         'product1-desc': 'Ідеально для днів народження та весіль',
         'product1-composition': '100% соєвий віск, натуральний аромат',
@@ -651,9 +654,10 @@ const translations = {
         'nav-sub-new': 'Новинки',
         
         
-        'hero-title': 'Свечи ручной работы',
-        'hero-subtitle': 'Натуральные. Элегантные. Сделаны с любовью в Ниме, Франция',
+        'hero-title': 'Искусство кутюра на заказ.',
+        'hero-subtitle': 'Свечи ручной работы, соевый воск, ароматы Прованса. Ним, Франция.',
         'hero-btn': 'Посмотреть коллекцию',
+        'fab-consultation': 'Записаться на консультацию',
 
         'promo-eyebrow': 'Конкурс',
         'promo-title': 'Выиграйте букет из свечей',
@@ -665,7 +669,7 @@ const translations = {
         'about-snippet-text': 'Каждая свеча — это история, созданная вручную из 100% натурального соевого воска и эксклюзивных ароматов из Прованса. Мы верим в красоту, устойчивость и искусство медленной жизни.',
         
         
-        'products-title': 'Наша новая коллекция',
+        'products-title': 'Портфолио',
         'product1-name': 'Свеча Bento',
         'product1-desc': 'Идеально для дней рождения и свадеб',
         'product1-composition': '100% соевый воск, натуральный аромат',

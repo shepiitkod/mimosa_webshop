@@ -22,7 +22,8 @@ load_dotenv(BASE_DIR / '.env')
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'надежный-дефолтный-ключ')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# Local: set DJANGO_DEBUG=True in .env — otherwise DEBUG stays off and HTTPS redirect breaks http://127.0.0.1:8000
+DEBUG = os.getenv('DJANGO_DEBUG', os.getenv('DEBUG', 'False')).lower() in ('true', '1', 'yes')
 
 ALLOWED_HOSTS = [
     'mimosa-atelier.onrender.com',
@@ -37,6 +38,11 @@ CSRF_TRUSTED_ORIGINS = [
     'https://mimosa-atelier.com',
     'https://www.mimosa-atelier.com',
 ]
+if DEBUG:
+    CSRF_TRUSTED_ORIGINS.extend([
+        'http://127.0.0.1:8000',
+        'http://localhost:8000',
+    ])
 
 # Security settings for HTTPS in production
 if not DEBUG:

@@ -27,13 +27,36 @@ main {
     box-sizing: border-box;
 }
 
+:root {
+    --color-page-bg: #FCFBFA;
+    --color-text: #2a2a2a;
+    --font-display: 'Cormorant Garamond', 'Libre Baskerville', 'Times New Roman', Times, serif;
+    --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --section-gap-atelier: 120px;
+    --accent-emerald: #0f4039;
+    --accent-emerald-deep: #0a2e29;
+    --accent-gold: #c9a227;
+    --accent-gold-soft: rgba(201, 162, 39, 0.35);
+}
+
 body {
-    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: linear-gradient(180deg, #fef9f0 0%, #f8f3e8 100%);
-    color: #2a2a2a;
-    line-height: 1.6;
+    font-family: var(--font-body);
+    background-color: var(--color-page-bg);
+    color: var(--color-text);
+    line-height: 1.65;
     overflow-x: hidden;
     animation: fadeInFromAsh 1.5s ease-out;
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+}
+
+h1,
+h2,
+.section-title,
+.about-hero h1,
+.about-snippet h2,
+.promo-banner__title {
+    font-family: var(--font-display);
 }
 
 @keyframes fadeInFromAsh {
@@ -51,7 +74,7 @@ body {
 
 
 header {
-    background: #ffffff;
+    background: var(--color-page-bg);
     padding: 22px 40px;
     display: flex;
     flex-direction: column;
@@ -297,13 +320,37 @@ nav ul li a:hover::before {
 }
 
 .hero h1 {
+    font-family: var(--font-display);
     font-size: 72px;
-    font-weight: 700;
+    font-weight: 600;
     color: #1a1a1a;
     margin-bottom: 24px;
-    letter-spacing: -2px;
-    line-height: 1.1;
+    letter-spacing: -0.02em;
+    line-height: 1.12;
     animation: fadeInUp 0.8s ease-out;
+}
+
+.home-page .hero .hero-headline {
+    animation: heroHeadlineFade 1.35s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+    opacity: 0;
+}
+
+@keyframes heroHeadlineFade {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home-page .hero .hero-headline {
+        animation: none;
+        opacity: 1;
+    }
 }
 
 @keyframes fadeInUp {
@@ -324,46 +371,39 @@ nav ul li a:hover::before {
 .hero-btn {
     display: inline-block;
     padding: 16px 42px;
-    background: linear-gradient(135deg, #f0e4c8, #ecdcb8, #f0e4c8);
-    background-size: 200% 200%;
-    color: #2a2a2a;
+    background: linear-gradient(145deg, #155a52 0%, var(--accent-emerald) 45%, var(--accent-emerald-deep) 100%);
+    color: #fdfbf7;
     text-decoration: none;
     border-radius: 50px;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 600;
-    letter-spacing: -0.2px;
+    letter-spacing: 0.02em;
+    border: 1px solid rgba(201, 162, 39, 0.45);
     position: relative;
     overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    box-shadow: 0 8px 24px rgba(212, 175, 55, 0.2);
-    animation: fadeInUp 0.8s ease-out 0.4s backwards, gradientMove 4s ease infinite;
-}
-
-@keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+    box-shadow: 0 10px 28px rgba(15, 64, 57, 0.28);
+    animation: fadeInUp 0.8s ease-out 0.4s backwards;
 }
 
 .hero-btn::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: -100%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
-    animation: shine 3s ease-in-out infinite;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 40%, rgba(201, 162, 39, 0.2) 50%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
 }
 
-@keyframes shine {
-    0% { left: -100%; }
-    50%, 100% { left: 150%; }
+.hero-btn:hover::before {
+    opacity: 1;
 }
 
 .hero-btn:hover {
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 15px 40px rgba(212, 175, 55, 0.35);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(15, 64, 57, 0.35);
+    border-color: rgba(201, 162, 39, 0.65);
 }
 
 .hero-btn:active {
@@ -373,7 +413,7 @@ nav ul li a:hover::before {
 
 .about-snippet {
     max-width: 850px;
-    margin: 100px auto;
+    margin: var(--section-gap-atelier) auto;
     padding: 50px 40px;
     text-align: center;
     background: rgba(255, 255, 255, 0.7);
@@ -401,13 +441,13 @@ nav ul li a:hover::before {
 
 /* Homepage: promotional card between hero and welcome block */
 .promo-banner {
-    --promo-bg: #f9f7f2;
-    --promo-accent: #e6dcc3;
+    --promo-bg: #f7f5f2;
+    --promo-accent: #ebe4d6;
     --promo-text: #1a1a1a;
     --promo-muted: #3d3d3d;
     padding: 3.5rem 1.5rem 2.75rem;
     max-width: 1120px;
-    margin: 0 auto;
+    margin: var(--section-gap-atelier) auto 0;
 }
 
 .promo-banner__inner {
@@ -511,7 +551,7 @@ nav ul li a:hover::before {
 }
 
 
-main h2 {
+main h2:not(.section-title) {
     font-size: 28px;
     margin-top: 40px;
     margin-bottom: 20px;
@@ -533,11 +573,11 @@ main p {
 
 .section-title {
     text-align: center;
-    font-size: 48px;
+    font-size: clamp(2rem, 4.5vw, 3rem);
     color: #1a1a1a;
-    margin: 60px 0 50px 0;
-    font-weight: 700;
-    letter-spacing: -1.5px;
+    margin: var(--section-gap-atelier) 0 48px 0;
+    font-weight: 600;
+    letter-spacing: -0.02em;
 }
 
 
@@ -547,7 +587,98 @@ main p {
     gap: 32px;
     width: min(1120px, 100%);
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 clamp(16px, 4vw, 24px);
+}
+
+/* Homepage: masonry portfolio */
+.home-page .Products.portfolio-masonry {
+    display: block;
+    column-count: 3;
+    column-gap: 28px;
+}
+
+.home-page .Products.portfolio-masonry > article {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 28px;
+    display: inline-block;
+    width: 100%;
+    vertical-align: top;
+}
+
+.home-page .Products.portfolio-masonry .Product1 figure,
+.home-page .Products.portfolio-masonry .Product2 figure,
+.home-page .Products.portfolio-masonry .Product3 figure {
+    aspect-ratio: auto;
+    border-bottom: none;
+}
+
+.home-page .Products.portfolio-masonry .portfolio-card__media {
+    position: relative;
+    overflow: hidden;
+    border-radius: 22px 22px 0 0;
+    aspect-ratio: 4 / 5;
+    background: linear-gradient(145deg, #f3f0eb, #e8e4dc);
+}
+
+.home-page .Products.portfolio-masonry .Product1:nth-child(3n + 2) .portfolio-card__media {
+    aspect-ratio: 1 / 1;
+}
+
+.home-page .Products.portfolio-masonry .Product1:nth-child(3n + 3) .portfolio-card__media {
+    aspect-ratio: 3 / 4;
+}
+
+.home-page .Products.portfolio-masonry .portfolio-card__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 1.35rem 1rem 1.5rem;
+    background: linear-gradient(to top, rgba(10, 46, 41, 0.88) 0%, rgba(10, 46, 41, 0.2) 45%, transparent 72%);
+    opacity: 0;
+    transition: opacity 0.45s ease;
+    pointer-events: none;
+}
+
+.home-page .Products.portfolio-masonry .Product1:hover .portfolio-card__overlay,
+.home-page .Products.portfolio-masonry .Product2:hover .portfolio-card__overlay,
+.home-page .Products.portfolio-masonry .Product3:hover .portfolio-card__overlay,
+.home-page .Products.portfolio-masonry .product-link:focus-visible .portfolio-card__overlay {
+    opacity: 1;
+}
+
+.home-page .Products.portfolio-masonry .portfolio-card__overlay-text {
+    font-family: var(--font-display);
+    font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+    font-weight: 600;
+    color: #fdfbf7;
+    text-align: center;
+    line-height: 1.35;
+    text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35);
+    transform: translateY(10px);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.home-page .Products.portfolio-masonry .Product1:hover .portfolio-card__overlay-text,
+.home-page .Products.portfolio-masonry .Product2:hover .portfolio-card__overlay-text,
+.home-page .Products.portfolio-masonry .Product3:hover .portfolio-card__overlay-text,
+.home-page .Products.portfolio-masonry .product-link:focus-visible .portfolio-card__overlay-text {
+    transform: translateY(0);
+}
+
+@media (max-width: 900px) {
+    .home-page .Products.portfolio-masonry {
+        column-count: 2;
+        column-gap: 20px;
+    }
+}
+
+@media (max-width: 520px) {
+    .home-page .Products.portfolio-masonry {
+        column-count: 1;
+    }
 }
 
 .Products > article {
@@ -602,11 +733,12 @@ main p {
 .Product1 figcaption, .Product2 figcaption, .Product3 figcaption { display: none; }
 
 .Product1 h3, .Product2 h3, .Product3 h3 {
+    font-family: var(--font-display);
     font-size: 22px;
     font-weight: 600;
     margin: 26px 24px 12px 24px;
     color: #1a1a1a;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.02em;
 }
 
 .product-link {
@@ -1051,6 +1183,46 @@ footer {
 .back-to-top span {
     display: block;
     line-height: 54px;
+}
+
+/* Floating consultation CTA (homepage) */
+.fab-consultation {
+    position: fixed;
+    right: max(18px, env(safe-area-inset-right));
+    bottom: max(22px, env(safe-area-inset-bottom));
+    z-index: 10000;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 22px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: #fdfbf7;
+    text-decoration: none;
+    white-space: nowrap;
+    background: linear-gradient(145deg, #155a52 0%, var(--accent-emerald) 50%, var(--accent-emerald-deep) 100%);
+    border: 1px solid rgba(201, 162, 39, 0.48);
+    border-radius: 999px;
+    box-shadow: 0 12px 32px rgba(15, 64, 57, 0.38);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.fab-consultation:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 38px rgba(15, 64, 57, 0.45);
+    border-color: rgba(201, 162, 39, 0.7);
+}
+
+.fab-consultation:focus-visible {
+    outline: 2px solid var(--accent-gold);
+    outline-offset: 3px;
+}
+
+.home-page .back-to-top {
+    bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+    right: max(22px, env(safe-area-inset-right));
 }
 
 
@@ -1818,6 +1990,20 @@ footer {
         bottom: 20px;
         right: 20px;
         font-size: 20px;
+    }
+
+    .home-page .back-to-top {
+        bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+        right: max(16px, env(safe-area-inset-right));
+    }
+
+    .fab-consultation {
+        font-size: 13px;
+        padding: 12px 16px;
+        white-space: normal;
+        text-align: center;
+        max-width: min(260px, calc(100vw - 32px));
+        line-height: 1.25;
     }
 
     .back-to-top span {
@@ -3272,6 +3458,10 @@ opacity: 0.7;
         width: 38px;
         height: 38px;
     }
+
+    .home-page .Products.portfolio-masonry .Product1 figure {
+        max-height: none;
+    }
 }
 
 @media (max-width: 900px) {
@@ -3746,9 +3936,31 @@ opacity: 0.7;
     justify-self: center;
 }
 
+.home-page .Products.portfolio-masonry > .Product4 {
+    grid-column: unset;
+    justify-self: unset;
+    column-span: all;
+    width: min(520px, 100%);
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 28px;
+    display: block;
+}
+
 .home-page .hero {
     position: relative;
     overflow: hidden;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+@supports (height: 100svh) {
+    .home-page .hero {
+        min-height: 100svh;
+    }
 }
 
 .home-page .hero-photos {
@@ -3862,6 +4074,18 @@ opacity: 0.7;
     }
 }
 
+@media (max-height: 680px) {
+    .home-page .hero-photos {
+        min-height: 180px;
+        padding: 12px 10px;
+    }
+
+    .home-page .hero-content {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+}
+
 /* Final global mobile optimization pass */
 @media (max-width: 900px) {
     html,
@@ -3896,8 +4120,8 @@ opacity: 0.7;
     }
 
     header {
-        padding-left: 12px;
-        padding-right: 12px;
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
     }
 
     nav {
@@ -3913,8 +4137,8 @@ opacity: 0.7;
     .Products {
         width: 100%;
         max-width: 100%;
-        padding-left: 12px;
-        padding-right: 12px;
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
         margin-left: auto;
         margin-right: auto;
     }
@@ -4245,15 +4469,100 @@ body.is-loaded header figure::after {
     }
 }
 
+/* Scroll reveal: base (fade + 20px lift) */
 .reveal-on-scroll {
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 520ms ease, transform 520ms ease;
+    transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reveal-on-scroll.is-visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* Text blocks: blur → clear */
+.reveal-on-scroll--text {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(18px);
+    transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-on-scroll--text.is-visible {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+}
+
+/* Homepage masonry portfolio: section container visible; cards stagger in */
+.home-page .portfolio-masonry.reveal-on-scroll {
+    opacity: 1;
+    transform: none;
+    transition: none;
+}
+
+.home-page .portfolio-masonry.reveal-on-scroll > article {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.home-page .portfolio-masonry.reveal-on-scroll.is-visible > article {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.home-page .portfolio-masonry.reveal-on-scroll.is-visible > article:nth-child(1) {
+    transition-delay: 0ms;
+}
+.home-page .portfolio-masonry.reveal-on-scroll.is-visible > article:nth-child(2) {
+    transition-delay: 75ms;
+}
+.home-page .portfolio-masonry.reveal-on-scroll.is-visible > article:nth-child(3) {
+    transition-delay: 150ms;
+}
+.home-page .portfolio-masonry.reveal-on-scroll.is-visible > article:nth-child(4) {
+    transition-delay: 225ms;
+}
+.home-page .portfolio-masonry.reveal-on-scroll.is-visible > article:nth-child(5) {
+    transition-delay: 300ms;
+}
+.home-page .portfolio-masonry.reveal-on-scroll.is-visible > article:nth-child(6) {
+    transition-delay: 375ms;
+}
+.home-page .portfolio-masonry.reveal-on-scroll.is-visible > article:nth-child(7) {
+    transition-delay: 450ms;
+}
+.home-page .portfolio-masonry.reveal-on-scroll.is-visible > article:nth-child(8) {
+    transition-delay: 525ms;
+}
+.home-page .portfolio-masonry.reveal-on-scroll.is-visible > article:nth-child(9) {
+    transition-delay: 600ms;
+}
+.home-page .portfolio-masonry.reveal-on-scroll.is-visible > article:nth-child(10) {
+    transition-delay: 675ms;
+}
+.home-page .portfolio-masonry.reveal-on-scroll.is-visible > article:nth-child(11) {
+    transition-delay: 750ms;
+}
+.home-page .portfolio-masonry.reveal-on-scroll.is-visible > article:nth-child(12) {
+    transition-delay: 825ms;
+}
+
+/* Masonry product image: zoom inside clipped media (hover 2.0) */
+.home-page .Products.portfolio-masonry .portfolio-card__media img {
+    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.home-page .Products.portfolio-masonry .Product1:hover .portfolio-card__media img,
+.home-page .Products.portfolio-masonry .Product2:hover .portfolio-card__media img,
+.home-page .Products.portfolio-masonry .Product3:hover .portfolio-card__media img {
+    transform: scale(1.03);
 }
 
 @media (hover: none) {
@@ -4294,6 +4603,10 @@ body.is-loaded header figure::after {
 
     .reveal-on-scroll,
     .reveal-on-scroll.is-visible,
+    .reveal-on-scroll--text,
+    .reveal-on-scroll--text.is-visible,
+    .home-page .portfolio-masonry.reveal-on-scroll > article,
+    .home-page .portfolio-masonry.reveal-on-scroll.is-visible > article,
     .Products > .Product1,
     .Products > .Product2,
     .Products > .Product3,
@@ -4317,6 +4630,10 @@ body.is-loaded header figure::after {
         transform: none !important;
         opacity: 1 !important;
         filter: none !important;
+    }
+
+    .home-page .Products.portfolio-masonry .portfolio-card__media img {
+        transform: none !important;
     }
 }
 
