@@ -35,6 +35,10 @@ class Product(models.Model):
 		default='',
 		help_text='Displayed on product page (e.g. 200 g, 0.42 kg).',
 	)
+	weight_grams = models.PositiveIntegerField(
+		default=200,
+		help_text='Shipping weight in grams (used for checkout).',
+	)
 	burn_time = models.CharField(max_length=120, blank=True, default='')
 	stock = models.PositiveIntegerField(default=0)
 
@@ -67,6 +71,9 @@ class Order(models.Model):
 	city = models.CharField(max_length=100, blank=True, default='')
 	postal_code = models.CharField(max_length=20, blank=True, default='')
 	country = models.CharField(max_length=100, blank=True, default='')
+	shipping_carrier = models.CharField(max_length=32, blank=True, default='')
+	shipping_cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+	shipping_country_code = models.CharField(max_length=2, blank=True, default='')
 
 	def __str__(self):
 		return f'Order #{self.id} - {self.user.username}'

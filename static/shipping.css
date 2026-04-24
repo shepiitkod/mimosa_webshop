@@ -1,0 +1,418 @@
+/* Mimosa checkout — shipping module (Cormorant / DM Sans via styles.css :root) */
+
+.shipping-module {
+    margin-top: 2rem;
+    padding: 1.75rem 1.5rem;
+    max-width: 640px;
+    background: #fcfbfa;
+    border: 1px solid #1a1a1a;
+    border-radius: 16px;
+    font-family: var(--font-body, 'DM Sans', sans-serif);
+}
+
+.shipping-module__title {
+    font-family: var(--font-display, 'Cormorant Garamond', serif);
+    font-size: 1.65rem;
+    font-weight: 600;
+    margin: 0 0 1.25rem;
+    color: #1a1a1a;
+}
+
+.shipping-module__field {
+    margin-bottom: 1.5rem;
+}
+
+.shipping-module__label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #444;
+    margin-bottom: 0.5rem;
+}
+
+/* Custom country dropdown */
+.shipping-country {
+    position: relative;
+    max-width: 420px;
+}
+
+.shipping-country__btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
+    font-family: inherit;
+    font-size: 1rem;
+    background: #fcfbfa;
+    border: 1px solid #1a1a1a;
+    border-radius: 12px;
+    cursor: pointer;
+    color: #1a1a1a;
+    transition: all 0.3s ease;
+}
+
+.shipping-country__btn:hover,
+.shipping-country__btn[aria-expanded='true'] {
+    border-color: var(--accent-emerald, #0f4039);
+    box-shadow: 0 0 0 1px rgba(15, 64, 57, 0.15);
+}
+
+.shipping-country__chev {
+    flex-shrink: 0;
+    opacity: 0.55;
+    transition: transform 0.3s ease;
+}
+
+.shipping-country__btn[aria-expanded='true'] .shipping-country__chev {
+    transform: rotate(180deg);
+}
+
+.shipping-country__panel {
+    position: absolute;
+    z-index: 40;
+    left: 0;
+    right: 0;
+    top: calc(100% + 6px);
+    max-height: 280px;
+    overflow-y: auto;
+    background: #fcfbfa;
+    border: 1px solid #1a1a1a;
+    border-radius: 12px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+    padding: 8px 0;
+    display: none;
+}
+
+.shipping-country__panel.is-open {
+    display: block;
+}
+
+.shipping-country__group-label {
+    padding: 8px 16px 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #888;
+}
+
+.shipping-country__option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 10px 16px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #1a1a1a;
+    transition: background 0.2s ease;
+}
+
+.shipping-country__option:hover,
+.shipping-country__option:focus-visible {
+    background: rgba(15, 64, 57, 0.08);
+    outline: none;
+}
+
+.shipping-country__option.is-active {
+    background: rgba(201, 162, 39, 0.12);
+    font-weight: 600;
+}
+
+/* Carrier cards */
+.shipping-carriers {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.shipping-carrier-card {
+    position: relative;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    padding: 1rem 1.15rem;
+    text-align: left;
+    font-family: inherit;
+    background: #fcfbfa;
+    border: 1px solid #1a1a1a;
+    border-radius: 14px;
+    cursor: pointer;
+    color: #1a1a1a;
+    transition: all 0.3s ease;
+}
+
+.shipping-carrier-card--info {
+    cursor: default;
+}
+
+.shipping-carrier-card:hover:not(.shipping-carrier-card--info),
+.shipping-carrier-card:focus-visible:not(.shipping-carrier-card--info) {
+    border-color: #333;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.07);
+}
+
+.shipping-carrier-card.is-active {
+    border-color: var(--accent-emerald, #0f4039);
+    box-shadow: 0 0 0 2px rgba(201, 162, 39, 0.45);
+}
+
+.shipping-carrier-card.is-active:hover:not(.shipping-carrier-card--info),
+.shipping-carrier-card.is-active:focus-visible:not(.shipping-carrier-card--info) {
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 2px rgba(201, 162, 39, 0.45), 0 10px 26px rgba(0, 0, 0, 0.08);
+}
+
+.shipping-carrier-card__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px 12px;
+}
+
+.shipping-carrier-card__main {
+    flex: 1 1 140px;
+    min-width: 0;
+}
+
+.shipping-carrier-card__name {
+    font-family: var(--font-display, 'Cormorant Garamond', serif);
+    font-size: clamp(1.05rem, 3.8vw, 1.25rem);
+    font-weight: 600;
+    line-height: 1.25;
+    word-break: break-word;
+    hyphens: auto;
+}
+
+.shipping-carrier-card__eta {
+    font-size: 0.86rem;
+    color: #555;
+    margin-top: 4px;
+    line-height: 1.35;
+    word-break: break-word;
+}
+
+.shipping-carrier-card__price-wrap {
+    flex: 0 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 2px;
+    min-width: 0;
+    text-align: right;
+}
+
+.shipping-carrier-card__price {
+    font-size: 1.05rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.shipping-carrier-card__price.is-struck {
+    text-decoration: line-through;
+    opacity: 0.55;
+    font-weight: 500;
+}
+
+.shipping-carrier-card__gratuit {
+    display: block;
+    font-size: clamp(0.98rem, 3.2vw, 1.05rem);
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: right;
+    background: linear-gradient(
+        120deg,
+        var(--accent-gold, #c9a227) 0%,
+        var(--accent-emerald, #0f4039) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.shipping-totals {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(26, 26, 26, 0.15);
+    font-size: 1rem;
+}
+
+.shipping-totals__row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.35rem;
+    gap: 8px;
+}
+
+.shipping-totals__grand {
+    font-family: var(--font-display, 'Cormorant Garamond', serif);
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-top: 0.75rem;
+}
+
+.shipping-free-hint {
+    margin-top: 0.75rem;
+    font-size: 0.88rem;
+    color: var(--accent-emerald, #0f4039);
+    line-height: 1.45;
+}
+
+/* Checkout button — loading */
+.cart-checkout-btn {
+    position: relative;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.25s ease;
+}
+
+.cart-checkout-btn:disabled {
+    cursor: wait;
+    opacity: 0.92;
+}
+
+.cart-checkout-btn__inner {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.cart-checkout-btn__spinner {
+    display: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(252, 251, 250, 0.35);
+    border-top-color: #fcfbfa;
+    border-radius: 50%;
+    animation: shipping-spin 0.65s linear infinite;
+    flex-shrink: 0;
+}
+
+.cart-checkout-btn.is-loading .cart-checkout-btn__spinner {
+    display: block;
+}
+
+.cart-checkout-btn.is-loading .cart-checkout-btn__label {
+    display: none;
+}
+
+.cart-checkout-btn.is-loading .cart-checkout-btn__loading-text {
+    display: inline !important;
+    color: #fdfbf7;
+}
+
+.cart-checkout-btn__loading-text {
+    display: none;
+    font-family: var(--font-body, 'DM Sans', sans-serif);
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: inherit;
+}
+
+.cart-checkout-btn.is-loading .cart-checkout-btn__inner {
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes shipping-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Toasts */
+.shipping-toast-host {
+    position: fixed;
+    z-index: 10050;
+    bottom: max(16px, env(safe-area-inset-bottom));
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    max-width: min(420px, calc(100vw - 24px));
+    pointer-events: none;
+}
+
+@media (min-width: 640px) {
+    .shipping-toast-host {
+        top: max(20px, env(safe-area-inset-top));
+        bottom: auto;
+        left: auto;
+        right: max(20px, env(safe-area-inset-right));
+        transform: none;
+        align-items: flex-end;
+    }
+}
+
+.shipping-toast {
+    pointer-events: auto;
+    font-family: var(--font-display, 'Cormorant Garamond', serif);
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.35;
+    padding: 14px 18px;
+    background: #fcfbfa;
+    color: #1a1a1a;
+    border-radius: 12px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.shipping-toast--error {
+    border: 1px solid rgba(139, 41, 66, 0.55);
+    box-shadow: 0 12px 36px rgba(139, 41, 66, 0.12);
+}
+
+.shipping-toast--success {
+    border: 1px solid rgba(15, 64, 57, 0.45);
+}
+
+.shipping-toast--info {
+    border: 1px solid rgba(26, 26, 26, 0.2);
+}
+
+.shipping-toast--visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 380px) {
+    .shipping-module {
+        padding: 1.25rem 0.85rem;
+    }
+
+    .shipping-carrier-card {
+        padding: 0.85rem 0.75rem;
+    }
+
+    .shipping-carrier-card__price-wrap {
+        align-items: flex-start;
+        text-align: left;
+        width: 100%;
+    }
+
+    .shipping-carrier-card__gratuit {
+        text-align: left;
+    }
+
+    .shipping-carrier-card__price {
+        white-space: normal;
+    }
+}

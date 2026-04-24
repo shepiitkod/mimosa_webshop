@@ -42,7 +42,10 @@ class PaymentSyncTests(TestCase):
 
 		with patch('shop.views.stripe.checkout.Session.create') as create_mock:
 			create_mock.return_value = SimpleNamespace(url='https://checkout.stripe.com/c/pay/cs_test_mock')
-			response = self.client.post(reverse('shop:create_checkout_session'))
+			response = self.client.post(
+				reverse('shop:create_checkout_session'),
+				{'shipping_country': 'FR', 'shipping_carrier': 'colissimo'},
+			)
 			create_kwargs = create_mock.call_args.kwargs
 			self.assertTrue(create_kwargs.get('allow_promotion_codes'))
 			self.assertEqual(

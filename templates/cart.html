@@ -5,9 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Корзина - Mimosa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'shipping.css' %}">
 </head>
 <body class="home-page">
+    {% include 'includes/promo_ribbon.html' %}
     <header>
         <figure>
             <a href="{% url 'shop:home' %}">
@@ -32,10 +37,18 @@
         </nav>
     </header>
 
-    <main class="product-page">
+    <main id="main-content" tabindex="-1" class="product-page">
         <h1 class="section-title">Корзина</h1>
 
+        {{ toast_messages|json_script:"shipping-toast-messages" }}
+        <script>
+            window.MIMOSA_SHIPPING_DEBUG = {% if shipping_debug %}true{% else %}false{% endif %};
+        </script>
+
         {% if cart_items %}
+            {{ cart_lines|json_script:"cart-lines-data" }}
+            {{ shipping_rules|json_script:"shipping-rules-data" }}
+
             <section class="Products" style="grid-template-columns: 1fr; max-width: 900px;">
                 {% for item in cart_items %}
                     <article class="Product1" style="padding: 20px;">
@@ -43,6 +56,7 @@
                         <p class="product-desc">Категория: {{ item.product.category }}</p>
                         <p class="product-composition">Цена: EUR {{ item.product.price }}</p>
                         <p class="product-price">EUR {{ item.line_total }}</p>
+                        <p class="product-desc" style="font-size: 0.9rem;">Poids (expédition): {{ item.product.weight_grams }} g</p>
 
                         <form method="post" action="{% url 'shop:cart_add' item.product.id %}" style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
                             {% csrf_token %}
@@ -59,11 +73,61 @@
                 {% endfor %}
             </section>
 
-            <section class="about-snippet" style="margin-top: 30px;">
-                <h2>Итого: EUR {{ cart_total }}</h2>
-                <form method="post" action="{% url 'shop:create_checkout_session' %}">
+            <section class="about-snippet" style="margin-top: 30px; max-width: 900px;">
+                <form method="post" action="{% url 'shop:create_checkout_session' %}" data-checkout-form>
                     {% csrf_token %}
-                    <button type="submit" class="hero-btn" data-translate="cart-checkout">Place order</button>
+                    <div class="shipping-module" data-shipping-root>
+                        <h2 class="shipping-module__title">Livraison</h2>
+
+                        <div class="shipping-module__field">
+                            <span class="shipping-module__label" id="ship-country-label">Pays de destination</span>
+                            <div class="shipping-country">
+                                <button
+                                    type="button"
+                                    class="shipping-country__btn"
+                                    data-country-button
+                                    aria-haspopup="listbox"
+                                    aria-expanded="false"
+                                    aria-labelledby="ship-country-label"
+                                >
+                                    <span data-country-label>France</span>
+                                    <span class="shipping-country__chev" aria-hidden="true">▾</span>
+                                </button>
+                                <div class="shipping-country__panel" data-country-panel role="listbox"></div>
+                            </div>
+                            <input type="hidden" name="shipping_country" value="FR" data-shipping-country-input>
+                        </div>
+
+                        <div class="shipping-module__field">
+                            <span class="shipping-module__label">Mode de livraison</span>
+                            <div class="shipping-carriers" data-carrier-cards role="radiogroup" aria-label="Shipping options"></div>
+                            <input type="hidden" name="shipping_carrier" value="" data-shipping-carrier-input>
+                        </div>
+
+                        <div class="shipping-totals">
+                            <div class="shipping-totals__row">
+                                <span>Sous-total</span>
+                                <span data-summary-subtotal>EUR {{ cart_total }}</span>
+                            </div>
+                            <div class="shipping-totals__row">
+                                <span>Livraison</span>
+                                <span data-summary-shipping>—</span>
+                            </div>
+                            <div class="shipping-totals__row shipping-totals__grand">
+                                <span>Total commande</span>
+                                <span data-summary-grand>—</span>
+                            </div>
+                        </div>
+                        <p class="shipping-free-hint" data-free-hint aria-live="polite"></p>
+                    </div>
+
+                    <button type="submit" class="hero-btn cart-checkout-btn" style="margin-top: 1.25rem;" data-checkout-submit data-translate="cart-checkout" aria-busy="false">
+                        <span class="cart-checkout-btn__inner">
+                            <span class="cart-checkout-btn__spinner" aria-hidden="true"></span>
+                            <span class="cart-checkout-btn__label" data-translate="cart-checkout">Place order</span>
+                            <span class="cart-checkout-btn__loading-text" data-checkout-loading-text>Sécurisation en cours…</span>
+                        </span>
+                    </button>
                 </form>
             </section>
         {% else %}
@@ -79,7 +143,8 @@
     <script>
         window.STRIPE_PUBLISHABLE_KEY = "{{ STRIPE_PUBLISHABLE_KEY|escapejs }}";
     </script>
-    
+
     <script src="{% static 'translations.js' %}" defer></script>
+    <script src="{% static 'shipping.js' %}" defer></script>
 </body>
 </html>

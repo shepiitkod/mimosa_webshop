@@ -5,6 +5,8 @@ from typing import Optional
 
 import stripe
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.messages import get_messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -19,6 +21,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 
+from . import shipping
 from .models import NewsletterUser, Order, OrderItem, Product
 
 
@@ -97,22 +100,43 @@ def _create_stripe_session_for_order(request, order):
 		for item in order_items
 	]
 
+	ship = getattr(order, 'shipping_cost', None) or Decimal('0')
+	if ship > 0:
+		carrier_key = (order.shipping_carrier or '').strip().lower()
+		c_meta = shipping.CARRIER_LABELS.get(carrier_key, {})
+		ship_label = c_meta.get('name', 'Livraison')
+		line_items.append(
+			{
+				'price_data': {
+					'currency': 'eur',
+					'product_data': {'name': f'Livraison — {ship_label}'},
+					'unit_amount': int((ship * Decimal('100')).quantize(Decimal('1'))),
+				},
+				'quantity': 1,
+			}
+		)
+
 	allow_promotion_codes = True
 	print(f"DEBUG: Session created for {customer_email} with allow_promo=True")
 
+	shipping_iso = (getattr(order, 'shipping_country_code', '') or '').strip().upper()
+	session_metadata = {
+		'order_id': str(order.id),
+		'hs_codes': ','.join(hs_codes),
+		'primary_hs_code': hs_codes[0] if hs_codes else '340600',
+		'shipping_carrier': (order.shipping_carrier or ''),
+		'shipping_country': shipping_iso,
+	}
+
 	create_kwargs = {
 		'client_reference_id': str(order.id),
-		'metadata': {
-			'order_id': str(order.id),
-			'hs_codes': ','.join(hs_codes),
-			'primary_hs_code': hs_codes[0] if hs_codes else '340600',
-		},
+		'metadata': session_metadata,
 		'line_items': line_items,
 		'mode': 'payment',
 		'payment_method_types': ['card'],
 		'allow_promotion_codes': allow_promotion_codes,
 		'billing_address_collection': 'auto',
-		'shipping_address_collection': {'allowed_countries': ['FR', 'UA', 'GB', 'US']},
+		'shipping_address_collection': {'allowed_countries': shipping.stripe_shipping_countries()},
 		'success_url': success_url,
 		'cancel_url': cancel_url,
 	}
@@ -229,6 +253,14 @@ def _cart_summary(session):
 		)
 
 	return items, total.quantize(Decimal('0.01'))
+
+
+def _cart_total_weight_grams(items) -> int:
+	total = 0
+	for item in items:
+		w = int(getattr(item['product'], 'weight_grams', 200) or 200)
+		total += w * int(item['quantity'])
+	return max(total, 1)
 
 
 @require_GET
@@ -411,7 +443,33 @@ def cart_add(request, product_id):
 @require_GET
 def cart_detail(request):
 	items, total = _cart_summary(request.session)
-	return render(request, 'cart.html', {'cart_items': items, 'cart_total': total})
+	cart_lines = [
+		{
+			'id': line['product'].id,
+			'title': line['product'].title,
+			'quantity': line['quantity'],
+			'price': str(line['product'].price),
+			'lineTotal': str(line['line_total']),
+			'weightGrams': int(getattr(line['product'], 'weight_grams', 200) or 200),
+		}
+		for line in items
+	]
+	toast_messages = []
+	for m in get_messages(request):
+		toast_messages.append({'level': m.tags or 'info', 'text': str(m)})
+
+	return render(
+		request,
+		'cart.html',
+		{
+			'cart_items': items,
+			'cart_total': total,
+			'cart_lines': cart_lines,
+			'shipping_rules': shipping.client_payload(),
+			'toast_messages': toast_messages,
+			'shipping_debug': settings.DEBUG,
+		},
+	)
 
 
 @require_POST
@@ -427,14 +485,31 @@ def cart_remove(request, product_id):
 @login_required
 @require_POST
 def order_create(request):
-	items, total = _cart_summary(request.session)
+	items, subtotal = _cart_summary(request.session)
 	if not items:
 		return redirect('shop:cart_detail')
+
+	country = (request.POST.get('shipping_country') or '').strip().upper()
+	carrier = (request.POST.get('shipping_carrier') or '').strip().lower()
+	if not country or not carrier:
+		messages.error(request, 'Please choose a country and shipping method.')
+		return redirect('shop:cart_detail')
+
+	tw = _cart_total_weight_grams(items)
+	ship_amount, err = shipping.quote_shipping(country, carrier, tw, subtotal)
+	if err:
+		messages.error(request, err)
+		return redirect('shop:cart_detail')
+
+	grand_total = (subtotal + ship_amount).quantize(Decimal('0.01'))
 
 	with transaction.atomic():
 		order = Order.objects.create(
 			user=request.user,
-			total_amount=total,
+			total_amount=grand_total,
+			shipping_cost=ship_amount,
+			shipping_carrier=carrier,
+			shipping_country_code=country,
 			status=Order.STATUS_PROCESSING,
 		)
 
@@ -524,15 +599,32 @@ def create_order_from_product(request):
 @login_required
 @require_POST
 def create_checkout_session(request):
-	items, total = _cart_summary(request.session)
+	items, subtotal = _cart_summary(request.session)
 	if not items:
 		return redirect('shop:cart_detail')
+
+	country = (request.POST.get('shipping_country') or '').strip().upper()
+	carrier = (request.POST.get('shipping_carrier') or '').strip().lower()
+	if not country or not carrier:
+		messages.error(request, 'Please choose a country and shipping method.')
+		return redirect('shop:cart_detail')
+
+	tw = _cart_total_weight_grams(items)
+	ship_amount, err = shipping.quote_shipping(country, carrier, tw, subtotal)
+	if err:
+		messages.error(request, err)
+		return redirect('shop:cart_detail')
+
+	grand_total = (subtotal + ship_amount).quantize(Decimal('0.01'))
 
 	# Create the order in DB first so we have an order_id for Stripe metadata.
 	with transaction.atomic():
 		order = Order.objects.create(
 			user=request.user,
-			total_amount=total,
+			total_amount=grand_total,
+			shipping_cost=ship_amount,
+			shipping_carrier=carrier,
+			shipping_country_code=country,
 			status=Order.STATUS_PROCESSING,
 		)
 		for item in items:

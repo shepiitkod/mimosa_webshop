@@ -22,7 +22,7 @@ class ProductAdmin(admin.ModelAdmin):
 			'Product Parameters',
 			{
 				'fields': (
-					'scent', 'wick', 'weight', 'burn_time',
+					'scent', 'wick', 'weight', 'weight_grams', 'burn_time',
 					'composition', 'form_capacity', 'wax_type',
 				),
 			},
@@ -69,7 +69,20 @@ class OrderAdmin(admin.ModelAdmin):
 	search_fields = ('id', 'user__username', 'shipping_address', 'city', 'postal_code')
 	inlines = [OrderItemInline]
 	fieldsets = (
-		('Order Info', {'fields': ('user', 'total_amount', 'status', 'created_at')}),
+		(
+			'Order Info',
+			{
+				'fields': (
+					'user',
+					'total_amount',
+					'shipping_cost',
+					'shipping_carrier',
+					'shipping_country_code',
+					'status',
+					'created_at',
+				),
+			},
+		),
 		('Shipping Address', {'fields': ('shipping_address', 'city', 'postal_code', 'country')}),
 	)
 	readonly_fields = ('created_at',)
