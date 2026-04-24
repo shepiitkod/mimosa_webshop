@@ -1,0 +1,14 @@
+{% load static %}
+<picture>
+    <source type="image/webp" srcset="{% static rel|add:'.webp' %}">
+    <img
+        {% if class_name %}class="{{ class_name }}"{% endif %}
+        src="{% static rel|add:'.jpg' %}"
+        alt="{{ alt|default:'' }}"
+        width="{{ w }}"
+        height="{{ h }}"
+        decoding="async"
+        {% if loading == 'lazy' %}loading="lazy"{% endif %}
+        {% if fetchpriority == 'high' %}fetchpriority="high"{% endif %}
+    />
+</picture>

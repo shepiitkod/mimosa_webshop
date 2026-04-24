@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body class="home-page">
-    <main class="about-snippet" style="margin-top: 80px; max-width: 760px;">
+    <main id="main-content" tabindex="-1" class="about-snippet" style="margin-top: 80px; max-width: 760px;">
         <h1>Оплата отменена</h1>
         <p>Платеж не был завершен. Вы можете вернуться в корзину и попробовать снова.</p>
         <a class="hero-btn" href="{% url 'shop:cart' %}">Вернуться в корзину</a>

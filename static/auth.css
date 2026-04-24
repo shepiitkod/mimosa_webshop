@@ -117,7 +117,7 @@ body.auth-body {
     position: relative;
     background:
         linear-gradient(180deg, rgba(46, 36, 15, 0.18) 0%, rgba(46, 36, 15, 0.04) 100%),
-        url("/static/assets/images/photo1.ico") center/cover no-repeat;
+        url("/static/assets/images/photo1.jpg") center/cover no-repeat;
     color: #fffdf8;
     padding: 42px 34px;
     display: flex;

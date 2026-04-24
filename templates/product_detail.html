@@ -17,7 +17,7 @@
 <body>
     {% include 'includes/header.html' with header_show_cart=True %}
 
-    <main class="product-page">
+    <main id="main-content" tabindex="-1" class="product-page">
         <div class="breadcrumbs">
             <a href="{% url 'shop:home' %}" data-translate="nav-home">Home</a>
             <span>/</span>

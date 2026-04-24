@@ -11,7 +11,7 @@
 <body class="catalog-page">
     {% include 'includes/header.html' with header_show_cart=True %}
 
-    <main class="catalog-layout">
+    <main id="main-content" tabindex="-1" class="catalog-layout">
         <aside class="catalog-sidebar" aria-label="Product categories">
             <h2 data-translate="catalog-sidebar-title">Categories</h2>
             {% for category in categories %}

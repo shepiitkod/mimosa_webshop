@@ -14,6 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="preload" as="image" href="{% static 'assets/images/photo1.webp' %}" type="image/webp">
     <script src="{% static 'translations.js' %}"></script>
     <script src="{% static 'animations.js' %}" defer></script>
 </head>
@@ -24,43 +25,15 @@
     
     <section class="hero">
         <div class="hero-photos">
-            <img src="{% static 'assets/images/photo1.ico' %}" alt="Candle from collection 1" class="hero-photo hero-photo-1" width="400" height="520" fetchpriority="high" decoding="async">
-            <img src="{% static 'assets/images/photo2.ico' %}" alt="Photo model for the new collection" class="hero-photo hero-photo-2" width="400" height="520" loading="lazy" decoding="async">
-            <img src="{% static 'assets/images/photo3.ico' %}" alt="Candle from collection 2" class="hero-photo hero-photo-3" width="400" height="520" loading="lazy" decoding="async">
+            {% include 'includes/picture_opt.html' with rel='assets/images/photo1' class_name='hero-photo hero-photo-1' w=900 h=1348 alt='Candle from collection 1' fetchpriority='high' only %}
+            {% include 'includes/picture_opt.html' with rel='assets/images/photo2' class_name='hero-photo hero-photo-2' w=853 h=1280 alt='Photo model for the new collection' loading='lazy' only %}
+            {% include 'includes/picture_opt.html' with rel='assets/images/photo3' class_name='hero-photo hero-photo-3' w=900 h=1348 alt='Candle from collection 2' loading='lazy' only %}
         </div>
         <div class="hero-content">
             <div class="hero-content-bg" aria-hidden="true">
                 <div class="hero-bg-track">
-                    <img src="{% static 'assets/images/MAIN1.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/MAIN2.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/MAIN3.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/MAIN4.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/MAIN5.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/MAIN6.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/MAIN7.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/MAIN8.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/MAIN9.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/MAIN10.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/MAIN11.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/MAIN12.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/photo1.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/photo2.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/photo3.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/MAIN1.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/MAIN2.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/MAIN3.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/MAIN4.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/MAIN5.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/MAIN6.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/MAIN7.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/MAIN8.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/MAIN9.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/MAIN10.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/MAIN11.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/MAIN12.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/photo1.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/photo2.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
-                    <img src="{% static 'assets/images/photo3.ico' %}" alt="" class="hero-bg-photo" loading="lazy" decoding="async">
+                    {% include 'includes/hero_marquee_set.html' %}
+                    {% include 'includes/hero_marquee_set.html' %}
                 </div>
             </div>
             <h1 class="hero-headline" data-translate="hero-title">L'art de la couture sur mesure.</h1>
@@ -79,10 +52,10 @@
             </div>
             <div class="promo-banner__gallery">
                 <figure class="promo-banner__media">
-                    <img src="{% static 'assets/images/MAIN1.ico' %}" alt="Handcrafted numbered candles from Mimosa Atelier" width="400" height="500" loading="lazy" decoding="async">
+                    {% include 'includes/picture_opt.html' with rel='assets/images/MAIN1' w=800 h=1067 alt='Handcrafted numbered candles from Mimosa Atelier' loading='lazy' only %}
                 </figure>
                 <figure class="promo-banner__media">
-                    <img src="{% static 'assets/images/contest-bouquet.png' %}" alt="Prize: floral handcrafted candle bouquet" width="400" height="500" loading="lazy" decoding="async">
+                    {% include 'includes/picture_opt.html' with rel='assets/images/contest-bouquet' w=683 h=1024 alt='Prize: floral handcrafted candle bouquet' loading='lazy' only %}
                 </figure>
             </div>
         </div>
@@ -94,7 +67,7 @@
     </section>
 
     
-    <main>
+    <main id="main-content" tabindex="-1">
         <h2 class="section-title" data-translate="products-title">Portfolio</h2>
         
         <section class="Products portfolio-masonry" aria-label="Portfolio">

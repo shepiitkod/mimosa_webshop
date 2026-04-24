@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body class="home-page">
-    <main class="about-snippet" style="margin-top: 80px; max-width: 760px;">
+    <main id="main-content" tabindex="-1" class="about-snippet" style="margin-top: 80px; max-width: 760px;">
         <h1>Спасибо за покупку</h1>
         {% if payment_verified %}
         <p>Оплата подтверждена. Ваш заказ уже обрабатывается.</p>
