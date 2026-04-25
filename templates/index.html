@@ -43,19 +43,18 @@
     </section>
 
     <section class="promo-banner promo-banner--contest" aria-labelledby="promo-banner-heading">
-        <div class="promo-banner__inner">
+        <div class="promo-banner__inner promo-banner__inner--prize">
             <div class="promo-banner__content">
-                <p class="promo-banner__eyebrow" data-translate="promo-eyebrow">Contest</p>
-                <h2 id="promo-banner-heading" class="promo-banner__title" data-translate="promo-title">Win this candle bouquet</h2>
-                <p class="promo-banner__text" data-translate="promo-text">Place a single order of €50 or more and you are automatically entered into our draw to win this exclusive handcrafted candle bouquet.</p>
-                <a href="{% url 'shop:products' %}" class="hero-btn promo-banner__cta" data-translate="promo-cta">Shop the collection</a>
+                <p class="promo-banner__eyebrow" data-translate="promo-eyebrow">Exclusive draw</p>
+                <h2 id="promo-banner-heading" class="promo-banner__title" data-translate="promo-title">This bouquet could be yours</h2>
+                <p class="promo-banner__threshold" data-translate="promo-threshold">€50 minimum order · automatic entry</p>
+                <p class="promo-banner__text" data-translate="promo-text">Every order of €50 or more enters you into our draw for this handcrafted floral candle bouquet from the atelier.</p>
+                <p class="promo-banner__subtext" data-translate="promo-subtext">Add gifts, home pieces, and candles you love. The more you build your order, the easier it is to pass the threshold — and each qualifying order is another entry.</p>
+                <a href="{% url 'shop:products' %}" class="hero-btn promo-banner__cta" data-translate="promo-cta">Build my order</a>
             </div>
-            <div class="promo-banner__gallery">
-                <figure class="promo-banner__media">
-                    {% include 'includes/picture_opt.html' with rel='assets/images/MAIN1' w=800 h=1067 alt='Handcrafted numbered candles from Mimosa Atelier' loading='lazy' only %}
-                </figure>
-                <figure class="promo-banner__media">
-                    {% include 'includes/picture_opt.html' with rel='assets/images/contest-bouquet' w=683 h=1024 alt='Prize: floral handcrafted candle bouquet' loading='lazy' only %}
+            <div class="promo-banner__gallery promo-banner__gallery--single" aria-label="Prize image">
+                <figure class="promo-banner__media promo-banner__media--main">
+                    {% include 'includes/picture_opt.html' with rel='assets/images/contest-bouquet' w=1024 h=1280 alt='Prize: handcrafted floral candle bouquet' loading='lazy' only %}
                 </figure>
             </div>
         </div>

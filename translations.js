@@ -24,10 +24,12 @@ const translations = {
         'about-snippet-title': 'Welcome to Mimosa Atelier',
         'about-snippet-text': 'Every candle is a story, crafted by hand with 100% natural soy wax and exclusive fragrances from Provence. We believe in beauty, sustainability, and the art of slow living.',
 
-        'promo-eyebrow': 'Contest',
-        'promo-title': 'Win this candle bouquet',
-        'promo-text': 'Place a single order of €50 or more and you are automatically entered into our draw to win this exclusive handcrafted candle bouquet.',
-        'promo-cta': 'Shop the collection',
+        'promo-eyebrow': 'Exclusive draw',
+        'promo-title': 'This bouquet could be yours',
+        'promo-threshold': '€50 minimum order · automatic entry',
+        'promo-text': 'Every order of €50 or more enters you into our draw for this handcrafted floral candle bouquet from the atelier.',
+        'promo-subtext': 'Add gifts, home pieces, and candles you love. The more you build your order, the easier it is to pass the threshold — and each qualifying order is another entry.',
+        'promo-cta': 'Build my order',
 
         
         'products-title': 'Portfolio',
@@ -213,10 +215,12 @@ const translations = {
         'about-snippet-title': 'Bienvenue chez Mimosa Atelier',
         'about-snippet-text': 'Chaque bougie est une histoire, fabriquée à la main avec de la cire de soja 100% naturelle et des fragrances exclusives de Provence. Nous croyons en la beauté, la durabilité et l\'art de vivre lentement.',
 
-        'promo-eyebrow': 'Concours',
-        'promo-title': 'Gagnez ce bouquet de bougies',
-        'promo-text': 'Pour toute commande d\'un montant de 50 € ou plus, vous participez automatiquement au tirage au sort pour remporter ce bouquet de bougies artisanales.',
-        'promo-cta': 'Voir la boutique',
+        'promo-eyebrow': 'Tirage exclusif',
+        'promo-title': 'Ce bouquet pourrait être le vôtre',
+        'promo-threshold': '50 € d\'achat min. · participation automatique',
+        'promo-text': 'Chaque commande d\'au moins 50 € vous inscrit au tirage pour ce bouquet floral en bougies, pièce d\'exception de l\'atelier.',
+        'promo-subtext': 'Enrichissez votre panier : cadeaux, idées pour la maison, parfums à associer. Atteindre le palier 50 € devient un plaisir — chaque commande valide compte pour le concours.',
+        'promo-cta': 'Constituer mon panier',
 
         
         'products-title': 'Portfolio',
@@ -402,10 +406,12 @@ const translations = {
         'about-snippet-title': 'Ласкаво просимо до Mimosa Atelier',
         'about-snippet-text': 'Кожна свічка — це історія, виготовлена вручну зі 100% натурального соєвого воску та ексклюзивних ароматів з Провансу. Ми віримо в красу, сталість та мистецтво повільного життя.',
 
-        'promo-eyebrow': 'Розіграш',
-        'promo-title': 'Виграйте букет свічок',
-        'promo-text': 'Оформіть одне замовлення від 50 євро — і ви автоматично берете участь у розіграші цього ексклюзивного букета зі свічок ручної роботи.',
-        'promo-cta': 'До товарів',
+        'promo-eyebrow': 'Ексклюзивний розіграш',
+        'promo-title': 'Цей букет може бути вашим',
+        'promo-threshold': 'Від 50 € за замовлення · автоучасть',
+        'promo-text': 'Кожне замовлення від 50 € вносить вас у розіграш цього квіткового букета зі свічок — роботи ательє.',
+        'promo-subtext': 'Додавайте подарунки, свічки для дому, комплектні аромати. Що більше ви збираєте в кошик, тим простіше перетнути 50 € — кожна кваліфікаційна покупка дає шанс.',
+        'promo-cta': 'Зібрати замовлення',
 
         
         'products-title': 'Портфоліо',
