@@ -10,53 +10,12 @@
     <link rel="shortcut icon" href="{% static 'assets/images/logobl2.ico' %}" type="image/x-icon">
     <meta name="Description" content="Decorative rose-shaped candle. Elegant ornament made from 100% soy wax.">
     <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <script src="{% static 'translations.js' %}"></script>
     <script src="{% static 'animations.js' %}" defer></script>
 </head>
 
 <body>
-
-    <div class="language-switcher">
-        <button class="lang-current" type="button" aria-label="Toggle language menu" aria-expanded="false">EN</button>
-        <div class="lang-options" aria-label="Language options">
-            <button class="lang-btn active" data-lang="en" title="English" type="button">EN</button>
-            <button class="lang-btn" data-lang="fr" title="Français" type="button">FR</button>
-            <button class="lang-btn" data-lang="ua" title="Українська" type="button">UA</button>
-            <button class="lang-btn" data-lang="ru" title="Русский" type="button">RU</button>
-        </div>
-    </div>
-
-    
-    <header>
-        <figure>
-            <a href="{% url 'shop:home' %}">
-            <img src="{% static 'assets/images/logobl2.ico' %}" alt="Mimosa Logo" width="250" height="80">
-                </a>
-        </figure>
-        <nav>
-            <ul>
-                <li><a href="{% url 'shop:home' %}" data-translate="nav-home">Home</a></li>
-                    <li class="products-menu">
-                        <a href="{% url 'shop:products' %}" data-translate="nav-products">Products</a>
-                        <div class="dropdown-catalog" aria-label="Product categories">
-                            {% include 'includes/nav_catalog_dropdown.html' %}
-                        </div>
-                    </li>
-                    <li><a href="{% url 'shop:about' %}" data-translate="nav-about">About Us</a></li>
-                <li><a href="{% url 'shop:contact' %}" data-translate="nav-contact">Contact</a></li>
-            </ul>
-        </nav>
-        <div class="profile-icon">
-            <a href="{% url 'shop:profile' %}">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="8" r="4" stroke="black" stroke-width="2"/>
-                    <path d="M4 20c0-4 4-6 8-6s8 2 8 6"
-                        stroke="black"
-                        stroke-width="2"
-                        stroke-linecap="round"/>
-                </svg>
-            </a>
-        </div>
-    </header>
+    {% include 'includes/header.html' with header_show_cart=True %}
 
     
     <main id="main-content" tabindex="-1" class="product-page">
@@ -171,7 +130,7 @@
     
     <script>
 
-    const translations = {
+    const productPageTranslations = {
         en: {
             'nav-home': 'Home',
             'nav-products': 'Products',
@@ -278,14 +237,14 @@
     };
 
 
-    function switchLanguage(lang) {
+    function switchProductLanguage(lang) {
         document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
         document.querySelector(`.lang-btn[data-lang="${lang}"]`).classList.add('active');
         localStorage.setItem('selectedLanguage', lang);
         document.querySelectorAll('[data-translate]').forEach(element => {
             const key = element.getAttribute('data-translate');
-            if (translations[lang] && translations[lang][key]) {
-                element.textContent = translations[lang][key];
+            if (productPageTranslations[lang] && productPageTranslations[lang][key]) {
+                element.textContent = productPageTranslations[lang][key];
             }
         });
     }
@@ -370,51 +329,47 @@
 
             alert(msg.created + result.order_id + msg.suffix + result.total_amount);
         } catch (error) {
-            {% include 'includes/header.html' %}
-                        langCurrentBtn.setAttribute('aria-expanded', 'false');
-                    }
-                }, 0);
-            });
-        });
-
-        if (languageSwitcher && langCurrentBtn) {
-            langCurrentBtn.addEventListener('click', function() {
-                const isExpanded = languageSwitcher.classList.toggle('expanded');
-                langCurrentBtn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
-            });
-
-            document.addEventListener('click', function(event) {
-                if (!languageSwitcher.contains(event.target)) {
-                    languageSwitcher.classList.remove('expanded');
-                    langCurrentBtn.setAttribute('aria-expanded', 'false');
-                }
-            });
+            console.error(error);
+            alert(msg.networkError);
         }
+    }
 
+    function toggleWishlist(button) {
+        button.classList.toggle('active');
+        button.textContent = button.classList.contains('active') ? '♥' : '♡';
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
 
         const cookieBanner = document.getElementById('cookie-banner');
         const acceptBtn = document.getElementById('accept-cookies');
         const declineBtn = document.getElementById('decline-cookies');
-        if (!localStorage.getItem('cookieConsent')) {
+        if (cookieBanner && acceptBtn && declineBtn && !localStorage.getItem('cookieConsent')) {
             setTimeout(() => cookieBanner.classList.add('show'), 1000);
         }
-        acceptBtn.addEventListener('click', () => {
-            localStorage.setItem('cookieConsent', 'accepted');
-            cookieBanner.classList.remove('show');
-        });
-        declineBtn.addEventListener('click', () => {
-            localStorage.setItem('cookieConsent', 'declined');
-            cookieBanner.classList.remove('show');
-        });
+        if (acceptBtn && cookieBanner) {
+            acceptBtn.addEventListener('click', () => {
+                localStorage.setItem('cookieConsent', 'accepted');
+                cookieBanner.classList.remove('show');
+            });
+        }
+        if (declineBtn && cookieBanner) {
+            declineBtn.addEventListener('click', () => {
+                localStorage.setItem('cookieConsent', 'declined');
+                cookieBanner.classList.remove('show');
+            });
+        }
 
 
         const backToTopBtn = document.getElementById('back-to-top');
-        window.addEventListener('scroll', () => {
-            backToTopBtn.classList.toggle('show', window.pageYOffset > 300);
-        });
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+        if (backToTopBtn) {
+            window.addEventListener('scroll', () => {
+                backToTopBtn.classList.toggle('show', window.pageYOffset > 300);
+            });
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
     });
     </script>
 </body>

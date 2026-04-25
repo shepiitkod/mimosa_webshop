@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body class="home-page">
+    {% include 'includes/header.html' with header_show_cart=True %}
+
     <main id="main-content" tabindex="-1" class="about-snippet" style="margin-top: 80px; max-width: 760px;">
         <h1>Оплата прошла успешно</h1>
         <p>Ваш платеж подтвержден. Заказ уже передан в обработку.</p>
@@ -15,5 +17,6 @@
     </main>
 
     {% include 'includes/footer.html' with footer_lang='ru' %}
+    <script src="{% static 'translations.js' %}" defer></script>
 </body>
 </html>
