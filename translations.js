@@ -18,7 +18,7 @@ const translations = {
         'hero-subtitle': 'Handcrafted candles, natural soy wax, fragrances from Provence. Nîmes, France.',
         'hero-btn': 'Explore Collection',
         'fab-consultation': 'Book a Consultation',
-        'promo-ribbon-delivery': 'Free delivery on orders over €80',
+        'promo-ribbon-delivery': 'Free delivery on orders over €80 (France only)',
         
         
         'about-snippet-title': 'Welcome to Mimosa Atelier',
@@ -209,7 +209,7 @@ const translations = {
         'hero-subtitle': 'Bougies artisanales, cire de soja et fragrances de Provence. Nîmes, France.',
         'hero-btn': 'Découvrir la Collection',
         'fab-consultation': 'Réserver une consultation',
-        'promo-ribbon-delivery': 'Livraison offerte pour toute commande supérieure à 80 €',
+        'promo-ribbon-delivery': 'Livraison offerte dès 80 € d\'achat — France uniquement',
         
         
         'about-snippet-title': 'Bienvenue chez Mimosa Atelier',
@@ -400,7 +400,7 @@ const translations = {
         'hero-subtitle': 'Свічки ручної роботи, соєвий віск, аромати Провансу. Нім, Франція.',
         'hero-btn': 'Переглянути колекцію',
         'fab-consultation': 'Записатися на консультацію',
-        'promo-ribbon-delivery': 'Безкоштовна доставка при замовленні від 80 €',
+        'promo-ribbon-delivery': 'Безкоштовна доставка від 80 € (лише по Франції)',
         
         
         'about-snippet-title': 'Ласкаво просимо до Mimosa Atelier',
