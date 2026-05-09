@@ -6,11 +6,13 @@ class Product(models.Model):
 	CATEGORY_GIFTS = 'Gift Collections'
 	CATEGORY_BENTO = 'Bento Candles'
 	CATEGORY_SCENTED = 'Scented Candles'
+	CATEGORY_DECORATIVE = 'Decorative Candles'
 
 	CATEGORY_CHOICES = [
-		(CATEGORY_GIFTS, 'Gift Collections'),
 		(CATEGORY_BENTO, 'Bento Candles'),
 		(CATEGORY_SCENTED, 'Scented Candles'),
+		(CATEGORY_DECORATIVE, 'Decorative Candles'),
+		(CATEGORY_GIFTS, 'Gift Collections'),
 	]
 
 	title = models.CharField(max_length=255)

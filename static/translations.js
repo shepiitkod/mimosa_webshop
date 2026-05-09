@@ -10,6 +10,7 @@ const translations = {
         'nav-sub-bento': 'Bento Candles',
         'nav-sub-scented': 'Scented Candles',
         'nav-sub-rose': 'Decorative Candles',
+        'nav-sub-decorative': 'Decorative Candles',
         'nav-sub-gifts': 'Gift Collections',
         'nav-sub-new': 'New Arrivals',
         
@@ -18,7 +19,11 @@ const translations = {
         'hero-subtitle': 'Handcrafted candles, natural soy wax, fragrances from Provence. Nîmes, France.',
         'hero-btn': 'Explore Collection',
         'fab-consultation': 'Book a Consultation',
-        'promo-ribbon-delivery': 'Free delivery on orders over €80 (France only)',
+        'promo-ribbon-delivery': 'Free delivery on orders over €85 (France only)',
+
+        'home-categories-title': 'Categories',
+        'home-category-scented-subtitle': 'Candles for ceremonies and celebrations',
+        'home-category-decorative-subtitle': 'Personalized custom candles',
         
         
         'about-snippet-title': 'Welcome to Mimosa Atelier',
@@ -227,6 +232,7 @@ const translations = {
         'nav-sub-bento': 'Bougies Bento',
         'nav-sub-scented': 'Bougies parfumées',
         'nav-sub-rose': 'Bougies Décoratives',
+        'nav-sub-decorative': 'Bougies Décoratives',
         'nav-sub-gifts': 'Collections cadeaux',
         'nav-sub-new': 'Nouveautés',
         
@@ -235,7 +241,11 @@ const translations = {
         'hero-subtitle': 'Bougies artisanales, cire de soja et fragrances de Provence. Nîmes, France.',
         'hero-btn': 'Découvrir la Collection',
         'fab-consultation': 'Réserver une consultation',
-        'promo-ribbon-delivery': 'Livraison offerte dès 80 € d\'achat — France uniquement',
+        'promo-ribbon-delivery': 'Livraison offerte dès 85 € d\'achat — France uniquement',
+
+        'home-categories-title': 'Catégories',
+        'home-category-scented-subtitle': 'Bougies pour cérémonies et célébrations',
+        'home-category-decorative-subtitle': 'Bougies personnalisées sur mesure',
         
         
         'about-snippet-title': 'Bienvenue chez Mimosa Atelier',
@@ -443,6 +453,7 @@ const translations = {
         'nav-sub-bento': 'Свічки Bento',
         'nav-sub-scented': 'Ароматичні свічки',
         'nav-sub-rose': 'Декоративні свічки',
+        'nav-sub-decorative': 'Декоративні свічки',
         'nav-sub-gifts': 'Подарункові колекції',
         'nav-sub-new': 'Новинки',
         
@@ -451,7 +462,11 @@ const translations = {
         'hero-subtitle': 'Свічки ручної роботи, соєвий віск, аромати Провансу. Нім, Франція.',
         'hero-btn': 'Переглянути колекцію',
         'fab-consultation': 'Записатися на консультацію',
-        'promo-ribbon-delivery': 'Безкоштовна доставка від 80 € (лише по Франції)',
+        'promo-ribbon-delivery': 'Безкоштовна доставка від 85 € (лише по Франції)',
+
+        'home-categories-title': 'Категорії',
+        'home-category-scented-subtitle': 'Свічки для церемоній та святкувань',
+        'home-category-decorative-subtitle': 'Персоналізовані свічки на замовлення',
         
         
         'about-snippet-title': 'Ласкаво просимо до Mimosa Atelier',
@@ -659,6 +674,7 @@ const translations = {
         'nav-sub-bento': 'Свечи Bento',
         'nav-sub-scented': 'Ароматические свечи',
         'nav-sub-rose': 'Декоративные свечи',
+        'nav-sub-decorative': 'Декоративные свечи',
         'nav-sub-gifts': 'Подарочные коллекции',
         'nav-sub-new': 'Новинки',
         
@@ -667,7 +683,11 @@ const translations = {
         'hero-subtitle': 'Свечи ручной работы, соевый воск, ароматы Прованса. Ним, Франция.',
         'hero-btn': 'Посмотреть коллекцию',
         'fab-consultation': 'Записаться на консультацию',
-        'promo-ribbon-delivery': 'Бесплатная доставка от 80 € (только по Франции)',
+        'promo-ribbon-delivery': 'Бесплатная доставка от 85 € (только по Франции)',
+
+        'home-categories-title': 'Категории',
+        'home-category-scented-subtitle': 'Свечи для церемоний и праздников',
+        'home-category-decorative-subtitle': 'Персонализированные свечи на заказ',
 
         'promo-eyebrow': 'Эксклюзивный розыгрыш',
         'promo-title': 'Этот букет может стать вашим',

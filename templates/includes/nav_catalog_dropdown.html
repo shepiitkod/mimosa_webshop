@@ -1,4 +1,4 @@
-{# Три подкатегории каталога: Gift Collections, Bento, Scented #}
-<a href="{% url 'shop:products_by_category' 'gift-collections' %}" class="dropdown-item" data-translate="nav-sub-gifts">Gift Collections</a>
+{# Visible categories: Bento, Scented, Decorative (legacy categories may exist in DB but are hidden from nav). #}
 <a href="{% url 'shop:product_bento' %}" class="dropdown-item" data-translate="nav-sub-bento">Bento Candles</a>
 <a href="{% url 'shop:products_by_category' 'scented-candles' %}" class="dropdown-item" data-translate="nav-sub-scented">Scented Candles</a>
+<a href="{% url 'shop:products_by_category' 'decorative-candles' %}" class="dropdown-item" data-translate="nav-sub-decorative">Decorative Candles</a>

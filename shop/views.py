@@ -286,8 +286,14 @@ def products_catalog_view(request, category_slug=None):
 		for row in Product.objects.values('category').annotate(total=Count('id'))
 	}
 
+	visible_categories = (
+		Product.CATEGORY_BENTO,
+		Product.CATEGORY_SCENTED,
+		Product.CATEGORY_DECORATIVE,
+	)
+
 	category_items = []
-	for name, _label in Product.CATEGORY_CHOICES:
+	for name in visible_categories:
 		category_items.append(
 			{
 				'name': name,

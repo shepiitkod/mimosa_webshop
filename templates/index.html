@@ -65,6 +65,25 @@
         <p data-translate="about-snippet-text">Every candle is a story, crafted by hand with 100% natural soy wax and exclusive fragrances from Provence. We believe in beauty, sustainability, and the art of slow living.</p>
     </section>
 
+    <section class="home-categories" aria-label="Product categories">
+        <div class="home-categories__inner">
+            <h2 class="home-categories__title" data-translate="home-categories-title">Categories</h2>
+            <div class="home-categories__grid">
+                <a class="home-categories__card" href="{% url 'shop:products_by_category' 'bento-candles' %}">
+                    <h3 class="home-categories__name" data-translate="nav-sub-bento">Bento Candles</h3>
+                </a>
+                <a class="home-categories__card" href="{% url 'shop:products_by_category' 'scented-candles' %}">
+                    <h3 class="home-categories__name" data-translate="nav-sub-scented">Scented Candles</h3>
+                    <p class="home-categories__subtitle" data-translate="home-category-scented-subtitle">Candles for ceremonies and celebrations</p>
+                </a>
+                <a class="home-categories__card" href="{% url 'shop:products_by_category' 'decorative-candles' %}">
+                    <h3 class="home-categories__name" data-translate="nav-sub-decorative">Decorative Candles</h3>
+                    <p class="home-categories__subtitle" data-translate="home-category-decorative-subtitle">Personalized custom candles</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
     
     <main id="main-content" tabindex="-1">
         <h2 class="section-title" data-translate="products-title">Portfolio</h2>

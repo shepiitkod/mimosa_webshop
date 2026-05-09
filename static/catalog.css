@@ -128,14 +128,14 @@
 
 .catalog-card figure {
     margin: 0;
-    aspect-ratio: 4 / 3;
-    background: #f4efe5;
+    aspect-ratio: 4 / 5;
+    background: linear-gradient(145deg, #f4efe5, #efe8dc);
 }
 
 .catalog-card img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .catalog-card-body {

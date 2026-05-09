@@ -32,17 +32,71 @@
 </section>
 {% endif %}
 
-<footer>
-    <div class="footer-content">
-        <p>&copy; 2026 Mimosa Atelier. <span data-translate="footer-copyright">All rights reserved.</span></p>
-        <nav class="footer-links">
-            <a href="{% url 'shop:privacy' %}" data-translate="footer-privacy">Privacy Policy</a>
-            <a href="#" data-translate="footer-terms">Terms</a>
-            <a href="{% url 'shop:contact' %}" data-translate="footer-contact">Contact</a>
-        </nav>
-        <div class="footer-social">
-            <a href="mailto:mimosa.atelier.france@gmail.com" data-translate="footer-email">Email</a>
-            <a href="https://www.instagram.com/mimosa_atelier_france/" target="_blank" rel="noopener" data-translate="footer-instagram">Instagram</a>
+<footer class="site-footer" aria-labelledby="footer-title">
+    <div class="site-footer__container">
+        <div class="site-footer__grid">
+            <section class="site-footer__brand" aria-label="Brand">
+                <h2 id="footer-title" class="site-footer__title">Mimosa Atelier</h2>
+                <p class="site-footer__tagline" data-translate="footer-tagline">
+                    Handcrafted candles, natural soy wax, fragrances from Provence.
+                </p>
+                <div class="site-footer__social" aria-label="Social links">
+                    <a class="site-footer__social-link" href="https://www.instagram.com/mimosa_atelier_france/" target="_blank" rel="noopener" data-translate="footer-instagram">
+                        Instagram
+                    </a>
+                    <a class="site-footer__social-link" href="mailto:mimosa.atelier.france@gmail.com" data-translate="footer-email">
+                        Email
+                    </a>
+                </div>
+            </section>
+
+            <nav class="site-footer__nav" aria-label="Shop">
+                <h3 class="site-footer__heading" data-translate="footer-shop">Shop</h3>
+                <ul class="site-footer__list">
+                    <li><a class="site-footer__link" href="{% url 'shop:products' %}" data-translate="nav-products">Products</a></li>
+                    <li><a class="site-footer__link" href="{% url 'shop:cart' %}" data-translate="footer-cart">Cart</a></li>
+                    <li><a class="site-footer__link" href="{% url 'shop:profile' %}" data-translate="footer-profile">My account</a></li>
+                </ul>
+            </nav>
+
+            <nav class="site-footer__nav" aria-label="Company">
+                <h3 class="site-footer__heading" data-translate="footer-company">Company</h3>
+                <ul class="site-footer__list">
+                    <li><a class="site-footer__link" href="{% url 'shop:about' %}" data-translate="nav-about">About Us</a></li>
+                    <li><a class="site-footer__link" href="{% url 'shop:contact' %}" data-translate="footer-contact">Contact</a></li>
+                    <li><a class="site-footer__link" href="{% url 'shop:privacy' %}" data-translate="footer-privacy">Privacy Policy</a></li>
+                </ul>
+            </nav>
+
+            <section class="site-footer__support" aria-label="Support">
+                <h3 class="site-footer__heading" data-translate="footer-help">Help</h3>
+                <ul class="site-footer__list">
+                    <li><a class="site-footer__link" href="{% url 'shop:contact' %}" data-translate="footer-shipping">Shipping & delivery</a></li>
+                    <li><a class="site-footer__link" href="{% url 'shop:contact' %}" data-translate="footer-returns">Returns & refunds</a></li>
+                    <li><a class="site-footer__link" href="#" data-translate="footer-terms">Terms</a></li>
+                </ul>
+
+                <div class="site-footer__contact">
+                    <p class="site-footer__contact-line">
+                        <span class="site-footer__contact-label" data-translate="footer-location">Location</span>
+                        <span class="site-footer__contact-value">Nîmes, France</span>
+                    </p>
+                    <p class="site-footer__contact-line">
+                        <span class="site-footer__contact-label" data-translate="footer-response">Response time</span>
+                        <span class="site-footer__contact-value" data-translate="footer-response-value">Within 24 hours</span>
+                    </p>
+                </div>
+            </section>
+        </div>
+
+        <div class="site-footer__bottom" aria-label="Legal">
+            <p class="site-footer__legal">
+                &copy; 2026 Mimosa Atelier. <span data-translate="footer-copyright">All rights reserved.</span>
+            </p>
+            <nav class="site-footer__legal-links" aria-label="Legal links">
+                <a class="site-footer__link" href="{% url 'shop:privacy' %}" data-translate="footer-privacy">Privacy Policy</a>
+                <a class="site-footer__link" href="#" data-translate="footer-terms">Terms</a>
+            </nav>
         </div>
     </div>
 </footer>
