@@ -5,9 +5,48 @@ from unittest.mock import patch
 
 from django.contrib.auth.models import User
 from django.test import TestCase, override_settings
+from django.utils.text import slugify
 from django.urls import reverse
 
 from .models import Order, Product
+
+
+class ProductImageFramingTests(TestCase):
+	def test_product_image_position_properties(self):
+		product = Product.objects.create(
+			title='Framed Candle',
+			description='Test description',
+			price=Decimal('22.00'),
+			image='products/framed.jpg',
+			image_focal_x=25,
+			image_focal_y=75,
+			image_2='products/framed-2.jpg',
+			image_2_focal_x=80,
+			image_2_focal_y=20,
+			category=Product.CATEGORY_SCENTED,
+		)
+
+		self.assertEqual(product.image_object_position, '25% 75%')
+		self.assertEqual(product.image_2_object_position, '80% 20%')
+
+	def test_public_pages_use_saved_image_framing(self):
+		product = Product.objects.create(
+			title='Catalog Candle',
+			description='Test description',
+			price=Decimal('18.00'),
+			image='products/catalog.jpg',
+			image_focal_x=30,
+			image_focal_y=70,
+			category=Product.CATEGORY_SCENTED,
+		)
+
+		catalog_response = self.client.get(reverse('shop:products'))
+		self.assertContains(catalog_response, '--product-image-position: 30% 70%')
+
+		detail_response = self.client.get(
+			reverse('shop:product_detail', args=[product.id, slugify(product.title)])
+		)
+		self.assertContains(detail_response, 'data-object-position="30% 70%"')
 
 
 @override_settings(

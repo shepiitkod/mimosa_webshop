@@ -94,7 +94,7 @@
                 <a href="{% url 'shop:product_detail' product.id product.title|slugify %}" class="product-link" aria-label="{{ product.title }} details">
                     <figure class="portfolio-card__figure">
                         <div class="portfolio-card__media">
-                            <img src="{{ product.image.url }}" alt="" width="600" height="750" sizes="(max-width: 520px) 100vw, (max-width: 900px) 50vw, 360px" loading="lazy" decoding="async">
+                            <img class="product-framed-image" src="{{ product.image.url }}" alt="" width="600" height="750" sizes="(max-width: 520px) 100vw, (max-width: 900px) 50vw, 360px" loading="lazy" decoding="async" style="--product-image-position: {{ product.image_object_position }};">
                             <div class="portfolio-card__overlay" aria-hidden="true">
                                 <span class="portfolio-card__overlay-text">{{ product.title }}</span>
                             </div>

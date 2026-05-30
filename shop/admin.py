@@ -1,3 +1,4 @@
+from django import forms
 from django.contrib import admin
 from django.db.models import Sum
 from django.utils.html import format_html
@@ -6,8 +7,36 @@ from decimal import Decimal
 from .models import CartItem, NewsletterUser, Order, OrderItem, Product
 
 
+FRAMING_FIELDS = (
+	'image_focal_x',
+	'image_focal_y',
+	'image_2_focal_x',
+	'image_2_focal_y',
+	'image_3_focal_x',
+	'image_3_focal_y',
+	'image_4_focal_x',
+	'image_4_focal_y',
+)
+
+
+class ProductAdminForm(forms.ModelForm):
+	class Meta:
+		model = Product
+		fields = '__all__'
+		widgets = {
+			field_name: forms.HiddenInput(
+				attrs={
+					'class': 'mimosa-framing-value',
+					'data-mimosa-framing-field': field_name,
+				}
+			)
+			for field_name in FRAMING_FIELDS
+		}
+
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
+	form = ProductAdminForm
 	list_display = ('id', 'title', 'category', 'hs_code', 'price', 'stock', 'image_preview')
 	list_filter = ('category',)
 	search_fields = (
@@ -17,7 +46,25 @@ class ProductAdmin(admin.ModelAdmin):
 
 	fieldsets = (
 		('Basic', {'fields': ('title', 'description', 'category', 'hs_code', 'price', 'stock')}),
-		('Gallery (up to 4 photos)', {'fields': ('image', 'image_2', 'image_3', 'image_4')}),
+		(
+			'Gallery (up to 4 photos)',
+			{
+				'fields': (
+					'image',
+					'image_2',
+					'image_3',
+					'image_4',
+					'image_focal_x',
+					'image_focal_y',
+					'image_2_focal_x',
+					'image_2_focal_y',
+					'image_3_focal_x',
+					'image_3_focal_y',
+					'image_4_focal_x',
+					'image_4_focal_y',
+				)
+			},
+		),
 		(
 			'Product Parameters',
 			{
@@ -32,25 +79,41 @@ class ProductAdmin(admin.ModelAdmin):
 
 	def image_preview(self, obj):
 		if obj.image:
-			return format_html('<img src="{}" style="max-width: 250px; max-height: 250px; border-radius: 4px;" />', obj.image.url)
+			return format_html(
+				'<img src="{}" style="width: 96px; height: 120px; object-fit: cover; object-position: {}; border-radius: 8px;" />',
+				obj.image.url,
+				obj.image_object_position,
+			)
 		return "No image"
 	image_preview.short_description = 'Image Preview'
 
 	def image_2_preview(self, obj):
 		if obj.image_2:
-			return format_html('<img src="{}" style="max-width: 250px; max-height: 250px; border-radius: 4px;" />', obj.image_2.url)
+			return format_html(
+				'<img src="{}" style="width: 96px; height: 120px; object-fit: cover; object-position: {}; border-radius: 8px;" />',
+				obj.image_2.url,
+				obj.image_2_object_position,
+			)
 		return "No image"
 	image_2_preview.short_description = 'Image 2 Preview'
 
 	def image_3_preview(self, obj):
 		if obj.image_3:
-			return format_html('<img src="{}" style="max-width: 250px; max-height: 250px; border-radius: 4px;" />', obj.image_3.url)
+			return format_html(
+				'<img src="{}" style="width: 96px; height: 120px; object-fit: cover; object-position: {}; border-radius: 8px;" />',
+				obj.image_3.url,
+				obj.image_3_object_position,
+			)
 		return "No image"
 	image_3_preview.short_description = 'Image 3 Preview'
 
 	def image_4_preview(self, obj):
 		if obj.image_4:
-			return format_html('<img src="{}" style="max-width: 250px; max-height: 250px; border-radius: 4px;" />', obj.image_4.url)
+			return format_html(
+				'<img src="{}" style="width: 96px; height: 120px; object-fit: cover; object-position: {}; border-radius: 8px;" />',
+				obj.image_4.url,
+				obj.image_4_object_position,
+			)
 		return "No image"
 	image_4_preview.short_description = 'Image 4 Preview'
 

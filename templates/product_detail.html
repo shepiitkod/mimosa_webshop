@@ -29,18 +29,18 @@
         <div class="product-container">
             <div class="product-gallery">
                 <div class="main-image">
-                    <img id="mainProductImage" src="{{ product.image.url }}" alt="{{ product.title }}">
+                    <img id="mainProductImage" class="product-framed-image" src="{{ product.image.url }}" alt="{{ product.title }}" data-object-position="{{ product.image_object_position }}" style="--product-image-position: {{ product.image_object_position }};">
                 </div>
                 <div class="thumbnail-images">
-                    <img src="{{ product.image.url }}" alt="{{ product.title }}" class="thumbnail active" onclick="changeImage(this)">
+                    <img src="{{ product.image.url }}" alt="{{ product.title }}" class="thumbnail product-framed-image active" data-object-position="{{ product.image_object_position }}" style="--product-image-position: {{ product.image_object_position }};" onclick="changeImage(this)">
                     {% if product.image_2 %}
-                    <img src="{{ product.image_2.url }}" alt="{{ product.title }} photo 2" class="thumbnail" onclick="changeImage(this)">
+                    <img src="{{ product.image_2.url }}" alt="{{ product.title }} photo 2" class="thumbnail product-framed-image" data-object-position="{{ product.image_2_object_position }}" style="--product-image-position: {{ product.image_2_object_position }};" onclick="changeImage(this)">
                     {% endif %}
                     {% if product.image_3 %}
-                    <img src="{{ product.image_3.url }}" alt="{{ product.title }} photo 3" class="thumbnail" onclick="changeImage(this)">
+                    <img src="{{ product.image_3.url }}" alt="{{ product.title }} photo 3" class="thumbnail product-framed-image" data-object-position="{{ product.image_3_object_position }}" style="--product-image-position: {{ product.image_3_object_position }};" onclick="changeImage(this)">
                     {% endif %}
                     {% if product.image_4 %}
-                    <img src="{{ product.image_4.url }}" alt="{{ product.title }} photo 4" class="thumbnail" onclick="changeImage(this)">
+                    <img src="{{ product.image_4.url }}" alt="{{ product.title }} photo 4" class="thumbnail product-framed-image" data-object-position="{{ product.image_4_object_position }}" style="--product-image-position: {{ product.image_4_object_position }};" onclick="changeImage(this)">
                     {% endif %}
                 </div>
             </div>
@@ -104,7 +104,7 @@
             <div class="related-grid">
                 {% for item in related_products %}
                 <a class="related-card" href="{% url 'shop:product_detail' item.id item.title|slugify %}" style="cursor:pointer; text-decoration:none; color:inherit; display:block;">
-                    <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                    <img class="product-framed-image" src="{{ item.image.url }}" alt="{{ item.title }}" style="--product-image-position: {{ item.image_object_position }};">
                     <h3>{{ item.title }}</h3>
                     <p class="price">EUR {{ item.price }}</p>
                 </a>
@@ -122,6 +122,9 @@
         if (!mainImage) return;
 
         mainImage.src = thumbnail.src;
+        const position = thumbnail.dataset.objectPosition || '50% 50%';
+        mainImage.dataset.objectPosition = position;
+        mainImage.style.setProperty('--product-image-position', position);
         document.querySelectorAll('.thumbnail').forEach((thumb) => thumb.classList.remove('active'));
         thumbnail.classList.add('active');
     }

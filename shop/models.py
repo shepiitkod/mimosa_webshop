@@ -1,5 +1,9 @@
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+
+
+IMAGE_FOCAL_POINT_VALIDATORS = [MinValueValidator(0), MaxValueValidator(100)]
 
 
 class Product(models.Model):
@@ -22,6 +26,14 @@ class Product(models.Model):
 	image_2 = models.ImageField(upload_to='products/', blank=True, null=True)
 	image_3 = models.ImageField(upload_to='products/', blank=True, null=True)
 	image_4 = models.ImageField(upload_to='products/', blank=True, null=True)
+	image_focal_x = models.PositiveSmallIntegerField(default=50, validators=IMAGE_FOCAL_POINT_VALIDATORS)
+	image_focal_y = models.PositiveSmallIntegerField(default=50, validators=IMAGE_FOCAL_POINT_VALIDATORS)
+	image_2_focal_x = models.PositiveSmallIntegerField(default=50, validators=IMAGE_FOCAL_POINT_VALIDATORS)
+	image_2_focal_y = models.PositiveSmallIntegerField(default=50, validators=IMAGE_FOCAL_POINT_VALIDATORS)
+	image_3_focal_x = models.PositiveSmallIntegerField(default=50, validators=IMAGE_FOCAL_POINT_VALIDATORS)
+	image_3_focal_y = models.PositiveSmallIntegerField(default=50, validators=IMAGE_FOCAL_POINT_VALIDATORS)
+	image_4_focal_x = models.PositiveSmallIntegerField(default=50, validators=IMAGE_FOCAL_POINT_VALIDATORS)
+	image_4_focal_y = models.PositiveSmallIntegerField(default=50, validators=IMAGE_FOCAL_POINT_VALIDATORS)
 	category = models.CharField(max_length=120, choices=CATEGORY_CHOICES, default=CATEGORY_SCENTED)
 	hs_code = models.CharField(max_length=20, blank=True, null=True, default='340600')
 	composition = models.CharField(max_length=255, blank=True, default='')
@@ -46,6 +58,22 @@ class Product(models.Model):
 
 	def __str__(self):
 		return self.title
+
+	@property
+	def image_object_position(self):
+		return f'{self.image_focal_x}% {self.image_focal_y}%'
+
+	@property
+	def image_2_object_position(self):
+		return f'{self.image_2_focal_x}% {self.image_2_focal_y}%'
+
+	@property
+	def image_3_object_position(self):
+		return f'{self.image_3_focal_x}% {self.image_3_focal_y}%'
+
+	@property
+	def image_4_object_position(self):
+		return f'{self.image_4_focal_x}% {self.image_4_focal_y}%'
 
 
 class Order(models.Model):

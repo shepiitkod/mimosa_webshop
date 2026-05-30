@@ -41,7 +41,7 @@
                 <article class="catalog-card">
                     <figure>
                         <a href="{% url 'shop:product_detail' product.id product.title|slugify %}" aria-label="{{ product.title }} details">
-                            <img src="{{ product.image.url }}" alt="{{ product.title }}">
+                            <img class="product-framed-image" src="{{ product.image.url }}" alt="{{ product.title }}" style="--product-image-position: {{ product.image_object_position }};">
                         </a>
                     </figure>
                     <div class="catalog-card-body">
