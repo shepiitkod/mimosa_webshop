@@ -37,6 +37,10 @@ class ProductAdminForm(forms.ModelForm):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
 	form = ProductAdminForm
+	class Media:
+		css = {'all': ('admin_custom_v2.css',)}
+		js = ('admin_custom_v2.js',)
+
 	list_display = ('id', 'title', 'category', 'hs_code', 'price', 'stock', 'image_preview')
 	list_filter = ('category',)
 	search_fields = (
@@ -51,9 +55,13 @@ class ProductAdmin(admin.ModelAdmin):
 			{
 				'fields': (
 					'image',
+					'image_preview',
 					'image_2',
+					'image_2_preview',
 					'image_3',
+					'image_3_preview',
 					'image_4',
+					'image_4_preview',
 					'image_focal_x',
 					'image_focal_y',
 					'image_2_focal_x',

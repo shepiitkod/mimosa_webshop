@@ -6,17 +6,18 @@ document.addEventListener('DOMContentLoaded', function () {
     document.documentElement.classList.add('theme-light');
 
     initProductFramingEditor();
+    enhanceMimosaAdminUi();
 });
 
 function initProductFramingEditor() {
-    if (!document.body.classList.contains('model-product')) return;
-
     const imageFields = [
         { name: 'image', label: 'Photo 1', x: 'image_focal_x', y: 'image_focal_y' },
         { name: 'image_2', label: 'Photo 2', x: 'image_2_focal_x', y: 'image_2_focal_y' },
         { name: 'image_3', label: 'Photo 3', x: 'image_3_focal_x', y: 'image_3_focal_y' },
         { name: 'image_4', label: 'Photo 4', x: 'image_4_focal_x', y: 'image_4_focal_y' },
     ];
+
+    let mountedEditors = 0;
 
     imageFields.forEach(function (field) {
         const fileInput = document.getElementById('id_' + field.name);
@@ -26,9 +27,11 @@ function initProductFramingEditor() {
 
         const row = fileInput.closest('.form-row') || fileInput.parentElement;
         if (!row) return;
+        if (row.querySelector('.mimosa-framing-actions')) return;
 
         xInput.value = normalizePercent(xInput.value || 50);
         yInput.value = normalizePercent(yInput.value || 50);
+        row.classList.add('mimosa-gallery-row');
 
         const button = document.createElement('button');
         button.type = 'button';
@@ -42,13 +45,16 @@ function initProductFramingEditor() {
         const actions = document.createElement('div');
         actions.className = 'mimosa-framing-actions';
         actions.append(button, hint);
-        row.appendChild(actions);
+        const uploadBlock = fileInput.closest('.file-upload') || fileInput.parentElement || row;
+        uploadBlock.insertAdjacentElement('afterend', actions);
 
         let objectUrl = '';
 
         function currentSource() {
             if (objectUrl) return objectUrl;
-            const currentLink = row.querySelector('a[href]');
+            const currentLink = Array.from(row.querySelectorAll('a[href]')).find(function (link) {
+                return /\.(jpg|jpeg|png|gif|webp|avif|ico)(\?|#|$)/i.test(link.getAttribute('href') || link.href);
+            });
             return currentLink ? currentLink.href : '';
         }
 
@@ -92,7 +98,12 @@ function initProductFramingEditor() {
         });
 
         updateButtonState();
+        mountedEditors += 1;
     });
+
+    if (mountedEditors > 0) {
+        document.body.classList.add('mimosa-framing-ready');
+    }
 }
 
 function openFramingModal(options) {
@@ -240,4 +251,29 @@ function escapeAttribute(value) {
 
 function escapeHtml(value) {
     return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function enhanceMimosaAdminUi() {
+    const content = document.getElementById('content');
+    if (!content || document.querySelector('.mimosa-admin-hero')) return;
+
+    const title = content.querySelector('h1');
+    if (!title) return;
+
+    const hero = document.createElement('div');
+    hero.className = 'mimosa-admin-hero';
+    hero.innerHTML = [
+        '<div>',
+        '  <p class="mimosa-admin-kicker">Mimosa Atelier</p>',
+        '  <h1>' + escapeHtml(title.textContent.trim()) + '</h1>',
+        '</div>',
+        '<div class="mimosa-admin-badge">Admin Studio</div>',
+    ].join('');
+
+    title.replaceWith(hero);
+
+    const fieldsets = document.querySelectorAll('.change-form fieldset.module');
+    fieldsets.forEach(function (fieldset, index) {
+        fieldset.style.setProperty('--mimosa-panel-delay', String(index * 45) + 'ms');
+    });
 }
