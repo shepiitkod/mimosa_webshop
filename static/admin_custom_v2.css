@@ -1079,3 +1079,603 @@ body.change-form .mimosa-framing-hint,
         grid-template-columns: 1fr;
     }
 }
+
+/* Final theme layer: readable light and dark admin themes. */
+body.app-admin,
+body.dashboard,
+body.login,
+body.change-form,
+body.change-list,
+body[class^="app-"],
+body[class*=" app-"] {
+    --mimosa-yellow: #e5bc36;
+    --mimosa-yellow-strong: #f5d85d;
+    --admin-bg: #f7f1e6;
+    --admin-page-bg:
+        radial-gradient(circle at 12% 0%, rgba(255, 231, 158, 0.62), transparent 34%),
+        linear-gradient(135deg, #fffdf8 0%, #f7f1e6 58%, #eadabc 100%);
+    --admin-surface: rgba(255, 255, 255, 0.94);
+    --admin-surface-solid: #ffffff;
+    --admin-surface-soft: #fff6df;
+    --admin-header: rgba(255, 255, 255, 0.82);
+    --admin-border: rgba(130, 99, 31, 0.2);
+    --admin-border-strong: rgba(130, 99, 31, 0.34);
+    --admin-text: #211b12;
+    --admin-heading: #18130c;
+    --admin-muted: #665b49;
+    --admin-link: #775800;
+    --admin-link-active: #3d2e00;
+    --admin-input-bg: #fffef9;
+    --admin-input-border: rgba(96, 73, 22, 0.28);
+    --admin-row: #fffefb;
+    --admin-row-alt: #fff7e4;
+    --admin-shadow: 0 16px 38px rgba(84, 63, 18, 0.1);
+    --admin-modal-overlay: rgba(35, 25, 10, 0.58);
+    --admin-focus: rgba(229, 188, 54, 0.28);
+    --studio-bg: var(--admin-bg);
+    --studio-ink: var(--admin-heading);
+    --studio-muted: var(--admin-muted);
+    --studio-gold: var(--mimosa-yellow);
+    --studio-gold-soft: #fff0b5;
+    --studio-card: var(--admin-surface);
+    --studio-line: var(--admin-border);
+    --body-bg: var(--admin-bg);
+    --body-fg: var(--admin-text);
+    --body-quiet-color: var(--admin-muted);
+    --body-loud-color: var(--admin-heading);
+    --breadcrumbs-bg: var(--admin-surface-soft);
+    --breadcrumbs-fg: var(--admin-muted);
+    --link-fg: var(--admin-link);
+    --link-hover-color: var(--admin-link-active);
+    --header-bg: var(--admin-header);
+    --header-color: var(--admin-heading);
+    --hairline-color: var(--admin-border);
+    --border-color: var(--admin-border);
+    --darkened-bg: var(--admin-surface-soft);
+    --selected-bg: rgba(229, 188, 54, 0.18);
+    --selected-row: rgba(229, 188, 54, 0.16);
+    --button-bg: var(--mimosa-yellow);
+    --button-fg: #211900;
+    --button-hover-bg: var(--mimosa-yellow-strong);
+}
+
+html[data-theme="dark"] body.app-admin,
+html[data-theme="dark"] body.dashboard,
+html[data-theme="dark"] body.login,
+html[data-theme="dark"] body.change-form,
+html[data-theme="dark"] body.change-list,
+html[data-theme="dark"] body[class^="app-"],
+html[data-theme="dark"] body[class*=" app-"],
+html.theme-dark body.app-admin,
+html.theme-dark body.dashboard,
+html.theme-dark body.login,
+html.theme-dark body.change-form,
+html.theme-dark body.change-list,
+html.theme-dark body[class^="app-"],
+html.theme-dark body[class*=" app-"] {
+    --mimosa-yellow: #f0c94b;
+    --mimosa-yellow-strong: #ffe178;
+    --admin-bg: #100f0d;
+    --admin-page-bg:
+        radial-gradient(circle at 12% 0%, rgba(240, 201, 75, 0.18), transparent 34%),
+        radial-gradient(circle at 100% 8%, rgba(255, 238, 178, 0.08), transparent 28%),
+        linear-gradient(135deg, #0b0a09 0%, #12100d 52%, #1c1710 100%);
+    --admin-surface: rgba(28, 24, 18, 0.94);
+    --admin-surface-solid: #1c1812;
+    --admin-surface-soft: #262016;
+    --admin-header: rgba(18, 15, 11, 0.9);
+    --admin-border: rgba(240, 201, 75, 0.2);
+    --admin-border-strong: rgba(240, 201, 75, 0.36);
+    --admin-text: #f8f0df;
+    --admin-heading: #fff8e8;
+    --admin-muted: #d1c3a8;
+    --admin-link: #ffe178;
+    --admin-link-active: #fff1ad;
+    --admin-input-bg: #231d14;
+    --admin-input-border: rgba(240, 201, 75, 0.34);
+    --admin-row: #1b1711;
+    --admin-row-alt: #221d14;
+    --admin-shadow: 0 20px 46px rgba(0, 0, 0, 0.36);
+    --admin-modal-overlay: rgba(0, 0, 0, 0.72);
+    --admin-focus: rgba(240, 201, 75, 0.32);
+    --studio-gold-soft: rgba(240, 201, 75, 0.18);
+    --button-fg: #211900;
+}
+
+body.app-admin,
+body.dashboard,
+body.login,
+body.change-form,
+body.change-list,
+body[class^="app-"],
+body[class*=" app-"] {
+    background: var(--admin-page-bg) !important;
+    color: var(--admin-text) !important;
+}
+
+body.app-admin #container,
+body.dashboard #container,
+body.login #container,
+body.change-form #container,
+body.change-list #container,
+body[class^="app-"] #container,
+body[class*=" app-"] #container,
+body.app-admin #content,
+body.dashboard #content,
+body.change-form #content,
+body.change-list #content,
+body[class^="app-"] #content,
+body[class*=" app-"] #content {
+    background: transparent !important;
+    color: var(--admin-text) !important;
+}
+
+body.app-admin #header,
+body.dashboard #header,
+body.change-form #header,
+body.change-list #header,
+body[class^="app-"] #header,
+body[class*=" app-"] #header {
+    background: var(--admin-header) !important;
+    border-bottom: 1px solid var(--admin-border) !important;
+    color: var(--admin-heading) !important;
+}
+
+body.app-admin #branding h1,
+body.app-admin #branding h1 a,
+body.dashboard #branding h1,
+body.dashboard #branding h1 a,
+body.change-form #branding h1,
+body.change-form #branding h1 a,
+body.change-list #branding h1,
+body.change-list #branding h1 a,
+body.app-admin #header a,
+body.dashboard #header a,
+body.change-form #header a,
+body.change-list #header a,
+body.app-admin #user-tools,
+body.dashboard #user-tools,
+body.change-form #user-tools,
+body.change-list #user-tools {
+    color: var(--admin-heading) !important;
+}
+
+body.app-admin div.breadcrumbs,
+body.dashboard div.breadcrumbs,
+body.change-form div.breadcrumbs,
+body.change-list div.breadcrumbs,
+body[class^="app-"] div.breadcrumbs,
+body[class*=" app-"] div.breadcrumbs {
+    background: var(--admin-surface-soft) !important;
+    border-bottom: 1px solid var(--admin-border) !important;
+    color: var(--admin-muted) !important;
+}
+
+body.app-admin div.breadcrumbs a,
+body.dashboard div.breadcrumbs a,
+body.change-form div.breadcrumbs a,
+body.change-list div.breadcrumbs a {
+    color: var(--admin-link) !important;
+}
+
+body.app-admin #nav-sidebar,
+body.dashboard #nav-sidebar,
+body.change-form #nav-sidebar,
+body.change-list #nav-sidebar,
+body[class^="app-"] #nav-sidebar,
+body[class*=" app-"] #nav-sidebar {
+    background: var(--admin-surface-solid) !important;
+    border-right: 1px solid var(--admin-border) !important;
+}
+
+body.app-admin #nav-sidebar a,
+body.dashboard #nav-sidebar a,
+body.change-form #nav-sidebar a,
+body.change-list #nav-sidebar a,
+body.app-admin #nav-sidebar th,
+body.dashboard #nav-sidebar th,
+body.change-form #nav-sidebar th,
+body.change-list #nav-sidebar th,
+body.app-admin #nav-sidebar td,
+body.dashboard #nav-sidebar td,
+body.change-form #nav-sidebar td,
+body.change-list #nav-sidebar td {
+    color: var(--admin-text) !important;
+}
+
+body.app-admin #nav-sidebar .current-model,
+body.dashboard #nav-sidebar .current-model,
+body.change-form #nav-sidebar .current-model,
+body.change-list #nav-sidebar .current-model,
+body.app-admin #nav-sidebar .current-model a,
+body.dashboard #nav-sidebar .current-model a,
+body.change-form #nav-sidebar .current-model a,
+body.change-list #nav-sidebar .current-model a {
+    background: var(--selected-bg) !important;
+    color: var(--admin-link-active) !important;
+}
+
+body.app-admin .module,
+body.dashboard .module,
+body.change-form .module,
+body.change-list .module,
+body[class^="app-"] .module,
+body[class*=" app-"] .module,
+body.app-admin fieldset,
+body.dashboard fieldset,
+body.change-form fieldset,
+body.change-list fieldset,
+body[class^="app-"] fieldset,
+body[class*=" app-"] fieldset,
+body.app-admin .results,
+body.dashboard .results,
+body.change-form .results,
+body.change-list .results,
+body.dashboard #content-related,
+body.app-admin #changelist,
+body.change-list #changelist,
+body.app-admin #changelist-filter,
+body.dashboard #changelist-filter,
+body.change-list #changelist-filter,
+body.change-form .submit-row {
+    background: var(--admin-surface) !important;
+    border-color: var(--admin-border) !important;
+    color: var(--admin-text) !important;
+    box-shadow: var(--admin-shadow) !important;
+}
+
+body.app-admin .module h2,
+body.dashboard .module h2,
+body.change-form .module h2,
+body.change-list .module h2,
+body.app-admin .module caption,
+body.dashboard .module caption,
+body.change-form .module caption,
+body.change-list .module caption,
+body.dashboard #content-related h2,
+body.app-admin #changelist-filter h2,
+body.dashboard #changelist-filter h2,
+body.change-list #changelist-filter h2,
+body.change-form fieldset.module h2 {
+    background: linear-gradient(135deg, var(--admin-surface-soft), var(--admin-surface-solid)) !important;
+    border-bottom-color: var(--admin-border) !important;
+    color: var(--admin-heading) !important;
+}
+
+body.app-admin h1,
+body.app-admin h2,
+body.app-admin h3,
+body.app-admin h4,
+body.dashboard h1,
+body.dashboard h2,
+body.dashboard h3,
+body.dashboard h4,
+body.change-form h1,
+body.change-form h2,
+body.change-form h3,
+body.change-form h4,
+body.change-list h1,
+body.change-list h2,
+body.change-list h3,
+body.change-list h4,
+body.app-admin label,
+body.dashboard label,
+body.change-form label,
+body.change-list label,
+body.app-admin th,
+body.dashboard th,
+body.change-form th,
+body.change-list th,
+body.app-admin td,
+body.dashboard td,
+body.change-form td,
+body.change-list td,
+body.app-admin p,
+body.dashboard p,
+body.change-form p,
+body.change-list p,
+body.app-admin li,
+body.dashboard li,
+body.change-form li,
+body.change-list li {
+    color: var(--admin-text) !important;
+}
+
+body.app-admin a,
+body.dashboard a,
+body.change-form a,
+body.change-list a,
+body[class^="app-"] a,
+body[class*=" app-"] a {
+    color: var(--admin-link) !important;
+}
+
+body.app-admin a:hover,
+body.dashboard a:hover,
+body.change-form a:hover,
+body.change-list a:hover,
+body[class^="app-"] a:hover,
+body[class*=" app-"] a:hover {
+    color: var(--admin-link-active) !important;
+}
+
+body.app-admin .quiet,
+body.dashboard .quiet,
+body.change-form .quiet,
+body.change-list .quiet,
+body.app-admin .help,
+body.dashboard .help,
+body.change-form .help,
+body.change-list .help,
+body.app-admin #changelist-filter li,
+body.dashboard #changelist-filter li,
+body.change-list #changelist-filter li {
+    color: var(--admin-muted) !important;
+}
+
+body.app-admin input,
+body.app-admin select,
+body.app-admin textarea,
+body.dashboard input,
+body.dashboard select,
+body.dashboard textarea,
+body.change-form input,
+body.change-form select,
+body.change-form textarea,
+body.change-list input,
+body.change-list select,
+body.change-list textarea,
+body[class^="app-"] input,
+body[class^="app-"] select,
+body[class^="app-"] textarea,
+body[class*=" app-"] input,
+body[class*=" app-"] select,
+body[class*=" app-"] textarea {
+    background: var(--admin-input-bg) !important;
+    border-color: var(--admin-input-border) !important;
+    color: var(--admin-heading) !important;
+}
+
+body.app-admin input::placeholder,
+body.app-admin textarea::placeholder,
+body.dashboard input::placeholder,
+body.dashboard textarea::placeholder,
+body.change-form input::placeholder,
+body.change-form textarea::placeholder,
+body.change-list input::placeholder,
+body.change-list textarea::placeholder {
+    color: var(--admin-muted) !important;
+    opacity: 1;
+}
+
+body.app-admin input:focus,
+body.app-admin textarea:focus,
+body.app-admin select:focus,
+body.dashboard input:focus,
+body.dashboard textarea:focus,
+body.dashboard select:focus,
+body.change-form input:focus,
+body.change-form textarea:focus,
+body.change-form select:focus,
+body.change-list input:focus,
+body.change-list textarea:focus,
+body.change-list select:focus {
+    border-color: var(--mimosa-yellow) !important;
+    box-shadow: 0 0 0 4px var(--admin-focus) !important;
+    outline: none !important;
+}
+
+body.app-admin select option,
+body.dashboard select option,
+body.change-form select option,
+body.change-list select option {
+    background: var(--admin-surface-solid);
+    color: var(--admin-heading);
+}
+
+body.app-admin #changelist-search,
+body.dashboard #changelist-search,
+body.change-list #changelist-search,
+body.app-admin #changelist .actions,
+body.dashboard #changelist .actions,
+body.change-list #changelist .actions,
+body.app-admin #toolbar,
+body.dashboard #toolbar,
+body.change-list #toolbar {
+    background: var(--admin-surface) !important;
+    border-color: var(--admin-border) !important;
+    color: var(--admin-text) !important;
+}
+
+body.app-admin .module table,
+body.dashboard .module table,
+body.change-form .module table,
+body.change-list .module table,
+body.app-admin #result_list,
+body.dashboard #result_list,
+body.change-list #result_list {
+    background: var(--admin-surface-solid) !important;
+    color: var(--admin-text) !important;
+}
+
+body.app-admin .module tbody tr,
+body.dashboard .module tbody tr,
+body.change-form .module tbody tr,
+body.change-list .module tbody tr,
+body.app-admin #result_list tbody tr,
+body.dashboard #result_list tbody tr,
+body.change-list #result_list tbody tr {
+    background: var(--admin-row) !important;
+}
+
+body.app-admin .module tbody tr:nth-child(even),
+body.dashboard .module tbody tr:nth-child(even),
+body.change-form .module tbody tr:nth-child(even),
+body.change-list .module tbody tr:nth-child(even),
+body.app-admin #result_list tbody tr:nth-child(even),
+body.dashboard #result_list tbody tr:nth-child(even),
+body.change-list #result_list tbody tr:nth-child(even) {
+    background: var(--admin-row-alt) !important;
+}
+
+body.app-admin .module th,
+body.dashboard .module th,
+body.change-form .module th,
+body.change-list .module th,
+body.app-admin #result_list thead th,
+body.dashboard #result_list thead th,
+body.change-list #result_list thead th {
+    background: var(--admin-surface-soft) !important;
+    border-color: var(--admin-border) !important;
+    color: var(--admin-heading) !important;
+}
+
+body.app-admin .module td,
+body.dashboard .module td,
+body.change-form .module td,
+body.change-list .module td,
+body.app-admin #result_list td,
+body.dashboard #result_list td,
+body.change-list #result_list td {
+    border-color: var(--admin-border) !important;
+}
+
+.mimosa-admin-hero {
+    background:
+        linear-gradient(135deg, var(--admin-surface), var(--admin-surface-soft)),
+        radial-gradient(circle at 92% 18%, rgba(244, 208, 63, 0.22), transparent 26%) !important;
+    border-color: var(--admin-border) !important;
+    box-shadow: var(--admin-shadow) !important;
+}
+
+.mimosa-admin-kicker {
+    color: var(--mimosa-yellow) !important;
+}
+
+.mimosa-admin-hero h1 {
+    color: var(--admin-heading) !important;
+}
+
+.mimosa-admin-badge,
+body.change-form .mimosa-framing-hint,
+.mimosa-framing-hint {
+    background: var(--studio-gold-soft) !important;
+    border: 1px solid var(--admin-border) !important;
+    color: var(--admin-heading) !important;
+}
+
+body.change-form .mimosa-gallery-row {
+    background: linear-gradient(135deg, var(--admin-surface-solid), var(--admin-surface-soft)) !important;
+    border-color: var(--admin-border) !important;
+}
+
+body.change-form .mimosa-gallery-row label {
+    color: var(--admin-heading) !important;
+}
+
+.mimosa-framing-modal {
+    background: var(--admin-modal-overlay) !important;
+}
+
+.mimosa-framing-dialog {
+    background: linear-gradient(135deg, var(--admin-surface-solid), var(--admin-surface-soft)) !important;
+    border-color: var(--admin-border-strong) !important;
+    color: var(--admin-text) !important;
+}
+
+.mimosa-framing-header h2,
+.mimosa-framing-header p,
+.mimosa-framing-controls label,
+.mimosa-framing-output {
+    color: var(--admin-heading) !important;
+}
+
+.mimosa-framing-frame {
+    background: var(--admin-input-bg) !important;
+    border-color: var(--admin-border-strong) !important;
+}
+
+.mimosa-framing-frame::before {
+    opacity: 0.8;
+}
+
+html[data-theme="dark"] .mimosa-framing-frame::before,
+html.theme-dark .mimosa-framing-frame::before {
+    background:
+        linear-gradient(to right, transparent calc(33.333% - 1px), rgba(255, 241, 189, 0.2) 33.333%, transparent calc(33.333% + 1px)),
+        linear-gradient(to right, transparent calc(66.666% - 1px), rgba(255, 241, 189, 0.2) 66.666%, transparent calc(66.666% + 1px)),
+        linear-gradient(to bottom, transparent calc(33.333% - 1px), rgba(255, 241, 189, 0.2) 33.333%, transparent calc(33.333% + 1px)),
+        linear-gradient(to bottom, transparent calc(66.666% - 1px), rgba(255, 241, 189, 0.2) 66.666%, transparent calc(66.666% + 1px));
+}
+
+body.app-admin .button,
+body.dashboard .button,
+body.change-form .button,
+body.change-list .button,
+body.app-admin .default,
+body.dashboard .default,
+body.change-form .default,
+body.change-list .default,
+body.app-admin input[type="submit"],
+body.dashboard input[type="submit"],
+body.change-form input[type="submit"],
+body.change-list input[type="submit"],
+body.app-admin input[type="button"],
+body.dashboard input[type="button"],
+body.change-form input[type="button"],
+body.change-list input[type="button"],
+body.app-admin .addlink,
+body.dashboard .addlink,
+body.change-form .addlink,
+body.change-list .addlink,
+body.app-admin .changelink,
+body.dashboard .changelink,
+body.change-form .changelink,
+body.change-list .changelink,
+.mimosa-framing-button,
+.mimosa-framing-save,
+.mimosa-framing-presets button,
+.mimosa-framing-close {
+    background: linear-gradient(135deg, var(--mimosa-yellow-strong), var(--mimosa-yellow)) !important;
+    border: 1px solid rgba(121, 90, 12, 0.34) !important;
+    color: var(--button-fg) !important;
+    text-shadow: none !important;
+}
+
+html[data-theme="dark"] body.app-admin .button,
+html[data-theme="dark"] body.dashboard .button,
+html[data-theme="dark"] body.change-form .button,
+html[data-theme="dark"] body.change-list .button,
+html[data-theme="dark"] body.app-admin .default,
+html[data-theme="dark"] body.dashboard .default,
+html[data-theme="dark"] body.change-form .default,
+html[data-theme="dark"] body.change-list .default,
+html[data-theme="dark"] body.app-admin input[type="submit"],
+html[data-theme="dark"] body.dashboard input[type="submit"],
+html[data-theme="dark"] body.change-form input[type="submit"],
+html[data-theme="dark"] body.change-list input[type="submit"],
+html.theme-dark body.app-admin .button,
+html.theme-dark body.dashboard .button,
+html.theme-dark body.change-form .button,
+html.theme-dark body.change-list .button,
+html.theme-dark body.app-admin .default,
+html.theme-dark body.dashboard .default,
+html.theme-dark body.change-form .default,
+html.theme-dark body.change-list .default,
+html.theme-dark body.app-admin input[type="submit"],
+html.theme-dark body.dashboard input[type="submit"],
+html.theme-dark body.change-form input[type="submit"],
+html.theme-dark body.change-list input[type="submit"] {
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.26), 0 0 0 1px rgba(255, 238, 178, 0.12) inset !important;
+}
+
+html[data-theme="dark"] body.app-admin input[type="checkbox"],
+html[data-theme="dark"] body.dashboard input[type="checkbox"],
+html[data-theme="dark"] body.change-form input[type="checkbox"],
+html[data-theme="dark"] body.change-list input[type="checkbox"],
+html.theme-dark body.app-admin input[type="checkbox"],
+html.theme-dark body.dashboard input[type="checkbox"],
+html.theme-dark body.change-form input[type="checkbox"],
+html.theme-dark body.change-list input[type="checkbox"] {
+    accent-color: var(--mimosa-yellow);
+}
