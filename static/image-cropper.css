@@ -1,0 +1,297 @@
+/* 
+ * Image Cropper Component Styles
+ * Styles for the visual image cropper in admin panel
+ */
+
+.mimosa-crop-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.mimosa-crop-dialog {
+  background: white;
+  border-radius: 8px;
+  padding: 24px;
+  max-width: 800px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.mimosa-crop-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 15px;
+}
+
+.mimosa-crop-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.mimosa-crop-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #999;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.mimosa-crop-close:hover {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.mimosa-crop-canvas-container {
+  position: relative;
+  background-color: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 500px;
+}
+
+.mimosa-crop-canvas {
+  display: block;
+  cursor: grab;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.mimosa-crop-canvas:active {
+  cursor: grabbing;
+}
+
+.mimosa-crop-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.mimosa-crop-control-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.mimosa-crop-control-group label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.mimosa-crop-control-group input[type="range"] {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: #e0e0e0;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.mimosa-crop-control-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #333;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.mimosa-crop-control-group input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #333;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.mimosa-crop-info {
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 20px;
+  font-size: 12px;
+  color: #666;
+}
+
+.mimosa-crop-info-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.mimosa-crop-info-item {
+  text-align: center;
+}
+
+.mimosa-crop-info-label {
+  display: block;
+  font-weight: 600;
+  color: #999;
+  font-size: 10px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.mimosa-crop-info-value {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+  font-family: 'Monaco', 'Menlo', monospace;
+}
+
+.mimosa-crop-presets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.mimosa-crop-preset {
+  background-color: #f0f0f0;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+  color: #333;
+}
+
+.mimosa-crop-preset:hover {
+  background-color: #e8e8e8;
+  border-color: #d0d0d0;
+}
+
+.mimosa-crop-preset.active {
+  background-color: #333;
+  color: white;
+  border-color: #333;
+}
+
+.mimosa-crop-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 15px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.mimosa-crop-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mimosa-crop-button-cancel {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.mimosa-crop-button-cancel:hover {
+  background-color: #e8e8e8;
+}
+
+.mimosa-crop-button-save {
+  background-color: #417505;
+  color: white;
+}
+
+.mimosa-crop-button-save:hover {
+  background-color: #2d5103;
+}
+
+.mimosa-crop-button-save:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.mimosa-crop-loading {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 16px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.mimosa-crop-loading.show {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mimosa-crop-spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #e0e0e0;
+  border-top-color: #333;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .mimosa-crop-dialog {
+    width: 95%;
+    padding: 16px;
+  }
+  
+  .mimosa-crop-controls {
+    grid-template-columns: 1fr;
+  }
+  
+  .mimosa-crop-info-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

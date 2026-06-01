@@ -1,0 +1,375 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="{% static 'admin_dashboard.css' %}">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :root {
+        --primary-color: #417505;
+        --secondary-color: #f5f5f5;
+        --text-primary: #1a1a1a;
+        --text-secondary: #666666;
+        --border-color: #e0e0e0;
+        --success-color: #10b981;
+        --warning-color: #f59e0b;
+        --danger-color: #ef4444;
+        --white: #ffffff;
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    #content {
+        padding: 32px 24px;
+    }
+
+    .dashboard-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* ═══════════════════════════════════════ GREETING ═══════════════════════════════════════ */
+    .greeting-section {
+        animation: fadeInDown 0.8s ease-out 0.1s backwards;
+        margin-bottom: 48px;
+    }
+
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .greeting-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 8px;
+    }
+
+    .greeting-icon {
+        font-size: 48px;
+        animation: wave 1.5s ease-in-out infinite;
+    }
+
+    @keyframes wave {
+        0%, 100% { transform: rotate(0deg); }
+        10%, 20% { transform: rotate(14deg); }
+        30%, 40%, 50%, 60%, 70%, 80%, 90% { transform: rotate(-8deg); }
+    }
+
+    .greeting-title {
+        font-size: 36px;
+        font-weight: 700;
+        color: var(--text-primary);
+        letter-spacing: -0.5px;
+    }
+
+    .greeting-subtitle {
+        font-size: 14px;
+        color: var(--text-secondary);
+        margin-top: 12px;
+    }
+
+    /* ═══════════════════════════════════════ STATS GRID ═══════════════════════════════════════ */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+        margin-bottom: 32px;
+        animation: fadeInUp 0.8s ease-out 0.2s backwards;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .stat-card {
+        background: var(--white);
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: var(--shadow-md);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid var(--border-color);
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s ease-out;
+    }
+
+    .stat-card:hover {
+        box-shadow: var(--shadow-lg);
+        transform: translateY(-4px);
+    }
+
+    .stat-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .stat-label {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 12px;
+    }
+
+    .stat-value {
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--text-primary);
+        font-feature-settings: 'tnum' 1;
+    }
+
+    .stat-change {
+        font-size: 12px;
+        font-weight: 600;
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .stat-change.positive {
+        color: var(--success-color);
+    }
+
+    .stat-change.negative {
+        color: var(--danger-color);
+    }
+
+    /* ═══════════════════════════════════════ TABLE ═══════════════════════════════════════ */
+    .table-section {
+        background: var(--white);
+        border-radius: 12px;
+        box-shadow: var(--shadow-md);
+        overflow: hidden;
+        animation: fadeInUp 0.8s ease-out 0.3s backwards;
+        border: 1px solid var(--border-color);
+        margin-bottom: 48px;
+    }
+
+    .table-header {
+        background: linear-gradient(135deg, #fafbfc 0%, #f0f3f6 100%);
+        padding: 20px 24px;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .table-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text-primary);
+    }
+
+    .stats-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .stats-table thead {
+        background: transparent;
+    }
+
+    .stats-table th {
+        padding: 12px 24px;
+        text-align: left;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-bottom: 1px solid var(--border-color);
+        background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.02) 100%);
+    }
+
+    .stats-table tbody tr {
+        transition: all 0.3s ease;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .stats-table tbody tr:last-child {
+        border-bottom: none;
+    }
+
+    .stats-table tbody tr:hover {
+        background: linear-gradient(90deg, rgba(65, 117, 5, 0.03) 0%, rgba(16, 185, 129, 0.03) 100%);
+        box-shadow: inset 0 0 0 1px rgba(65, 117, 5, 0.1);
+    }
+
+    .stats-table td {
+        padding: 16px 24px;
+        font-size: 14px;
+        color: var(--text-primary);
+    }
+
+    .stats-table td.numeric {
+        font-weight: 600;
+        font-feature-settings: 'tnum' 1;
+        text-align: right;
+    }
+
+    .date-cell {
+        color: var(--text-secondary);
+        font-size: 13px;
+    }
+
+    .revenue-cell {
+        color: var(--success-color);
+        font-weight: 700;
+    }
+
+    /* ═══════════════════════════════════════ ADMIN MODELS SECTION ═══════════════════════════════════════ */
+    .admin-models-section {
+        margin-top: 48px;
+        padding-top: 32px;
+        border-top: 2px solid var(--border-color);
+    }
+
+    .admin-models-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 24px;
+    }
+
+    .admin-modules {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    /* ═══════════════════════════════════════ RESPONSIVE ═══════════════════════════════════════ */
+    @media (max-width: 768px) {
+        #content {
+            padding: 16px 12px;
+        }
+
+        .greeting-title {
+            font-size: 24px;
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .stats-table th,
+        .stats-table td {
+            padding: 12px 16px;
+            font-size: 12px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+        }
+
+        .admin-modules {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<script src="{% static 'admin_dashboard.js' %}" defer></script>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Greeting Section -->
+    <section class="greeting-section">
+        <div class="greeting-header">
+            <span class="greeting-icon" id="greetingIcon">👋</span>
+            <h1 class="greeting-title" id="greetingText">Добрый день, Admin!</h1>
+        </div>
+        <p class="greeting-subtitle" id="greetingTime">Загружаем твой рабочий день...</p>
+    </section>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-label">Всего визитов</div>
+            <div class="stat-value" data-counter="8543">0</div>
+            <div class="stat-change positive">↑ 12.5% от вчера</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Новые заказы</div>
+            <div class="stat-value" data-counter="234">0</div>
+            <div class="stat-change positive">↑ 8.2% от вчера</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Доходы (грн)</div>
+            <div class="stat-value" data-counter="45280">0</div>
+            <div class="stat-change positive">↑ 23.1% от вчера</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Активные товары</div>
+            <div class="stat-value" data-counter="156">0</div>
+            <div class="stat-change negative">↓ 2.4% от вчера</div>
+        </div>
+    </div>
+
+    <!-- Statistics Table -->
+    <div class="table-section">
+        <div class="table-header">
+            <div class="table-title">📊 Статистика по дням</div>
+        </div>
+        <table class="stats-table">
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th class="numeric">Визиты</th>
+                    <th class="numeric">Заказы</th>
+                    <th class="numeric">Доходы (грн)</th>
+                </tr>
+            </thead>
+            <tbody id="statsTableBody">
+                <!-- Populated by JS -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Standard Django Admin Content -->
+    <div class="admin-models-section">
+        <h2 class="admin-models-title">📦 Управление моделями</h2>
+        {{ block.super }}
+    </div>
+</div>
+{% endblock %}

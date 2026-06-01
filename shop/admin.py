@@ -38,8 +38,8 @@ class ProductAdminForm(forms.ModelForm):
 class ProductAdmin(admin.ModelAdmin):
 	form = ProductAdminForm
 	class Media:
-		css = {'all': ('admin_custom_v2.css',)}
-		js = ('admin_custom_v2.js',)
+		css = {'all': ('admin_custom_v2.css', 'image-cropper.css')}
+		js = ('image-cropper.js', 'admin_custom_v2.js')
 
 	list_display = ('id', 'title', 'category', 'hs_code', 'price', 'stock', 'image_preview')
 	list_filter = ('category',)

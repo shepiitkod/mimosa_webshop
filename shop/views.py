@@ -83,8 +83,8 @@ def _create_stripe_session_for_order(request, order):
 	def _https(url: str) -> str:
 		return url.replace('http://', 'https://', 1) if url.startswith('http://') else url
 
-	success_url = _https(request.build_absolute_uri(reverse('shop:success'))) + '?session_id={CHECKOUT_SESSION_ID}'
-	cancel_url = _https(request.build_absolute_uri(reverse('shop:cart')))
+	success_url = _https(_build_site_url(reverse('shop:success'))) + '?session_id={CHECKOUT_SESSION_ID}'
+	cancel_url = _https(_build_site_url(reverse('shop:cart')))
 
 	line_items = [
 		{
@@ -798,3 +798,4 @@ def subscribe_newsletter(request):
 		return JsonResponse({'success': False, 'error': 'Invalid JSON'}, status=400)
 	except Exception as exc:
 		return JsonResponse({'success': False, 'error': str(exc)}, status=500)
+
