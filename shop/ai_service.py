@@ -4,7 +4,8 @@ import requests
 from django.conf import settings
 
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
-GROQ_MODEL = "gemma2-9b-it"
+# gemma2-9b-it was retired on Groq (Oct 2025); use their recommended fast replacement.
+GROQ_MODEL = "llama-3.1-8b-instant"
 
 SYSTEM_PROMPT = (
     "You are an elite French copywriter for 'Mimosa Atelier', a luxury brand creating "

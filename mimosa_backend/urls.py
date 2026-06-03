@@ -23,6 +23,7 @@ from django.views.generic import TemplateView
 
 from shop import admin_dashboard
 from shop.sitemaps import CategorySitemap, ProductSitemap, StaticViewSitemap
+from shop.views import ai_enhance_description
 
 sitemaps = {
     'static': StaticViewSitemap,
@@ -31,6 +32,8 @@ sitemaps = {
 }
 
 urlpatterns = [
+    # Must be before admin.site.urls — otherwise Django admin returns HTML 404 for this path.
+    path('admin/api/ai-enhance/', ai_enhance_description, name='ai_enhance_description'),
     path('admin/', admin_dashboard.index, name='index'),
     path('admin/', admin.site.urls),
     path('', include('shop.urls')),

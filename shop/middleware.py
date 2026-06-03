@@ -10,8 +10,8 @@ class AdminCopilotAssetsMiddleware:
 		css = static('admin_copilot.css')
 		js = static('admin_copilot.js')
 		return (
-			f'<link rel="stylesheet" href="{css}?v=20260603-all-admin">'
-			f'<script src="{js}?v=20260603-all-admin" defer></script>'
+			f'<link rel="stylesheet" href="{css}?v=20260603-ai-api-fix">'
+			f'<script src="{js}?v=20260603-ai-api-fix" defer></script>'
 		).encode('utf-8')
 
 	def __init__(self, get_response):

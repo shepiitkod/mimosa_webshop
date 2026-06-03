@@ -5,7 +5,6 @@ from . import views
 app_name = 'shop'
 
 urlpatterns = [
-    path('admin/api/ai-enhance/', views.ai_enhance_description, name='ai_enhance_description'),
     path('', views.index_view, name='home'),
     path('products/', views.products_catalog_view, name='products'),
     path('products/category/<slug:category_slug>/', views.products_catalog_view, name='products_by_category'),

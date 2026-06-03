@@ -161,8 +161,20 @@
           credentials: "same-origin",
         });
 
-        const data = await response.json();
+        const raw = await response.text();
         setLoading(false);
+
+        var data;
+        try {
+          data = raw ? JSON.parse(raw) : {};
+        } catch (parseErr) {
+          appendMessage(
+            "error",
+            "Сервер повернув HTML замість JSON (статус " + response.status + "). " +
+            "Перевірте URL API та деплой."
+          );
+          return;
+        }
 
         if (!response.ok) {
           appendMessage("error", data.error || "Request failed (" + response.status + ")");
