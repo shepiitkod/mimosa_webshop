@@ -23,7 +23,12 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 
 from . import shipping
-from .ai_service import generate_premium_description, stream_sse_events
+from .ai_service import (
+	generate_chat_reply,
+	generate_product_form_fields,
+	stream_sse_events,
+	wants_product_form_fill,
+)
 from .models import NewsletterUser, Order, OrderItem, Product
 
 
@@ -811,6 +816,19 @@ def ai_enhance_description(request):
 		if not prompt:
 			return JsonResponse({'error': 'Prompt is required.'}, status=400)
 
+		on_product_form = bool(body.get('on_product_form'))
+		fill_form = body.get('fill_product_form')
+		if fill_form is None:
+			fill_form = wants_product_form_fill(prompt, on_product_form=on_product_form)
+
+		if fill_form:
+			result = generate_product_form_fields(prompt)
+			return JsonResponse({
+				'mode': 'form_fill',
+				'form_fields': result['form_fields'],
+				'message': result['message'],
+			}, json_dumps_params={'ensure_ascii': False})
+
 		use_stream = body.get('stream', True)
 		if use_stream:
 			response = StreamingHttpResponse(
@@ -821,8 +839,11 @@ def ai_enhance_description(request):
 			response['X-Accel-Buffering'] = 'no'
 			return response
 
-		enhanced = generate_premium_description(prompt)
-		return JsonResponse({'enhanced_description': enhanced})
+		enhanced = generate_chat_reply(prompt)
+		return JsonResponse(
+			{'enhanced_description': enhanced},
+			json_dumps_params={'ensure_ascii': False},
+		)
 
 	except json.JSONDecodeError:
 		return JsonResponse({'error': 'Invalid JSON.'}, status=400)
