@@ -137,6 +137,25 @@
   border: 1px solid rgba(212, 175, 55, 0.15);
 }
 
+.copilot-ai-text {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.copilot-msg--ai.is-streaming .copilot-ai-text::after {
+  content: "▋";
+  display: inline;
+  margin-left: 2px;
+  color: var(--copilot-gold);
+  animation: copilot-cursor-blink 0.9s step-end infinite;
+}
+
+@keyframes copilot-cursor-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
 .copilot-msg--loading {
   align-self: flex-start;
   color: var(--copilot-gold-soft);

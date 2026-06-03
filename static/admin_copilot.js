@@ -34,12 +34,12 @@
     panel.setAttribute("aria-hidden", "true");
     panel.innerHTML =
       '<header class="copilot-header">' +
-        '<div><h2>Mimosa Atelier</h2><p>На всіх сторінках адмінки · Groq Gemma</p></div>' +
+        '<div><h2>Mimosa Atelier</h2><p>Розумний помічник · відповідає по суті</p></div>' +
         '<button type="button" id="mimosa-copilot-close" aria-label="Close">×</button>' +
       '</header>' +
       '<div id="mimosa-copilot-messages" role="log" aria-live="polite"></div>' +
       '<div class="copilot-input-area">' +
-        '<textarea id="mimosa-copilot-input" rows="3" placeholder="Напр.: свічка-ракушка, соєвий віск, морські ноти…"></textarea>' +
+        '<textarea id="mimosa-copilot-input" rows="3" placeholder="Питання, ідея, опис товару, переклад…"></textarea>' +
         '<button type="button" id="mimosa-copilot-send">Send</button>' +
       '</div>';
 
@@ -84,44 +84,59 @@
       messagesEl.scrollTop = messagesEl.scrollHeight;
     }
 
-    function appendMessage(role, text, aiTextForApply) {
+    function appendUserMessage(text) {
       const wrap = document.createElement("div");
-      wrap.className = "copilot-msg copilot-msg--" + role;
-
-      if (role === "ai" && aiTextForApply) {
-        const textNode = document.createElement("div");
-        textNode.textContent = text;
-        wrap.appendChild(textNode);
-
-        const applyBtn = document.createElement("button");
-        applyBtn.type = "button";
-        applyBtn.className = "copilot-apply-btn";
-        applyBtn.textContent = "Apply to Description";
-        applyBtn.addEventListener("click", function () {
-          const descriptionField = getDescriptionField();
-          if (!descriptionField) {
-            alert(
-              "Поле опису недоступне на цій сторінці.\n\n" +
-              "Відкрийте товар: Shop → Products → оберіть продукт → Change."
-            );
-            if (window.confirm("Перейти до списку товарів зараз?")) {
-              window.location.href = PRODUCTS_CHANGE_URL;
-            }
-            return;
-          }
-          descriptionField.value = aiTextForApply;
-          descriptionField.dispatchEvent(new Event("input", { bubbles: true }));
-          descriptionField.dispatchEvent(new Event("change", { bubbles: true }));
-          applyBtn.textContent = "✓ Applied";
-          applyBtn.disabled = true;
-        });
-        wrap.appendChild(applyBtn);
-      } else {
-        wrap.textContent = text;
-      }
-
+      wrap.className = "copilot-msg copilot-msg--user";
+      wrap.textContent = text;
       messagesEl.appendChild(wrap);
       scrollToBottom();
+    }
+
+    function appendErrorMessage(text) {
+      const wrap = document.createElement("div");
+      wrap.className = "copilot-msg copilot-msg--error";
+      wrap.textContent = text;
+      messagesEl.appendChild(wrap);
+      scrollToBottom();
+    }
+
+    function createAiMessageShell() {
+      const wrap = document.createElement("div");
+      wrap.className = "copilot-msg copilot-msg--ai is-streaming";
+      const textEl = document.createElement("div");
+      textEl.className = "copilot-ai-text";
+      wrap.appendChild(textEl);
+      messagesEl.appendChild(wrap);
+      scrollToBottom();
+      return { wrap: wrap, textEl: textEl };
+    }
+
+    function attachApplyButton(wrap, fullText) {
+      if (wrap.querySelector(".copilot-apply-btn")) return;
+
+      const applyBtn = document.createElement("button");
+      applyBtn.type = "button";
+      applyBtn.className = "copilot-apply-btn";
+      applyBtn.textContent = "Apply to Description";
+      applyBtn.addEventListener("click", function () {
+        const descriptionField = getDescriptionField();
+        if (!descriptionField) {
+          alert(
+            "Поле опису недоступне на цій сторінці.\n\n" +
+            "Відкрийте товар: Shop → Products → оберіть продукт → Change."
+          );
+          if (window.confirm("Перейти до списку товарів зараз?")) {
+            window.location.href = PRODUCTS_CHANGE_URL;
+          }
+          return;
+        }
+        descriptionField.value = fullText;
+        descriptionField.dispatchEvent(new Event("input", { bubbles: true }));
+        descriptionField.dispatchEvent(new Event("change", { bubbles: true }));
+        applyBtn.textContent = "✓ Applied";
+        applyBtn.disabled = true;
+      });
+      wrap.appendChild(applyBtn);
     }
 
     function setLoading(on) {
@@ -142,13 +157,99 @@
       }
     }
 
+    function parseSseBuffer(buffer, onEvent) {
+      const lines = buffer.split("\n");
+      const rest = lines.pop() || "";
+      lines.forEach(function (line) {
+        if (!line.startsWith("data: ")) return;
+        try {
+          onEvent(JSON.parse(line.slice(6)));
+        } catch (e) {
+          /* ignore malformed chunks */
+        }
+      });
+      return rest;
+    }
+
+    async function consumeStream(response, shell) {
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let fullText = "";
+
+      while (true) {
+        const chunk = await reader.read();
+        if (chunk.done) break;
+
+        buffer += decoder.decode(chunk.value, { stream: true });
+        buffer = parseSseBuffer(buffer, function (payload) {
+          if (payload.error) {
+            throw new Error(payload.error);
+          }
+          if (payload.delta) {
+            fullText += payload.delta;
+            shell.textEl.textContent = fullText;
+            scrollToBottom();
+          }
+        });
+      }
+
+      buffer += decoder.decode();
+      parseSseBuffer(buffer + "\n", function (payload) {
+        if (payload.error) throw new Error(payload.error);
+        if (payload.delta) {
+          fullText += payload.delta;
+          shell.textEl.textContent = fullText;
+        }
+      });
+
+      return fullText;
+    }
+
+    async function sendPromptJson(prompt) {
+      const response = await fetch(API_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": getCsrfToken(),
+        },
+        body: JSON.stringify({ prompt: prompt, stream: false }),
+        credentials: "same-origin",
+      });
+
+      const raw = await response.text();
+      var data;
+      try {
+        data = raw ? JSON.parse(raw) : {};
+      } catch (parseErr) {
+        appendErrorMessage(
+          "Сервер повернув HTML замість JSON (статус " + response.status + ")."
+        );
+        return;
+      }
+
+      if (!response.ok) {
+        appendErrorMessage(data.error || "Request failed (" + response.status + ")");
+        return;
+      }
+
+      const shell = createAiMessageShell();
+      const text = data.enhanced_description || "";
+      shell.textEl.textContent = text;
+      shell.wrap.classList.remove("is-streaming");
+      attachApplyButton(shell.wrap, text);
+      scrollToBottom();
+    }
+
     async function sendPrompt() {
       const prompt = inputEl.value.trim();
       if (!prompt) return;
 
-      appendMessage("user", prompt);
+      appendUserMessage(prompt);
       inputEl.value = "";
       setLoading(true);
+
+      var shell = null;
 
       try {
         const response = await fetch(API_ENDPOINT, {
@@ -157,35 +258,42 @@
             "Content-Type": "application/json",
             "X-CSRFToken": getCsrfToken(),
           },
-          body: JSON.stringify({ prompt: prompt }),
+          body: JSON.stringify({ prompt: prompt, stream: true }),
           credentials: "same-origin",
         });
 
-        const raw = await response.text();
         setLoading(false);
 
-        var data;
-        try {
-          data = raw ? JSON.parse(raw) : {};
-        } catch (parseErr) {
-          appendMessage(
-            "error",
-            "Сервер повернув HTML замість JSON (статус " + response.status + "). " +
-            "Перевірте URL API та деплой."
-          );
+        const contentType = response.headers.get("content-type") || "";
+
+        if (contentType.indexOf("text/event-stream") !== -1) {
+          if (!response.ok) {
+            appendErrorMessage("Stream failed (" + response.status + ")");
+            return;
+          }
+
+          shell = createAiMessageShell();
+          const fullText = await consumeStream(response, shell);
+          shell.wrap.classList.remove("is-streaming");
+
+          if (!fullText.trim()) {
+            shell.wrap.remove();
+            appendErrorMessage("Порожня відповідь від моделі.");
+            return;
+          }
+
+          attachApplyButton(shell.wrap, fullText);
+          scrollToBottom();
           return;
         }
 
-        if (!response.ok) {
-          appendMessage("error", data.error || "Request failed (" + response.status + ")");
-          return;
-        }
-
-        const enhanced = data.enhanced_description || "";
-        appendMessage("ai", enhanced, enhanced);
+        await sendPromptJson(prompt);
       } catch (err) {
         setLoading(false);
-        appendMessage("error", "❌ " + (err.message || "Network error"));
+        if (shell && shell.wrap && shell.wrap.parentNode) {
+          shell.wrap.remove();
+        }
+        appendErrorMessage("❌ " + (err.message || "Network error"));
       }
     }
 

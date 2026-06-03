@@ -15,7 +15,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.db import IntegrityError, transaction
 from django.db.models import Count, Prefetch
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, StreamingHttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.text import slugify
 from django.urls import reverse
@@ -23,7 +23,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 
 from . import shipping
-from .ai_service import generate_premium_description
+from .ai_service import generate_premium_description, stream_sse_events
 from .models import NewsletterUser, Order, OrderItem, Product
 
 
@@ -810,6 +810,16 @@ def ai_enhance_description(request):
 		prompt = body.get('prompt', '').strip()
 		if not prompt:
 			return JsonResponse({'error': 'Prompt is required.'}, status=400)
+
+		use_stream = body.get('stream', True)
+		if use_stream:
+			response = StreamingHttpResponse(
+				stream_sse_events(prompt),
+				content_type='text/event-stream; charset=utf-8',
+			)
+			response['Cache-Control'] = 'no-cache'
+			response['X-Accel-Buffering'] = 'no'
+			return response
 
 		enhanced = generate_premium_description(prompt)
 		return JsonResponse({'enhanced_description': enhanced})
