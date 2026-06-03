@@ -22,6 +22,7 @@ from django.urls import include, path
 from django.views.generic import TemplateView
 
 from shop import admin_dashboard
+from shop.admin_api import ai_enhance_description
 from shop.sitemaps import CategorySitemap, ProductSitemap, StaticViewSitemap
 
 sitemaps = {
@@ -31,6 +32,7 @@ sitemaps = {
 }
 
 urlpatterns = [
+    path('admin/api/ai-enhance/', ai_enhance_description, name='ai_enhance_description'),
     path('admin/', admin_dashboard.index, name='index'),
     path('admin/', admin.site.urls),
     path('', include('shop.urls')),
