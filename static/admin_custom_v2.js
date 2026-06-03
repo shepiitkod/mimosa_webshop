@@ -1,8 +1,79 @@
 document.addEventListener('DOMContentLoaded', function () {
+    forceMimosaLightAdminTheme();
+    initMimosaAdminGradient();
     document.documentElement.classList.add('mimosa-admin-ready');
     initProductFramingEditor();
     enhanceMimosaAdminUi();
 });
+
+function forceMimosaLightAdminTheme() {
+    localStorage.setItem('theme', 'light');
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.remove('theme-dark');
+    document.documentElement.classList.add('theme-light');
+}
+
+function initMimosaAdminGradient() {
+    const root = document.documentElement;
+    let pointerX = 18;
+    let pointerY = 12;
+    let glow = 0.58;
+    let warmth = 0;
+    let rafId = 0;
+
+    function scheduleUpdate() {
+        if (rafId) return;
+        rafId = window.requestAnimationFrame(function () {
+            rafId = 0;
+            const scrollRange = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+            const scrollProgress = window.scrollY / scrollRange;
+            const angle = 118 + scrollProgress * 34 + warmth * 10;
+
+            root.style.setProperty('--mimosa-flow-x', pointerX.toFixed(1) + '%');
+            root.style.setProperty('--mimosa-flow-y', pointerY.toFixed(1) + '%');
+            root.style.setProperty('--mimosa-flow-angle', angle.toFixed(1) + 'deg');
+            root.style.setProperty('--mimosa-flow-glow', glow.toFixed(2));
+            root.style.setProperty('--mimosa-flow-warmth', warmth.toFixed(2));
+        });
+    }
+
+    function pulse(actionClass, nextGlow, nextWarmth) {
+        root.classList.add(actionClass);
+        glow = nextGlow;
+        warmth = nextWarmth;
+        scheduleUpdate();
+
+        window.setTimeout(function () {
+            root.classList.remove(actionClass);
+            glow = 0.58;
+            warmth = 0;
+            scheduleUpdate();
+        }, 900);
+    }
+
+    window.addEventListener('pointermove', function (event) {
+        pointerX = Math.max(0, Math.min(100, (event.clientX / window.innerWidth) * 100));
+        pointerY = Math.max(0, Math.min(100, (event.clientY / window.innerHeight) * 100));
+        scheduleUpdate();
+    }, { passive: true });
+
+    window.addEventListener('scroll', scheduleUpdate, { passive: true });
+
+    document.addEventListener('pointerdown', function () {
+        pulse('mimosa-admin-action-click', 0.78, 0.42);
+    });
+
+    document.addEventListener('focusin', function (event) {
+        if (!event.target.closest('input, textarea, select, .vTextField, .mimosa-framing-frame')) return;
+        pulse('mimosa-admin-action-focus', 0.72, 0.22);
+    });
+
+    document.addEventListener('submit', function () {
+        pulse('mimosa-admin-action-save', 0.9, 0.62);
+    });
+
+    scheduleUpdate();
+}
 
 function initProductFramingEditor() {
     const imageFields = [

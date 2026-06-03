@@ -65,6 +65,12 @@ function getPeriodGreeting() {
     return { text: randomGreeting, icon, period };
 }
 
+function getAdminName() {
+    const greetingTextEl = document.getElementById('greetingText');
+    const name = greetingTextEl?.dataset.adminName?.trim();
+    return name || 'Admin';
+}
+
 // ═══════════════════════════════════════════════════════════════════════════════════
 // Counter Animation
 // ═══════════════════════════════════════════════════════════════════════════════════
@@ -78,6 +84,7 @@ function getPeriodGreeting() {
 function animateCounter(element, target, duration = 1500) {
     const startTime = performance.now();
     const startValue = 0;
+    const suffix = element.getAttribute('data-suffix') || '';
 
     function update(currentTime) {
         const elapsed = currentTime - startTime;
@@ -88,13 +95,13 @@ function animateCounter(element, target, duration = 1500) {
         const currentValue = Math.floor(startValue + (target - startValue) * easeProgress);
 
         // Format with locale-specific number formatting
-        element.textContent = currentValue.toLocaleString('uk-UA');
+        element.textContent = currentValue.toLocaleString('uk-UA') + suffix;
 
         if (progress < 1) {
             requestAnimationFrame(update);
         } else {
             // Ensure final value is exact
-            element.textContent = target.toLocaleString('uk-UA');
+            element.textContent = target.toLocaleString('uk-UA') + suffix;
         }
     }
 
@@ -115,47 +122,18 @@ function startCounterAnimations() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════════
-// Table Population
-// ═══════════════════════════════════════════════════════════════════════════════════
-
-const SAMPLE_DATA = [
-    { date: '31 травня 2026', visits: 1245, orders: 43, revenue: 8540 },
-    { date: '30 травня 2026', visits: 1089, orders: 38, revenue: 7620 },
-    { date: '29 травня 2026', visits: 1456, orders: 52, revenue: 9280 },
-    { date: '28 травня 2026', visits: 892, orders: 31, revenue: 6150 },
-    { date: '27 травня 2026', visits: 1678, orders: 61, revenue: 11450 },
-    { date: '26 травня 2026', visits: 1234, orders: 45, revenue: 8820 },
-];
-
-/**
- * Populate stats table with data
- */
-function populateStatsTable() {
-    const tbody = document.getElementById('statsTableBody');
-    if (!tbody) return;
-
-    tbody.innerHTML = SAMPLE_DATA.map((row, index) => `
-        <tr style="animation: fadeInUp 0.6s ease-out ${0.4 + index * 0.1}s backwards;">
-            <td class="date-cell">${row.date}</td>
-            <td class="numeric">${row.visits.toLocaleString('uk-UA')}</td>
-            <td class="numeric">${row.orders}</td>
-            <td class="numeric revenue-cell">${row.revenue.toLocaleString('uk-UA')} ₴</td>
-        </tr>
-    `).join('');
-}
-
-// ═══════════════════════════════════════════════════════════════════════════════════
 // Initialization
 // ═══════════════════════════════════════════════════════════════════════════════════
 
 document.addEventListener('DOMContentLoaded', function() {
     // Update greeting
     const { text, icon } = getPeriodGreeting();
+    const adminName = getAdminName();
     const greetingTextEl = document.getElementById('greetingText');
     const greetingIconEl = document.getElementById('greetingIcon');
     const greetingTimeEl = document.getElementById('greetingTime');
 
-    if (greetingTextEl) greetingTextEl.textContent = text;
+    if (greetingTextEl) greetingTextEl.textContent = text.replaceAll('{name}', adminName);
     if (greetingIconEl) greetingIconEl.textContent = icon;
     if (greetingTimeEl) {
         greetingTimeEl.textContent = 'Добро пожаловать в панель управления Mimosa Atelier';
@@ -163,7 +141,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Start animations
     startCounterAnimations();
-    populateStatsTable();
 });
 
 // Export for use in other modules if needed
@@ -172,6 +149,5 @@ if (typeof module !== 'undefined' && module.exports) {
         getPeriodGreeting,
         animateCounter,
         startCounterAnimations,
-        populateStatsTable,
     };
 }

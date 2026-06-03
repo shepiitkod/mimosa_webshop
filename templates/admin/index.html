@@ -4,7 +4,7 @@
 {% block extrastyle %}
 {{ block.super }}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="{% static 'admin_dashboard.css' %}">
+<link rel="stylesheet" href="{% static 'admin_dashboard.css' %}?v=20260603-real-stats">
 <style>
     * {
         margin: 0;
@@ -167,9 +167,13 @@
         color: var(--success-color);
     }
 
-    .stat-change.negative {
-        color: var(--danger-color);
-    }
+        .stat-change.negative {
+            color: var(--danger-color);
+        }
+
+        .stat-change.neutral {
+            color: var(--text-secondary);
+        }
 
     /* ═══════════════════════════════════════ TABLE ═══════════════════════════════════════ */
     .table-section {
@@ -305,7 +309,7 @@
 
 {% block extrahead %}
 {{ block.super }}
-<script src="{% static 'admin_dashboard.js' %}" defer></script>
+<script src="{% static 'admin_dashboard.js' %}?v=20260603-real-stats" defer></script>
 {% endblock %}
 
 {% block content %}
@@ -314,36 +318,26 @@
     <section class="greeting-section">
         <div class="greeting-header">
             <span class="greeting-icon" id="greetingIcon">👋</span>
-            <h1 class="greeting-title" id="greetingText">Добрый день, Admin!</h1>
+            <h1 class="greeting-title" id="greetingText" data-admin-name="{{ admin_display_name|default:request.user.username }}">Добрый день, {{ admin_display_name|default:request.user.username }}!</h1>
         </div>
         <p class="greeting-subtitle" id="greetingTime">Загружаем твой рабочий день...</p>
     </section>
 
     <!-- Stats Grid -->
     <div class="stats-grid">
+        {% for stat in dashboard_stats %}
         <div class="stat-card">
-            <div class="stat-label">Всего визитов</div>
-            <div class="stat-value" data-counter="8543">0</div>
-            <div class="stat-change positive">↑ 12.5% от вчера</div>
+            <div class="stat-label">{{ stat.label }}</div>
+            <div class="stat-value" data-counter="{{ stat.counter }}" data-suffix="{{ stat.suffix|default:'' }}">0</div>
+            <div class="stat-change {{ stat.change_class }}">{{ stat.change }}</div>
         </div>
-
+        {% empty %}
         <div class="stat-card">
-            <div class="stat-label">Новые заказы</div>
-            <div class="stat-value" data-counter="234">0</div>
-            <div class="stat-change positive">↑ 8.2% от вчера</div>
+            <div class="stat-label">Данные</div>
+            <div class="stat-value" data-counter="0">0</div>
+            <div class="stat-change neutral">Нет данных для отображения</div>
         </div>
-
-        <div class="stat-card">
-            <div class="stat-label">Доходы (грн)</div>
-            <div class="stat-value" data-counter="45280">0</div>
-            <div class="stat-change positive">↑ 23.1% от вчера</div>
-        </div>
-
-        <div class="stat-card">
-            <div class="stat-label">Активные товары</div>
-            <div class="stat-value" data-counter="156">0</div>
-            <div class="stat-change negative">↓ 2.4% от вчера</div>
-        </div>
+        {% endfor %}
     </div>
 
     <!-- Statistics Table -->
@@ -355,13 +349,24 @@
             <thead>
                 <tr>
                     <th>Дата</th>
-                    <th class="numeric">Визиты</th>
                     <th class="numeric">Заказы</th>
+                    <th class="numeric">Оплачено</th>
                     <th class="numeric">Доходы (грн)</th>
                 </tr>
             </thead>
             <tbody id="statsTableBody">
-                <!-- Populated by JS -->
+                {% for row in dashboard_table_rows %}
+                <tr>
+                    <td class="date-cell">{{ row.date|date:"d.m.Y" }}</td>
+                    <td class="numeric">{{ row.orders }}</td>
+                    <td class="numeric">{{ row.paid_orders }}</td>
+                    <td class="numeric revenue-cell">{{ row.revenue|floatformat:2 }} грн</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="date-cell">Нет заказов для отображения</td>
+                </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

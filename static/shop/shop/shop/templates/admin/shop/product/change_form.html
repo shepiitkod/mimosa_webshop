@@ -1,0 +1,181 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block after_related_objects %}
+{{ block.super }}
+
+<style>
+  #ai-copilot-wrapper {
+    margin: 12px 0 6px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  #ai-enhance-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 20px;
+    background: #059669;
+    color: #FEFCE8;
+    font-family: "Georgia", serif;
+    font-size: 13px;
+    font-style: italic;
+    letter-spacing: 0.04em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.35);
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+  }
+
+  #ai-enhance-btn:hover:not(:disabled) {
+    background: #047857;
+    box-shadow: 0 4px 14px rgba(5, 150, 105, 0.45);
+    transform: translateY(-1px);
+  }
+
+  #ai-enhance-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  #ai-lang-select {
+    padding: 7px 10px;
+    font-size: 13px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    background: #fff;
+    color: #374151;
+    cursor: pointer;
+  }
+
+  #ai-status-msg {
+    font-size: 12px;
+    color: #6b7280;
+    font-style: italic;
+    display: none;
+    width: 100%;
+    margin-top: 2px;
+  }
+</style>
+
+<script>
+(function () {
+  "use strict";
+
+  // КОНТРИБ'ЮТОРИ: Список мов синхронізуй із BASE_SYSTEM_PROMPT в ai_service.py.
+  // Значення — це те, що передається напряму в промпт як {target_language}.
+  const LANGUAGES = [
+    { code: "французька",    label: "🇫🇷 Французька" },
+    { code: "українська",    label: "🇺🇦 Українська" },
+    { code: "англійська",    label: "🇬🇧 Англійська" },
+    { code: "німецька",      label: "🇩🇪 Німецька"   },
+    { code: "іспанська",     label: "🇪🇸 Іспанська"  },
+    { code: "італійська",    label: "🇮🇹 Італійська" },
+    { code: "японська",      label: "🇯🇵 Японська"   },
+  ];
+
+  const API_ENDPOINT = "/admin/api/ai-enhance/";
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const textarea = document.getElementById("id_description");
+    if (!textarea) return;
+
+    const wrapper = document.createElement("div");
+    wrapper.id = "ai-copilot-wrapper";
+
+    // --- Селектор мови ---
+    const langSelect = document.createElement("select");
+    langSelect.id = "ai-lang-select";
+    langSelect.title = "Мова генерації";
+    LANGUAGES.forEach(function (lang) {
+      const opt = document.createElement("option");
+      opt.value = lang.code;
+      opt.textContent = lang.label;
+      langSelect.appendChild(opt);
+    });
+
+    // --- Кнопка ---
+    const btn = document.createElement("button");
+    btn.id = "ai-enhance-btn";
+    btn.type = "button";
+    btn.textContent = "✨ AI Enhance (French Luxe)";
+
+    // --- Статус ---
+    const statusMsg = document.createElement("span");
+    statusMsg.id = "ai-status-msg";
+
+    wrapper.appendChild(langSelect);
+    wrapper.appendChild(btn);
+    wrapper.appendChild(statusMsg);
+    textarea.parentNode.insertBefore(wrapper, textarea);
+
+    // КОНТРИБ'ЮТОРИ: getCsrfToken шукає токен у cookies.
+    // Якщо проєкт використовує SameSite=Strict — додай fallback через
+    // document.querySelector('[name=csrfmiddlewaretoken]').value
+    function getCsrfToken() {
+      const match = document.cookie
+        .split(";")
+        .map(function (c) { return c.trim().split("="); })
+        .find(function (pair) { return pair[0] === "csrftoken"; });
+      return match ? decodeURIComponent(match[1]) : "";
+    }
+
+    btn.addEventListener("click", async function () {
+      const draft = textarea.value.trim();
+      const targetLanguage = langSelect.value;
+
+      if (!draft) {
+        alert("⚠️ Поле опису порожнє.\nДодайте кілька ключових слів перед запуском ШІ.");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "✨ Генерація...";
+      statusMsg.style.display = "inline";
+      statusMsg.style.color = "#6b7280";
+      statusMsg.textContent = "ШІ складає ваш текст…";
+
+      try {
+        const response = await fetch(API_ENDPOINT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCsrfToken(),
+          },
+          body: JSON.stringify({
+            draft_text: draft,
+            target_language: targetLanguage,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || `HTTP помилка ${response.status}`);
+        }
+
+        textarea.value = data.enhanced_description;
+        // КОНТРИБ'ЮТОРИ: dispatchEvent потрібен якщо підключено CKEditor / Summernote
+        textarea.dispatchEvent(new Event("input", { bubbles: true }));
+
+        statusMsg.textContent = "✅ Опис успішно згенеровано.";
+        setTimeout(function () { statusMsg.style.display = "none"; }, 3500);
+
+      } catch (err) {
+        statusMsg.textContent = "❌ Помилка: " + err.message;
+        statusMsg.style.color = "#dc2626";
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "✨ AI Enhance (French Luxe)";
+      }
+    });
+  });
+})();
+</script>
+
+{% endblock %}

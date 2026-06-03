@@ -21,6 +21,7 @@ from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
 from django.views.generic import TemplateView
 
+from shop import admin_dashboard
 from shop.sitemaps import CategorySitemap, ProductSitemap, StaticViewSitemap
 
 sitemaps = {
@@ -30,6 +31,7 @@ sitemaps = {
 }
 
 urlpatterns = [
+    path('admin/', admin_dashboard.index, name='index'),
     path('admin/', admin.site.urls),
     path('', include('shop.urls')),
     path(

@@ -13,6 +13,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: auto;
   z-index: 10000;
 }
 
@@ -24,6 +25,7 @@
   width: 90%;
   max-height: 90vh;
   overflow-y: auto;
+  box-sizing: border-box;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
 
@@ -178,7 +180,7 @@
 
 .mimosa-crop-presets {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
   gap: 8px;
   margin-bottom: 20px;
 }
@@ -193,6 +195,12 @@
   transition: all 0.2s;
   font-weight: 500;
   color: #333;
+  line-height: 1.25;
+  min-height: 40px;
+  white-space: normal;
+  overflow: visible;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 .mimosa-crop-preset:hover {
@@ -210,6 +218,7 @@
   display: flex;
   justify-content: flex-end;
   gap: 12px;
+  flex-wrap: wrap;
   padding-top: 15px;
   border-top: 1px solid #e0e0e0;
 }
@@ -222,6 +231,11 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  line-height: 1.25;
+  min-height: 42px;
+  white-space: normal;
+  overflow: visible;
+  box-sizing: border-box;
 }
 
 .mimosa-crop-button-cancel {
@@ -285,6 +299,17 @@
   .mimosa-crop-dialog {
     width: 95%;
     padding: 16px;
+    max-height: calc(100dvh - 28px);
+  }
+
+  .mimosa-crop-modal {
+    align-items: flex-start;
+    padding: 14px;
+    box-sizing: border-box;
+  }
+
+  .mimosa-crop-canvas-container {
+    max-height: 44vh;
   }
   
   .mimosa-crop-controls {
@@ -293,5 +318,13 @@
   
   .mimosa-crop-info-row {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .mimosa-crop-presets {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .mimosa-crop-button {
+    flex: 1 1 140px;
   }
 }

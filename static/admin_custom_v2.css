@@ -313,12 +313,14 @@ body.model-product .mimosa-framing-hint {
     align-items: center;
     justify-content: center;
     padding: 24px;
+    overflow: auto;
     background: rgba(36, 29, 18, 0.58);
 }
 
 .mimosa-framing-dialog {
     width: min(760px, 100%);
     max-height: min(840px, calc(100vh - 48px));
+    box-sizing: border-box;
     display: grid;
     grid-template-columns: minmax(260px, 420px) minmax(220px, 1fr);
     gap: 18px;
@@ -453,8 +455,19 @@ body.model-product .mimosa-framing-hint {
         margin-left: 0;
     }
 
+    .mimosa-framing-modal {
+        align-items: flex-start;
+        padding: 14px;
+    }
+
     .mimosa-framing-dialog {
         grid-template-columns: 1fr;
+        max-height: calc(100dvh - 28px);
+    }
+
+    .mimosa-framing-frame {
+        justify-self: center;
+        width: min(100%, 320px);
     }
 }
 
@@ -1678,4 +1691,324 @@ html.theme-dark body.dashboard input[type="checkbox"],
 html.theme-dark body.change-form input[type="checkbox"],
 html.theme-dark body.change-list input[type="checkbox"] {
     accent-color: var(--mimosa-yellow);
+}
+
+/* Hard light override: Django may restore data-theme="dark" from localStorage before our JS runs. */
+html[data-theme="dark"] body.app-admin,
+html[data-theme="dark"] body.dashboard,
+html[data-theme="dark"] body.login,
+html[data-theme="dark"] body.change-form,
+html[data-theme="dark"] body.change-list,
+html[data-theme="dark"] body[class^="app-"],
+html[data-theme="dark"] body[class*=" app-"],
+html.theme-dark body.app-admin,
+html.theme-dark body.dashboard,
+html.theme-dark body.login,
+html.theme-dark body.change-form,
+html.theme-dark body.change-list,
+html.theme-dark body[class^="app-"],
+html.theme-dark body[class*=" app-"],
+body.app-admin,
+body.dashboard,
+body.login,
+body.change-form,
+body.change-list,
+body[class^="app-"],
+body[class*=" app-"] {
+    --mimosa-yellow: #e5bc36;
+    --mimosa-yellow-strong: #f5d85d;
+    --admin-bg: #f7f1e6;
+    --admin-page-bg:
+        radial-gradient(circle at 12% 0%, rgba(255, 231, 158, 0.62), transparent 34%),
+        linear-gradient(135deg, #fffdf8 0%, #f7f1e6 58%, #eadabc 100%);
+    --admin-surface: rgba(255, 255, 255, 0.94);
+    --admin-surface-solid: #ffffff;
+    --admin-surface-soft: #fff6df;
+    --admin-header: rgba(255, 255, 255, 0.82);
+    --admin-border: rgba(130, 99, 31, 0.2);
+    --admin-border-strong: rgba(130, 99, 31, 0.34);
+    --admin-text: #211b12;
+    --admin-heading: #18130c;
+    --admin-muted: #665b49;
+    --admin-link: #775800;
+    --admin-link-active: #3d2e00;
+    --admin-input-bg: #fffef9;
+    --admin-input-border: rgba(96, 73, 22, 0.28);
+    --admin-row: #fffefb;
+    --admin-row-alt: #fff7e4;
+    --admin-shadow: 0 16px 38px rgba(84, 63, 18, 0.1);
+    --admin-modal-overlay: rgba(35, 25, 10, 0.58);
+    --admin-focus: rgba(229, 188, 54, 0.28);
+    --studio-bg: var(--admin-bg);
+    --studio-ink: var(--admin-heading);
+    --studio-muted: var(--admin-muted);
+    --studio-gold: var(--mimosa-yellow);
+    --studio-gold-soft: #fff0b5;
+    --studio-card: var(--admin-surface);
+    --studio-line: var(--admin-border);
+    --body-bg: var(--admin-bg);
+    --body-fg: var(--admin-text);
+    --body-quiet-color: var(--admin-muted);
+    --body-loud-color: var(--admin-heading);
+    --breadcrumbs-bg: var(--admin-surface-soft);
+    --breadcrumbs-fg: var(--admin-muted);
+    --link-fg: var(--admin-link);
+    --link-hover-color: var(--admin-link-active);
+    --header-bg: var(--admin-header);
+    --header-color: var(--admin-heading);
+    --hairline-color: var(--admin-border);
+    --border-color: var(--admin-border);
+    --darkened-bg: var(--admin-surface-soft);
+    --selected-bg: rgba(229, 188, 54, 0.18);
+    --selected-row: rgba(229, 188, 54, 0.16);
+    --button-bg: var(--mimosa-yellow);
+    --button-fg: #211900;
+    --button-hover-bg: var(--mimosa-yellow-strong);
+}
+
+.mimosa-framing-actions,
+body.change-form .mimosa-framing-actions,
+.mimosa-crop-footer,
+.mimosa-crop-presets {
+    min-width: 0;
+}
+
+.mimosa-framing-button,
+.mimosa-framing-save,
+.mimosa-framing-close,
+.mimosa-framing-presets button,
+.mimosa-crop-button,
+.mimosa-crop-preset {
+    box-sizing: border-box !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    max-width: 100%;
+    line-height: 1.25 !important;
+    overflow: visible !important;
+    white-space: normal !important;
+    text-align: center;
+}
+
+.mimosa-framing-button {
+    flex: 0 1 auto;
+}
+
+.mimosa-framing-presets {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+}
+
+.mimosa-framing-presets button {
+    width: 100%;
+}
+
+.mimosa-framing-footer {
+    flex-wrap: wrap;
+}
+
+@media (max-width: 520px) {
+    .mimosa-framing-button,
+    .mimosa-crop-button {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+}
+
+.mimosa-framing-dialog {
+    box-sizing: border-box !important;
+}
+
+@media (max-width: 720px) {
+    .mimosa-framing-modal {
+        align-items: flex-start !important;
+        padding: 14px !important;
+    }
+
+    .mimosa-framing-dialog {
+        max-height: calc(100dvh - 28px) !important;
+    }
+
+    .mimosa-framing-frame {
+        justify-self: center;
+        width: min(100%, 320px) !important;
+    }
+}
+
+/* Admin index has an empty body class in some Django versions, so keep the shell light by element too. */
+body {
+    --header-bg: rgba(255, 255, 255, 0.86);
+    --header-color: #18130c;
+    --breadcrumbs-bg: #fff6df;
+    --breadcrumbs-fg: #665b49;
+    --body-bg: #f7f1e6;
+    --body-fg: #211b12;
+    --body-quiet-color: #665b49;
+    --link-fg: #775800;
+    --link-hover-color: #3d2e00;
+    --hairline-color: rgba(130, 99, 31, 0.2);
+    --border-color: rgba(130, 99, 31, 0.2);
+    --darkened-bg: #fff6df;
+    color: #211b12 !important;
+}
+
+#header {
+    background: rgba(255, 255, 255, 0.86) !important;
+    border-bottom: 1px solid rgba(130, 99, 31, 0.2) !important;
+    color: #18130c !important;
+    box-shadow: 0 10px 34px rgba(88, 66, 20, 0.08) !important;
+}
+
+#branding h1,
+#branding h1 a,
+#header a,
+#user-tools {
+    color: #18130c !important;
+}
+
+div.breadcrumbs {
+    background: #fff6df !important;
+    border-bottom: 1px solid rgba(130, 99, 31, 0.2) !important;
+    color: #665b49 !important;
+}
+
+div.breadcrumbs a {
+    color: #775800 !important;
+}
+
+.theme-toggle {
+    display: none !important;
+}
+
+/* Living vanilla gradient for the whole admin shell. */
+html {
+    --mimosa-flow-x: 18%;
+    --mimosa-flow-y: 12%;
+    --mimosa-flow-angle: 128deg;
+    --mimosa-flow-glow: 0.58;
+    --mimosa-flow-warmth: 0;
+    background: #fff4d6;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(
+            circle at var(--mimosa-flow-x) var(--mimosa-flow-y),
+            rgba(255, 250, 224, calc(0.86 + var(--mimosa-flow-glow) * 0.12)) 0%,
+            rgba(255, 226, 129, calc(0.42 + var(--mimosa-flow-glow) * 0.18)) 22%,
+            transparent 44%
+        ),
+        radial-gradient(
+            circle at calc(100% - var(--mimosa-flow-x)) calc(18% + var(--mimosa-flow-y) * 0.18),
+            rgba(255, 176, 70, calc(0.24 + var(--mimosa-flow-warmth) * 0.24)) 0%,
+            transparent 36%
+        ),
+        radial-gradient(
+            circle at 52% calc(88% - var(--mimosa-flow-y) * 0.22),
+            rgba(255, 216, 91, calc(0.25 + var(--mimosa-flow-glow) * 0.16)) 0%,
+            transparent 42%
+        ),
+        linear-gradient(
+            var(--mimosa-flow-angle),
+            #fffdf5 0%,
+            #fff0c7 28%,
+            #ffd477 58%,
+            #ffb35a 78%,
+            #fff6df 100%
+        ) !important;
+    background-attachment: fixed;
+    background-size: 150% 150%, 135% 135%, 170% 170%, 220% 220%;
+    animation: mimosaAdminGradientFlow 20s ease-in-out infinite alternate;
+    transition: background 700ms ease, color 220ms ease;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        linear-gradient(115deg, rgba(255, 255, 255, 0.28), transparent 35%, rgba(255, 184, 77, 0.16) 70%, transparent),
+        repeating-linear-gradient(98deg, rgba(255, 255, 255, 0.16) 0 1px, transparent 1px 22px);
+    mix-blend-mode: soft-light;
+    opacity: calc(0.46 + var(--mimosa-flow-glow) * 0.24);
+    animation: mimosaAdminSheen 12s ease-in-out infinite alternate;
+}
+
+html.mimosa-admin-action-click body {
+    background-size: 132% 132%, 118% 118%, 150% 150%, 190% 190%;
+}
+
+html.mimosa-admin-action-focus body {
+    background-size: 142% 142%, 126% 126%, 160% 160%, 205% 205%;
+}
+
+html.mimosa-admin-action-save body {
+    filter: saturate(1.05);
+}
+
+#container,
+#content,
+#content-main {
+    background: transparent !important;
+}
+
+#header {
+    background: rgba(255, 251, 238, 0.78) !important;
+    backdrop-filter: blur(18px) saturate(1.08);
+    -webkit-backdrop-filter: blur(18px) saturate(1.08);
+}
+
+div.breadcrumbs {
+    background: rgba(255, 244, 209, 0.74) !important;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+body.change-form fieldset.module,
+body.change-form .submit-row,
+body.change-list #changelist,
+body.dashboard .module,
+.mimosa-admin-hero,
+.table-section,
+.stat-card,
+body.app-admin .module,
+body.change-list .module,
+body.dashboard #content-related {
+    background-color: rgba(255, 255, 255, 0.78) !important;
+    backdrop-filter: blur(14px) saturate(1.04);
+    -webkit-backdrop-filter: blur(14px) saturate(1.04);
+}
+
+@keyframes mimosaAdminGradientFlow {
+    0% {
+        background-position: 0% 10%, 100% 0%, 50% 100%, 0% 50%;
+    }
+    50% {
+        background-position: 42% 0%, 70% 35%, 28% 82%, 70% 30%;
+    }
+    100% {
+        background-position: 100% 30%, 0% 18%, 80% 55%, 100% 50%;
+    }
+}
+
+@keyframes mimosaAdminSheen {
+    from {
+        opacity: calc(0.34 + var(--mimosa-flow-glow) * 0.2);
+        transform: translate3d(-1.5%, -1%, 0);
+    }
+    to {
+        opacity: calc(0.48 + var(--mimosa-flow-glow) * 0.24);
+        transform: translate3d(1.5%, 1%, 0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body,
+    body::before {
+        animation: none !important;
+    }
 }
