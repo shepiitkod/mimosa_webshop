@@ -5,6 +5,9 @@
   const PRODUCTS_LIST_URL = "/admin/shop/product/";
   const UTF8_DECODER = new TextDecoder("utf-8");
 
+  const MAX_HISTORY = 14;
+  const chatHistory = [];
+
   const PRODUCT_FIELD_KEYS = [
     "title",
     "description",
@@ -64,7 +67,7 @@
     panel.setAttribute("aria-hidden", "true");
     panel.innerHTML =
       '<header class="copilot-header">' +
-        '<div><h2>Mimosa Atelier</h2><p>Чат · автозаповнення форми товару</p></div>' +
+        '<div><h2>Mimosa Atelier</h2><p>Памʼять діалогу · відповідає по вашому запиту</p></div>' +
         '<button type="button" id="mimosa-copilot-close" aria-label="Close">×</button>' +
       '</header>' +
       '<div id="mimosa-copilot-messages" role="log" aria-live="polite"></div>' +
@@ -92,6 +95,22 @@
       el.value = value;
       el.dispatchEvent(new Event("input", { bubbles: true }));
       el.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+
+    function recordTurn(userText, assistantText) {
+      if (userText) {
+        chatHistory.push({ role: "user", content: userText });
+      }
+      if (assistantText) {
+        chatHistory.push({ role: "assistant", content: assistantText });
+      }
+      while (chatHistory.length > MAX_HISTORY * 2) {
+        chatHistory.shift();
+      }
+    }
+
+    function historyForApi() {
+      return chatHistory.slice(-MAX_HISTORY);
     }
 
     function applyProductFormFields(fields) {
@@ -288,6 +307,7 @@
           },
           body: JSON.stringify({
             prompt: prompt,
+            history: historyForApi(),
             stream: !fillForm,
             on_product_form: onProductForm,
             fill_product_form: fillForm,
@@ -310,6 +330,7 @@
             (applied ? " (" + applied + " полів у формі)" : "");
 
           appendAiMessage(msg);
+          recordTurn(prompt, msg);
 
           if (!onProductForm) {
             appendErrorMessage(
@@ -352,6 +373,7 @@
             shell.wrap.appendChild(applyBtn);
           }
 
+          recordTurn(prompt, fullText);
           scrollToBottom();
           return;
         }
@@ -362,9 +384,11 @@
           return;
         }
 
-        appendAiMessage(data.enhanced_description || "", {
-          applyDescription: onProductForm ? (data.enhanced_description || "") : null,
+        const reply = data.enhanced_description || "";
+        appendAiMessage(reply, {
+          applyDescription: onProductForm ? reply : null,
         });
+        recordTurn(prompt, reply);
       } catch (err) {
         setLoading(false);
         if (shell && shell.wrap && shell.wrap.parentNode) {

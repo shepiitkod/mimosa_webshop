@@ -7,6 +7,7 @@ from django.conf import settings
 
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_MODEL = "llama-3.3-70b-versatile"
+MAX_HISTORY_TURNS = 14
 
 PRODUCT_CATEGORIES = [
     "Bento Candles",
@@ -15,36 +16,42 @@ PRODUCT_CATEGORIES = [
     "Gift Collections",
 ]
 
-CHAT_SYSTEM_PROMPT = """You are Mimosa Copilot — a sharp assistant in the Django admin of Mimosa Atelier (luxury artisan candles).
+CHAT_SYSTEM_PROMPT = """You are Mimosa Copilot — an elite staff assistant for Mimosa Atelier (luxury artisan candles, Parisian atelier). Behave like a top-tier AI (ChatGPT-class): precise, contextual, never generic.
 
-RULES:
-1. Infer intent: greeting, question, brainstorm, translation, or product copy. Do NOT default to long marketing text.
-2. Short questions → short clear answers. Greetings → 1–2 warm sentences.
-3. Product descriptions only when asked: elegant French boutique copy, <br> for breaks, no markdown asterisks.
-4. Reply in the user's language unless they ask otherwise.
-5. Never mention being an AI or Groq."""
+NON-NEGOTIABLE RULES:
+1. LANGUAGE: Reply in the SAME language as the user's LATEST message (Russian, Ukrainian, English, etc.). Do NOT switch to French unless the user wrote in French or explicitly asked for French text. Never open with "Bonjour" if they wrote in Russian/Ukrainian.
+2. CONVERSATION: You see prior user/assistant messages. Short follow-ups ("посты", "да", "опис", "3 варианта") continue the SAME topic — do NOT reset to a random product sales pitch.
+3. DO THE ACTUAL TASK:
+   - "контент для сайта" → help with website content (pages, SEO, hero text, etc.) in their language.
+   - "посты" / posts → write social or blog POSTS (captions, ideas, drafts), not a French candle FAQ.
+   - product/candle description → elegant boutique copy only when they want product text; <br> allowed, no markdown **.
+   - questions → direct, useful answers.
+4. If the request is ambiguous, ask ONE short clarifying question in their language — do not ignore them.
+5. Match length to the task (short question → concise answer; "write 3 posts" → deliver 3 posts).
+6. Never mention AI models, Groq, or that you are a bot.
+7. Be practical for a shop admin: copy they can paste, ideas they can use today."""
 
 FORM_FILL_SYSTEM_PROMPT = """You fill the Django admin "Add/Change Product" form for Mimosa Atelier (luxury candles).
 
-Return ONLY one JSON object (no markdown, no extra text) with these keys — use empty string "" if unknown:
+Use the conversation context if provided. Return ONLY one JSON object (no markdown, no extra text) with these keys — use "" if unknown:
 {
   "title": "product name",
-  "description": "HTML allowed: use <br> for line breaks, French luxury tone if appropriate",
+  "description": "HTML <br> allowed for line breaks",
   "category": "exactly one of: Bento Candles | Scented Candles | Decorative Candles | Gift Collections",
   "hs_code": "e.g. 340600",
-  "price": "decimal as string e.g. 24.00",
-  "stock": "integer as string",
-  "scent": "fragrance notes",
+  "price": "decimal string e.g. 28.00",
+  "stock": "integer string",
+  "scent": "fragrance",
   "wick": "wick type",
-  "weight": "display weight e.g. 200 g",
-  "weight_grams": "integer grams for shipping",
+  "weight": "display e.g. 200 g",
+  "weight_grams": "integer grams",
   "burn_time": "e.g. 40 h",
-  "composition": "wax/materials",
-  "form_capacity": "vessel size if relevant",
-  "wax_type": "e.g. soy, beeswax blend"
+  "composition": "materials",
+  "form_capacity": "vessel size",
+  "wax_type": "e.g. soy blend"
 }
 
-Infer all fields from the user's message. Be realistic for a candle shop."""
+Infer realistic candle-shop values from the full conversation."""
 
 
 def _api_key() -> str:
@@ -62,6 +69,20 @@ def _groq_headers() -> dict[str, str]:
         "Content-Type": "application/json; charset=utf-8",
         "Accept": "application/json; charset=utf-8",
     }
+
+
+def sanitize_history(raw_history: Any) -> list[dict[str, str]]:
+    if not isinstance(raw_history, list):
+        return []
+    messages: list[dict[str, str]] = []
+    for item in raw_history[-MAX_HISTORY_TURNS:]:
+        if not isinstance(item, dict):
+            continue
+        role = item.get("role")
+        content = (item.get("content") or "").strip()
+        if role in ("user", "assistant") and content:
+            messages.append({"role": role, "content": content[:6000]})
+    return messages
 
 
 def wants_product_form_fill(prompt_text: str, *, on_product_form: bool) -> bool:
@@ -89,21 +110,29 @@ def wants_product_form_fill(prompt_text: str, *, on_product_form: bool) -> bool:
     return any(t in p for t in triggers)
 
 
-def _chat_payload(
+def _build_messages(
+    system_prompt: str,
+    history: list[dict[str, str]],
     prompt_text: str,
+) -> list[dict[str, str]]:
+    messages: list[dict[str, str]] = [{"role": "system", "content": system_prompt}]
+    messages.extend(history)
+    messages.append({"role": "user", "content": prompt_text})
+    return messages
+
+
+def _groq_payload(
+    messages: list[dict[str, str]],
     *,
     stream: bool,
-    system_prompt: str,
     json_mode: bool = False,
 ) -> dict[str, Any]:
     payload: dict[str, Any] = {
         "model": GROQ_MODEL,
-        "messages": [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": prompt_text},
-        ],
-        "temperature": 0.55 if json_mode else 0.65,
-        "max_tokens": 1200 if json_mode else 1024,
+        "messages": messages,
+        "temperature": 0.45 if json_mode else 0.5,
+        "top_p": 0.9,
+        "max_tokens": 1400 if json_mode else 1200,
         "stream": stream,
     }
     if json_mode:
@@ -136,12 +165,17 @@ def _parse_sse_line(line: bytes) -> Optional[str]:
     return delta or None
 
 
-def stream_chat_completion(prompt_text: str) -> Iterator[str]:
-    """Yield UTF-8 text deltas from Groq streaming API."""
+def stream_chat_completion(
+    prompt_text: str,
+    history: Optional[list[dict[str, str]]] = None,
+) -> Iterator[str]:
+    history = history or []
+    messages = _build_messages(CHAT_SYSTEM_PROMPT, history, prompt_text)
+
     with requests.post(
         GROQ_API_URL,
         headers=_groq_headers(),
-        json=_chat_payload(prompt_text, stream=True, system_prompt=CHAT_SYSTEM_PROMPT),
+        json=_groq_payload(messages, stream=True),
         stream=True,
         timeout=120,
     ) as response:
@@ -155,15 +189,17 @@ def stream_chat_completion(prompt_text: str) -> Iterator[str]:
                 yield delta
 
 
-def generate_chat_reply(prompt_text: str) -> str:
+def generate_chat_reply(
+    prompt_text: str,
+    history: Optional[list[dict[str, str]]] = None,
+) -> str:
+    history = history or []
+    messages = _build_messages(CHAT_SYSTEM_PROMPT, history, prompt_text)
+
     response = requests.post(
         GROQ_API_URL,
         headers=_groq_headers(),
-        json=_chat_payload(
-            prompt_text,
-            stream=False,
-            system_prompt=CHAT_SYSTEM_PROMPT,
-        ),
+        json=_groq_payload(messages, stream=False),
         timeout=120,
     )
     _raise_for_groq_error(response)
@@ -210,16 +246,29 @@ def _normalize_form_fields(raw: dict[str, Any]) -> dict[str, str]:
     return result
 
 
-def generate_product_form_fields(prompt_text: str) -> dict[str, Any]:
+def generate_product_form_fields(
+    prompt_text: str,
+    history: Optional[list[dict[str, str]]] = None,
+) -> dict[str, Any]:
+    history = history or []
+    user_block = prompt_text
+    if history:
+        context_lines = [
+            f"{'User' if m['role'] == 'user' else 'Assistant'}: {m['content']}"
+            for m in history[-8:]
+        ]
+        user_block = (
+            "Conversation context:\n"
+            + "\n".join(context_lines)
+            + f"\n\nCurrent request:\n{prompt_text}"
+        )
+
+    messages = _build_messages(FORM_FILL_SYSTEM_PROMPT, [], user_block)
+
     response = requests.post(
         GROQ_API_URL,
         headers=_groq_headers(),
-        json=_chat_payload(
-            prompt_text,
-            stream=False,
-            system_prompt=FORM_FILL_SYSTEM_PROMPT,
-            json_mode=True,
-        ),
+        json=_groq_payload(messages, stream=False, json_mode=True),
         timeout=120,
     )
     _raise_for_groq_error(response)
@@ -252,16 +301,20 @@ def _sse_bytes(payload: dict[str, Any]) -> bytes:
     return f"data: {json.dumps(payload, ensure_ascii=False)}\n\n".encode("utf-8")
 
 
-def stream_sse_events(prompt_text: str) -> Generator[bytes, None, None]:
-    """Server-Sent Events (UTF-8 bytes) for the admin Copilot frontend."""
+def stream_sse_events(
+    prompt_text: str,
+    history: Optional[list[dict[str, str]]] = None,
+) -> Generator[bytes, None, None]:
     try:
-        for delta in stream_chat_completion(prompt_text):
+        for delta in stream_chat_completion(prompt_text, history=history):
             yield _sse_bytes({"delta": delta})
         yield _sse_bytes({"done": True})
     except Exception as exc:
         yield _sse_bytes({"error": str(exc)})
 
 
-# Backwards compatibility
-def generate_premium_description(prompt_text: str) -> str:
-    return generate_chat_reply(prompt_text)
+def generate_premium_description(
+    prompt_text: str,
+    history: Optional[list[dict[str, str]]] = None,
+) -> str:
+    return generate_chat_reply(prompt_text, history=history)

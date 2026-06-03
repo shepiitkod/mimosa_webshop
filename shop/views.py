@@ -26,6 +26,7 @@ from . import shipping
 from .ai_service import (
 	generate_chat_reply,
 	generate_product_form_fields,
+	sanitize_history,
 	stream_sse_events,
 	wants_product_form_fill,
 )
@@ -816,13 +817,14 @@ def ai_enhance_description(request):
 		if not prompt:
 			return JsonResponse({'error': 'Prompt is required.'}, status=400)
 
+		history = sanitize_history(body.get('history'))
 		on_product_form = bool(body.get('on_product_form'))
 		fill_form = body.get('fill_product_form')
 		if fill_form is None:
 			fill_form = wants_product_form_fill(prompt, on_product_form=on_product_form)
 
 		if fill_form:
-			result = generate_product_form_fields(prompt)
+			result = generate_product_form_fields(prompt, history=history)
 			return JsonResponse({
 				'mode': 'form_fill',
 				'form_fields': result['form_fields'],
@@ -832,14 +834,14 @@ def ai_enhance_description(request):
 		use_stream = body.get('stream', True)
 		if use_stream:
 			response = StreamingHttpResponse(
-				stream_sse_events(prompt),
+				stream_sse_events(prompt, history=history),
 				content_type='text/event-stream; charset=utf-8',
 			)
 			response['Cache-Control'] = 'no-cache'
 			response['X-Accel-Buffering'] = 'no'
 			return response
 
-		enhanced = generate_chat_reply(prompt)
+		enhanced = generate_chat_reply(prompt, history=history)
 		return JsonResponse(
 			{'enhanced_description': enhanced},
 			json_dumps_params={'ensure_ascii': False},
