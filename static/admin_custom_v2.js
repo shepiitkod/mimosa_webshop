@@ -4,7 +4,33 @@ document.addEventListener('DOMContentLoaded', function () {
     document.documentElement.classList.add('mimosa-admin-ready');
     initProductFramingEditor();
     enhanceMimosaAdminUi();
+    ensureMimosaCopilotOnAdmin();
 });
+
+function ensureMimosaCopilotOnAdmin() {
+    if (document.getElementById('mimosa-copilot-tab')) {
+        return;
+    }
+
+    var path = window.location.pathname || '';
+    if (path.indexOf('/admin') !== 0) {
+        return;
+    }
+
+    if (!document.querySelector('link[href*="admin_copilot.css"]')) {
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = '/static/admin_copilot.css?v=20260603-all-admin';
+        document.head.appendChild(link);
+    }
+
+    if (!document.querySelector('script[src*="admin_copilot.js"]')) {
+        var script = document.createElement('script');
+        script.src = '/static/admin_copilot.js?v=20260603-all-admin';
+        script.defer = true;
+        document.head.appendChild(script);
+    }
+}
 
 function forceMimosaLightAdminTheme() {
     localStorage.setItem('theme', 'light');

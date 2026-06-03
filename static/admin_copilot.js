@@ -14,7 +14,12 @@
     return input ? input.value : "";
   }
 
+  function isAdminPage() {
+    return (window.location.pathname || "").indexOf("/admin") === 0;
+  }
+
   function mountCopilot() {
+    if (!isAdminPage()) return;
     if (document.getElementById("mimosa-copilot-tab")) return;
 
     const tab = document.createElement("button");
@@ -29,7 +34,7 @@
     panel.setAttribute("aria-hidden", "true");
     panel.innerHTML =
       '<header class="copilot-header">' +
-        '<div><h2>Mimosa Atelier</h2><p>Groq · Gemma · описи товарів</p></div>' +
+        '<div><h2>Mimosa Atelier</h2><p>На всіх сторінках адмінки · Groq Gemma</p></div>' +
         '<button type="button" id="mimosa-copilot-close" aria-label="Close">×</button>' +
       '</header>' +
       '<div id="mimosa-copilot-messages" role="log" aria-live="polite"></div>' +
@@ -47,7 +52,10 @@
     const sendBtn = document.getElementById("mimosa-copilot-send");
 
     function getDescriptionField() {
-      return document.getElementById("id_description");
+      return (
+        document.getElementById("id_description") ||
+        document.querySelector('textarea[name="description"]')
+      );
     }
 
     function openPanel() {
