@@ -1,50 +1,53 @@
-import os
-from functools import lru_cache
 from typing import Optional
 
-from openai import OpenAI
+import requests
+from django.conf import settings
 
-BASE_SYSTEM_PROMPT = """Ти — копірайтер класу люкс для французького бренду свічок Mimosa Atelier.
-Твій стиль — Vogue Paris: елегантний, чуттєвий, поетичний і надихаючий.
-Ти перетворюєш чернетки на рафіновані тексти, що викликають емоції та образи. При необхідності використовуй французькі культурні референси, але пиши виключно мовою: {target_language}. Також якщо тебе питають про нові тренди в ароматах, згадуй про популярність натуральних інгредієнтів і екзотичних поєднань.
+GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
+GROQ_MODEL = "gemma2-9b-it"
 
-Суворі правила:
-- Пиши ВИКЛЮЧНО мовою: {target_language}.
-- Використовуй теги <br> для переносів рядків (без markdown).
-- Обсяг: 3–5 насичених речень.
-- Починай із сильного чуттєвого образу.
-- Уникай дешевих суперлативів і зайвих великих літер.
-- Завершуй інтимною ноткою, яка спонукає до покупки."""
+SYSTEM_PROMPT = (
+    "You are an elite French copywriter for 'Mimosa Atelier', a luxury brand creating "
+    "artisanal, custom, and scented candles. Transform the user's prompt into a beautiful, "
+    "premium, and poetic product description in French. Emphasize craftsmanship and sensory "
+    "experience. Use HTML <br> tags for layout, but NO markdown asterisks. "
+    "Tone: Vogue magazine, elegant."
+)
 
 
-@lru_cache(maxsize=1)
-def _get_client() -> OpenAI:
-    api_key = os.environ.get("OPENAI_API_KEY", "").strip()
+def generate_premium_description(prompt_text: str) -> str:
+    api_key = (getattr(settings, "GROQ_API_KEY", None) or "").strip()
     if not api_key:
         raise RuntimeError(
-            "OPENAI_API_KEY is not set. Add it in Render → Environment."
+            "GROQ_API_KEY is not set. Add it in Render → Environment."
         )
-    return OpenAI(api_key=api_key)
 
-
-def generate_premium_description(draft_text: str, target_language: str = "французька") -> str:
-    system_prompt = BASE_SYSTEM_PROMPT.format(target_language=target_language)
-
-    response = _get_client().chat.completions.create(
-        model="gpt-4o",
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {
-                "role": "user",
-                "content": (
-                    f"Чернетка опису свічки:\n\n{draft_text}\n\n"
-                    "Напиши люкс-опис товару для інтернет-магазину."
-                ),
-            },
-        ],
-        temperature=0.85,
-        max_tokens=400,
+    response = requests.post(
+        GROQ_API_URL,
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+        },
+        json={
+            "model": GROQ_MODEL,
+            "messages": [
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": prompt_text},
+            ],
+            "temperature": 0.85,
+            "max_tokens": 400,
+        },
+        timeout=60,
     )
 
-    content: Optional[str] = response.choices[0].message.content
+    if not response.ok:
+        try:
+            err_body = response.json()
+            err_msg = err_body.get("error", {}).get("message", response.text)
+        except ValueError:
+            err_msg = response.text
+        raise RuntimeError(f"Groq API error ({response.status_code}): {err_msg}")
+
+    data = response.json()
+    content: Optional[str] = data["choices"][0]["message"]["content"]
     return (content or "").strip()

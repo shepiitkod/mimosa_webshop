@@ -8,6 +8,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.messages import get_messages
 from django.contrib.auth import login, logout
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core.exceptions import ValidationError
@@ -22,6 +23,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 
 from . import shipping
+from .ai_service import generate_premium_description
 from .models import NewsletterUser, Order, OrderItem, Product
 
 
@@ -798,4 +800,22 @@ def subscribe_newsletter(request):
 		return JsonResponse({'success': False, 'error': 'Invalid JSON'}, status=400)
 	except Exception as exc:
 		return JsonResponse({'success': False, 'error': str(exc)}, status=500)
+
+
+@staff_member_required
+@require_POST
+def ai_enhance_description(request):
+	try:
+		body = json.loads(request.body)
+		prompt = body.get('prompt', '').strip()
+		if not prompt:
+			return JsonResponse({'error': 'Prompt is required.'}, status=400)
+
+		enhanced = generate_premium_description(prompt)
+		return JsonResponse({'enhanced_description': enhanced})
+
+	except json.JSONDecodeError:
+		return JsonResponse({'error': 'Invalid JSON.'}, status=400)
+	except Exception as exc:
+		return JsonResponse({'error': str(exc)}, status=500)
 

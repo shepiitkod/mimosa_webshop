@@ -18,6 +18,7 @@
     --copilot-obsidian-2: #24262b;
     --copilot-ivory: #f7f4ef;
     --copilot-muted: #9ca3af;
+    --copilot-width: 380px;
     --copilot-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
   }
 
@@ -26,11 +27,11 @@
     right: 0;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 10000;
+    z-index: 9999;
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 14px 10px 14px 14px;
+    padding: 14px 12px 14px 16px;
     border: none;
     border-radius: 10px 0 0 10px;
     background: linear-gradient(135deg, var(--copilot-emerald) 0%, #0a5844 100%);
@@ -38,28 +39,28 @@
     font-family: "Cormorant Garamond", Georgia, serif;
     font-size: 15px;
     font-weight: 600;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
     cursor: pointer;
     box-shadow: var(--copilot-shadow);
     transition: transform 0.3s ease, padding-right 0.3s ease, background 0.2s ease;
   }
 
   #mimosa-copilot-tab:hover {
-    padding-right: 14px;
+    padding-right: 16px;
     background: linear-gradient(135deg, var(--copilot-emerald-hover) 0%, #084a38 100%);
   }
 
   #mimosa-copilot-tab.is-open {
-    transform: translateY(-50%) translateX(-350px);
+    transform: translateY(-50%) translateX(calc(-1 * var(--copilot-width)));
   }
 
   #mimosa-copilot-panel {
     position: fixed;
     right: 0;
     top: 0;
-    width: 350px;
+    width: var(--copilot-width);
     height: 100vh;
-    z-index: 9999;
+    z-index: 9998;
     display: flex;
     flex-direction: column;
     background: var(--copilot-obsidian);
@@ -78,15 +79,15 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 18px 16px 14px;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    padding: 20px 18px 16px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.22);
     flex-shrink: 0;
   }
 
   .copilot-header h2 {
     margin: 0;
     font-family: "Cormorant Garamond", Georgia, serif;
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 600;
     color: var(--copilot-gold);
     letter-spacing: 0.04em;
@@ -99,13 +100,13 @@
   }
 
   #mimosa-copilot-close {
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
     border: 1px solid rgba(212, 175, 55, 0.35);
     border-radius: 6px;
     background: transparent;
     color: var(--copilot-ivory);
-    font-size: 18px;
+    font-size: 20px;
     line-height: 1;
     cursor: pointer;
     transition: background 0.2s, border-color 0.2s;
@@ -116,28 +117,10 @@
     border-color: var(--copilot-gold);
   }
 
-  .copilot-lang-row {
-    padding: 10px 16px;
-    flex-shrink: 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  }
-
-  #copilot-lang-select {
-    width: 100%;
-    padding: 8px 10px;
-    font-family: "DM Sans", sans-serif;
-    font-size: 12px;
-    border: 1px solid rgba(212, 175, 55, 0.25);
-    border-radius: 6px;
-    background: var(--copilot-obsidian-2);
-    color: var(--copilot-ivory);
-    cursor: pointer;
-  }
-
   #mimosa-copilot-messages {
     flex: 1;
     overflow-y: auto;
-    padding: 16px;
+    padding: 18px;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -154,11 +137,11 @@
   }
 
   .copilot-msg {
-    max-width: 92%;
+    max-width: 94%;
     padding: 10px 12px;
     border-radius: 10px;
     font-size: 13px;
-    line-height: 1.5;
+    line-height: 1.55;
     white-space: pre-wrap;
     word-break: break-word;
   }
@@ -179,7 +162,7 @@
 
   .copilot-msg--loading {
     align-self: flex-start;
-    color: var(--copilot-muted);
+    color: var(--copilot-gold-soft);
     font-style: italic;
     padding: 8px 12px;
   }
@@ -208,14 +191,19 @@
     transition: background 0.2s, color 0.2s;
   }
 
-  .copilot-apply-btn:hover {
+  .copilot-apply-btn:hover:not(:disabled) {
     background: var(--copilot-gold);
     color: var(--copilot-obsidian);
   }
 
+  .copilot-apply-btn:disabled {
+    opacity: 0.7;
+    cursor: default;
+  }
+
   .copilot-input-area {
     flex-shrink: 0;
-    padding: 14px 16px 18px;
+    padding: 16px 18px 20px;
     border-top: 1px solid rgba(212, 175, 55, 0.2);
     background: var(--copilot-obsidian-2);
     display: flex;
@@ -225,8 +213,8 @@
 
   #mimosa-copilot-input {
     width: 100%;
-    min-height: 72px;
-    max-height: 120px;
+    min-height: 80px;
+    max-height: 140px;
     resize: vertical;
     padding: 10px 12px;
     font-family: "DM Sans", sans-serif;
@@ -251,7 +239,7 @@
 
   #mimosa-copilot-send {
     align-self: flex-end;
-    padding: 9px 22px;
+    padding: 9px 24px;
     border: none;
     border-radius: 6px;
     background: linear-gradient(135deg, var(--copilot-emerald), #0a5844);
@@ -275,29 +263,17 @@
 </style>
 
 <button type="button" id="mimosa-copilot-tab" aria-expanded="false" aria-controls="mimosa-copilot-panel">
-  ✨ Copilot
+  ✨ AI Copilot
 </button>
 
 <aside id="mimosa-copilot-panel" aria-hidden="true">
   <header class="copilot-header">
     <div>
-      <h2>Mimosa Copilot</h2>
-      <p>Premium product descriptions</p>
+      <h2>Mimosa Atelier</h2>
+      <p>Groq · Gemma · French luxe copy</p>
     </div>
     <button type="button" id="mimosa-copilot-close" aria-label="Close">×</button>
   </header>
-
-  <div class="copilot-lang-row">
-    <select id="copilot-lang-select" title="Generation language">
-      <option value="французька">🇫🇷 Français</option>
-      <option value="українська">🇺🇦 Українська</option>
-      <option value="англійська">🇬🇧 English</option>
-      <option value="німецька">🇩🇪 Deutsch</option>
-      <option value="іспанська">🇪🇸 Español</option>
-      <option value="італійська">🇮🇹 Italiano</option>
-      <option value="японська">🇯🇵 日本語</option>
-    </select>
-  </div>
 
   <div id="mimosa-copilot-messages" role="log" aria-live="polite"></div>
 
@@ -305,7 +281,7 @@
     <textarea
       id="mimosa-copilot-input"
       rows="3"
-      placeholder="e.g. Write a description for a sea shell candle…"
+      placeholder="Ex. : bougie artisanale coquillage, cire de soja, notes marines…"
     ></textarea>
     <button type="button" id="mimosa-copilot-send">Send</button>
   </div>
@@ -322,7 +298,6 @@
   const messagesEl = document.getElementById("mimosa-copilot-messages");
   const inputEl = document.getElementById("mimosa-copilot-input");
   const sendBtn = document.getElementById("mimosa-copilot-send");
-  const langSelect = document.getElementById("copilot-lang-select");
   const descriptionField = document.getElementById("id_description");
 
   if (!tab || !panel || !messagesEl || !inputEl || !sendBtn) return;
@@ -366,9 +341,12 @@
   function appendMessage(role, text, aiTextForApply) {
     const wrap = document.createElement("div");
     wrap.className = "copilot-msg copilot-msg--" + role;
-    wrap.textContent = text;
 
     if (role === "ai" && aiTextForApply) {
+      const textNode = document.createElement("div");
+      textNode.textContent = text;
+      wrap.appendChild(textNode);
+
       const applyBtn = document.createElement("button");
       applyBtn.type = "button";
       applyBtn.className = "copilot-apply-btn";
@@ -384,8 +362,9 @@
         applyBtn.textContent = "✓ Applied";
         applyBtn.disabled = true;
       });
-      wrap.appendChild(document.createElement("br"));
       wrap.appendChild(applyBtn);
+    } else {
+      wrap.textContent = text;
     }
 
     messagesEl.appendChild(wrap);
@@ -397,13 +376,15 @@
     sendBtn.disabled = on;
     inputEl.disabled = on;
     if (on) {
+      sendBtn.textContent = "Génération...";
       const el = document.createElement("div");
       el.className = "copilot-msg copilot-msg--loading";
       el.id = "copilot-loading";
-      el.textContent = "✨ Composing your text…";
+      el.textContent = "Génération...";
       messagesEl.appendChild(el);
       scrollToBottom();
     } else {
+      sendBtn.textContent = "Send";
       const loading = document.getElementById("copilot-loading");
       if (loading) loading.remove();
     }
@@ -424,10 +405,7 @@
           "Content-Type": "application/json",
           "X-CSRFToken": getCsrfToken(),
         },
-        body: JSON.stringify({
-          draft_text: prompt,
-          target_language: langSelect ? langSelect.value : "французька",
-        }),
+        body: JSON.stringify({ prompt: prompt }),
       });
 
       const data = await response.json();
