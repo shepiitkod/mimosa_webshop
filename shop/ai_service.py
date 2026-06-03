@@ -1,7 +1,8 @@
-from openai import OpenAI
+import os
+from functools import lru_cache
 from typing import Optional
 
-client = OpenAI()
+from openai import OpenAI
 
 BASE_SYSTEM_PROMPT = """Ти — копірайтер класу люкс для французького бренду свічок Mimosa Atelier.
 Твій стиль — Vogue Paris: елегантний, чуттєвий, поетичний і надихаючий.
@@ -16,10 +17,20 @@ BASE_SYSTEM_PROMPT = """Ти — копірайтер класу люкс для
 - Завершуй інтимною ноткою, яка спонукає до покупки."""
 
 
+@lru_cache(maxsize=1)
+def _get_client() -> OpenAI:
+    api_key = os.environ.get("OPENAI_API_KEY", "").strip()
+    if not api_key:
+        raise RuntimeError(
+            "OPENAI_API_KEY is not set. Add it in Render → Environment."
+        )
+    return OpenAI(api_key=api_key)
+
+
 def generate_premium_description(draft_text: str, target_language: str = "французька") -> str:
     system_prompt = BASE_SYSTEM_PROMPT.format(target_language=target_language)
 
-    response = client.chat.completions.create(
+    response = _get_client().chat.completions.create(
         model="gpt-4o",
         messages=[
             {"role": "system", "content": system_prompt},

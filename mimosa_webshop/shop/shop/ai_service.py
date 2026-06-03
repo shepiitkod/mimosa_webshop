@@ -1,7 +1,18 @@
-from openai import OpenAI
+import os
+from functools import lru_cache
 from typing import Optional
 
-client = OpenAI()
+from openai import OpenAI
+
+
+@lru_cache(maxsize=1)
+def _get_client() -> OpenAI:
+    api_key = os.environ.get("OPENAI_API_KEY", "").strip()
+    if not api_key:
+        raise RuntimeError(
+            "OPENAI_API_KEY is not set. Add it in Render → Environment."
+        )
+    return OpenAI(api_key=api_key)
 
 # КОНТРИБ'ЮТОРИ: Системний промпт визначає стиль і мову вихідного тексту.
 # Щоб змінити мову або тон — редагуй цей блок.
@@ -25,7 +36,7 @@ def generate_premium_description(draft_text: str, target_language: str = "фра
     # за потреби A/B-тестування або зниження витрат (gpt-4o-mini дешевший).
     system_prompt = BASE_SYSTEM_PROMPT.format(target_language=target_language)
 
-    response = client.chat.completions.create(
+    response = _get_client().chat.completions.create(
         model="gpt-4o",
         messages=[
             {"role": "system", "content": system_prompt},
