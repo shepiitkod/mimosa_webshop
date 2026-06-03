@@ -3,7 +3,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 
-from shop.ai_service import generate_premium_description
+from mimosa_webshop.shop.shop.ai_service import generate_premium_description
 
 # КОНТРИБ'ЮТОРИ: Якщо в майбутньому з'являться інші AI-ендпоінти —
 # виноси їх в окремий файл admin_api.py і реєструй через router.

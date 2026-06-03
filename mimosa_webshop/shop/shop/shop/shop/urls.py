@@ -1,5 +1,5 @@
 from django.urls import path
-from shop.shop.views import ai_enhance_description
+from mimosa_webshop.shop.shop.shop.views import ai_enhance_description
 
 urlpatterns = [
     path(
