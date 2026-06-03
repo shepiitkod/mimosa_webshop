@@ -55,7 +55,8 @@ if not DEBUG:
 		'script-src': ("'self'", "'unsafe-inline'"),
 		'style-src': ("'self'", "'unsafe-inline'"),
 		'img-src': ("'self'", 'data:', 'https:'),
-		'font-src': ("'self'",),
+		'font-src': ("'self'", 'https://fonts.gstatic.com'),
+		'connect-src': ("'self'",),
 	}
 
 # Application definition

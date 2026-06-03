@@ -1,12 +1,20 @@
-{% extends "admin/base_site.html" %}
+{% extends "admin/base.html" %}
 {% load static %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
+{% endblock %}
 
 {% block extrastyle %}
 {{ block.super }}
 <link rel="stylesheet" href="{% static 'admin_custom_v2.css' %}?v=20260603-live-gradient">
+<link rel="stylesheet" href="{% static 'admin_copilot.css' %}?v=20260603-copilot-global">
 {% endblock %}
 
 {% block extrahead %}
 {{ block.super }}
 <script src="{% static 'admin_custom_v2.js' %}?v=20260603-live-gradient" defer></script>
+<script src="{% static 'admin_copilot.js' %}?v=20260603-copilot-global" defer></script>
 {% endblock %}

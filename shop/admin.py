@@ -37,6 +37,7 @@ class ProductAdminForm(forms.ModelForm):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
 	form = ProductAdminForm
+	change_form_template = 'admin/shop/product/change_form.html'
 	class Media:
 		css = {'all': ('admin_custom_v2.css', 'image-cropper.css')}
 		js = ('image-cropper.js', 'admin_custom_v2.js')
