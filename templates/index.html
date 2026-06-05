@@ -1,262 +1,482 @@
 {% load static %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <title>Mimosa Home Page</title>
-    <meta charset="UTF-8">
-    <meta name="Authors" content="Yuliia Sagan and Denys Shepitko">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="shortcut icon" href="{% static 'assets/images/logobl2.ico' %}" type="image/x-icon">
-    <meta name="Keywords" content="Mimosa, Mimosa candles, Mimosa bio bougies, bougies artisanales bio, bougies naturelles, bougies parfumées, bougies écologiques, bougies végétales, bougies faites main, bougies durables, bougies respectueuses de l'environnement">
-    <meta name="Description" content="Découvrez Mimosa, votre destination pour des bougies artisanales bio, naturelles et parfumées. Nos bougies écologiques sont fabriquées à la main avec des ingrédients végétaux durables, offrant une expérience sensorielle unique tout en respectant l'environnement.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-    <link rel="preload" as="image" href="{% static 'assets/images/photo1.webp' %}" type="image/webp">
-    <script src="{% static 'translations.js' %}"></script>
-    <script src="{% static 'animations.js' %}" defer></script>
-</head>
+    <head>
+        <title>Mimosa Home Page</title>
+        <meta charset="UTF-8" />
+        <meta name="Authors" content="Yuliia Sagan and Denys Shepitko" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link
+            rel="shortcut icon"
+            href="{% static 'assets/images/logobl2.ico' %}"
+            type="image/x-icon"
+        />
+        <meta
+            name="Keywords"
+            content="Mimosa, Mimosa candles, Mimosa bio bougies, bougies artisanales bio, bougies naturelles, bougies parfumées, bougies écologiques, bougies végétales, bougies faites main, bougies durables, bougies respectueuses de l'environnement"
+        />
+        <meta
+            name="Description"
+            content="Découvrez Mimosa, votre destination pour des bougies artisanales bio, naturelles et parfumées. Nos bougies écologiques sont fabriquées à la main avec des ingrédients végétaux durables, offrant une expérience sensorielle unique tout en respectant l'environnement."
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="{% static 'styles.css' %}" />
+        <link
+            rel="preload"
+            as="image"
+            href="{% static 'assets/images/photo1.webp' %}"
+            type="image/webp"
+        />
+        <script src="{% static 'translations.js' %}"></script>
+        <script src="{% static 'animations.js' %}" defer></script>
+    </head>
 
-<body class="home-page">
-    {% include 'includes/header.html' with header_show_cart=True %}
+    <body class="home-page">
+        {% include 'includes/header.html' with header_show_cart=True %}
 
-    
-    <section class="hero">
-        <div class="hero-photos">
-            {% include 'includes/picture_opt.html' with rel='assets/images/photo1' class_name='hero-photo hero-photo-1' w=900 h=1348 alt='Candle from collection 1' fetchpriority='high' only %}
-            {% include 'includes/picture_opt.html' with rel='assets/images/photo2' class_name='hero-photo hero-photo-2' w=853 h=1280 alt='Photo model for the new collection' loading='lazy' only %}
-            {% include 'includes/picture_opt.html' with rel='assets/images/photo3' class_name='hero-photo hero-photo-3' w=900 h=1348 alt='Candle from collection 2' loading='lazy' only %}
-        </div>
-        <div class="hero-content">
-            <div class="hero-content-bg" aria-hidden="true">
-                <div class="hero-bg-track">
-                    {% include 'includes/hero_marquee_set.html' %}
-                    {% include 'includes/hero_marquee_set.html' %}
+        <section class="hero">
+            <div class="hero-photos">
+                {% include 'includes/picture_opt.html' with
+                rel='assets/images/photo1' class_name='hero-photo hero-photo-1'
+                w=900 h=1348 alt='Candle from collection 1' fetchpriority='high'
+                only %} {% include 'includes/picture_opt.html' with
+                rel='assets/images/photo2' class_name='hero-photo hero-photo-2'
+                w=853 h=1280 alt='Photo model for the new collection'
+                loading='lazy' only %} {% include 'includes/picture_opt.html'
+                with rel='assets/images/photo3' class_name='hero-photo
+                hero-photo-3' w=900 h=1348 alt='Candle from collection 2'
+                loading='lazy' only %}
+            </div>
+            <div class="hero-content">
+                <div class="hero-content-bg" aria-hidden="true">
+                    <div class="hero-bg-track">
+                        {% include 'includes/hero_marquee_set.html' %} {%
+                        include 'includes/hero_marquee_set.html' %}
+                    </div>
+                </div>
+                <h1 class="hero-headline" data-translate="hero-title">
+                    L'art de la couture sur mesure.
+                </h1>
+                <p class="hero-subtitle" data-translate="hero-subtitle">
+                    Handcrafted candles, natural soy wax, fragrances from
+                    Provence. Nîmes, France.
+                </p>
+                <a
+                    href="{% url 'shop:products' %}"
+                    class="hero-btn"
+                    data-translate="hero-btn"
+                    >Explore Collection</a
+                >
+            </div>
+        </section>
+
+        <section
+            class="promo-banner promo-banner--contest"
+            aria-labelledby="promo-banner-heading"
+        >
+            <div class="promo-banner__inner promo-banner__inner--prize">
+                <div class="promo-banner__content">
+                    <p
+                        class="promo-banner__eyebrow"
+                        data-translate="promo-eyebrow"
+                    >
+                        Exclusive draw
+                    </p>
+                    <h2
+                        id="promo-banner-heading"
+                        class="promo-banner__title"
+                        data-translate="promo-title"
+                    >
+                        This bouquet could be yours
+                    </h2>
+                    <p
+                        class="promo-banner__threshold"
+                        data-translate="promo-threshold"
+                    >
+                        €50 minimum order · automatic entry
+                    </p>
+                    <p class="promo-banner__text" data-translate="promo-text">
+                        Every order of €50 or more enters you into our draw for
+                        this handcrafted floral candle bouquet from the atelier.
+                    </p>
+                    <p
+                        class="promo-banner__subtext"
+                        data-translate="promo-subtext"
+                    >
+                        Add gifts, home pieces, and candles you love. The more
+                        you build your order, the easier it is to pass the
+                        threshold — and each qualifying order is another entry.
+                    </p>
+                    <a
+                        href="{% url 'shop:products' %}"
+                        class="hero-btn promo-banner__cta"
+                        data-translate="promo-cta"
+                        >Build my order</a
+                    >
+                </div>
+                <div
+                    class="promo-banner__gallery promo-banner__gallery--single"
+                    aria-label="Prize image"
+                >
+                    <figure
+                        class="promo-banner__media promo-banner__media--main"
+                    >
+                        {% include 'includes/picture_opt.html' with
+                        rel='assets/images/contest-bouquet' w=1024 h=1280
+                        alt='Prize: handcrafted floral candle bouquet'
+                        loading='lazy' only %}
+                    </figure>
                 </div>
             </div>
-            <h1 class="hero-headline" data-translate="hero-title">L'art de la couture sur mesure.</h1>
-            <p class="hero-subtitle" data-translate="hero-subtitle">Handcrafted candles, natural soy wax, fragrances from Provence. Nîmes, France.</p>
-            <a href="{% url 'shop:products' %}" class="hero-btn" data-translate="hero-btn">Explore Collection</a>
-        </div>
-    </section>
-
-    <section class="promo-banner promo-banner--contest" aria-labelledby="promo-banner-heading">
-        <div class="promo-banner__inner promo-banner__inner--prize">
-            <div class="promo-banner__content">
-                <p class="promo-banner__eyebrow" data-translate="promo-eyebrow">Exclusive draw</p>
-                <h2 id="promo-banner-heading" class="promo-banner__title" data-translate="promo-title">This bouquet could be yours</h2>
-                <p class="promo-banner__threshold" data-translate="promo-threshold">€50 minimum order · automatic entry</p>
-                <p class="promo-banner__text" data-translate="promo-text">Every order of €50 or more enters you into our draw for this handcrafted floral candle bouquet from the atelier.</p>
-                <p class="promo-banner__subtext" data-translate="promo-subtext">Add gifts, home pieces, and candles you love. The more you build your order, the easier it is to pass the threshold — and each qualifying order is another entry.</p>
-                <a href="{% url 'shop:products' %}" class="hero-btn promo-banner__cta" data-translate="promo-cta">Build my order</a>
-            </div>
-            <div class="promo-banner__gallery promo-banner__gallery--single" aria-label="Prize image">
-                <figure class="promo-banner__media promo-banner__media--main">
-                    {% include 'includes/picture_opt.html' with rel='assets/images/contest-bouquet' w=1024 h=1280 alt='Prize: handcrafted floral candle bouquet' loading='lazy' only %}
-                </figure>
-            </div>
-        </div>
-    </section>
-
-    <section class="about-snippet">
-        <h2 data-translate="about-snippet-title">Welcome to Mimosa Atelier</h2>
-        <p data-translate="about-snippet-text">Every candle is a story, crafted by hand with 100% natural soy wax and exclusive fragrances from Provence. We believe in beauty, sustainability, and the art of slow living.</p>
-    </section>
-
-    <section class="home-categories" aria-label="Product categories">
-        <div class="home-categories__inner">
-            <h2 class="home-categories__title" data-translate="home-categories-title">Categories</h2>
-            <div class="home-categories__grid">
-                <a class="home-categories__card" href="{% url 'shop:products_by_category' 'bento-candles' %}">
-                    <h3 class="home-categories__name" data-translate="nav-sub-bento">Bento Candles</h3>
-                </a>
-                <a class="home-categories__card" href="{% url 'shop:products_by_category' 'scented-candles' %}">
-                    <h3 class="home-categories__name" data-translate="nav-sub-scented">Scented Candles</h3>
-                    <p class="home-categories__subtitle" data-translate="home-category-scented-subtitle">Candles for ceremonies and celebrations</p>
-                </a>
-                <a class="home-categories__card" href="{% url 'shop:products_by_category' 'decorative-candles' %}">
-                    <h3 class="home-categories__name" data-translate="nav-sub-decorative">Decorative Candles</h3>
-                    <p class="home-categories__subtitle" data-translate="home-category-decorative-subtitle">Personalized custom candles</p>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    
-    <main id="main-content" tabindex="-1">
-        <h2 class="section-title" data-translate="products-title">Portfolio</h2>
-        
-        <section class="Products portfolio-masonry" aria-label="Portfolio">
-            {% for product in products %}
-            <article id="product{{ product.id }}" class="Product1">
-                <a href="{% url 'shop:product_detail' product.id product.title|slugify %}" class="product-link" aria-label="{{ product.title }} details">
-                    <figure class="portfolio-card__figure">
-                        <div class="portfolio-card__media">
-                            <img class="product-framed-image" src="{{ product.image.url }}" alt="" width="600" height="750" sizes="(max-width: 520px) 100vw, (max-width: 900px) 50vw, 360px" loading="lazy" decoding="async" style="--product-image-position: {{ product.image_object_position }};">
-                            <div class="portfolio-card__overlay" aria-hidden="true">
-                                <span class="portfolio-card__overlay-text">{{ product.title }}</span>
-                            </div>
-                        </div>
-                    </figure>
-                    <h3>{{ product.title }}</h3>
-                </a>
-                <p class="product-desc">{{ product.description|truncatechars:90 }}</p>
-                <p class="product-composition">{{ product.category }}</p>
-                <p class="product-price">€{{ product.price }}</p>
-                <form action="{% url 'shop:cart_add' product.id %}" method="post" class="add-cart-form">
-                    {% csrf_token %}
-                    <input type="hidden" name="quantity" value="1">
-                    <button class="btn-add-to-cart" type="submit">
-                        <span data-translate="add-to-cart">Add to Cart</span>
-                    </button>
-                </form>
-                <button class="btn-order" type="button" data-translate="order-now" onclick="orderProduct('{{ product.title|escapejs }}', '{{ product.price }}', '{{ product.category|escapejs }}')">Order Now</button>
-            </article>
-            {% empty %}
-            <article class="Product4">
-                <h3>Coming Soon</h3>
-                <p class="product-desc">New products will be available shortly. Stay tuned!</p>
-            </article>
-            {% endfor %}
-            <article class="Product4">
-                <a href="{% url 'shop:products' %}" class="product-link" aria-label="See all products">
-                    <h3 data-translate="product4-name">New Products Coming Soon</h3>
-                </a>
-                <p class="product-desc" data-translate="product4-desc">Stay tuned for our next release!</p>
-            </article>
         </section>
-    </main>
 
-    {% include 'includes/footer.html' %}
+        <section class="about-snippet">
+            <h2 data-translate="about-snippet-title">
+                Welcome to Mimosa Atelier
+            </h2>
+            <p data-translate="about-snippet-text">
+                Every candle is a story, crafted by hand with 100% natural soy
+                wax and exclusive fragrances from Provence. We believe in
+                beauty, sustainability, and the art of slow living.
+            </p>
+        </section>
 
-    <div id="cookie-banner" class="cookie-banner">
-        <div class="cookie-content">
-            <div class="cookie-text">
-                <h3 data-translate="cookie-title">🍪 We use cookies</h3>
-                <p data-translate="cookie-text">We use cookies to improve your experience on our site. By continuing, you accept our privacy policy.</p>
+        <section class="home-categories" aria-label="Product categories">
+            <div class="home-categories__inner">
+                <h2
+                    class="home-categories__title"
+                    data-translate="home-categories-title"
+                >
+                    Categories
+                </h2>
+                <div class="home-categories__grid">
+                    <a
+                        class="home-categories__card"
+                        href="{% url 'shop:products_by_category' 'bento-candles' %}"
+                    >
+                        <h3
+                            class="home-categories__name"
+                            data-translate="nav-sub-bento"
+                        >
+                            Bento Candles
+                        </h3>
+                    </a>
+                    <a
+                        class="home-categories__card"
+                        href="{% url 'shop:products_by_category' 'scented-candles' %}"
+                    >
+                        <h3
+                            class="home-categories__name"
+                            data-translate="nav-sub-scented"
+                        >
+                            Scented Candles
+                        </h3>
+                        <p
+                            class="home-categories__subtitle"
+                            data-translate="home-category-scented-subtitle"
+                        >
+                            Candles for ceremonies and celebrations
+                        </p>
+                    </a>
+                    <a
+                        class="home-categories__card"
+                        href="{% url 'shop:products_by_category' 'decorative-candles' %}"
+                    >
+                        <h3
+                            class="home-categories__name"
+                            data-translate="nav-sub-decorative"
+                        >
+                            Decorative Candles
+                        </h3>
+                        <p
+                            class="home-categories__subtitle"
+                            data-translate="home-category-decorative-subtitle"
+                        >
+                            Personalized custom candles
+                        </p>
+                    </a>
+                    <a
+                        class="home-categories__card"
+                        href="{% url 'shop:products_by_category' 'bougies-de-ceremonie' %}"
+                    >
+                        <h3
+                            class="home-categories__name"
+                            data-translate="nav-sub-ceremony"
+                        >
+                            Bougies de cérémonie
+                        </h3>
+                        <p
+                            class="home-categories__subtitle"
+                            data-translate="home-category-ceremony-subtitle"
+                        >
+                            Ceremonial candles for your special moments
+                        </p>
+                    </a>
+                </div>
             </div>
-            <div class="cookie-buttons">
-                <button id="accept-cookies" class="btn-accept" data-translate="cookie-accept">Accept</button>
-                <a href="{% url 'shop:privacy' %}" class="cookie-policy-link" data-translate="footer-privacy">Privacy Policy</a>
-                <button id="decline-cookies" class="btn-decline" data-translate="cookie-decline">Decline</button>
+        </section>
+
+        <main id="main-content" tabindex="-1">
+            <h2 class="section-title" data-translate="products-title">
+                Portfolio
+            </h2>
+
+            <section class="Products portfolio-masonry" aria-label="Portfolio">
+                {% for product in products %}
+                <article id="product{{ product.id }}" class="Product1">
+                    <a
+                        href="{% url 'shop:product_detail' product.id product.title|slugify %}"
+                        class="product-link"
+                        aria-label="{{ product.title }} details"
+                    >
+                        <figure class="portfolio-card__figure">
+                            <div class="portfolio-card__media">
+                                <img
+                                    class="product-framed-image"
+                                    src="{{ product.image.url }}"
+                                    alt=""
+                                    width="600"
+                                    height="750"
+                                    sizes="(max-width: 520px) 100vw, (max-width: 900px) 50vw, 360px"
+                                    loading="lazy"
+                                    decoding="async"
+                                    style="--product-image-position: {{ product.image_object_position }};"
+                                />
+                                <div
+                                    class="portfolio-card__overlay"
+                                    aria-hidden="true"
+                                >
+                                    <span class="portfolio-card__overlay-text"
+                                        >{{ product.title }}</span
+                                    >
+                                </div>
+                            </div>
+                        </figure>
+                        <h3>{{ product.title }}</h3>
+                    </a>
+                    <p class="product-desc">
+                        {{ product.description|truncatechars:90 }}
+                    </p>
+                    <p class="product-composition">{{ product.category }}</p>
+                    <p class="product-price">€{{ product.price }}</p>
+                    <form
+                        action="{% url 'shop:cart_add' product.id %}"
+                        method="post"
+                        class="add-cart-form"
+                    >
+                        {% csrf_token %}
+                        <input type="hidden" name="quantity" value="1" />
+                        <button class="btn-add-to-cart" type="submit">
+                            <span data-translate="add-to-cart"
+                                >Add to Cart</span
+                            >
+                        </button>
+                    </form>
+                    <button
+                        class="btn-order"
+                        type="button"
+                        data-translate="order-now"
+                        onclick="orderProduct('{{ product.title|escapejs }}', '{{ product.price }}', '{{ product.category|escapejs }}')"
+                    >
+                        Order Now
+                    </button>
+                </article>
+                {% empty %}
+                <article class="Product4">
+                    <h3>Coming Soon</h3>
+                    <p class="product-desc">
+                        New products will be available shortly. Stay tuned!
+                    </p>
+                </article>
+                {% endfor %}
+                <article class="Product4">
+                    <a
+                        href="{% url 'shop:products' %}"
+                        class="product-link"
+                        aria-label="See all products"
+                    >
+                        <h3 data-translate="product4-name">
+                            New Products Coming Soon
+                        </h3>
+                    </a>
+                    <p class="product-desc" data-translate="product4-desc">
+                        Stay tuned for our next release!
+                    </p>
+                </article>
+            </section>
+        </main>
+
+        {% include 'includes/footer.html' %}
+
+        <div id="cookie-banner" class="cookie-banner">
+            <div class="cookie-content">
+                <div class="cookie-text">
+                    <h3 data-translate="cookie-title">🍪 We use cookies</h3>
+                    <p data-translate="cookie-text">
+                        We use cookies to improve your experience on our site.
+                        By continuing, you accept our privacy policy.
+                    </p>
+                </div>
+                <div class="cookie-buttons">
+                    <button
+                        id="accept-cookies"
+                        class="btn-accept"
+                        data-translate="cookie-accept"
+                    >
+                        Accept
+                    </button>
+                    <a
+                        href="{% url 'shop:privacy' %}"
+                        class="cookie-policy-link"
+                        data-translate="footer-privacy"
+                        >Privacy Policy</a
+                    >
+                    <button
+                        id="decline-cookies"
+                        class="btn-decline"
+                        data-translate="cookie-decline"
+                    >
+                        Decline
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <a href="{% url 'shop:contact' %}" class="fab-consultation" data-translate="fab-consultation">Book a Consultation</a>
+        <a
+            href="{% url 'shop:contact' %}"
+            class="fab-consultation"
+            data-translate="fab-consultation"
+            >Book a Consultation</a
+        >
 
-    <button id="back-to-top" class="back-to-top">
-        <span>↑</span>
-    </button>
+        <button id="back-to-top" class="back-to-top">
+            <span>↑</span>
+        </button>
 
-
-    <script>
-    function getOrderMessages() {
-        const lang = localStorage.getItem('selectedLanguage') || 'en';
-        if (lang === 'fr') {
-            return {
-                created: 'Commande #',
-                createdSuffix: ' creee avec succes.',
-                networkError: 'Erreur reseau lors de la creation de la commande.',
-                genericError: 'Impossible de creer la commande. Connectez-vous d\'abord.'
-            };
-        }
-        if (lang === 'ua') {
-            return {
-                created: 'Замовлення #',
-                createdSuffix: ' успішно створено.',
-                networkError: 'Помилка мережі під час створення замовлення.',
-                genericError: 'Не вдалося створити замовлення. Спочатку увійдіть у профіль.'
-            };
-        }
-        return {
-            created: 'Order #',
-            createdSuffix: ' created successfully.',
-            networkError: 'Network error while creating order.',
-            genericError: 'Could not create order. Please sign in first.'
-        };
-    }
-
-    async function orderProduct(title, price, category) {
-        const messages = getOrderMessages();
-        const normalizedPrice = parseFloat(String(price).replace(',', '.'));
-
-        if (Number.isNaN(normalizedPrice)) {
-            alert(messages.genericError);
-            return;
-        }
-
-        try {
-            const response = await fetch('/orders/create-from-product/', {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    title: title,
-                    price: normalizedPrice,
-                    category: category,
-                    quantity: 1
-                })
-            });
-
-            const result = await response.json();
-
-            if (!response.ok) {
-                alert(result.error || messages.genericError);
-                return;
+        <script>
+            function getOrderMessages() {
+                const lang = localStorage.getItem("selectedLanguage") || "en";
+                if (lang === "fr") {
+                    return {
+                        created: "Commande #",
+                        createdSuffix: " creee avec succes.",
+                        networkError:
+                            "Erreur reseau lors de la creation de la commande.",
+                        genericError:
+                            "Impossible de creer la commande. Connectez-vous d'abord.",
+                    };
+                }
+                if (lang === "ua") {
+                    return {
+                        created: "Замовлення #",
+                        createdSuffix: " успішно створено.",
+                        networkError:
+                            "Помилка мережі під час створення замовлення.",
+                        genericError:
+                            "Не вдалося створити замовлення. Спочатку увійдіть у профіль.",
+                    };
+                }
+                return {
+                    created: "Order #",
+                    createdSuffix: " created successfully.",
+                    networkError: "Network error while creating order.",
+                    genericError:
+                        "Could not create order. Please sign in first.",
+                };
             }
 
-            alert(messages.created + result.order_id + messages.createdSuffix);
-        } catch (error) {
-            alert(messages.networkError);
-        }
-    }
+            async function orderProduct(title, price, category) {
+                const messages = getOrderMessages();
+                const normalizedPrice = parseFloat(
+                    String(price).replace(",", "."),
+                );
 
-    document.addEventListener('DOMContentLoaded', function() {
-        const cookieBanner = document.getElementById('cookie-banner');
-        const acceptBtn = document.getElementById('accept-cookies');
-        const declineBtn = document.getElementById('decline-cookies');
-        
-        const cookieConsent = localStorage.getItem('cookieConsent');
-        
-        if (!cookieConsent) {
-            setTimeout(() => {
-                cookieBanner.classList.add('show');
-            }, 1000);
-        }
-        
-        acceptBtn.addEventListener('click', function() {
-            localStorage.setItem('cookieConsent', 'accepted');
-            cookieBanner.classList.remove('show');
-        });
-        
-        declineBtn.addEventListener('click', function() {
-            localStorage.setItem('cookieConsent', 'declined');
-            cookieBanner.classList.remove('show');
-        });
+                if (Number.isNaN(normalizedPrice)) {
+                    alert(messages.genericError);
+                    return;
+                }
 
-        const backToTopBtn = document.getElementById('back-to-top');
-        
-        window.addEventListener('scroll', function() {
-            if (window.pageYOffset > 300) {
-                backToTopBtn.classList.add('show');
-            } else {
-                backToTopBtn.classList.remove('show');
+                try {
+                    const response = await fetch(
+                        "/orders/create-from-product/",
+                        {
+                            method: "POST",
+                            credentials: "include",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                title: title,
+                                price: normalizedPrice,
+                                category: category,
+                                quantity: 1,
+                            }),
+                        },
+                    );
+
+                    const result = await response.json();
+
+                    if (!response.ok) {
+                        alert(result.error || messages.genericError);
+                        return;
+                    }
+
+                    alert(
+                        messages.created +
+                            result.order_id +
+                            messages.createdSuffix,
+                    );
+                } catch (error) {
+                    alert(messages.networkError);
+                }
             }
-        });
-        
-        backToTopBtn.addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    });
 
-    </script>
-</body>
+            document.addEventListener("DOMContentLoaded", function () {
+                const cookieBanner = document.getElementById("cookie-banner");
+                const acceptBtn = document.getElementById("accept-cookies");
+                const declineBtn = document.getElementById("decline-cookies");
+
+                const cookieConsent = localStorage.getItem("cookieConsent");
+
+                if (!cookieConsent) {
+                    setTimeout(() => {
+                        cookieBanner.classList.add("show");
+                    }, 1000);
+                }
+
+                acceptBtn.addEventListener("click", function () {
+                    localStorage.setItem("cookieConsent", "accepted");
+                    cookieBanner.classList.remove("show");
+                });
+
+                declineBtn.addEventListener("click", function () {
+                    localStorage.setItem("cookieConsent", "declined");
+                    cookieBanner.classList.remove("show");
+                });
+
+                const backToTopBtn = document.getElementById("back-to-top");
+
+                window.addEventListener("scroll", function () {
+                    if (window.pageYOffset > 300) {
+                        backToTopBtn.classList.add("show");
+                    } else {
+                        backToTopBtn.classList.remove("show");
+                    }
+                });
+
+                backToTopBtn.addEventListener("click", function () {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth",
+                    });
+                });
+            });
+        </script>
+    </body>
 </html>

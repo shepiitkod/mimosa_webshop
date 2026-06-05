@@ -57,9 +57,7 @@ Infer realistic candle-shop values from the full conversation."""
 def _api_key() -> str:
     api_key = (getattr(settings, "GROQ_API_KEY", None) or "").strip()
     if not api_key:
-        raise RuntimeError(
-            "GROQ_API_KEY is not set. Add it in Render → Environment."
-        )
+        raise RuntimeError("GROQ_API_KEY is not set. Add it in Render → Environment.")
     return api_key
 
 

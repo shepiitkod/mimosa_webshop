@@ -60,7 +60,7 @@
     tab.id = "mimosa-copilot-tab";
     tab.setAttribute("aria-expanded", "false");
     tab.setAttribute("aria-controls", "mimosa-copilot-panel");
-    tab.textContent = "✨ AI Copilot";
+    tab.textContent = "✨ ИИ Ассистент";
 
     const panel = document.createElement("aside");
     panel.id = "mimosa-copilot-panel";
