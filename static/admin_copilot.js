@@ -431,8 +431,59 @@
     async function consumeStream(response, textEl, wrapEl) {
       const reader = response.body.getReader();
       let buffer = "";
-      let fullText = "";
+      let fullText = ""; // all received text (for return value)
+      let displayedText = ""; // what's currently shown char-by-char
+      let charQueue = [];
+      let typingTimer = null;
+      let scrollRafId = null;
+      let streamDone = false;
+
       wrapEl.classList.add("is-streaming");
+
+      // ─ Smooth scroll: eases toward bottom via RAF ──────────────────
+      function smoothScroll() {
+        if (scrollRafId) return;
+        function step() {
+          const target = messagesEl.scrollHeight - messagesEl.clientHeight;
+          const diff = target - messagesEl.scrollTop;
+          if (diff < 1) {
+            scrollRafId = null;
+            return;
+          }
+          messagesEl.scrollTop += Math.max(1, diff * 0.14);
+          scrollRafId = requestAnimationFrame(step);
+        }
+        scrollRafId = requestAnimationFrame(step);
+      }
+
+      // ─ Typewriter: drain queue one char at a time ────────────────
+      function typeNext() {
+        typingTimer = null;
+        if (charQueue.length === 0) return;
+        // Adaptive speed: speed up if falling behind
+        const delay =
+          charQueue.length > 120
+            ? 2
+            : charQueue.length > 60
+              ? 6
+              : charQueue.length > 20
+                ? 11
+                : 16;
+        const char = charQueue.shift();
+        displayedText += char;
+        textEl.textContent = displayedText;
+        smoothScroll();
+        if (charQueue.length > 0) {
+          typingTimer = setTimeout(typeNext, delay);
+        }
+      }
+
+      function enqueue(text) {
+        for (const ch of text) charQueue.push(ch);
+        if (!typingTimer) typingTimer = setTimeout(typeNext, 16);
+      }
+
+      // ─ Read SSE stream ──────────────────────────────────────
       while (true) {
         const chunk = await reader.read();
         if (chunk.done) break;
@@ -441,8 +492,7 @@
           if (payload.error) throw new Error(payload.error);
           if (payload.delta) {
             fullText += payload.delta;
-            textEl.textContent = stripNavCommands(fullText);
-            messagesEl.scrollTop = messagesEl.scrollHeight;
+            enqueue(payload.delta);
           }
         });
       }
@@ -451,9 +501,24 @@
         if (payload.error) throw new Error(payload.error);
         if (payload.delta) {
           fullText += payload.delta;
-          textEl.textContent = stripNavCommands(fullText);
+          enqueue(payload.delta);
         }
       });
+      streamDone = true;
+
+      // ─ Wait for typewriter queue to fully drain ─────────────────
+      await new Promise(function (resolve) {
+        function check() {
+          if (charQueue.length === 0 && !typingTimer) {
+            resolve();
+          } else {
+            setTimeout(check, 30);
+          }
+        }
+        check();
+      });
+
+      if (scrollRafId) cancelAnimationFrame(scrollRafId);
       wrapEl.classList.remove("is-streaming");
       return fullText;
     }
