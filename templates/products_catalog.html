@@ -54,16 +54,10 @@
             <section class="catalog-content" aria-label="Products list">
                 <div class="catalog-topbar">
                     <h1>
-                        {% if active_category %} {{ active_category.name }} {%
-                        else %}
-                        <span data-translate="catalog-all-heading"
-                            >All products</span
-                        >
-                        {% endif %}
+                        {% if active_category %}{{ active_category.name }}{% else %}<span data-translate="catalog-all-heading">All products</span>{% endif %}
                     </h1>
                     <p>
-                        {{ products|length }} item{{ products|length|pluralize
-                        }}
+                        {{ products|length }} item{{ products|length|pluralize }}
                     </p>
                 </div>
 
