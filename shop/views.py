@@ -34,7 +34,6 @@ from .models import NewsletterUser, Order, OrderItem, Product
 
 CATEGORY_SLUG_ALIASES = {
     "decorative-rose": "scented-candles",
-    "decorative-candles": "scented-candles",
     "new-arrivals": "scented-candles",
 }
 

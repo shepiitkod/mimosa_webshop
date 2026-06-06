@@ -1,71 +1,348 @@
 {% load static %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mimosa | Products Catalog</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-    <link rel="stylesheet" href="{% static 'catalog.css' %}">
-</head>
-<body class="catalog-page">
-    {% include 'includes/header.html' with header_show_cart=True %}
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Mimosa | Products Catalog</title>
+        <link rel="stylesheet" href="{% static 'styles.css' %}" />
+        <link rel="stylesheet" href="{% static 'catalog.css' %}" />
+    </head>
+    <body class="catalog-page">
+        <div class="mimosa-petals" aria-hidden="true">
+            <span class="petal"></span>
+            <span class="petal"></span>
+            <span class="petal"></span>
+            <span class="petal"></span>
+            <span class="petal"></span>
+            <span class="petal"></span>
+            <span class="petal"></span>
+            <span class="petal"></span>
+            <span class="petal"></span>
+            <span class="petal"></span>
+            <span class="petal"></span>
+            <span class="petal"></span>
+            <span class="petal"></span>
+            <span class="petal"></span>
+            <span class="petal"></span>
+            <span class="petal"></span>
+            <span class="petal"></span>
+            <span class="petal"></span>
+            <span class="petal"></span>
+            <span class="petal"></span>
+        </div>
+        {% include 'includes/header.html' with header_show_cart=True %}
 
-    <main id="main-content" tabindex="-1" class="catalog-layout">
-        <aside class="catalog-sidebar" aria-label="Product categories">
-            <h2 data-translate="catalog-sidebar-title">Categories</h2>
-            {% for category in categories %}
-            <a href="{% url 'shop:products_by_category' category.slug %}" class="catalog-cat-link {% if active_category and active_category.slug == category.slug %}is-active{% endif %}">
-                <span>{{ category.name }}</span>
-                <span class="catalog-cat-count">{{ category.count }}</span>
-            </a>
-            {% empty %}
-            <p class="catalog-empty-note">No categories available yet. Check back soon!</p>
-            {% endfor %}
-        </aside>
-
-        <section class="catalog-content" aria-label="Products list">
-            <div class="catalog-topbar">
-                <h1>
-                    {% if active_category %}
-                        {{ active_category.name }}
-                    {% else %}
-                        <span data-translate="catalog-all-heading">All products</span>
-                    {% endif %}
-                </h1>
-                <p>{{ products|length }} item{{ products|length|pluralize }}</p>
-            </div>
-
-            <div class="catalog-grid">
-                {% for product in products %}
-                <article class="catalog-card">
-                    <figure>
-                        <a href="{% url 'shop:product_detail' product.id product.title|slugify %}" aria-label="{{ product.title }} details">
-                            <img class="product-framed-image" src="{{ product.image.url }}" alt="{{ product.title }}" style="--product-image-position: {{ product.image_object_position }};">
-                        </a>
-                    </figure>
-                    <div class="catalog-card-body">
-                        <p class="catalog-chip">{{ product.category }}</p>
-                        <h3><a href="{% url 'shop:product_detail' product.id product.title|slugify %}" style="text-decoration:none; color:inherit;">{{ product.title }}</a></h3>
-                        <p class="catalog-desc">{{ product.description|truncatechars:100 }}</p>
-                        <div class="catalog-card-bottom">
-                            <span class="catalog-price">EUR {{ product.price }}</span>
-                            <a href="{% url 'shop:product_detail' product.id product.title|slugify %}" class="catalog-add-btn" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">View</a>
-                        </div>
-                    </div>
-                </article>
+        <main id="main-content" tabindex="-1" class="catalog-layout">
+            <aside class="catalog-sidebar" aria-label="Product categories">
+                <h2 data-translate="catalog-sidebar-title">Categories</h2>
+                {% for category in categories %}
+                <a
+                    href="{% url 'shop:products_by_category' category.slug %}"
+                    class="catalog-cat-link {% if active_category and active_category.slug == category.slug %}is-active{% endif %}"
+                >
+                    <span>{{ category.name }}</span>
+                    <span class="catalog-cat-count">{{ category.count }}</span>
+                </a>
                 {% empty %}
-                <article class="catalog-card catalog-card-empty">
-                    <h3>No products in this category yet</h3>
-                    <p>Try selecting a different category from the sidebar.</p>
-                </article>
+                <p class="catalog-empty-note">
+                    No categories available yet. Check back soon!
+                </p>
                 {% endfor %}
-            </div>
-        </section>
-    </main>
+            </aside>
 
-    {% include 'includes/footer.html' %}
-    
-    <script src="{% static 'translations.js' %}" defer></script>
-</body>
+            <section class="catalog-content" aria-label="Products list">
+                <div class="catalog-topbar">
+                    <h1>
+                        {% if active_category %} {{ active_category.name }} {%
+                        else %}
+                        <span data-translate="catalog-all-heading"
+                            >All products</span
+                        >
+                        {% endif %}
+                    </h1>
+                    <p>
+                        {{ products|length }} item{{ products|length|pluralize
+                        }}
+                    </p>
+                </div>
+
+                <div class="catalog-grid">
+                    {% for product in products %}
+                    <article class="catalog-card">
+                        <figure>
+                            <a
+                                href="{% url 'shop:product_detail' product.id product.title|slugify %}"
+                                aria-label="{{ product.title }} details"
+                            >
+                                <img
+                                    class="product-framed-image"
+                                    src="{{ product.image.url }}"
+                                    alt="{{ product.title }}"
+                                    style="--product-image-position: {{ product.image_object_position }};"
+                                />
+                            </a>
+                        </figure>
+                        <div class="catalog-card-body">
+                            <p class="catalog-chip">{{ product.category }}</p>
+                            <h3>
+                                <a
+                                    href="{% url 'shop:product_detail' product.id product.title|slugify %}"
+                                    style="
+                                        text-decoration: none;
+                                        color: inherit;
+                                    "
+                                    >{{ product.title }}</a
+                                >
+                            </h3>
+                            <p class="catalog-desc">
+                                {{ product.description|truncatechars:100 }}
+                            </p>
+                            <div class="catalog-card-bottom">
+                                <span class="catalog-price"
+                                    >EUR {{ product.price }}</span
+                                >
+                                <a
+                                    href="{% url 'shop:product_detail' product.id product.title|slugify %}"
+                                    class="catalog-add-btn"
+                                    style="
+                                        text-decoration: none;
+                                        display: inline-flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                    "
+                                    >View</a
+                                >
+                            </div>
+                        </div>
+                    </article>
+                    {% empty %}
+                    <article class="catalog-card catalog-card-empty">
+                        <h3>No products in this category yet</h3>
+                        <p>
+                            Try selecting a different category from the sidebar.
+                        </p>
+                    </article>
+                    {% endfor %}
+                </div>
+            </section>
+        </main>
+
+        {% include 'includes/footer.html' %}
+
+        <script src="{% static 'translations.js' %}" defer></script>
+
+        <style>
+            .mimosa-petals {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 0;
+                overflow: hidden;
+            }
+
+            .petal {
+                position: absolute;
+                top: -40px;
+                display: block;
+                border-radius: 50%;
+                opacity: 0;
+                animation: petalFall linear infinite;
+            }
+
+            /* Каждый листок — уникальный размер, позиция, задержка, скорость */
+            .petal:nth-child(1) {
+                left: 4%;
+                width: 8px;
+                height: 8px;
+                background: #f0c84a;
+                animation-duration: 9s;
+                animation-delay: 0s;
+            }
+            .petal:nth-child(2) {
+                left: 10%;
+                width: 6px;
+                height: 6px;
+                background: #e8b830;
+                animation-duration: 11s;
+                animation-delay: 1.5s;
+            }
+            .petal:nth-child(3) {
+                left: 18%;
+                width: 10px;
+                height: 10px;
+                background: #f5d060;
+                animation-duration: 8s;
+                animation-delay: 3s;
+            }
+            .petal:nth-child(4) {
+                left: 25%;
+                width: 7px;
+                height: 7px;
+                background: #f0c84a;
+                animation-duration: 13s;
+                animation-delay: 0.5s;
+            }
+            .petal:nth-child(5) {
+                left: 33%;
+                width: 9px;
+                height: 9px;
+                background: #e8b830;
+                animation-duration: 10s;
+                animation-delay: 2s;
+            }
+            .petal:nth-child(6) {
+                left: 40%;
+                width: 6px;
+                height: 6px;
+                background: #f5d060;
+                animation-duration: 7s;
+                animation-delay: 4s;
+            }
+            .petal:nth-child(7) {
+                left: 48%;
+                width: 11px;
+                height: 11px;
+                background: #f0c84a;
+                animation-duration: 12s;
+                animation-delay: 1s;
+            }
+            .petal:nth-child(8) {
+                left: 55%;
+                width: 7px;
+                height: 7px;
+                background: #e8b830;
+                animation-duration: 9s;
+                animation-delay: 3.5s;
+            }
+            .petal:nth-child(9) {
+                left: 62%;
+                width: 8px;
+                height: 8px;
+                background: #f5d060;
+                animation-duration: 11s;
+                animation-delay: 0.8s;
+            }
+            .petal:nth-child(10) {
+                left: 70%;
+                width: 6px;
+                height: 6px;
+                background: #f0c84a;
+                animation-duration: 8s;
+                animation-delay: 2.5s;
+            }
+            .petal:nth-child(11) {
+                left: 76%;
+                width: 9px;
+                height: 9px;
+                background: #e8b830;
+                animation-duration: 14s;
+                animation-delay: 0.3s;
+            }
+            .petal:nth-child(12) {
+                left: 83%;
+                width: 7px;
+                height: 7px;
+                background: #f5d060;
+                animation-duration: 10s;
+                animation-delay: 5s;
+            }
+            .petal:nth-child(13) {
+                left: 90%;
+                width: 10px;
+                height: 10px;
+                background: #f0c84a;
+                animation-duration: 9s;
+                animation-delay: 1.8s;
+            }
+            .petal:nth-child(14) {
+                left: 96%;
+                width: 6px;
+                height: 6px;
+                background: #e8b830;
+                animation-duration: 12s;
+                animation-delay: 3.2s;
+            }
+            .petal:nth-child(15) {
+                left: 7%;
+                width: 8px;
+                height: 8px;
+                background: #f5d060;
+                animation-duration: 15s;
+                animation-delay: 6s;
+            }
+            .petal:nth-child(16) {
+                left: 22%;
+                width: 6px;
+                height: 6px;
+                background: #f0c84a;
+                animation-duration: 11s;
+                animation-delay: 4.5s;
+            }
+            .petal:nth-child(17) {
+                left: 38%;
+                width: 9px;
+                height: 9px;
+                background: #e8b830;
+                animation-duration: 8s;
+                animation-delay: 7s;
+            }
+            .petal:nth-child(18) {
+                left: 57%;
+                width: 7px;
+                height: 7px;
+                background: #f5d060;
+                animation-duration: 13s;
+                animation-delay: 2.2s;
+            }
+            .petal:nth-child(19) {
+                left: 73%;
+                width: 10px;
+                height: 10px;
+                background: #f0c84a;
+                animation-duration: 10s;
+                animation-delay: 0.6s;
+            }
+            .petal:nth-child(20) {
+                left: 87%;
+                width: 8px;
+                height: 8px;
+                background: #e8b830;
+                animation-duration: 9s;
+                animation-delay: 4.8s;
+            }
+
+            @keyframes petalFall {
+                0% {
+                    transform: translateY(0) rotate(0deg) scale(1);
+                    opacity: 0;
+                }
+                5% {
+                    opacity: 0.7;
+                }
+                50% {
+                    transform: translateY(50vh) rotate(180deg) scale(0.9);
+                    opacity: 0.5;
+                }
+                95% {
+                    opacity: 0.3;
+                }
+                100% {
+                    transform: translateY(105vh) rotate(360deg) scale(0.8);
+                    opacity: 0;
+                }
+            }
+
+            /* Небольшое горизонтальное покачивание через отдельную анимацию на wrapper */
+            .petal:nth-child(odd) {
+                animation-timing-function: ease-in-out;
+            }
+            .petal:nth-child(even) {
+                animation-timing-function: ease-in;
+            }
+        </style>
+    </body>
 </html>
