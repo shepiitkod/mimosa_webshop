@@ -20,13 +20,13 @@ function ensureMimosaCopilotOnAdmin() {
     if (!document.querySelector('link[href*="admin_copilot.css"]')) {
         var link = document.createElement('link');
         link.rel = 'stylesheet';
-        link.href = '/static/admin_copilot.css?v=20260607-typewriter';
+        link.href = '/static/admin_copilot.css?v=20260607-photo-cards';
         document.head.appendChild(link);
     }
 
     if (!document.querySelector('script[src*="admin_copilot.js"]')) {
         var script = document.createElement('script');
-        script.src = '/static/admin_copilot.js?v=20260607-typewriter';
+        script.src = '/static/admin_copilot.js?v=20260607-photo-cards';
         script.defer = true;
         document.head.appendChild(script);
     }
@@ -102,123 +102,221 @@ function initMimosaAdminGradient() {
 }
 
 function initProductFramingEditor() {
-    const imageFields = [
-        { name: 'image', label: 'Photo 1', x: 'image_focal_x', y: 'image_focal_y' },
-        { name: 'image_2', label: 'Photo 2', x: 'image_2_focal_x', y: 'image_2_focal_y' },
-        { name: 'image_3', label: 'Photo 3', x: 'image_3_focal_x', y: 'image_3_focal_y' },
-        { name: 'image_4', label: 'Photo 4', x: 'image_4_focal_x', y: 'image_4_focal_y' },
+    var imageFields = [
+        { name: 'image',   label: 'Фото 1', x: 'image_focal_x',   y: 'image_focal_y'   },
+        { name: 'image_2', label: 'Фото 2', x: 'image_2_focal_x', y: 'image_2_focal_y' },
+        { name: 'image_3', label: 'Фото 3', x: 'image_3_focal_x', y: 'image_3_focal_y' },
     ];
 
-    let mountedEditors = 0;
+    imageFields.forEach(function(field) {
+        var fileInput = document.getElementById('id_' + field.name);
+        if (!fileInput) return;
 
-    imageFields.forEach(function (field) {
-        const fileInput = document.getElementById('id_' + field.name);
-        const xInput = document.getElementById('id_' + field.x);
-        const yInput = document.getElementById('id_' + field.y);
-        if (!fileInput || !xInput || !yInput) return;
+        var xInput = document.getElementById('id_' + field.x);
+        var yInput = document.getElementById('id_' + field.y);
 
-        const row = fileInput.closest('.form-row') || fileInput.parentElement;
-        if (!row) return;
-        if (row.querySelector('.mimosa-framing-actions')) return;
+        var row = fileInput.closest('.form-row') || fileInput.parentElement;
+        if (!row || row.dataset.mimosaCard) return;
+        row.dataset.mimosaCard = '1';
 
-        xInput.value = normalizePercent(xInput.value || 50);
-        yInput.value = normalizePercent(yInput.value || 50);
-        row.classList.add('mimosa-gallery-row');
+        if (xInput) xInput.value = normalizePercent(xInput.value || 50);
+        if (yInput) yInput.value = normalizePercent(yInput.value || 50);
 
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'mimosa-framing-button';
-        button.textContent = buttonLabel(field.label, xInput.value, yInput.value);
+        // Get existing image URL from Django's "Currently:" link
+        var currentLink = Array.from(row.querySelectorAll('a[href]')).find(function(a) {
+            return /\.(jpg|jpeg|png|gif|webp|avif)(\?|$)/i.test(a.getAttribute('href') || '');
+        }) || row.querySelector('a[href*="/media/"]');
+        var currentUrl = currentLink ? currentLink.href : '';
 
-        const cropButton = document.createElement('button');
-        cropButton.type = 'button';
-        cropButton.className = 'mimosa-framing-button mimosa-crop-button-trigger';
-        cropButton.textContent = 'Crop Image';
-        cropButton.style.backgroundColor = '#417505';
-        cropButton.style.color = 'white';
+        // Get Django clear checkbox
+        var clearCheckbox = row.querySelector('input[type="checkbox"]');
 
-        const hint = document.createElement('span');
-        hint.className = 'mimosa-framing-hint';
-        hint.textContent = '4:5 site crop';
-
-        const actions = document.createElement('div');
-        actions.className = 'mimosa-framing-actions';
-        actions.append(button, cropButton, hint);
-        const uploadBlock = fileInput.closest('.file-upload') || fileInput.parentElement || row;
-        uploadBlock.insertAdjacentElement('afterend', actions);
-
-        let objectUrl = '';
-
-        function currentSource() {
-            if (objectUrl) return objectUrl;
-            const currentLink = Array.from(row.querySelectorAll('a[href]')).find(function (link) {
-                return /\.(jpg|jpeg|png|gif|webp|avif|ico)(\?|#|$)/i.test(link.getAttribute('href') || link.href);
-            });
-            return currentLink ? currentLink.href : '';
+        // Move file input + clear checkbox out of the Django widget (keep in form)
+        fileInput.style.cssText = 'position:absolute;opacity:0;width:1px;height:1px;overflow:hidden;pointer-events:none;';
+        row.appendChild(fileInput);
+        if (clearCheckbox) {
+            clearCheckbox.style.display = 'none';
+            row.appendChild(clearCheckbox);
         }
 
-        function updateButtonState() {
-            button.disabled = !currentSource();
-            button.textContent = currentSource()
-                ? buttonLabel(field.label, xInput.value, yInput.value)
-                : field.label + ': choose image first';
-            
-            cropButton.disabled = !currentSource() && !fileInput.files?.length;
+        // Hide the original Django widget container
+        var innerDiv = row.querySelector(':scope > div');
+        if (innerDiv) innerDiv.style.display = 'none';
+
+        // ── Build clean photo card ───────────────────────────────
+        var card = document.createElement('div');
+        card.className = 'mimosa-photo-card';
+
+        // Preview area
+        var preview = document.createElement('div');
+        preview.className = 'mimosa-photo-preview' + (currentUrl ? ' has-image' : '');
+
+        if (currentUrl) {
+            var img = document.createElement('img');
+            img.src = currentUrl;
+            img.alt = field.label;
+            preview.appendChild(img);
+        } else {
+            preview.innerHTML = '<div class="mimosa-photo-empty"><span>📷</span><span>' + field.label + '</span></div>';
         }
 
-        fileInput.addEventListener('change', function () {
+        // Actions
+        var actions = document.createElement('div');
+        actions.className = 'mimosa-photo-actions';
+
+        // Label for field
+        var fieldLabel = document.createElement('div');
+        fieldLabel.className = 'mimosa-photo-field-label';
+        fieldLabel.textContent = field.label;
+
+        // Choose / Replace button (label → triggers file input)
+        var chooseBtn = document.createElement('label');
+        chooseBtn.className = 'mimosa-btn mimosa-btn-choose';
+        chooseBtn.htmlFor = 'id_' + field.name;
+        chooseBtn.innerHTML = '<span>📁</span> ' + (currentUrl ? 'Заменить' : 'Выбрать фото');
+
+        // Crop button
+        var cropBtn = document.createElement('button');
+        cropBtn.type = 'button';
+        cropBtn.className = 'mimosa-btn mimosa-btn-crop';
+        cropBtn.innerHTML = '<span>✂️</span> Обрезать';
+        cropBtn.disabled = !currentUrl;
+
+        // Focus/frame button
+        var focusBtn = null;
+        if (xInput && yInput) {
+            focusBtn = document.createElement('button');
+            focusBtn.type = 'button';
+            focusBtn.className = 'mimosa-btn mimosa-btn-focus';
+            focusBtn.innerHTML = '<span>🎯</span> Фокус';
+            focusBtn.disabled = !currentUrl;
+        }
+
+        // Remove button
+        var removeBtn = null;
+        if (clearCheckbox) {
+            removeBtn = document.createElement('button');
+            removeBtn.type = 'button';
+            removeBtn.className = 'mimosa-btn mimosa-btn-remove';
+            removeBtn.innerHTML = '<span>🗑</span> Удалить';
+            removeBtn.disabled = !currentUrl;
+        }
+
+        actions.appendChild(fieldLabel);
+        actions.appendChild(chooseBtn);
+        actions.appendChild(cropBtn);
+        if (focusBtn) actions.appendChild(focusBtn);
+        if (removeBtn) actions.appendChild(removeBtn);
+
+        card.appendChild(preview);
+        card.appendChild(actions);
+        row.appendChild(card);
+        row.classList.add('mimosa-photo-row');
+
+        // ── Helpers ──────────────────────────────────────────────
+        var objectUrl = '';
+
+        function getPreviewSrc() {
+            var img = preview.querySelector('img');
+            return img ? img.src : '';
+        }
+
+        function setPreview(src) {
+            preview.innerHTML = '';
+            var img = document.createElement('img');
+            img.src = src;
+            img.alt = field.label;
+            preview.appendChild(img);
+            preview.classList.add('has-image');
+        }
+
+        function enableButtons() {
+            cropBtn.disabled = false;
+            if (focusBtn) focusBtn.disabled = false;
+            if (removeBtn) removeBtn.disabled = false;
+        }
+
+        // ── Events ───────────────────────────────────────────────
+
+        // New file chosen → preview + auto crop
+        fileInput.addEventListener('change', function() {
+            if (!fileInput.files || !fileInput.files[0]) return;
             if (objectUrl) URL.revokeObjectURL(objectUrl);
-            objectUrl = '';
+            objectUrl = URL.createObjectURL(fileInput.files[0]);
+            setPreview(objectUrl);
+            enableButtons();
+            chooseBtn.innerHTML = '<span>📁</span> Заменить';
 
-            if (fileInput.files && fileInput.files[0]) {
-                objectUrl = URL.createObjectURL(fileInput.files[0]);
-                updateButtonState();
-                openFramingModal({
-                    field: field,
-                    imageUrl: objectUrl,
-                    xInput: xInput,
-                    yInput: yInput,
-                    trigger: button,
-                });
-            } else {
-                updateButtonState();
-            }
-        });
-
-        button.addEventListener('click', function () {
-            const source = currentSource();
-            if (!source) return;
-
-            openFramingModal({
-                field: field,
-                imageUrl: source,
-                xInput: xInput,
-                yInput: yInput,
-                trigger: button,
-            });
-        });
-
-        cropButton.addEventListener('click', function () {
-            if (!fileInput.files || !fileInput.files[0]) {
-                alert('Please upload an image first');
-                return;
-            }
-            
+            // Auto-open crop
             openCropModal({
                 field: field,
-                imageUrl: objectUrl || currentSource(),
+                imageUrl: objectUrl,
                 imageFile: fileInput.files[0],
                 imageField: fileInput,
             });
         });
 
-        updateButtonState();
-        mountedEditors += 1;
+        // Crop → works for new AND existing images
+        cropBtn.addEventListener('click', function() {
+            var src = getPreviewSrc();
+            if (!src) { alert('Сначала выберите фото.'); return; }
+
+            // If new file is selected — use it directly
+            if (objectUrl && fileInput.files && fileInput.files[0]) {
+                openCropModal({
+                    field: field, imageUrl: objectUrl,
+                    imageFile: fileInput.files[0], imageField: fileInput,
+                });
+                return;
+            }
+
+            // Existing image — fetch as blob then crop
+            cropBtn.disabled = true;
+            cropBtn.innerHTML = '<span>⏳</span> Загружаю…';
+            fetch(src)
+                .then(function(r) { return r.blob(); })
+                .then(function(blob) {
+                    var file = new File([blob], 'photo.jpg', { type: blob.type || 'image/jpeg' });
+                    var blobUrl = URL.createObjectURL(blob);
+                    openCropModal({
+                        field: field, imageUrl: blobUrl,
+                        imageFile: file, imageField: fileInput,
+                    });
+                    cropBtn.disabled = false;
+                    cropBtn.innerHTML = '<span>✂️</span> Обрезать';
+                })
+                .catch(function() {
+                    cropBtn.disabled = false;
+                    cropBtn.innerHTML = '<span>✂️</span> Обрезать';
+                    alert('Не удалось загрузить фото для обрезки.');
+                });
+        });
+
+        // Focus / focal point
+        if (focusBtn) {
+            focusBtn.addEventListener('click', function() {
+                var src = getPreviewSrc();
+                if (!src) return;
+                openFramingModal({ field: field, imageUrl: src, xInput: xInput, yInput: yInput, trigger: focusBtn });
+            });
+        }
+
+        // Remove
+        if (removeBtn && clearCheckbox) {
+            removeBtn.addEventListener('click', function() {
+                if (!confirm('Удалить фото «' + field.label + '»?')) return;
+                clearCheckbox.checked = true;
+                preview.innerHTML = '<div class="mimosa-photo-empty"><span>🗑</span><span>Удалится при сохранении</span></div>';
+                preview.classList.remove('has-image');
+                cropBtn.disabled = true;
+                if (focusBtn) focusBtn.disabled = true;
+                removeBtn.disabled = true;
+                chooseBtn.innerHTML = '<span>📁</span> Выбрать фото';
+            });
+        }
     });
 
-    if (mountedEditors > 0) {
-        document.body.classList.add('mimosa-framing-ready');
-    }
+    document.body.classList.add('mimosa-framing-ready');
 }
 
 function openFramingModal(options) {

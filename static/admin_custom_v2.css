@@ -394,10 +394,30 @@ body.model-product .mimosa-framing-hint {
 
 .mimosa-framing-frame::before {
     background:
-        linear-gradient(to right, transparent calc(33.333% - 1px), rgba(255, 255, 255, 0.72) 33.333%, transparent calc(33.333% + 1px)),
-        linear-gradient(to right, transparent calc(66.666% - 1px), rgba(255, 255, 255, 0.72) 66.666%, transparent calc(66.666% + 1px)),
-        linear-gradient(to bottom, transparent calc(33.333% - 1px), rgba(255, 255, 255, 0.72) 33.333%, transparent calc(33.333% + 1px)),
-        linear-gradient(to bottom, transparent calc(66.666% - 1px), rgba(255, 255, 255, 0.72) 66.666%, transparent calc(66.666% + 1px));
+        linear-gradient(
+            to right,
+            transparent calc(33.333% - 1px),
+            rgba(255, 255, 255, 0.72) 33.333%,
+            transparent calc(33.333% + 1px)
+        ),
+        linear-gradient(
+            to right,
+            transparent calc(66.666% - 1px),
+            rgba(255, 255, 255, 0.72) 66.666%,
+            transparent calc(66.666% + 1px)
+        ),
+        linear-gradient(
+            to bottom,
+            transparent calc(33.333% - 1px),
+            rgba(255, 255, 255, 0.72) 33.333%,
+            transparent calc(33.333% + 1px)
+        ),
+        linear-gradient(
+            to bottom,
+            transparent calc(66.666% - 1px),
+            rgba(255, 255, 255, 0.72) 66.666%,
+            transparent calc(66.666% + 1px)
+        );
 }
 
 .mimosa-framing-target {
@@ -533,13 +553,25 @@ body[class*=" app-"] .button,
 body[class*=" app-"] .default,
 body[class*=" app-"] input[type="submit"],
 body[class*=" app-"] input[type="button"] {
-    background: linear-gradient(160deg, #f7e67a 0%, #e8c84a 60%, #d4a900 100%) !important;
+    background: linear-gradient(
+        160deg,
+        #f7e67a 0%,
+        #e8c84a 60%,
+        #d4a900 100%
+    ) !important;
     color: #3a2e00 !important;
     border: 1px solid #c5a000 !important;
     border-radius: 20px !important;
-    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.1) !important;
+    box-shadow:
+        inset 0 1px 2px rgba(255, 255, 255, 0.3),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.1) !important;
     text-shadow: none !important;
-    font-family: 'Poppins', 'Lato', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family:
+        "Poppins",
+        "Lato",
+        -apple-system,
+        BlinkMacSystemFont,
+        sans-serif;
     font-weight: 600;
     font-size: 12px;
     text-transform: uppercase;
@@ -565,7 +597,9 @@ body[class*=" app-"] input[type="submit"]:hover,
 body[class*=" app-"] input[type="button"]:hover {
     transform: translateY(-1px) scale(1.02);
     filter: brightness(1.08);
-    box-shadow: 0 0 12px rgba(220, 180, 0, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.3) !important;
+    box-shadow:
+        0 0 12px rgba(220, 180, 0, 0.45),
+        inset 0 1px 2px rgba(255, 255, 255, 0.3) !important;
 }
 
 /* Orders analytics cards on the changelist page */
@@ -805,7 +839,9 @@ body.dashboard #changelist-search input[type="submit"],
 body[class^="app-"] #changelist-search input[type="submit"],
 body[class*=" app-"] #changelist-search input[type="submit"] {
     background: #f4d03f !important;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.4),
+        0 2px 4px rgba(0, 0, 0, 0.1) !important;
     text-transform: uppercase;
     font-weight: 600;
     letter-spacing: 1.2px;
@@ -833,7 +869,10 @@ body.dashboard #changelist-search input[type="submit"]:hover,
 body[class^="app-"] #changelist-search input[type="submit"]:hover,
 body[class*=" app-"] #changelist-search input[type="submit"]:hover {
     transform: scale(1.03);
-    box-shadow: 0 0 10px rgba(244, 208, 63, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    box-shadow:
+        0 0 10px rgba(244, 208, 63, 0.5),
+        inset 0 1px 1px rgba(255, 255, 255, 0.4),
+        0 2px 4px rgba(0, 0, 0, 0.1) !important;
 }
 
 /* Mimosa Admin Studio refresh */
@@ -849,7 +888,11 @@ body.dashboard {
     --studio-card: rgba(255, 255, 255, 0.92);
     --studio-line: rgba(137, 105, 34, 0.18);
     background:
-        radial-gradient(circle at 12% 0%, rgba(255, 232, 165, 0.56), transparent 32%),
+        radial-gradient(
+            circle at 12% 0%,
+            rgba(255, 232, 165, 0.56),
+            transparent 32%
+        ),
         linear-gradient(135deg, #fffdf8 0%, var(--studio-bg) 58%, #efe1c6 100%) !important;
 }
 
@@ -881,8 +924,16 @@ body.dashboard #header {
     border: 1px solid rgba(137, 105, 34, 0.16);
     border-radius: 18px;
     background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(255, 246, 219, 0.88)),
-        radial-gradient(circle at 92% 18%, rgba(244, 208, 63, 0.22), transparent 26%);
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.94),
+            rgba(255, 246, 219, 0.88)
+        ),
+        radial-gradient(
+            circle at 92% 18%,
+            rgba(244, 208, 63, 0.22),
+            transparent 26%
+        );
     box-shadow: 0 18px 44px rgba(84, 63, 18, 0.11);
 }
 
@@ -984,37 +1035,125 @@ body.change-form select:focus {
     box-shadow: 0 0 0 4px rgba(244, 208, 63, 0.18) !important;
 }
 
-body.change-form .mimosa-gallery-row {
-    position: relative;
-    display: grid !important;
-    grid-template-columns: minmax(140px, 180px) minmax(0, 1fr);
-    gap: 14px;
-    align-items: start;
-    margin: 0 0 12px;
-    border: 1px solid rgba(215, 170, 50, 0.18) !important;
+/* Photo card row — replaces old broken gallery-row grid */
+body.change-form .mimosa-photo-row {
+    padding: 0 !important;
+    background: none !important;
+    border: none !important;
+    margin-bottom: 4px !important;
+}
+
+.mimosa-photo-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #fffdf8, #fff9ec);
+    border: 1px solid rgba(215, 170, 50, 0.28);
     border-radius: 16px;
-    background: linear-gradient(135deg, #fffdf8, #fff8e5);
+    margin-bottom: 12px;
 }
 
-body.change-form .mimosa-gallery-row > div,
-body.change-form .mimosa-gallery-row .file-upload {
-    min-width: 0;
-}
-
-body.change-form .mimosa-gallery-row label {
-    margin-top: 8px;
-    color: var(--studio-ink) !important;
-    font-weight: 800;
-}
-
-body.change-form .mimosa-gallery-row .file-upload a {
-    display: inline-flex;
-    max-width: 100%;
+.mimosa-photo-preview {
+    width: 130px;
+    height: 163px;
+    flex-shrink: 0;
+    border-radius: 10px;
     overflow: hidden;
-    text-overflow: ellipsis;
-    vertical-align: middle;
+    background: #f0ebe0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed rgba(215, 170, 50, 0.35);
+    transition: border 0.2s;
+}
+.mimosa-photo-preview.has-image {
+    border: 2px solid rgba(215, 170, 50, 0.4);
+}
+.mimosa-photo-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.mimosa-photo-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    color: #a89060;
+    font-size: 11px;
+    text-align: center;
+    padding: 8px;
+    line-height: 1.3;
+}
+.mimosa-photo-empty span:first-child {
+    font-size: 26px;
 }
 
+.mimosa-photo-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding-top: 2px;
+}
+.mimosa-photo-field-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #7a5c00;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+}
+
+/* Unified button style for photo cards */
+.mimosa-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition:
+        opacity 0.15s,
+        transform 0.1s;
+    white-space: nowrap;
+    text-decoration: none;
+    line-height: 1;
+}
+.mimosa-btn:hover:not(:disabled) {
+    opacity: 0.85;
+    transform: translateY(-1px);
+}
+.mimosa-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.mimosa-btn-choose {
+    background: linear-gradient(135deg, #0d6b52, #0a5844);
+    color: #e8c96a !important;
+}
+.mimosa-btn-crop {
+    background: linear-gradient(135deg, #3d6849, #2d5038);
+    color: #fff !important;
+}
+.mimosa-btn-focus {
+    background: rgba(215, 170, 50, 0.12);
+    color: #7a5c00 !important;
+    border: 1px solid rgba(215, 170, 50, 0.3);
+}
+.mimosa-btn-remove {
+    background: rgba(220, 38, 38, 0.07);
+    color: #b91c1c !important;
+    border: 1px solid rgba(220, 38, 38, 0.18);
+}
+
+/* Hide focal point inputs and old preview fields - handled by photo cards */
 body.change-form .form-row.field-image_focal_x,
 body.change-form .form-row.field-image_focal_y,
 body.change-form .form-row.field-image_2_focal_x,
@@ -1030,7 +1169,11 @@ body.change-form .form-row.field-image_4_focal_y,
 .form-row.field-image_3_focal_x,
 .form-row.field-image_3_focal_y,
 .form-row.field-image_4_focal_x,
-.form-row.field-image_4_focal_y {
+.form-row.field-image_4_focal_y,
+body.change-form .form-row.field-image_preview,
+body.change-form .form-row.field-image_2_preview,
+body.change-form .form-row.field-image_3_preview,
+body.change-form .form-row.field-image_4_preview {
     display: none !important;
 }
 
@@ -1079,7 +1222,9 @@ body.change-form .mimosa-framing-hint,
 }
 
 .mimosa-framing-frame {
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.78), 0 14px 34px rgba(66, 47, 10, 0.16);
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.78),
+        0 14px 34px rgba(66, 47, 10, 0.16);
 }
 
 @media (max-width: 760px) {
@@ -1105,7 +1250,11 @@ body[class*=" app-"] {
     --mimosa-yellow-strong: #f5d85d;
     --admin-bg: #f7f1e6;
     --admin-page-bg:
-        radial-gradient(circle at 12% 0%, rgba(255, 231, 158, 0.62), transparent 34%),
+        radial-gradient(
+            circle at 12% 0%,
+            rgba(255, 231, 158, 0.62),
+            transparent 34%
+        ),
         linear-gradient(135deg, #fffdf8 0%, #f7f1e6 58%, #eadabc 100%);
     --admin-surface: rgba(255, 255, 255, 0.94);
     --admin-surface-solid: #ffffff;
@@ -1170,8 +1319,16 @@ html.theme-dark body[class*=" app-"] {
     --mimosa-yellow-strong: #ffe178;
     --admin-bg: #100f0d;
     --admin-page-bg:
-        radial-gradient(circle at 12% 0%, rgba(240, 201, 75, 0.18), transparent 34%),
-        radial-gradient(circle at 100% 8%, rgba(255, 238, 178, 0.08), transparent 28%),
+        radial-gradient(
+            circle at 12% 0%,
+            rgba(240, 201, 75, 0.18),
+            transparent 34%
+        ),
+        radial-gradient(
+            circle at 100% 8%,
+            rgba(255, 238, 178, 0.08),
+            transparent 28%
+        ),
         linear-gradient(135deg, #0b0a09 0%, #12100d 52%, #1c1710 100%);
     --admin-surface: rgba(28, 24, 18, 0.94);
     --admin-surface-solid: #1c1812;
@@ -1350,7 +1507,11 @@ body.app-admin #changelist-filter h2,
 body.dashboard #changelist-filter h2,
 body.change-list #changelist-filter h2,
 body.change-form fieldset.module h2 {
-    background: linear-gradient(135deg, var(--admin-surface-soft), var(--admin-surface-solid)) !important;
+    background: linear-gradient(
+        135deg,
+        var(--admin-surface-soft),
+        var(--admin-surface-solid)
+    ) !important;
     border-bottom-color: var(--admin-border) !important;
     color: var(--admin-heading) !important;
 }
@@ -1555,8 +1716,16 @@ body.change-list #result_list td {
 
 .mimosa-admin-hero {
     background:
-        linear-gradient(135deg, var(--admin-surface), var(--admin-surface-soft)),
-        radial-gradient(circle at 92% 18%, rgba(244, 208, 63, 0.22), transparent 26%) !important;
+        linear-gradient(
+            135deg,
+            var(--admin-surface),
+            var(--admin-surface-soft)
+        ),
+        radial-gradient(
+            circle at 92% 18%,
+            rgba(244, 208, 63, 0.22),
+            transparent 26%
+        ) !important;
     border-color: var(--admin-border) !important;
     box-shadow: var(--admin-shadow) !important;
 }
@@ -1578,7 +1747,11 @@ body.change-form .mimosa-framing-hint,
 }
 
 body.change-form .mimosa-gallery-row {
-    background: linear-gradient(135deg, var(--admin-surface-solid), var(--admin-surface-soft)) !important;
+    background: linear-gradient(
+        135deg,
+        var(--admin-surface-solid),
+        var(--admin-surface-soft)
+    ) !important;
     border-color: var(--admin-border) !important;
 }
 
@@ -1591,7 +1764,11 @@ body.change-form .mimosa-gallery-row label {
 }
 
 .mimosa-framing-dialog {
-    background: linear-gradient(135deg, var(--admin-surface-solid), var(--admin-surface-soft)) !important;
+    background: linear-gradient(
+        135deg,
+        var(--admin-surface-solid),
+        var(--admin-surface-soft)
+    ) !important;
     border-color: var(--admin-border-strong) !important;
     color: var(--admin-text) !important;
 }
@@ -1615,10 +1792,30 @@ body.change-form .mimosa-gallery-row label {
 html[data-theme="dark"] .mimosa-framing-frame::before,
 html.theme-dark .mimosa-framing-frame::before {
     background:
-        linear-gradient(to right, transparent calc(33.333% - 1px), rgba(255, 241, 189, 0.2) 33.333%, transparent calc(33.333% + 1px)),
-        linear-gradient(to right, transparent calc(66.666% - 1px), rgba(255, 241, 189, 0.2) 66.666%, transparent calc(66.666% + 1px)),
-        linear-gradient(to bottom, transparent calc(33.333% - 1px), rgba(255, 241, 189, 0.2) 33.333%, transparent calc(33.333% + 1px)),
-        linear-gradient(to bottom, transparent calc(66.666% - 1px), rgba(255, 241, 189, 0.2) 66.666%, transparent calc(66.666% + 1px));
+        linear-gradient(
+            to right,
+            transparent calc(33.333% - 1px),
+            rgba(255, 241, 189, 0.2) 33.333%,
+            transparent calc(33.333% + 1px)
+        ),
+        linear-gradient(
+            to right,
+            transparent calc(66.666% - 1px),
+            rgba(255, 241, 189, 0.2) 66.666%,
+            transparent calc(66.666% + 1px)
+        ),
+        linear-gradient(
+            to bottom,
+            transparent calc(33.333% - 1px),
+            rgba(255, 241, 189, 0.2) 33.333%,
+            transparent calc(33.333% + 1px)
+        ),
+        linear-gradient(
+            to bottom,
+            transparent calc(66.666% - 1px),
+            rgba(255, 241, 189, 0.2) 66.666%,
+            transparent calc(66.666% + 1px)
+        );
 }
 
 body.app-admin .button,
@@ -1649,7 +1846,11 @@ body.change-list .changelink,
 .mimosa-framing-save,
 .mimosa-framing-presets button,
 .mimosa-framing-close {
-    background: linear-gradient(135deg, var(--mimosa-yellow-strong), var(--mimosa-yellow)) !important;
+    background: linear-gradient(
+        135deg,
+        var(--mimosa-yellow-strong),
+        var(--mimosa-yellow)
+    ) !important;
     border: 1px solid rgba(121, 90, 12, 0.34) !important;
     color: var(--button-fg) !important;
     text-shadow: none !important;
@@ -1679,7 +1880,9 @@ html.theme-dark body.app-admin input[type="submit"],
 html.theme-dark body.dashboard input[type="submit"],
 html.theme-dark body.change-form input[type="submit"],
 html.theme-dark body.change-list input[type="submit"] {
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.26), 0 0 0 1px rgba(255, 238, 178, 0.12) inset !important;
+    box-shadow:
+        0 10px 22px rgba(0, 0, 0, 0.26),
+        0 0 0 1px rgba(255, 238, 178, 0.12) inset !important;
 }
 
 html[data-theme="dark"] body.app-admin input[type="checkbox"],
@@ -1719,7 +1922,11 @@ body[class*=" app-"] {
     --mimosa-yellow-strong: #f5d85d;
     --admin-bg: #f7f1e6;
     --admin-page-bg:
-        radial-gradient(circle at 12% 0%, rgba(255, 231, 158, 0.62), transparent 34%),
+        radial-gradient(
+            circle at 12% 0%,
+            rgba(255, 231, 158, 0.62),
+            transparent 34%
+        ),
         linear-gradient(135deg, #fffdf8 0%, #f7f1e6 58%, #eadabc 100%);
     --admin-surface: rgba(255, 255, 255, 0.94);
     --admin-surface-solid: #ffffff;
@@ -1901,7 +2108,8 @@ body {
             transparent 44%
         ),
         radial-gradient(
-            circle at calc(100% - var(--mimosa-flow-x)) calc(18% + var(--mimosa-flow-y) * 0.18),
+            circle at calc(100% - var(--mimosa-flow-x))
+                calc(18% + var(--mimosa-flow-y) * 0.18),
             rgba(255, 176, 70, calc(0.24 + var(--mimosa-flow-warmth) * 0.24)) 0%,
             transparent 36%
         ),
@@ -1919,9 +2127,15 @@ body {
             #fff6df 100%
         ) !important;
     background-attachment: fixed;
-    background-size: 150% 150%, 135% 135%, 170% 170%, 220% 220%;
+    background-size:
+        150% 150%,
+        135% 135%,
+        170% 170%,
+        220% 220%;
     animation: mimosaAdminGradientFlow 20s ease-in-out infinite alternate;
-    transition: background 700ms ease, color 220ms ease;
+    transition:
+        background 700ms ease,
+        color 220ms ease;
 }
 
 body::before {
@@ -1931,19 +2145,37 @@ body::before {
     z-index: -1;
     pointer-events: none;
     background:
-        linear-gradient(115deg, rgba(255, 255, 255, 0.28), transparent 35%, rgba(255, 184, 77, 0.16) 70%, transparent),
-        repeating-linear-gradient(98deg, rgba(255, 255, 255, 0.16) 0 1px, transparent 1px 22px);
+        linear-gradient(
+            115deg,
+            rgba(255, 255, 255, 0.28),
+            transparent 35%,
+            rgba(255, 184, 77, 0.16) 70%,
+            transparent
+        ),
+        repeating-linear-gradient(
+            98deg,
+            rgba(255, 255, 255, 0.16) 0 1px,
+            transparent 1px 22px
+        );
     mix-blend-mode: soft-light;
     opacity: calc(0.46 + var(--mimosa-flow-glow) * 0.24);
     animation: mimosaAdminSheen 12s ease-in-out infinite alternate;
 }
 
 html.mimosa-admin-action-click body {
-    background-size: 132% 132%, 118% 118%, 150% 150%, 190% 190%;
+    background-size:
+        132% 132%,
+        118% 118%,
+        150% 150%,
+        190% 190%;
 }
 
 html.mimosa-admin-action-focus body {
-    background-size: 142% 142%, 126% 126%, 160% 160%, 205% 205%;
+    background-size:
+        142% 142%,
+        126% 126%,
+        160% 160%,
+        205% 205%;
 }
 
 html.mimosa-admin-action-save body {
@@ -1985,13 +2217,25 @@ body.dashboard #content-related {
 
 @keyframes mimosaAdminGradientFlow {
     0% {
-        background-position: 0% 10%, 100% 0%, 50% 100%, 0% 50%;
+        background-position:
+            0% 10%,
+            100% 0%,
+            50% 100%,
+            0% 50%;
     }
     50% {
-        background-position: 42% 0%, 70% 35%, 28% 82%, 70% 30%;
+        background-position:
+            42% 0%,
+            70% 35%,
+            28% 82%,
+            70% 30%;
     }
     100% {
-        background-position: 100% 30%, 0% 18%, 80% 55%, 100% 50%;
+        background-position:
+            100% 30%,
+            0% 18%,
+            80% 55%,
+            100% 50%;
     }
 }
 
