@@ -13,6 +13,37 @@
     <link rel="canonical" href="{% url 'shop:product_detail' product.id canonical_slug %}">
     <link rel="shortcut icon" href="{% static 'assets/images/logobl2.ico' %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        .main-image { position: relative; overflow: hidden; cursor: crosshair; }
+        .zoom-lens {
+            display: none;
+            position: absolute;
+            border: 2px solid #c8a96e;
+            border-radius: 4px;
+            background: rgba(200, 169, 110, 0.15);
+            pointer-events: none;
+            z-index: 10;
+        }
+        .zoom-result {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: calc(100% + 16px);
+            width: 420px;
+            height: 420px;
+            border: 1px solid #e0d4b8;
+            border-radius: 12px;
+            background-repeat: no-repeat;
+            background-color: #faf8f4;
+            z-index: 100;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+            overflow: hidden;
+        }
+        @media (max-width: 900px) {
+            .zoom-result { display: none !important; }
+            .main-image { cursor: default; }
+        }
+    </style>
 </head>
 <body>
     {% include 'includes/header.html' with header_show_cart=True %}
@@ -28,20 +59,15 @@
 
         <div class="product-container">
             <div class="product-gallery">
-                <div class="main-image">
+                <div class="main-image" id="zoomContainer">
                     <img id="mainProductImage" class="product-framed-image" src="{{ product.image.url }}" alt="{{ product.title }}" data-object-position="{{ product.image_object_position }}" style="--product-image-position: {{ product.image_object_position }};">
+                    <div id="zoomLens" class="zoom-lens" aria-hidden="true"></div>
+                    <div id="zoomResult" class="zoom-result" aria-hidden="true"></div>
                 </div>
                 <div class="thumbnail-images">
                     <img src="{{ product.image.url }}" alt="{{ product.title }}" class="thumbnail product-framed-image active" data-object-position="{{ product.image_object_position }}" style="--product-image-position: {{ product.image_object_position }};" onclick="changeImage(this)">
-                    {% if product.image_2 %}
-                    <img src="{{ product.image_2.url }}" alt="{{ product.title }} photo 2" class="thumbnail product-framed-image" data-object-position="{{ product.image_2_object_position }}" style="--product-image-position: {{ product.image_2_object_position }};" onclick="changeImage(this)">
-                    {% endif %}
-                    {% if product.image_3 %}
-                    <img src="{{ product.image_3.url }}" alt="{{ product.title }} photo 3" class="thumbnail product-framed-image" data-object-position="{{ product.image_3_object_position }}" style="--product-image-position: {{ product.image_3_object_position }};" onclick="changeImage(this)">
-                    {% endif %}
-                    {% if product.image_4 %}
-                    <img src="{{ product.image_4.url }}" alt="{{ product.title }} photo 4" class="thumbnail product-framed-image" data-object-position="{{ product.image_4_object_position }}" style="--product-image-position: {{ product.image_4_object_position }};" onclick="changeImage(this)">
-                    {% endif %}
+                    {% if product.image_2 %}<img src="{{ product.image_2.url }}" alt="{{ product.title }} photo 2" class="thumbnail product-framed-image" data-object-position="{{ product.image_2_object_position }}" style="--product-image-position: {{ product.image_2_object_position }};" onclick="changeImage(this)">{% endif %}
+                    {% if product.image_3 %}<img src="{{ product.image_3.url }}" alt="{{ product.title }} photo 3" class="thumbnail product-framed-image" data-object-position="{{ product.image_3_object_position }}" style="--product-image-position: {{ product.image_3_object_position }};" onclick="changeImage(this)">{% endif %}
                 </div>
             </div>
 
@@ -50,41 +76,21 @@
                 <p class="product-price-large">EUR {{ product.price }}</p>
                 <p class="product-description">{{ product.description }}</p>
 
-                {% if product.category == "Bento Candles" %}
-                {% include 'includes/bento_color_picker.html' with bento_white_src=product.image.url %}
-                {% endif %}
+                {% if product.category == "Bento Candles" %}{% include 'includes/bento_color_picker.html' with bento_white_src=product.image.url %}{% endif %}
 
                 <div class="product-details">
                     <h3 data-translate="details-title">Product Details</h3>
                     <ul class="product-specs-primary">
-                        <li>
-                            <strong><span data-translate="detail-parfum-label">Fragrance:</span></strong>
-                            {% if product.scent %}{{ product.scent }}{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}
-                        </li>
-                        <li>
-                            <strong><span data-translate="detail-meche-label">Wick:</span></strong>
-                            {% if product.wick %}{{ product.wick }}{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}
-                        </li>
-                        <li>
-                            <strong><span data-translate="detail-poids-label">Weight:</span></strong>
-                            {% if product.weight %}{{ product.weight }}{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}
-                        </li>
-                        <li>
-                            <strong><span data-translate="burn-time-label">Burn time:</span></strong>
-                            {% if product.burn_time %}{{ product.burn_time }}{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}
-                        </li>
+                        <li><strong><span data-translate="detail-parfum-label">Fragrance:</span></strong> {% if product.scent %}{{ product.scent }}{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}</li>
+                        <li><strong><span data-translate="detail-meche-label">Wick:</span></strong> {% if product.wick %}{{ product.wick }}{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}</li>
+                        <li><strong><span data-translate="detail-poids-label">Weight:</span></strong> {% if product.weight %}{{ product.weight }}{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}</li>
+                        <li><strong><span data-translate="burn-time-label">Burn time:</span></strong> {% if product.burn_time %}{{ product.burn_time }}{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}</li>
                     </ul>
                     <ul class="product-specs-secondary">
                         <li><strong><span data-translate="detail-category-label">Category:</span></strong> {{ product.category }}</li>
-                        {% if product.composition %}
-                        <li><strong><span data-translate="composition-label">Composition:</span></strong> {{ product.composition }}</li>
-                        {% endif %}
-                        {% if product.form_capacity %}
-                        <li><strong><span data-translate="detail-form-label">Form / capacity:</span></strong> {{ product.form_capacity }}</li>
-                        {% endif %}
-                        {% if product.wax_type %}
-                        <li><strong><span data-translate="detail-wax-label">Wax:</span></strong> {{ product.wax_type }}</li>
-                        {% endif %}
+                        {% if product.composition %}<li><strong><span data-translate="composition-label">Composition:</span></strong> {{ product.composition }}</li>{% endif %}
+                        {% if product.form_capacity %}<li><strong><span data-translate="detail-form-label">Form / capacity:</span></strong> {{ product.form_capacity }}</li>{% endif %}
+                        {% if product.wax_type %}<li><strong><span data-translate="detail-wax-label">Wax:</span></strong> {{ product.wax_type }}</li>{% endif %}
                         <li><strong><span data-translate="detail-stock-label">Stock:</span></strong> {{ product.stock }}</li>
                         <li><strong><span data-translate="detail-sku-label">SKU:</span></strong> #{{ product.id }}</li>
                     </ul>
@@ -120,14 +126,65 @@
     function changeImage(thumbnail) {
         const mainImage = document.getElementById('mainProductImage');
         if (!mainImage) return;
-
         mainImage.src = thumbnail.src;
         const position = thumbnail.dataset.objectPosition || '50% 50%';
         mainImage.dataset.objectPosition = position;
         mainImage.style.setProperty('--product-image-position', position);
-        document.querySelectorAll('.thumbnail').forEach((thumb) => thumb.classList.remove('active'));
+        document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
         thumbnail.classList.add('active');
+        initZoom();
     }
+
+    function initZoom() {
+        const container = document.getElementById('zoomContainer');
+        const img = document.getElementById('mainProductImage');
+        const lens = document.getElementById('zoomLens');
+        const result = document.getElementById('zoomResult');
+        if (!container || !img || !lens || !result) return;
+
+        if (window.innerWidth <= 900) return;
+
+        const ZOOM = 2.5;
+
+        function moveLens(e) {
+            e.preventDefault();
+            const rect = img.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+            const lensW = result.offsetWidth / ZOOM;
+            const lensH = result.offsetHeight / ZOOM;
+
+            let x = clientX - rect.left - lensW / 2;
+            let y = clientY - rect.top - lensH / 2;
+
+            x = Math.max(0, Math.min(x, img.offsetWidth - lensW));
+            y = Math.max(0, Math.min(y, img.offsetHeight - lensH));
+
+            lens.style.width = lensW + 'px';
+            lens.style.height = lensH + 'px';
+            lens.style.left = x + 'px';
+            lens.style.top = y + 'px';
+
+            const bgX = -(x * ZOOM);
+            const bgY = -(y * ZOOM);
+            result.style.backgroundImage = 'url(' + img.src + ')';
+            result.style.backgroundSize = (img.offsetWidth * ZOOM) + 'px ' + (img.offsetHeight * ZOOM) + 'px';
+            result.style.backgroundPosition = bgX + 'px ' + bgY + 'px';
+        }
+
+        container.onmouseenter = function() {
+            lens.style.display = 'block';
+            result.style.display = 'block';
+        };
+        container.onmouseleave = function() {
+            lens.style.display = 'none';
+            result.style.display = 'none';
+        };
+        container.onmousemove = moveLens;
+    }
+
+    document.addEventListener('DOMContentLoaded', initZoom);
     </script>
     <script src="{% static 'translations.js' %}"></script>
     {% if product.category == "Bento Candles" %}
