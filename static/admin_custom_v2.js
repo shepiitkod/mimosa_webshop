@@ -20,13 +20,13 @@ function ensureMimosaCopilotOnAdmin() {
     if (!document.querySelector('link[href*="admin_copilot.css"]')) {
         var link = document.createElement('link');
         link.rel = 'stylesheet';
-        link.href = '/static/admin_copilot.css?v=20260607-chat-history';
+        link.href = '/static/admin_copilot.css?v=20260607-ai-desc-btn';
         document.head.appendChild(link);
     }
 
     if (!document.querySelector('script[src*="admin_copilot.js"]')) {
         var script = document.createElement('script');
-        script.src = '/static/admin_copilot.js?v=20260607-chat-history';
+        script.src = '/static/admin_copilot.js?v=20260607-ai-desc-btn';
         script.defer = true;
         document.head.appendChild(script);
     }

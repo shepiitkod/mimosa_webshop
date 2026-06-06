@@ -430,6 +430,77 @@
     cursor: not-allowed;
 }
 
+/* ── Inline AI Description Button ──────────────────────────────────────── */
+#mimosa-ai-desc-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 10px;
+    padding: 9px 18px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #0d6b52 0%, #0a5844 100%);
+    color: #e8c96a;
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(13, 107, 82, 0.35);
+    transition:
+        opacity 0.2s,
+        transform 0.15s,
+        box-shadow 0.2s;
+}
+#mimosa-ai-desc-btn:hover:not(:disabled) {
+    opacity: 0.92;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(13, 107, 82, 0.45);
+}
+#mimosa-ai-desc-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+}
+.ai-desc-btn-icon {
+    font-size: 15px;
+    line-height: 1;
+}
+
+.ai-desc-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    background: rgba(13, 107, 82, 0.08);
+    border: 1px solid rgba(13, 107, 82, 0.25);
+    border-radius: 6px;
+    overflow: hidden;
+}
+.ai-desc-progress-bar {
+    width: 32px;
+    height: 4px;
+    background: linear-gradient(90deg, #0d6b52, #e8c96a, #0d6b52);
+    background-size: 200% 100%;
+    border-radius: 2px;
+    flex-shrink: 0;
+    animation: ai-desc-shimmer 1.4s linear infinite;
+}
+@keyframes ai-desc-shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+.ai-desc-progress-text {
+    font-size: 12px;
+    color: #0d6b52;
+    font-style: italic;
+}
+
 /* ── Responsive ─────────────────────────────────────────────────────────── */
 @media (max-width: 680px) {
     :root {

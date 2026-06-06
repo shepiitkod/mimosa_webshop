@@ -647,7 +647,188 @@
     });
   }
 
-  if (document.readyState === "loading")
-    document.addEventListener("DOMContentLoaded", mountCopilot);
-  else mountCopilot();
+  // ─── AI Description Button (inline in product form) ────────────────────
+  function initDescriptionAIButton() {
+    if (!isProductFormPage()) return;
+    if (document.getElementById("mimosa-ai-desc-btn")) return;
+
+    const descField = document.getElementById("id_description");
+    if (!descField) return;
+
+    // Build wrapper button
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.id = "mimosa-ai-desc-btn";
+    btn.innerHTML =
+      '<span class="ai-desc-btn-icon">✨</span> Написать описание с ИИ';
+    btn.title = "ИИ проанализирует заполненные поля и напишет описание";
+
+    // Progress bar element
+    const progress = document.createElement("div");
+    progress.id = "mimosa-ai-desc-progress";
+    progress.className = "ai-desc-progress";
+    progress.innerHTML =
+      '<div class="ai-desc-progress-bar"></div><span class="ai-desc-progress-text">Анализирую товар…</span>';
+    progress.style.display = "none";
+
+    // Insert button + progress right above the description textarea
+    const container =
+      descField.closest(".form-row") ||
+      descField.closest("p") ||
+      descField.parentNode;
+    container.insertBefore(progress, descField);
+    container.insertBefore(btn, descField);
+
+    function readFormValues() {
+      const fields = [
+        "title",
+        "category",
+        "price",
+        "scent",
+        "wick",
+        "weight",
+        "burn_time",
+        "composition",
+        "form_capacity",
+        "wax_type",
+        "stock",
+      ];
+      const values = {};
+      fields.forEach(function (key) {
+        const el = document.getElementById("id_" + key);
+        if (el && el.value && el.value.trim()) {
+          values[key] = el.value.trim();
+        }
+      });
+      return values;
+    }
+
+    function buildPrompt(values) {
+      const lines = [];
+      if (values.title) lines.push("Название: " + values.title);
+      if (values.category) lines.push("Категория: " + values.category);
+      if (values.price) lines.push("Цена: €" + values.price);
+      if (values.scent) lines.push("Аромат: " + values.scent);
+      if (values.wax_type) lines.push("Воск: " + values.wax_type);
+      if (values.composition) lines.push("Состав: " + values.composition);
+      if (values.form_capacity)
+        lines.push("Форма/объём: " + values.form_capacity);
+      if (values.wick) lines.push("Фитиль: " + values.wick);
+      if (values.weight) lines.push("Вес: " + values.weight);
+      if (values.burn_time) lines.push("Время горения: " + values.burn_time);
+
+      return (
+        "Напиши продающее описание для свечи Mimosa Atelier на основе этих данных:\n" +
+        lines.join("\n") +
+        "\n\nТребования: элегантный бутиковый стиль, 3–5 предложений, без заголовков, " +
+        "можно использовать <br> для переносов строк. Язык — французский (основной) " +
+        "или тот же что в названии товара."
+      );
+    }
+
+    function getCsrfToken() {
+      const c = document.cookie
+        .split(";")
+        .map((s) => s.trim().split("="))
+        .find((p) => p[0] === "csrftoken");
+      if (c) return decodeURIComponent(c[1]);
+      const inp = document.querySelector("[name=csrfmiddlewaretoken]");
+      return inp ? inp.value : "";
+    }
+
+    btn.addEventListener("click", async function () {
+      const values = readFormValues();
+      if (!values.title && !values.category) {
+        alert("Заполните хотя бы название товара перед генерацией описания.");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="ai-desc-btn-icon">⏳</span> Генерирую…';
+      progress.style.display = "flex";
+      descField.style.opacity = "0.4";
+
+      const prompt = buildPrompt(values);
+      let fullText = "";
+
+      try {
+        const response = await fetch("/admin/api/ai-enhance/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "X-CSRFToken": getCsrfToken(),
+          },
+          body: JSON.stringify({ prompt: prompt, history: [], stream: true }),
+          credentials: "same-origin",
+        });
+
+        if (!response.ok) {
+          throw new Error("Ошибка сервера " + response.status);
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder("utf-8");
+        let buffer = "";
+
+        while (true) {
+          const chunk = await reader.read();
+          if (chunk.done) break;
+          buffer += decoder.decode(chunk.value, { stream: true });
+          const lines = buffer.split("\n");
+          buffer = lines.pop() || "";
+          for (const line of lines) {
+            if (!line.startsWith("data: ")) continue;
+            try {
+              const payload = JSON.parse(line.slice(6));
+              if (payload.error) throw new Error(payload.error);
+              if (payload.delta) {
+                fullText += payload.delta;
+                // Stream live into the field
+                descField.value = fullText;
+                descField.dispatchEvent(new Event("input", { bubbles: true }));
+              }
+            } catch (e) {
+              /* ignore parse errors */
+            }
+          }
+        }
+
+        // Final cleanup
+        descField.value = fullText.trim();
+        descField.dispatchEvent(new Event("change", { bubbles: true }));
+        descField.style.opacity = "1";
+
+        btn.disabled = false;
+        btn.innerHTML =
+          '<span class="ai-desc-btn-icon">✅</span> Готово — проверьте описание';
+        progress.style.display = "none";
+
+        // Reset button after 4s
+        setTimeout(function () {
+          btn.innerHTML =
+            '<span class="ai-desc-btn-icon">✨</span> Написать описание с ИИ';
+        }, 4000);
+      } catch (err) {
+        descField.style.opacity = "1";
+        btn.disabled = false;
+        btn.innerHTML =
+          '<span class="ai-desc-btn-icon">❌</span> Ошибка — попробуйте снова';
+        progress.style.display = "none";
+        setTimeout(function () {
+          btn.innerHTML =
+            '<span class="ai-desc-btn-icon">✨</span> Написать описание с ИИ';
+        }, 3000);
+      }
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function () {
+      mountCopilot();
+      initDescriptionAIButton();
+    });
+  } else {
+    mountCopilot();
+    initDescriptionAIButton();
+  }
 })();
