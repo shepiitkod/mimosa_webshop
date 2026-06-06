@@ -1,225 +1,442 @@
 :root {
-  --copilot-emerald: #0d6b52;
-  --copilot-emerald-hover: #0a5844;
-  --copilot-gold: #d4af37;
-  --copilot-gold-soft: #e8c96a;
-  --copilot-obsidian: #1a1b1e;
-  --copilot-obsidian-2: #24262b;
-  --copilot-ivory: #f7f4ef;
-  --copilot-muted: #9ca3af;
-  --copilot-width: 380px;
-  --copilot-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    --copilot-emerald: #0d6b52;
+    --copilot-emerald-hover: #0a5844;
+    --copilot-gold: #d4af37;
+    --copilot-gold-soft: #e8c96a;
+    --copilot-obsidian: #1a1b1e;
+    --copilot-obsidian-2: #24262b;
+    --copilot-obsidian-3: #1e2023;
+    --copilot-ivory: #f7f4ef;
+    --copilot-muted: #9ca3af;
+    --copilot-sidebar-w: 190px;
+    --copilot-main-w: 400px;
+    --copilot-total-w: 590px;
+    --copilot-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
 }
 
+/* ── Tab button ─────────────────────────────────────────────────────────── */
 #mimosa-copilot-tab {
-  position: fixed !important;
-  right: 0 !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  z-index: 100001 !important;
-  display: flex !important;
-  align-items: center;
-  gap: 6px;
-  padding: 14px 12px 14px 16px;
-  border: none;
-  border-radius: 10px 0 0 10px;
-  background: linear-gradient(135deg, var(--copilot-emerald) 0%, #0a5844 100%);
-  color: var(--copilot-gold-soft);
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  cursor: pointer;
-  box-shadow: var(--copilot-shadow);
-  transition: transform 0.3s ease, padding-right 0.3s ease, background 0.2s ease;
-  visibility: visible !important;
-  opacity: 1 !important;
-  pointer-events: auto !important;
+    position: fixed !important;
+    right: 0 !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 100001 !important;
+    display: flex !important;
+    align-items: center;
+    gap: 6px;
+    padding: 14px 12px 14px 16px;
+    border: none;
+    border-radius: 10px 0 0 10px;
+    background: linear-gradient(
+        135deg,
+        var(--copilot-emerald) 0%,
+        #0a5844 100%
+    );
+    color: var(--copilot-gold-soft);
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    box-shadow: var(--copilot-shadow);
+    transition:
+        transform 0.3s ease,
+        padding-right 0.3s ease,
+        background 0.2s ease;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
 }
-
+#mimosa-copilot-tab .copilot-tab-icon {
+    writing-mode: horizontal-tb;
+}
+#mimosa-copilot-tab .copilot-tab-label {
+    writing-mode: vertical-rl;
+}
 #mimosa-copilot-tab:hover {
-  padding-right: 16px;
-  background: linear-gradient(135deg, var(--copilot-emerald-hover) 0%, #084a38 100%);
+    padding-right: 16px;
+    background: linear-gradient(
+        135deg,
+        var(--copilot-emerald-hover) 0%,
+        #084a38 100%
+    );
 }
-
 #mimosa-copilot-tab.is-open {
-  transform: translateY(-50%) translateX(calc(-1 * var(--copilot-width))) !important;
+    transform: translateY(-50%) translateX(calc(-1 * var(--copilot-total-w))) !important;
 }
 
+/* ── Panel ──────────────────────────────────────────────────────────────── */
 #mimosa-copilot-panel {
-  position: fixed !important;
-  right: 0 !important;
-  top: 0 !important;
-  width: var(--copilot-width);
-  height: 100vh;
-  z-index: 100000 !important;
-  display: flex;
-  flex-direction: column;
-  background: var(--copilot-obsidian);
-  color: var(--copilot-ivory);
-  font-family: "DM Sans", system-ui, sans-serif;
-  box-shadow: -8px 0 32px rgba(0, 0, 0, 0.4);
-  transform: translateX(100%);
-  transition: transform 0.3s ease;
-  visibility: visible !important;
-  opacity: 1 !important;
-  pointer-events: auto !important;
+    position: fixed !important;
+    right: 0 !important;
+    top: 0 !important;
+    width: var(--copilot-total-w);
+    height: 100vh;
+    z-index: 100000 !important;
+    display: flex;
+    flex-direction: row;
+    background: var(--copilot-obsidian);
+    color: var(--copilot-ivory);
+    font-family: "DM Sans", system-ui, sans-serif;
+    box-shadow: -8px 0 32px rgba(0, 0, 0, 0.4);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
 }
-
 #mimosa-copilot-panel.is-open {
-  transform: translateX(0) !important;
+    transform: translateX(0) !important;
 }
 
+/* ── Sidebar (chat history) ─────────────────────────────────────────────── */
+.copilot-sidebar {
+    width: var(--copilot-sidebar-w);
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--copilot-obsidian-3);
+    border-right: 1px solid rgba(212, 175, 55, 0.12);
+    overflow: hidden;
+}
+.copilot-sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 12px 12px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    flex-shrink: 0;
+}
+.copilot-sidebar-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--copilot-muted);
+}
+#copilot-new-chat {
+    background: rgba(13, 107, 82, 0.3);
+    border: 1px solid rgba(13, 107, 82, 0.5);
+    border-radius: 6px;
+    color: var(--copilot-gold-soft);
+    font-size: 18px;
+    line-height: 1;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+#copilot-new-chat:hover {
+    background: rgba(13, 107, 82, 0.55);
+}
+.copilot-chat-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 6px 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.copilot-chat-list::-webkit-scrollbar {
+    width: 3px;
+}
+.copilot-chat-list::-webkit-scrollbar-thumb {
+    background: rgba(212, 175, 55, 0.2);
+    border-radius: 2px;
+}
+
+.copilot-chat-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+    padding: 8px 8px;
+    background: transparent;
+    border: none;
+    border-radius: 7px;
+    color: var(--copilot-muted);
+    text-align: left;
+    cursor: pointer;
+    transition:
+        background 0.15s,
+        color 0.15s;
+}
+.copilot-chat-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--copilot-ivory);
+}
+.copilot-chat-item.is-active {
+    background: rgba(13, 107, 82, 0.25);
+    color: var(--copilot-ivory);
+    border-left: 2px solid var(--copilot-gold);
+}
+.copilot-chat-item-title {
+    flex: 1;
+    font-size: 11px;
+    line-height: 1.4;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+}
+.copilot-chat-del {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    color: rgba(156, 163, 175, 0.4);
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition:
+        opacity 0.15s,
+        color 0.15s;
+}
+.copilot-chat-item:hover .copilot-chat-del {
+    opacity: 1;
+}
+.copilot-chat-del:hover {
+    color: #fca5a5;
+}
+
+/* ── Main chat area ─────────────────────────────────────────────────────── */
+.copilot-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-width: 0;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
 .copilot-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 18px 16px;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.22);
-  flex-shrink: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 16px 16px 12px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.22);
+    flex-shrink: 0;
 }
-
 .copilot-header h2 {
-  margin: 0;
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 24px;
-  font-weight: 600;
-  color: var(--copilot-gold);
-  letter-spacing: 0.04em;
+    margin: 0;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--copilot-gold);
+    letter-spacing: 0.04em;
 }
-
-.copilot-header p {
-  margin: 4px 0 0;
-  font-size: 11px;
-  color: var(--copilot-muted);
+.copilot-page-ctx {
+    margin: 3px 0 0;
+    font-size: 10px;
+    color: var(--copilot-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
 }
-
 #mimosa-copilot-close {
-  width: 34px;
-  height: 34px;
-  border: 1px solid rgba(212, 175, 55, 0.35);
-  border-radius: 6px;
-  background: transparent;
-  color: var(--copilot-ivory);
-  font-size: 20px;
-  line-height: 1;
-  cursor: pointer;
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--copilot-ivory);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
 }
 
+/* ── Messages ───────────────────────────────────────────────────────────── */
 #mimosa-copilot-messages {
-  flex: 1;
-  overflow-y: auto;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#mimosa-copilot-messages::-webkit-scrollbar {
+    width: 4px;
+}
+#mimosa-copilot-messages::-webkit-scrollbar-thumb {
+    background: rgba(212, 175, 55, 0.2);
+    border-radius: 2px;
 }
 
 .copilot-msg {
-  max-width: 94%;
-  padding: 10px 12px;
-  border-radius: 10px;
-  font-size: 13px;
-  line-height: 1.55;
-  white-space: pre-wrap;
-  word-break: break-word;
+    max-width: 96%;
+    padding: 9px 11px;
+    border-radius: 10px;
+    font-size: 12.5px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    word-break: break-word;
 }
-
 .copilot-msg--user {
-  align-self: flex-end;
-  background: rgba(13, 107, 82, 0.45);
-  border: 1px solid rgba(13, 107, 82, 0.6);
+    align-self: flex-end;
+    background: rgba(13, 107, 82, 0.4);
+    border: 1px solid rgba(13, 107, 82, 0.55);
 }
-
 .copilot-msg--ai {
-  align-self: flex-start;
-  background: var(--copilot-obsidian-2);
-  border: 1px solid rgba(212, 175, 55, 0.15);
+    align-self: flex-start;
+    background: var(--copilot-obsidian-2);
+    border: 1px solid rgba(212, 175, 55, 0.13);
 }
-
 .copilot-ai-text {
-  white-space: pre-wrap;
-  word-break: break-word;
+    white-space: pre-wrap;
+    word-break: break-word;
 }
-
 .copilot-msg--ai.is-streaming .copilot-ai-text::after {
-  content: "▋";
-  display: inline;
-  margin-left: 2px;
-  color: var(--copilot-gold);
-  animation: copilot-cursor-blink 0.9s step-end infinite;
+    content: "▋";
+    display: inline;
+    margin-left: 2px;
+    color: var(--copilot-gold);
+    animation: copilot-blink 0.9s step-end infinite;
 }
-
-@keyframes copilot-cursor-blink {
-  50% {
-    opacity: 0;
-  }
+@keyframes copilot-blink {
+    50% {
+        opacity: 0;
+    }
 }
 
 .copilot-msg--loading {
-  align-self: flex-start;
-  color: var(--copilot-gold-soft);
-  font-style: italic;
+    align-self: flex-start;
+    color: var(--copilot-gold-soft);
+    font-style: italic;
+    font-size: 12px;
 }
-
 .copilot-msg--error {
-  align-self: flex-start;
-  background: rgba(220, 38, 38, 0.15);
-  border: 1px solid rgba(220, 38, 38, 0.4);
-  color: #fca5a5;
+    align-self: flex-start;
+    background: rgba(220, 38, 38, 0.12);
+    border: 1px solid rgba(220, 38, 38, 0.35);
+    color: #fca5a5;
 }
 
+/* ── Buttons inside messages ────────────────────────────────────────────── */
 .copilot-apply-btn {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 6px 12px;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  border: 1px solid var(--copilot-gold);
-  border-radius: 4px;
-  background: transparent;
-  color: var(--copilot-gold);
-  cursor: pointer;
+    display: inline-block;
+    margin-top: 8px;
+    padding: 5px 11px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border: 1px solid var(--copilot-gold);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--copilot-gold);
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.copilot-apply-btn:hover {
+    background: rgba(212, 175, 55, 0.12);
+}
+.copilot-apply-btn:disabled {
+    opacity: 0.5;
+    cursor: default;
 }
 
+.copilot-nav-btn {
+    display: inline-block;
+    margin-top: 8px;
+    margin-right: 6px;
+    padding: 5px 11px;
+    font-size: 11px;
+    font-weight: 600;
+    border: 1px solid rgba(13, 107, 82, 0.6);
+    border-radius: 4px;
+    background: rgba(13, 107, 82, 0.2);
+    color: #6ee7b7;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.copilot-nav-btn:hover {
+    background: rgba(13, 107, 82, 0.4);
+    color: #a7f3d0;
+}
+
+/* ── Input area ─────────────────────────────────────────────────────────── */
 .copilot-input-area {
-  flex-shrink: 0;
-  padding: 16px 18px 20px;
-  border-top: 1px solid rgba(212, 175, 55, 0.2);
-  background: var(--copilot-obsidian-2);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+    flex-shrink: 0;
+    padding: 12px 14px 16px;
+    border-top: 1px solid rgba(212, 175, 55, 0.18);
+    background: var(--copilot-obsidian-2);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
-
 #mimosa-copilot-input {
-  width: 100%;
-  min-height: 80px;
-  resize: vertical;
-  padding: 10px 12px;
-  font-size: 13px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 8px;
-  background: var(--copilot-obsidian);
-  color: var(--copilot-ivory);
-  box-sizing: border-box;
+    width: 100%;
+    min-height: 70px;
+    resize: vertical;
+    padding: 9px 11px;
+    font-size: 12.5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    background: var(--copilot-obsidian);
+    color: var(--copilot-ivory);
+    box-sizing: border-box;
+    font-family: "DM Sans", system-ui, sans-serif;
 }
-
+#mimosa-copilot-input:focus {
+    outline: none;
+    border-color: rgba(212, 175, 55, 0.4);
+}
+.copilot-input-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+.copilot-hint {
+    font-size: 10.5px;
+    color: var(--copilot-muted);
+    font-style: italic;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 #mimosa-copilot-send {
-  align-self: flex-end;
-  padding: 9px 24px;
-  border: none;
-  border-radius: 6px;
-  background: linear-gradient(135deg, var(--copilot-emerald), #0a5844);
-  color: var(--copilot-gold-soft);
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
+    flex-shrink: 0;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 6px;
+    background: linear-gradient(135deg, var(--copilot-emerald), #0a5844);
+    color: var(--copilot-gold-soft);
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+#mimosa-copilot-send:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
-#mimosa-copilot-send:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 680px) {
+    :root {
+        --copilot-total-w: 100vw;
+        --copilot-sidebar-w: 150px;
+    }
+    .copilot-page-ctx {
+        max-width: 120px;
+    }
 }
