@@ -42,22 +42,15 @@
 
         <section class="hero">
             <div class="hero-photos">
-                {% include 'includes/picture_opt.html' with
-                rel='assets/images/photo1' class_name='hero-photo hero-photo-1'
-                w=900 h=1348 alt='Candle from collection 1' fetchpriority='high'
-                only %} {% include 'includes/picture_opt.html' with
-                rel='assets/images/photo2' class_name='hero-photo hero-photo-2'
-                w=853 h=1280 alt='Photo model for the new collection'
-                loading='lazy' only %} {% include 'includes/picture_opt.html'
-                with rel='assets/images/photo3' class_name='hero-photo
-                hero-photo-3' w=900 h=1348 alt='Candle from collection 2'
-                loading='lazy' only %}
+                {% include 'includes/picture_opt.html' with rel='assets/images/photo1' class_name='hero-photo hero-photo-1' w=900 h=1348 alt='Candle from collection 1' fetchpriority='high' only %}
+                {% include 'includes/picture_opt.html' with rel='assets/images/photo2' class_name='hero-photo hero-photo-2' w=853 h=1280 alt='Photo model for the new collection' loading='lazy' only %}
+                {% include 'includes/picture_opt.html' with rel='assets/images/photo3' class_name='hero-photo hero-photo-3' w=900 h=1348 alt='Candle from collection 2' loading='lazy' only %}
             </div>
             <div class="hero-content">
                 <div class="hero-content-bg" aria-hidden="true">
                     <div class="hero-bg-track">
-                        {% include 'includes/hero_marquee_set.html' %} {%
-                        include 'includes/hero_marquee_set.html' %}
+                        {% include 'includes/hero_marquee_set.html' %}
+                        {% include 'includes/hero_marquee_set.html' %}
                     </div>
                 </div>
                 <h1 class="hero-headline" data-translate="hero-title">
@@ -127,10 +120,7 @@
                     <figure
                         class="promo-banner__media promo-banner__media--main"
                     >
-                        {% include 'includes/picture_opt.html' with
-                        rel='assets/images/contest-bouquet' w=1024 h=1280
-                        alt='Prize: handcrafted floral candle bouquet'
-                        loading='lazy' only %}
+                        {% include 'includes/picture_opt.html' with rel='assets/images/contest-bouquet' w=1024 h=1280 alt='Prize: handcrafted floral candle bouquet' loading='lazy' only %}
                     </figure>
                 </div>
             </div>
