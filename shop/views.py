@@ -92,7 +92,7 @@ def _create_stripe_session_for_order(request, order):
         _https(_build_site_url(reverse("shop:success")))
         + "?session_id={CHECKOUT_SESSION_ID}"
     )
-    cancel_url = _https(_build_site_url(reverse("shop:cart")))
+    cancel_url = _https(_build_site_url(reverse("shop:cancel")))
 
     line_items = [
         {
@@ -125,7 +125,6 @@ def _create_stripe_session_for_order(request, order):
         )
 
     allow_promotion_codes = True
-    print(f"DEBUG: Session created for {customer_email} with allow_promo=True")
 
     shipping_iso = (getattr(order, "shipping_country_code", "") or "").strip().upper()
     session_metadata = {
@@ -227,8 +226,33 @@ def _mark_order_paid_from_checkout_session(session_id: str) -> bool:
 
     if updated_fields:
         order.save(update_fields=sorted(set(updated_fields)))
+        if "status" in updated_fields:
+            _decrement_stock_for_order(order.id)
 
     return True
+
+
+def _decrement_stock_for_order(order_id: int) -> None:
+    """Atomically decrement product stock for a paid order. Safe to call multiple times (idempotent)."""
+    try:
+        with transaction.atomic():
+            items = (
+                OrderItem.objects.filter(order_id=order_id)
+                .select_related("product")
+                .select_for_update()
+            )
+            for item in items:
+                product = item.product
+                new_stock = max(0, product.stock - item.quantity)
+                Product.objects.filter(id=product.id, stock__gt=0).update(
+                    stock=new_stock
+                )
+    except Exception as e:
+        import logging
+
+        logging.getLogger(__name__).error(
+            "Stock decrement failed for order %s: %s", order_id, e
+        )
 
 
 def _get_cart(session):
@@ -680,21 +704,32 @@ def create_checkout_session(request):
         stripe_session = _create_stripe_session_for_order(request, order)
     except stripe.error.StripeError as e:
         order.delete()
-        print(traceback.format_exc())
-        return HttpResponse(
-            f"<h2>Stripe error</h2><pre>{e.user_message or str(e)}</pre>",
-            status=500,
+        import logging
+
+        logging.getLogger(__name__).error(
+            "Stripe error for user %s: %s", request.user, e
         )
+        messages.error(
+            request,
+            f"Erreur de paiement: {e.user_message or 'Stripe indisponible. Réessayez dans quelques instants.'}",
+        )
+        return redirect("shop:cart_detail")
     except Exception:
         order.delete()
-        error_detail = traceback.format_exc()
-        print(error_detail)
-        return HttpResponse(
-            f"<h2>Checkout error</h2><pre>{error_detail}</pre>",
-            status=500,
-        )
+        import logging
 
-    # Cart is cleared only after Stripe confirmed the session.
+        logging.getLogger(__name__).exception(
+            "Checkout error for user %s", request.user
+        )
+        messages.error(
+            request,
+            "Une erreur inattendue s'est produite lors du paiement. Veuillez réessayer.",
+        )
+        return redirect("shop:cart_detail")
+
+    # Save cart snapshot so it can be restored if user cancels payment.
+    request.session["_pre_checkout_cart"] = dict(request.session.get("cart", {}))
+    request.session["_pre_checkout_order_id"] = str(order.id)
     request.session["cart"] = {}
     request.session.modified = True
     return redirect(stripe_session.url, permanent=False)
@@ -736,6 +771,12 @@ def checkout_success(request):
 
 @require_GET
 def checkout_cancel(request):
+    # Restore cart if user came from checkout and cancelled
+    saved_cart = request.session.pop("_pre_checkout_cart", None)
+    if saved_cart:
+        request.session["cart"] = saved_cart
+        request.session.modified = True
+    request.session.pop("_pre_checkout_order_id", None)
     return render(request, "cancel.html")
 
 
@@ -801,6 +842,8 @@ def stripe_webhook(request):
 
                 if updated_fields:
                     order.save(update_fields=sorted(set(updated_fields)))
+                    if "status" in updated_fields:
+                        _decrement_stock_for_order(order.id)
             except Order.DoesNotExist:
                 return JsonResponse({"error": "Order not found."}, status=404)
 

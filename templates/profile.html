@@ -1,72 +1,125 @@
 {% load static %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
-<body class="profile-dashboard-page">
-    {% include 'includes/header.html' with header_show_cart=True %}
-    
-    <main id="main-content" tabindex="-1" class="profile-dashboard">
-        <section class="profile-user-card">
-            <div class="profile-avatar">{{ request.user.username|first|upper }}</div>
-            <h1 data-translate="profile-title">My Profile</h1>
-            <p class="profile-user-name">@{{ request.user.username }}</p>
-            <div class="profile-nav-links">
-                <a href="{% url 'shop:cart' %}" data-translate="profile-cart-link">Cart</a>
-                <a href="{% url 'shop:home' %}" data-translate="profile-home-link">Home</a>
-                <a href="{% url 'shop:logout' %}" data-translate="profile-logout">Logout</a>
-            </div>
-        </section>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>My Profile</title>
+        <link rel="stylesheet" href="{% static 'styles.css' %}" />
+        <style>
+            .status-paid {
+                background: #d4edda;
+                color: #155724;
+                border: 1px solid #c3e6cb;
+            }
+        </style>
+    </head>
+    <body class="profile-dashboard-page">
+        {% include 'includes/header.html' with header_show_cart=True %}
 
-        <section class="profile-orders-card">
-            <h2 data-translate="profile-orders">My Orders</h2>
-            {% if orders %}
+        <main id="main-content" tabindex="-1" class="profile-dashboard">
+            <section class="profile-user-card">
+                <div class="profile-avatar">
+                    {{ request.user.username|first|upper }}
+                </div>
+                <h1 data-translate="profile-title">My Profile</h1>
+                <p class="profile-user-name">@{{ request.user.username }}</p>
+                <div class="profile-nav-links">
+                    <a
+                        href="{% url 'shop:cart' %}"
+                        data-translate="profile-cart-link"
+                        >Cart</a
+                    >
+                    <a
+                        href="{% url 'shop:home' %}"
+                        data-translate="profile-home-link"
+                        >Home</a
+                    >
+                    <a
+                        href="{% url 'shop:logout' %}"
+                        data-translate="profile-logout"
+                        >Logout</a
+                    >
+                </div>
+            </section>
+
+            <section class="profile-orders-card">
+                <h2 data-translate="profile-orders">My Orders</h2>
+                {% if orders %}
                 <div class="orders-list">
-                {% for order in orders %}
+                    {% for order in orders %}
                     <article class="order-card">
                         <div class="order-card-top">
-                            <h3><span data-translate="order-label">Order</span> #{{ order.id }}</h3>
-                            {% if order.status == 'delivered' %}
-                                <span class="order-status-badge status-delivered">{{ order.get_status_display }}</span>
-                            {% elif order.status == 'shipped' or order.status == 'in_transit' %}
-                                <span class="order-status-badge status-transit">{{ order.get_status_display }}</span>
-                            {% elif order.status == 'processing' or order.status == 'pending' %}
-                                <span class="order-status-badge status-pending">{{ order.get_status_display }}</span>
+                            <h3>
+                                <span data-translate="order-label">Order</span>
+                                #{{ order.id }}
+                            </h3>
+                            {% if order.status == 'paid' %}
+                            <span class="order-status-badge status-paid"
+                                >✓ Payé</span
+                            >
+                            {% elif order.status == 'delivered' %}
+                            <span class="order-status-badge status-delivered"
+                                >{{ order.get_status_display }}</span
+                            >
+                            {% elif order.status == 'shipped' or order.status ==
+                            'in_transit' %}
+                            <span class="order-status-badge status-transit"
+                                >{{ order.get_status_display }}</span
+                            >
+                            {% elif order.status == 'processing' or order.status
+                            == 'pending' %}
+                            <span class="order-status-badge status-pending"
+                                >{{ order.get_status_display }}</span
+                            >
                             {% else %}
-                                <span class="order-status-badge status-neutral">{{ order.get_status_display }}</span>
+                            <span class="order-status-badge status-neutral"
+                                >{{ order.get_status_display }}</span
+                            >
                             {% endif %}
                         </div>
-                        <p class="order-meta"><span data-translate="order-date">Date:</span> {{ order.created_at }}</p>
-                        <p class="order-meta"><span data-translate="order-amount">Amount:</span> EUR {{ order.total_amount }}</p>
+                        <p class="order-meta">
+                            <span data-translate="order-date">Date:</span> {{
+                            order.created_at }}
+                        </p>
+                        <p class="order-meta">
+                            <span data-translate="order-amount">Amount:</span>
+                            EUR {{ order.total_amount }}
+                        </p>
                         <ul class="order-items-list">
                             {% for item in order.items.all %}
-                                <li>{{ item.product.title }} x {{ item.quantity }} (EUR {{ item.price_at_purchase }})</li>
+                            <li>
+                                {{ item.product.title }} x {{ item.quantity }}
+                                (EUR {{ item.price_at_purchase }})
+                            </li>
                             {% endfor %}
                         </ul>
-                        {% if order.status != 'paid' %}
-                        <form method="post" action="{% url 'shop:create_checkout_session_for_order' order.id %}">
+                        {% if order.status == 'processing' %}
+                        <form
+                            method="post"
+                            action="{% url 'shop:create_checkout_session_for_order' order.id %}"
+                        >
                             {% csrf_token %}
-                            <button type="submit" class="profile-pay-btn">Pay Order</button>
+                            <button type="submit" class="profile-pay-btn">
+                                💳 Payer la commande
+                            </button>
                         </form>
                         {% endif %}
                     </article>
-                {% endfor %}
+                    {% endfor %}
                 </div>
-            {% else %}
+                {% else %}
                 <p class="profile-empty-state">No orders yet.</p>
-            {% endif %}
-        </section>
-    </main>
+                {% endif %}
+            </section>
+        </main>
 
-    {% include 'includes/footer.html' %}
-    <script>
-        window.STRIPE_PUBLISHABLE_KEY = "{{ STRIPE_PUBLISHABLE_KEY|escapejs }}";
-    </script>
-    
-    <script src="{% static 'translations.js' %}" defer></script>
-</body>
+        {% include 'includes/footer.html' %}
+        <script>
+            window.STRIPE_PUBLISHABLE_KEY =
+                "{{ STRIPE_PUBLISHABLE_KEY|escapejs }}";
+        </script>
+
+        <script src="{% static 'translations.js' %}" defer></script>
+    </body>
 </html>

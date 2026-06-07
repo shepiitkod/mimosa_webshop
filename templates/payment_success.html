@@ -1,22 +1,74 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Оплата успешна</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
-<body class="home-page">
-    {% include 'includes/header.html' with header_show_cart=True %}
-
-    <main id="main-content" tabindex="-1" class="about-snippet" style="margin-top: 80px; max-width: 760px;">
-        <h1>Оплата прошла успешно</h1>
-        <p>Ваш платеж подтвержден. Заказ уже передан в обработку.</p>
-        <a class="hero-btn" href="{% url 'shop:profile' %}">Перейти в профиль</a>
-    </main>
-
-    {% include 'includes/footer.html' with footer_lang='ru' %}
-    <script src="{% static 'translations.js' %}" defer></script>
-</body>
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Paiement confirmé — Mimosa Atelier</title>
+        <link rel="stylesheet" href="{% static 'styles.css' %}" />
+        <style>
+            .payment-success-wrap {
+                max-width: 600px;
+                margin: 100px auto 60px;
+                padding: 48px 40px;
+                background: linear-gradient(135deg, #fffdf8, #fff8e8);
+                border: 1px solid rgba(215, 170, 50, 0.25);
+                border-radius: 24px;
+                text-align: center;
+            }
+            .payment-success-icon {
+                font-size: 56px;
+                margin-bottom: 20px;
+            }
+            .payment-success-wrap h1 {
+                font-family: "Cormorant Garamond", Georgia, serif;
+                font-size: 2rem;
+                color: #2d2112;
+                margin-bottom: 14px;
+            }
+            .payment-success-wrap p {
+                color: #6b5533;
+                font-size: 1rem;
+                line-height: 1.65;
+                margin-bottom: 12px;
+            }
+            .payment-success-actions {
+                display: flex;
+                gap: 14px;
+                justify-content: center;
+                flex-wrap: wrap;
+                margin-top: 32px;
+            }
+        </style>
+    </head>
+    <body class="home-page">
+        {% include 'includes/header.html' with header_show_cart=True %}
+        <main id="main-content" tabindex="-1">
+            <div class="payment-success-wrap">
+                <div class="payment-success-icon">✨</div>
+                <h1>Paiement confirmé</h1>
+                <p>
+                    Votre paiement a bien été reçu. Votre commande est désormais
+                    en cours de traitement.
+                </p>
+                <div class="payment-success-actions">
+                    <a class="hero-btn" href="{% url 'shop:profile' %}"
+                        >Voir mes commandes</a
+                    >
+                    <a
+                        class="hero-btn"
+                        href="{% url 'shop:products' %}"
+                        style="
+                            background: transparent;
+                            border: 1px solid #c8a050;
+                            color: #7a5000;
+                        "
+                        >Continuer mes achats</a
+                    >
+                </div>
+            </div>
+        </main>
+        {% include 'includes/footer.html' %}
+        <script src="{% static 'translations.js' %}" defer></script>
+    </body>
 </html>

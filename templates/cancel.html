@@ -1,22 +1,81 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Оплата отменена</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
-<body class="home-page">
-    {% include 'includes/header.html' with header_show_cart=True %}
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Paiement annulé — Mimosa Atelier</title>
+        <link rel="stylesheet" href="{% static 'styles.css' %}" />
+        <style>
+            .payment-cancel-wrap {
+                max-width: 600px;
+                margin: 100px auto 60px;
+                padding: 48px 40px;
+                background: #fffdf8;
+                border: 1px solid rgba(215, 170, 50, 0.2);
+                border-radius: 24px;
+                text-align: center;
+            }
+            .payment-cancel-icon {
+                font-size: 48px;
+                margin-bottom: 20px;
+            }
+            .payment-cancel-wrap h1 {
+                font-family: "Cormorant Garamond", Georgia, serif;
+                font-size: 2rem;
+                color: #2d2112;
+                margin-bottom: 14px;
+            }
+            .payment-cancel-wrap p {
+                color: #6b5533;
+                font-size: 1rem;
+                line-height: 1.65;
+                margin-bottom: 12px;
+            }
+            .payment-cancel-actions {
+                display: flex;
+                gap: 14px;
+                justify-content: center;
+                flex-wrap: wrap;
+                margin-top: 32px;
+            }
+        </style>
+    </head>
+    <body class="home-page">
+        {% include 'includes/header.html' with header_show_cart=True %}
 
-    <main id="main-content" tabindex="-1" class="about-snippet" style="margin-top: 80px; max-width: 760px;">
-        <h1>Оплата отменена</h1>
-        <p>Платеж не был завершен. Вы можете вернуться в корзину и попробовать снова.</p>
-        <a class="hero-btn" href="{% url 'shop:cart' %}">Вернуться в корзину</a>
-    </main>
+        <main id="main-content" tabindex="-1">
+            <div class="payment-cancel-wrap">
+                <div class="payment-cancel-icon">🛒</div>
+                <h1>Paiement annulé</h1>
+                <p>
+                    Votre paiement n'a pas été complété. Votre panier a été
+                    restauré — vous pouvez reprendre votre commande quand vous
+                    le souhaitez.
+                </p>
+                <p>
+                    Si vous avez rencontré un problème, n'hésitez pas à nous
+                    contacter.
+                </p>
+                <div class="payment-cancel-actions">
+                    <a class="hero-btn" href="{% url 'shop:cart' %}"
+                        >Retourner au panier</a
+                    >
+                    <a
+                        class="hero-btn"
+                        href="{% url 'shop:contact' %}"
+                        style="
+                            background: transparent;
+                            border: 1px solid #c8a050;
+                            color: #7a5000;
+                        "
+                        >Nous contacter</a
+                    >
+                </div>
+            </div>
+        </main>
 
-    {% include 'includes/footer.html' with footer_lang='ru' %}
-    <script src="{% static 'translations.js' %}" defer></script>
-</body>
+        {% include 'includes/footer.html' %}
+        <script src="{% static 'translations.js' %}" defer></script>
+    </body>
 </html>
