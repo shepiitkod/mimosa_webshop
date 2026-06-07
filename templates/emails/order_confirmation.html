@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Confirmed — Mimosa Atelier</title>
+<style>
+  body { margin:0; padding:0; background:#f5f0e8; font-family: Georgia, 'Times New Roman', serif; color:#2d2112; }
+  .wrapper { max-width:600px; margin:40px auto; background:#fffdf8; border-radius:16px; overflow:hidden; border:1px solid rgba(215,170,50,0.2); }
+  .header { background: linear-gradient(135deg,#2d2112 0%,#4a3520 100%); padding:36px 40px; text-align:center; }
+  .header h1 { margin:0; color:#e8c97a; font-size:28px; letter-spacing:4px; font-weight:normal; font-family:Georgia,serif; }
+  .header p { margin:6px 0 0; color:rgba(232,201,122,0.7); font-size:13px; letter-spacing:2px; }
+  .body { padding:36px 40px; }
+  .greeting { font-size:18px; margin-bottom:20px; color:#2d2112; }
+  .status-badge { display:inline-block; background:linear-gradient(135deg,#c8a050,#e8c97a); color:#2d2112; padding:8px 20px; border-radius:20px; font-size:13px; font-weight:bold; letter-spacing:1px; margin-bottom:28px; }
+  .order-meta { background:#faf6ee; border-radius:10px; padding:18px 22px; margin-bottom:24px; }
+  .order-meta p { margin:4px 0; font-size:14px; color:#6b5533; }
+  .order-meta strong { color:#2d2112; }
+  table { width:100%; border-collapse:collapse; margin-bottom:20px; }
+  th { background:#f0e8d4; padding:10px 12px; text-align:left; font-size:12px; letter-spacing:1px; color:#7a5000; font-weight:normal; }
+  td { padding:12px; border-bottom:1px solid #f0e8d4; font-size:14px; vertical-align:top; }
+  tr:last-child td { border-bottom:none; }
+  .total-row { background:#faf6ee; }
+  .total-row td { font-weight:bold; color:#2d2112; padding:14px 12px; }
+  .shipping-box { background:#f5f0e8; border-radius:10px; padding:16px 20px; margin-bottom:24px; font-size:14px; }
+  .shipping-box h3 { margin:0 0 8px; font-size:13px; letter-spacing:1px; color:#7a5000; font-weight:normal; }
+  .cta { text-align:center; margin:28px 0; }
+  .btn { display:inline-block; background:linear-gradient(135deg,#c8a050,#b8902a); color:#fff !important; text-decoration:none; padding:14px 32px; border-radius:30px; font-size:14px; letter-spacing:1px; }
+  .footer { background:#2d2112; padding:24px 40px; text-align:center; color:rgba(232,201,122,0.6); font-size:12px; }
+  .footer a { color:#e8c97a; text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="header">
+    <h1>MIMOSA</h1>
+    <p>atelier artisanal</p>
+  </div>
+  <div class="body">
+    <p class="greeting">Dear {{ customer_name }},</p>
+    <p>Thank you for your order! We are preparing your candles with care.</p>
+    <div><span class="status-badge">&#10003; Payment confirmed</span></div>
+
+    <div class="order-meta">
+      <p><strong>Order #{{ order.id }}</strong></p>
+      <p>Date: {{ order.created_at|date:"d F Y" }}</p>
+      {% if order.shipping_address %}
+      <p>Shipping to: {{ order.shipping_address }}, {{ order.city }} {{ order.postal_code }}, {{ order.country }}</p>
+      {% endif %}
+      {% if order.shipping_carrier %}
+      <p>Carrier: {{ order.shipping_carrier|upper }}</p>
+      {% endif %}
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th style="text-align:right">Qty</th>
+          <th style="text-align:right">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in items %}
+        <tr>
+          <td>{{ item.product.title }}</td>
+          <td style="text-align:right">{{ item.quantity }}</td>
+          <td style="text-align:right">{{ item.price_at_purchase }} &euro;</td>
+        </tr>
+        {% endfor %}
+        {% if order.shipping_cost %}
+        <tr>
+          <td colspan="2" style="text-align:right; color:#7a5000; font-size:13px;">Shipping</td>
+          <td style="text-align:right; color:#7a5000; font-size:13px;">{{ order.shipping_cost }} &euro;</td>
+        </tr>
+        {% endif %}
+        <tr class="total-row">
+          <td colspan="2">Total</td>
+          <td style="text-align:right">{{ order.total_amount }} &euro;</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="cta">
+      <a href="{{ site_url }}/profile/" class="btn">View my orders</a>
+    </div>
+
+    <p style="font-size:13px; color:#7a5533; text-align:center;">
+      Questions? Write us at <a href="mailto:hello@mimosa-atelier.com" style="color:#c8a050;">hello@mimosa-atelier.com</a>
+    </p>
+  </div>
+  <div class="footer">
+    <p>&copy; Mimosa Atelier artisanal &mdash; handcrafted candles</p>
+    <p><a href="{{ site_url }}">mimosa-atelier.com</a></p>
+  </div>
+</div>
+</body>
+</html>

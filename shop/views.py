@@ -30,6 +30,7 @@ from .ai_service import (
     stream_sse_events,
     wants_product_form_fill,
 )
+from .emails import send_admin_order_notification, send_order_confirmation_email
 from .models import NewsletterUser, Order, OrderItem, Product
 
 CATEGORY_SLUG_ALIASES = {
@@ -228,6 +229,8 @@ def _mark_order_paid_from_checkout_session(session_id: str) -> bool:
         order.save(update_fields=sorted(set(updated_fields)))
         if "status" in updated_fields:
             _decrement_stock_for_order(order.id)
+            send_order_confirmation_email(order)
+            send_admin_order_notification(order)
 
     return True
 
@@ -823,6 +826,7 @@ def stripe_webhook(request):
                     order.total_amount = final_amount
                     updated_fields.append("total_amount")
 
+                was_already_paid = order.status == Order.STATUS_PAID
                 order.status = Order.STATUS_PAID
                 updated_fields.append("status")
 
@@ -842,8 +846,10 @@ def stripe_webhook(request):
 
                 if updated_fields:
                     order.save(update_fields=sorted(set(updated_fields)))
-                    if "status" in updated_fields:
+                    if "status" in updated_fields and not was_already_paid:
                         _decrement_stock_for_order(order.id)
+                        send_order_confirmation_email(order)
+                        send_admin_order_notification(order)
             except Order.DoesNotExist:
                 return JsonResponse({"error": "Order not found."}, status=404)
 

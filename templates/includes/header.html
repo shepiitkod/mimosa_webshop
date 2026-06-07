@@ -6,35 +6,81 @@
     class="site-header site-header--at-top"
     id="kinetic-header"
     data-kinetic-header
-    style="--kinetic-scroll: 0;"
+    style="--kinetic-scroll: 0"
 >
     <div class="site-header__surface">
-        <div class="site-header__pad" aria-hidden="true"></div>
-
-        <div class="site-header__brand">
-            <a href="{% url 'shop:home' %}" class="site-header__logo-link" aria-label="Mimosa home">
-                <img src="{% static 'assets/images/logobl2.ico' %}" alt="" width="250" height="80" decoding="async" class="site-header__logo-img">
-            </a>
-        </div>
-
         <div class="site-header__tools">
             <div class="language-switcher" aria-label="Language switcher">
-                <button class="lang-current" type="button" aria-label="Toggle language menu" aria-expanded="false">EN</button>
+                <button
+                    class="lang-current"
+                    type="button"
+                    aria-label="Toggle language menu"
+                    aria-expanded="false"
+                >
+                    EN
+                </button>
                 <div class="lang-options" aria-label="Language options">
-                    <button class="lang-btn active" data-lang="en" title="English" type="button">EN</button>
-                    <button class="lang-btn" data-lang="fr" title="Français" type="button">FR</button>
-                    <button class="lang-btn" data-lang="ua" title="Українська" type="button">UA</button>
-                    <button class="lang-btn" data-lang="ru" title="Русский" type="button">RU</button>
+                    <button
+                        class="lang-btn active"
+                        data-lang="en"
+                        title="English"
+                        type="button"
+                    >
+                        EN
+                    </button>
+                    <button
+                        class="lang-btn"
+                        data-lang="fr"
+                        title="Français"
+                        type="button"
+                    >
+                        FR
+                    </button>
+                    <button
+                        class="lang-btn"
+                        data-lang="ua"
+                        title="Українська"
+                        type="button"
+                    >
+                        UA
+                    </button>
+                    <button
+                        class="lang-btn"
+                        data-lang="ru"
+                        title="Русский"
+                        type="button"
+                    >
+                        RU
+                    </button>
                 </div>
             </div>
 
-            <a href="{% url 'shop:profile' %}" class="profile-icon site-header__profile" aria-label="Open profile">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
-                    <path d="M4 20c0-4 4-6 8-6s8 2 8 6"
+            <a
+                href="{% url 'shop:profile' %}"
+                class="profile-icon site-header__profile"
+                aria-label="Open profile"
+            >
+                <svg
+                    width="40"
+                    height="40"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                >
+                    <circle
+                        cx="12"
+                        cy="8"
+                        r="4"
                         stroke="currentColor"
                         stroke-width="2"
-                        stroke-linecap="round"/>
+                    />
+                    <path
+                        d="M4 20c0-4 4-6 8-6s8 2 8 6"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    />
                 </svg>
             </a>
 
@@ -57,18 +103,53 @@
             data-nav-root
         >
             <ul class="site-header__nav-list">
-                <li><a href="{% url 'shop:home' %}" class="site-header__link magnetic-link" data-translate="nav-home">Home</a></li>
+                <li>
+                    <a
+                        href="{% url 'shop:home' %}"
+                        class="site-header__link magnetic-link"
+                        data-translate="nav-home"
+                        >Home</a
+                    >
+                </li>
                 {% if header_show_cart %}
-                <li><a href="{% url 'shop:cart' %}" class="site-header__link magnetic-link nav-link-cart">Cart ({{ cart_items_count }})</a></li>
+                <li>
+                    <a
+                        href="{% url 'shop:cart' %}"
+                        class="site-header__link magnetic-link nav-link-cart"
+                        >Cart ({{ cart_items_count }})</a
+                    >
+                </li>
                 {% endif %}
                 <li class="products-menu">
-                    <a href="{% url 'shop:products' %}" class="site-header__link magnetic-link" data-translate="nav-products">Products</a>
-                    <div class="dropdown-catalog" aria-label="Product categories">
+                    <a
+                        href="{% url 'shop:products' %}"
+                        class="site-header__link magnetic-link"
+                        data-translate="nav-products"
+                        >Products</a
+                    >
+                    <div
+                        class="dropdown-catalog"
+                        aria-label="Product categories"
+                    >
                         {% include 'includes/nav_catalog_dropdown.html' %}
                     </div>
                 </li>
-                <li><a href="{% url 'shop:about' %}" class="site-header__link magnetic-link" data-translate="nav-about">About Us</a></li>
-                <li><a href="{% url 'shop:contact' %}" class="site-header__link magnetic-link" data-translate="nav-contact">Contact</a></li>
+                <li>
+                    <a
+                        href="{% url 'shop:about' %}"
+                        class="site-header__link magnetic-link"
+                        data-translate="nav-about"
+                        >About Us</a
+                    >
+                </li>
+                <li>
+                    <a
+                        href="{% url 'shop:contact' %}"
+                        class="site-header__link magnetic-link"
+                        data-translate="nav-contact"
+                        >Contact</a
+                    >
+                </li>
             </ul>
         </nav>
     </div>

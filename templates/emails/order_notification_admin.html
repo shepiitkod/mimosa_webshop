@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>New Order — Mimosa Admin</title>
+<style>
+  body { margin:0; padding:20px; background:#f5f0e8; font-family:Arial,sans-serif; color:#2d2112; }
+  .wrapper { max-width:600px; margin:0 auto; background:#fff; border-radius:8px; overflow:hidden; border:1px solid #ddd; }
+  .header { background:#2d2112; padding:20px 30px; }
+  .header h1 { margin:0; color:#e8c97a; font-size:18px; }
+  .body { padding:24px 30px; }
+  .alert { background:#fff3cd; border:1px solid #ffc107; border-radius:6px; padding:12px 16px; margin-bottom:20px; font-weight:bold; }
+  table { width:100%; border-collapse:collapse; }
+  th { background:#f5f0e8; padding:8px 10px; text-align:left; font-size:12px; color:#7a5000; }
+  td { padding:10px; border-bottom:1px solid #eee; font-size:14px; }
+  .total { font-weight:bold; background:#faf6ee; }
+  .btn { display:inline-block; background:#2d2112; color:#e8c97a !important; text-decoration:none; padding:10px 24px; border-radius:6px; margin-top:16px; font-size:14px; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="header">
+    <h1>New paid order #{{ order.id }}</h1>
+  </div>
+  <div class="body">
+    <div class="alert">New order received and payment confirmed!</div>
+
+    <p><strong>Customer:</strong> {{ order.user.get_full_name|default:order.user.username }} ({{ order.user.email }})</p>
+    <p><strong>Date:</strong> {{ order.created_at|date:"d F Y H:i" }}</p>
+    {% if order.shipping_address %}
+    <p><strong>Ship to:</strong> {{ order.shipping_address }}, {{ order.city }} {{ order.postal_code }}, {{ order.country }}</p>
+    {% endif %}
+    {% if order.shipping_carrier %}<p><strong>Carrier:</strong> {{ order.shipping_carrier|upper }}</p>{% endif %}
+
+    <table>
+      <thead><tr><th>Product</th><th>Qty</th><th>Price</th></tr></thead>
+      <tbody>
+        {% for item in items %}
+        <tr>
+          <td>{{ item.product.title }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.price_at_purchase }} &euro;</td>
+        </tr>
+        {% endfor %}
+        {% if order.shipping_cost %}
+        <tr><td colspan="2">Shipping</td><td>{{ order.shipping_cost }} &euro;</td></tr>
+        {% endif %}
+        <tr class="total"><td colspan="2">Total</td><td>{{ order.total_amount }} &euro;</td></tr>
+      </tbody>
+    </table>
+
+    <a href="{{ site_url }}/admin/shop/order/{{ order.id }}/change/" class="btn">Open in Admin</a>
+  </div>
+</div>
+</body>
+</html>
