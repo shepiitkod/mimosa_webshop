@@ -474,8 +474,14 @@ def profile_view(request):
         )
         .order_by("-created_at")
     )
-    total_spent = sum(o.total_amount for o in orders)
-    cart_count = sum(int(qty) for qty in _get_cart(request.session).values())
+    try:
+        total_spent = sum((o.total_amount or 0) for o in orders)
+    except Exception:
+        total_spent = 0
+    try:
+        cart_count = sum(int(qty) for qty in _get_cart(request.session).values())
+    except Exception:
+        cart_count = 0
     return render(
         request,
         "profile.html",
