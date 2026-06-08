@@ -467,14 +467,25 @@ def logout_view(request):
 @login_required
 @require_GET
 def profile_view(request):
-    orders = (
+    orders = list(
         Order.objects.filter(user=request.user)
         .prefetch_related(
             Prefetch("items", queryset=OrderItem.objects.select_related("product"))
         )
         .order_by("-created_at")
     )
-    return render(request, "profile.html", {"orders": orders})
+    total_spent = sum(o.total_amount for o in orders)
+    cart_count = sum(int(qty) for qty in _get_cart(request.session).values())
+    return render(
+        request,
+        "profile.html",
+        {
+            "orders": orders,
+            "orders_count": len(orders),
+            "total_spent": total_spent,
+            "cart_count": cart_count,
+        },
+    )
 
 
 @require_POST
