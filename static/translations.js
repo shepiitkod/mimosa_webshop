@@ -272,6 +272,56 @@ const translations = {
     "cookie-accept": "Accept",
     "cookie-decline": "Decline",
     "order-now": "Order Now",
+
+    // ── Seconde vie page ──────────────────────────────────────────────────
+    "nav-sub-seconde-vie": "🌿 Seconde vie",
+    "sv-hero-eyebrow": "Mimosa Atelier \u2014 Exclusive Service",
+    "sv-hero-tagline":
+      "Artisan Refilling \u00b7 Natural Soy Wax \u00b7 Fragrances from Provence",
+    "sv-gallery-eyebrow": "The Atelier in Images",
+    "sv-gallery-heading": "The Art of Refilling",
+    "sv-story-intro": "Dear friends of Mimosa Atelier,",
+    "sv-story-p1":
+      "We deeply believe that beauty deserves a second chance. That is why we offer a unique eco-conscious service: the rebirth of your favourite candle containers.",
+    "sv-story-p2":
+      "Your vintage glass jars, crystal cups, ceramic pots — any vessel dear to your heart can be transformed into a new artisan candle, hand-poured with our natural soy wax and fragrances selected in Provence.",
+    "sv-story-how": "How does it work?",
+    "sv-story-p3":
+      "Simply send us your container by post or drop it off in person. We inspect it with care, clean it gently, then refill it with the fragrance of your choice from our collection.",
+    "sv-story-p4":
+      "A few days later, your treasure is reborn — accompanied by a natural cotton wick, a personalised label and careful packaging that reflects the soul of Mimosa Atelier.",
+    "sv-story-p5":
+      "This service is an invitation to slow down, to choose differently, to give new life to objects that already have a story. Together, we extend beauty and care for our planet.",
+    "sv-process-title": "The Process in 4 Steps",
+    "sv-step1-title": "Send Your Container",
+    "sv-step1-text":
+      "Send us your jar, pot or cup by post, or drop it off directly at our studio in N\u00eemes.",
+    "sv-step2-title": "Inspection & Cleaning",
+    "sv-step2-text":
+      "We carefully examine your container and gently clean it to ensure a perfect new life.",
+    "sv-step3-title": "Artisan Pour",
+    "sv-step3-text":
+      "Your candle is hand-poured with our soy wax and the fragrance of your choice from our collection.",
+    "sv-step4-title": "Careful Delivery",
+    "sv-step4-text":
+      "Your creation is returned to you lovingly packaged, ready to illuminate your interior or be gifted.",
+    "sv-catalog-eyebrow": "The Mimosa Atelier Collection",
+    "sv-catalog-title": "Our Fragrances",
+    "sv-catalog-lead":
+      "Eighteen artisan fragrances \u2014 each an invitation to travel",
+    "sv-modal-intensity": "Intensity",
+    "sv-modal-notes": "Olfactory Notes",
+    "sv-modal-seasons": "Seasons",
+    "sv-modal-moments": "Perfect Moments",
+    "sv-modal-pairs": "Pairs well with \u2014",
+    "sv-pricing-title": "Bespoke Pricing",
+    "sv-pricing-text":
+      "Pricing is established by quote, based on the volume of the container and the number of candles required. Each project is unique \u2014 we take the time to understand your vision and offer a result that reflects you.",
+    "sv-pricing-subtext":
+      "Send us a photo of your container and your favourite fragrances, and we will respond within 24 hours with a personalised estimate.",
+    "sv-pricing-cta": "Request a Quote",
+    "sv-contact-label": "For any questions, write to us",
+    "sv-contact-sign": "\u2014 The Mimosa Atelier team, N\u00eemes, France",
   },
 
   fr: {
@@ -547,6 +597,57 @@ const translations = {
     "cookie-accept": "Accepter",
     "cookie-decline": "Refuser",
     "order-now": "Commander",
+
+    // ── Page Seconde vie ──────────────────────────────────────────────────
+    "nav-sub-seconde-vie": "🌿 Seconde vie",
+    "sv-hero-eyebrow": "Mimosa Atelier \u2014 Service exclusif",
+    "sv-hero-tagline":
+      "Rechargement artisanal \u00b7 Cire de soja naturelle \u00b7 Parfums de Provence",
+    "sv-gallery-eyebrow": "L\u2019atelier en images",
+    "sv-gallery-heading": "L\u2019art du rechargement",
+    "sv-story-intro": "Chers amis et ch\u00e8res amies de Mimosa Atelier,",
+    "sv-story-p1":
+      "Nous croyons profond\u00e9ment que la beaut\u00e9 m\u00e9rite une seconde chance. C\u2019est pourquoi nous vous proposons un service unique et \u00e9co-responsable\u00a0: la renaissance de vos contenants de bougies pr\u00e9f\u00e9r\u00e9s.",
+    "sv-story-p2":
+      "Vos bocaux en verre ancien, vos coupes vintages, vos pots en c\u00e9ramique\u00a0\u2014 chaque r\u00e9cipient qui vous tient \u00e0 c\u0153ur peut \u00eatre transform\u00e9 en une nouvelle bougie artisanale, coul\u00e9e \u00e0 la main avec notre cire de soja naturelle et nos parfums s\u00e9lectionn\u00e9s en Provence.",
+    "sv-story-how": "Comment \u00e7a marche\u00a0?",
+    "sv-story-p3":
+      "Il vous suffit de nous envoyer votre contenant par courrier ou de nous le d\u00e9poser en main propre. Nous l\u2019inspectons avec soin, le nettoyons d\u00e9licatement, puis le coulons \u00e0 nouveau avec la fragrance de votre choix parmi notre collection.",
+    "sv-story-p4":
+      "Quelques jours plus tard, votre tr\u00e9sor retrouve une nouvelle vie\u00a0\u2014 accompagn\u00e9 d\u2019une m\u00e8che en coton naturel, d\u2019un \u00e9tiquetage personnalis\u00e9 et d\u2019un emballage soign\u00e9 qui refl\u00e8te l\u2019\u00e2me de Mimosa Atelier.",
+    "sv-story-p5":
+      "Ce service est une invitation \u00e0 ralentir, \u00e0 choisir autrement, \u00e0 donner une \u00e2me nouvelle aux objets qui ont d\u00e9j\u00e0 une histoire. Ensemble, nous prolongeons la beaut\u00e9 et prenons soin de notre plan\u00e8te.",
+    "sv-process-title": "Le processus en 4 \u00e9tapes",
+    "sv-step1-title": "Envoi du contenant",
+    "sv-step1-text":
+      "Envoyez-nous votre bocal, pot ou coupe par courrier, ou d\u00e9posez-le directement chez nous \u00e0 N\u00eemes.",
+    "sv-step2-title": "Inspection & nettoyage",
+    "sv-step2-text":
+      "Nous examinons votre contenant avec soin et le nettoyons d\u00e9licatement pour assurer une nouvelle vie parfaite.",
+    "sv-step3-title": "Coul\u00e9e artisanale",
+    "sv-step3-text":
+      "Votre bougie est coul\u00e9e \u00e0 la main avec notre cire de soja et le parfum de votre choix parmi notre collection.",
+    "sv-step4-title": "Livraison soign\u00e9e",
+    "sv-step4-text":
+      "Votre cr\u00e9ation vous est retourn\u00e9e emball\u00e9e avec amour, pr\u00eate \u00e0 illuminer votre int\u00e9rieur ou \u00e0 offrir.",
+    "sv-catalog-eyebrow": "La Collection Mimosa Atelier",
+    "sv-catalog-title": "Nos Parfums",
+    "sv-catalog-lead":
+      "Dix-huit fragrances artisanales \u2014 chacune une invitation au voyage",
+    "sv-modal-intensity": "Intensit\u00e9",
+    "sv-modal-notes": "Notes olfactives",
+    "sv-modal-seasons": "Saisons",
+    "sv-modal-moments": "Moments id\u00e9aux",
+    "sv-modal-pairs": "Se marie avec \u2014",
+    "sv-pricing-title": "Tarif sur mesure",
+    "sv-pricing-text":
+      "Le tarif est \u00e9tabli sur devis, en fonction du volume du contenant et du nombre de bougies souhait\u00e9es. Chaque projet est unique \u2014 nous prenons le temps de comprendre votre vision pour vous offrir un r\u00e9sultat qui vous ressemble.",
+    "sv-pricing-subtext":
+      "Contactez-nous avec une photo de votre contenant et vos parfums pr\u00e9f\u00e9r\u00e9s, et nous vous r\u00e9pondrons sous 24 heures avec une estimation personnalis\u00e9e.",
+    "sv-pricing-cta": "Demander un devis",
+    "sv-contact-label": "Pour toute question, \u00e9crivez-nous",
+    "sv-contact-sign":
+      "\u2014 L\u2019\u00e9quipe Mimosa Atelier, N\u00eemes, France",
   },
 
   ua: {
@@ -821,6 +922,56 @@ const translations = {
     "cookie-accept": "Прийняти",
     "cookie-decline": "Відхилити",
     "order-now": "Замовити",
+
+    // ── Сторінка Seconde vie ──────────────────────────────────────────
+    "nav-sub-seconde-vie": "🌿 Seconde vie",
+    "sv-hero-eyebrow": "Mimosa Atelier \u2014 Ексклюзивна послуга",
+    "sv-hero-tagline":
+      "Ремісниче відновлення \u00b7 Натуральний соєвий віск \u00b7 Аромати з Провансу",
+    "sv-gallery-eyebrow": "Ательє в фотографіях",
+    "sv-gallery-heading": "Мистецтво відновлення",
+    "sv-story-intro": "Дорогі друзі Mimosa Atelier,",
+    "sv-story-p1":
+      "Ми щиро віримо, що краса заслуговує на другий шанс. Саме тому ми пропонуємо унікальну еко-послугу: відродження ваших улюблених свічників та же він відбувся.",
+    "sv-story-p2":
+      "Ваші вінтажні скляні баночки, кришталеві кубки, керамічні горщики \u2014 будь-яка ємність, яка вам дорога, може стати новою артисанальною свічкою, вилитою вручну з нашого натурального соєвого воску та ароматів, дібраних у Провансі.",
+    "sv-story-how": "Як це працює?",
+    "sv-story-p3":
+      "Достатньо надіслати нам ємність поштою або занести особисто. Ми ретельно її перевіримо, делікатно очистимо, а потім заллємо знову із обраним вами ароматом з нашої колекції.",
+    "sv-story-p4":
+      "Через кілька днів ваш скарб знаходить нове життя \u2014 з бавовняним фітилем, персоналізованим етикетуванням та дбайливою упаковкою, що відображає душу Mimosa Atelier.",
+    "sv-story-p5":
+      "Ця послуга \u2014 запрошення ссповільнитися, обирати інакше, дарувати нову душу предметам, які вже мають свою історію. Разом ми продовжуємо красу і дбаємо про нашу планету.",
+    "sv-process-title": "Процес у 4 кроки",
+    "sv-step1-title": "Надсилання ємності",
+    "sv-step1-text":
+      "Надішліть нам вашу баночку, горщик або корпус поштою, або завезіть безпосередньо до нас у Нім.",
+    "sv-step2-title": "Перевірка & очищення",
+    "sv-step2-text":
+      "Ми ретельно оглядаємо вашу ємність та делікатно її чистимо для ідеального нового життя.",
+    "sv-step3-title": "Ремісниче заповнення",
+    "sv-step3-text":
+      "Ваша свічка виливається вручну з нашим соєвим воском та обраним вами ароматом з нашої колекції.",
+    "sv-step4-title": "Дбайлива доставка",
+    "sv-step4-text":
+      "Ваш виріб повертається до вас з любов'юзапакованим, готовий прикрасити ваш інтер'єр або стати подарунком.",
+    "sv-catalog-eyebrow": "Колекція Mimosa Atelier",
+    "sv-catalog-title": "Наші Аромати",
+    "sv-catalog-lead":
+      "Вісімнадцять ремісничних ароматів \u2014 кожен є запрошенням до подорожі",
+    "sv-modal-intensity": "Інтенсивність",
+    "sv-modal-notes": "Нотки аромату",
+    "sv-modal-seasons": "Сезони",
+    "sv-modal-moments": "Ідеальні моменти",
+    "sv-modal-pairs": "Поєднується з \u2014",
+    "sv-pricing-title": "Індивідуальна вартість",
+    "sv-pricing-text":
+      "Вартість розраховується за запитом, залежно від об'єму ємності та бажаної кількості свічок. Кожен проєкт унікальний \u2014 ми приділяємо час, щоб зрозуміти вашу візію та запропонувати результат, який вас відображає.",
+    "sv-pricing-subtext":
+      "Надішліть нам фото вашої ємності та улюблені аромати, і ми відповімо протягом 24 годин з персональною оцінкою.",
+    "sv-pricing-cta": "Запросити пропозицію",
+    "sv-contact-label": "Якщо є запитання, пишіть нам",
+    "sv-contact-sign": "\u2014 Команда Mimosa Atelier, Нім, Франція",
   },
 
   ru: {
@@ -1121,6 +1272,56 @@ const translations = {
     "cookie-accept": "Принять",
     "cookie-decline": "Отклонить",
     "order-now": "Заказать",
+
+    // ── Страница Seconde vie ─────────────────────────────────────────
+    "nav-sub-seconde-vie": "🌿 Seconde vie",
+    "sv-hero-eyebrow": "Mimosa Atelier \u2014 Эксклюзивная услуга",
+    "sv-hero-tagline":
+      "Ремесленное восстановление \u00b7 Натуральный соевый воск \u00b7 Ароматы Прованса",
+    "sv-gallery-eyebrow": "Ателье в фотографиях",
+    "sv-gallery-heading": "Искусство восстановления",
+    "sv-story-intro": "Дорогие друзья Mimosa Atelier,",
+    "sv-story-p1":
+      "Мы глубоко убеждены, что красота заслуживает второго шанса. Именно поэтому мы предлагаем уникальную эко-услугу: возрождение ваших любимых подсвечников и уже состоялось.",
+    "sv-story-p2":
+      "Ваши старинные стеклянные баночки, хрустальные бокалы, керамические горшочки \u2014 любая емкость, дорогая вам, может стать новой ремесленной свечой, отлитой вручную из нашего натурального соевого воска и ароматов, отобранных в Провансе.",
+    "sv-story-how": "Как это работает?",
+    "sv-story-p3":
+      "Просто отправьте нам ваш контейнер почтой или принесите лично. Мы осмотрим его с заботой, бережно очистим, затем зальём заново с выбранным вами ароматом из нашей коллекции.",
+    "sv-story-p4":
+      "Через несколько дней ваша свеча обретает новую жизнь \u2014 с хлопковым фитилём, персонализированной этикеткой и бережной упаковкой, отражающей душу Mimosa Atelier.",
+    "sv-story-p5":
+      "Эта услуга \u2014 приглашение замедлиться, выбирать иначе, дарить новую жизнь предметам, у которых уже есть своя история. Вместе мы продлеваем красоту и заботимся о нашей планете.",
+    "sv-process-title": "Процесс в 4 шага",
+    "sv-step1-title": "Отправка емкости",
+    "sv-step1-text":
+      "Отправьте нам ваш бокал, горшочек или баночку почтой или принесите лично к нам в Ним.",
+    "sv-step2-title": "Осмотр & очистка",
+    "sv-step2-text":
+      "Мы внимательно осмотрим ваш контейнер и бережно его очистим для идеальной новой жизни.",
+    "sv-step3-title": "Ремесленная заливка",
+    "sv-step3-text":
+      "Ваша свеча отливается вручную из нашего соевого воска и выбранного вами аромата из нашей коллекции.",
+    "sv-step4-title": "Бережная доставка",
+    "sv-step4-text":
+      "Ваше творение возвращается к вам с любовью упакованным, готовое украсить ваш интерьер или стать подарком.",
+    "sv-catalog-eyebrow": "Коллекция Mimosa Atelier",
+    "sv-catalog-title": "Наши Ароматы",
+    "sv-catalog-lead":
+      "Восемнадцать ремесленных ароматов \u2014 каждый является приглашением к путешествию",
+    "sv-modal-intensity": "Интенсивность",
+    "sv-modal-notes": "Ноты аромата",
+    "sv-modal-seasons": "Сезоны",
+    "sv-modal-moments": "Идеальные моменты",
+    "sv-modal-pairs": "Сочетается с \u2014",
+    "sv-pricing-title": "Индивидуальная стоимость",
+    "sv-pricing-text":
+      "Стоимость рассчитывается по запросу, в зависимости от объёма емкости и желаемого количества свечей. Каждый проект уникален — мы уделяем время, чтобы понять вашу концепцию и предложить результат, отражающий вас.",
+    "sv-pricing-subtext":
+      "Пришлите нам фото вашей емкости и любимые ароматы, и мы ответим в течение 24 часов с персональным расчётом.",
+    "sv-pricing-cta": "Запросить предложение",
+    "sv-contact-label": "По любым вопросам, пишите нам",
+    "sv-contact-sign": "\u2014 Команда Mimosa Atelier, Ним, Франция",
   },
 };
 
