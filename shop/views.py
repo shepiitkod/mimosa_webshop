@@ -393,6 +393,12 @@ def product_detail_view(request, product_id, slug=None):
 
 
 @require_GET
+def seconde_vie_view(request):
+    """Landing page for the Candle Upcycling (Seconde vie) premium service."""
+    return render(request, "seconde_vie.html")
+
+
+@require_GET
 def about_view(request):
     return render(request, "About.html")
 

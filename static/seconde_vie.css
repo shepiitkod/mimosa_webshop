@@ -1,0 +1,1249 @@
+/* ============================================================
+   SECONDE VIE POUR VOS BOUGIES
+   Mimosa Atelier — Premium Candle Upcycling Service Page
+   Uses existing design tokens from styles.css:
+     --color-page-bg, --font-display, --font-body,
+     --accent-emerald, --accent-emerald-deep, --accent-gold
+   ============================================================ */
+
+/* ── Page shell ── */
+.seconde-vie-page {
+    background-color: var(--color-page-bg);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   HERO BANNER
+══════════════════════════════════════════════════════════════ */
+.sv-hero {
+    position: relative;
+    padding: 110px 24px 80px;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* Radial glow behind the title */
+.sv-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        ellipse 90% 55% at 50% 10%,
+        rgba(201, 162, 39, 0.09) 0%,
+        transparent 68%
+    );
+    pointer-events: none;
+}
+
+/* Subtle botanical watermark rings */
+.sv-hero__ornament {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    border: 1px solid rgba(201, 162, 39, 0.07);
+    pointer-events: none;
+}
+
+.sv-hero__ornament--left {
+    left: -80px;
+}
+
+.sv-hero__ornament--right {
+    right: -80px;
+}
+
+.sv-hero__ornament--left::before,
+.sv-hero__ornament--right::before {
+    content: "";
+    position: absolute;
+    inset: 28px;
+    border-radius: 50%;
+    border: 1px solid rgba(201, 162, 39, 0.05);
+}
+
+.sv-hero__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.sv-hero__eyebrow {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin: 0 0 22px;
+}
+
+.sv-hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw + 1rem, 4.4rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--accent-emerald-deep);
+    letter-spacing: 0.015em;
+    margin: 0 0 22px;
+}
+
+.sv-hero__leaf {
+    display: inline-block;
+    font-size: 0.65em;
+    vertical-align: middle;
+    margin: 0 0.25em;
+    opacity: 0.85;
+}
+
+.sv-hero__tagline {
+    font-family: var(--font-body);
+    font-size: 13px;
+    letter-spacing: 0.13em;
+    color: #7a6340;
+    margin: 0 0 40px;
+    text-transform: uppercase;
+}
+
+/* Decorative divider with diamond gem */
+.sv-hero__divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 0 auto;
+    max-width: 220px;
+}
+
+.sv-hero__divider::before,
+.sv-hero__divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(201, 162, 39, 0.55),
+        transparent
+    );
+}
+
+.sv-hero__divider-gem {
+    color: var(--accent-gold);
+    font-size: 12px;
+    opacity: 0.7;
+    flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TWO-COLUMN STORYTELLING
+══════════════════════════════════════════════════════════════ */
+.sv-story {
+    padding: 80px 24px;
+}
+
+.sv-story__inner {
+    max-width: 1160px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 72px;
+    align-items: start;
+}
+
+/* ── Image grid (left column) ── */
+.sv-story__media {
+    position: sticky;
+    top: 120px;
+}
+
+.sv-media-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 10px;
+}
+
+.sv-media-item {
+    margin: 0;
+}
+
+.sv-media-item--tall {
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+}
+
+/* Overflow-hidden container enables the scale zoom effect */
+.sv-media-frame {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 18px;
+    background: linear-gradient(145deg, #f0e8d8, #e4d5bc);
+    min-height: 190px;
+}
+
+.sv-media-item--tall .sv-media-frame {
+    min-height: 400px;
+    height: 100%;
+}
+
+/* The actual photograph */
+.sv-media-frame img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 1;
+}
+
+/* Hover zoom — scale(1.03) as specified */
+.sv-media-item:hover .sv-media-frame img {
+    transform: scale(1.03);
+}
+
+/* Graceful placeholder shown when image is absent/fails */
+.sv-media-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
+}
+
+.sv-media-placeholder span {
+    font-size: 52px;
+    opacity: 0.22;
+    filter: grayscale(0.3);
+    pointer-events: none;
+    user-select: none;
+}
+
+/* When image is loaded its z-index pushes placeholder behind */
+.sv-media-frame img:not([style*="display:none"]) + .sv-media-placeholder {
+    display: none;
+}
+
+.sv-media-caption {
+    font-family: var(--font-body);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #9a8060;
+    text-align: center;
+    padding: 8px 4px 2px;
+}
+
+/* ── Story text (right column) ── */
+.sv-story__text {
+    padding-top: 4px;
+}
+
+.sv-text-intro {
+    font-family: var(--font-display);
+    font-size: 21px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--accent-emerald);
+    line-height: 1.55;
+    margin-bottom: 28px;
+}
+
+.sv-text-paragraph {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.75;
+    color: #3d3228;
+    margin-bottom: 24px;
+}
+
+.sv-text-paragraph:last-child {
+    margin-bottom: 0;
+}
+
+.sv-text-subtitle {
+    font-family: var(--font-display);
+    font-size: 27px;
+    font-weight: 400;
+    color: var(--accent-emerald-deep);
+    letter-spacing: 0.025em;
+    margin: 36px 0 20px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PROCESS STEPS (4-column grid)
+══════════════════════════════════════════════════════════════ */
+.sv-process {
+    padding: 72px 24px;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(15, 64, 57, 0.025) 50%,
+        transparent 100%
+    );
+}
+
+.sv-process__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.sv-process__title {
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: clamp(1.7rem, 2.5vw, 2.4rem);
+    font-weight: 300;
+    color: var(--accent-emerald-deep);
+    margin: 0 0 52px;
+}
+
+.sv-process-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    counter-reset: steps;
+}
+
+.sv-step {
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid rgba(201, 162, 39, 0.16);
+    border-radius: 20px;
+    padding: 28px 22px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition:
+        transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sv-step:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 32px rgba(15, 64, 57, 0.1);
+}
+
+.sv-step__number {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    font-family: var(--font-display);
+    font-size: 40px;
+    font-weight: 300;
+    color: rgba(201, 162, 39, 0.15);
+    line-height: 1;
+    pointer-events: none;
+}
+
+.sv-step__icon {
+    font-size: 34px;
+    margin-bottom: 14px;
+    display: block;
+    line-height: 1;
+}
+
+.sv-step__title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--accent-emerald-deep);
+    margin: 0 0 10px;
+    letter-spacing: 0.01em;
+}
+
+.sv-step__text {
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #6a5a44;
+    margin: 0;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   FRAGRANCES GRID
+══════════════════════════════════════════════════════════════ */
+.sv-fragrances {
+    padding: 80px 24px;
+}
+
+.sv-fragrances__inner {
+    max-width: 860px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.sv-fragrances__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+    font-weight: 300;
+    color: var(--accent-emerald-deep);
+    margin: 0 0 12px;
+}
+
+.sv-fragrances__subtitle {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: #7a6748;
+    letter-spacing: 0.07em;
+    margin: 0 0 44px;
+    text-transform: uppercase;
+}
+
+.sv-fragrance-grid {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+.sv-fragrance-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    border-radius: 999px;
+    border: 1px solid rgba(15, 64, 57, 0.16);
+    background: rgba(255, 255, 255, 0.7);
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--accent-emerald);
+    letter-spacing: 0.025em;
+    cursor: default;
+    transition:
+        background 200ms ease,
+        border-color 200ms ease,
+        transform 200ms cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 200ms ease;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.sv-fragrance-tag:hover {
+    background: rgba(15, 64, 57, 0.07);
+    border-color: rgba(15, 64, 57, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(15, 64, 57, 0.09);
+}
+
+/* Special dashed gold tag for custom requests */
+.sv-fragrance-tag--custom {
+    border-style: dashed;
+    border-color: rgba(201, 162, 39, 0.45);
+    color: #7a5c12;
+    background: rgba(201, 162, 39, 0.04);
+    font-style: italic;
+}
+
+.sv-fragrance-tag--custom:hover {
+    background: rgba(201, 162, 39, 0.1);
+    border-color: var(--accent-gold);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(201, 162, 39, 0.15);
+}
+
+.sv-fragrance-icon {
+    font-size: 16px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CTA & PRICING CARD
+══════════════════════════════════════════════════════════════ */
+.sv-pricing {
+    padding: 80px 24px;
+}
+
+.sv-pricing__inner {
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+.sv-pricing__card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(201, 162, 39, 0.25);
+    border-radius: 28px;
+    padding: 56px 52px;
+    text-align: center;
+    overflow: hidden;
+    box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.9) inset,
+        0 18px 44px rgba(66, 49, 12, 0.1);
+}
+
+/* Gradient accent line at the top edge */
+.sv-pricing__accent-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(
+        90deg,
+        var(--accent-emerald) 0%,
+        var(--accent-gold) 50%,
+        var(--accent-emerald) 100%
+    );
+    border-radius: 28px 28px 0 0;
+}
+
+/* Faint watermark circle behind the card content */
+.sv-pricing__card::after {
+    content: "";
+    position: absolute;
+    bottom: -60px;
+    right: -60px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 1px solid rgba(201, 162, 39, 0.08);
+    pointer-events: none;
+}
+
+.sv-pricing__icon {
+    font-size: 44px;
+    margin-bottom: 22px;
+    display: block;
+    position: relative;
+    z-index: 1;
+}
+
+.sv-pricing__title {
+    font-family: var(--font-display);
+    font-size: 34px;
+    font-weight: 400;
+    color: var(--accent-emerald-deep);
+    margin: 0 0 22px;
+    position: relative;
+    z-index: 1;
+}
+
+.sv-pricing__text {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.75;
+    color: #3d3228;
+    margin: 0 0 18px;
+    position: relative;
+    z-index: 1;
+}
+
+.sv-pricing__subtext {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.65;
+    color: #7a6748;
+    margin: 0 0 36px;
+    position: relative;
+    z-index: 1;
+}
+
+.sv-pricing__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 40px;
+    border-radius: 999px;
+    background: linear-gradient(
+        135deg,
+        var(--accent-emerald) 0%,
+        var(--accent-emerald-deep) 100%
+    );
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    position: relative;
+    z-index: 1;
+    transition:
+        transform 240ms cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 240ms cubic-bezier(0.22, 1, 0.36, 1),
+        filter 200ms ease;
+    box-shadow: 0 6px 22px rgba(15, 64, 57, 0.3);
+}
+
+.sv-pricing__cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(15, 64, 57, 0.38);
+    filter: brightness(1.07);
+}
+
+.sv-pricing__cta:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(15, 64, 57, 0.25);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CENTERED FOOTER CONTACT BLOCK
+══════════════════════════════════════════════════════════════ */
+.sv-contact-footer {
+    padding: 88px 24px 100px;
+    text-align: center;
+    position: relative;
+}
+
+/* Separator line above the contact block */
+.sv-contact-footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(201, 162, 39, 0.45),
+        transparent
+    );
+}
+
+.sv-contact-footer__inner {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.sv-contact-footer__label {
+    font-family: var(--font-body);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #9a8060;
+    margin: 0 0 18px;
+}
+
+/* Prominent mailto link — Cormorant Garamond for elegance */
+.sv-contact-footer__email {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.8vw, 1.95rem);
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: var(--accent-emerald);
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 4px;
+    transition: color 280ms ease;
+    word-break: break-all;
+}
+
+/* Smooth golden → emerald underline sweep on hover */
+.sv-contact-footer__email::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 1.5px;
+    background: linear-gradient(
+        90deg,
+        var(--accent-gold),
+        var(--accent-emerald)
+    );
+    transition: width 380ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sv-contact-footer__email:hover {
+    color: var(--accent-gold);
+}
+
+.sv-contact-footer__email:hover::after {
+    width: 100%;
+}
+
+.sv-contact-footer__email:focus-visible {
+    outline: 2px solid var(--accent-gold);
+    outline-offset: 4px;
+    border-radius: 2px;
+}
+
+.sv-contact-footer__signature {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-style: italic;
+    color: #9a8060;
+    margin: 28px 0 0;
+    letter-spacing: 0.02em;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE — TABLET  (≤ 1024px)
+══════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+    .sv-process-steps {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE — SMALL TABLET  (≤ 900px)
+══════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+    .sv-hero {
+        padding: 90px 24px 64px;
+    }
+
+    /* Stack storytelling columns */
+    .sv-story__inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    /* Unstick the image grid on mobile */
+    .sv-story__media {
+        position: static;
+    }
+
+    .sv-media-item--tall .sv-media-frame {
+        min-height: 300px;
+    }
+
+    .sv-pricing__card {
+        padding: 44px 36px;
+    }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE — MOBILE  (≤ 600px)
+══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+    .sv-hero {
+        padding: 76px 20px 52px;
+    }
+
+    .sv-hero__ornament {
+        display: none;
+    }
+
+    /* Linearise the image grid on small screens */
+    .sv-media-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+
+    .sv-media-item--tall {
+        grid-column: auto;
+        grid-row: auto;
+    }
+
+    .sv-media-item--tall .sv-media-frame {
+        min-height: 230px;
+    }
+
+    .sv-media-frame {
+        min-height: 200px;
+    }
+
+    .sv-story {
+        padding: 52px 20px;
+    }
+
+    .sv-process {
+        padding: 52px 20px;
+    }
+
+    .sv-process-steps {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .sv-fragrances {
+        padding: 52px 20px;
+    }
+
+    .sv-fragrance-tag {
+        font-size: 13px;
+        padding: 9px 16px;
+    }
+
+    .sv-pricing {
+        padding: 52px 20px;
+    }
+
+    .sv-pricing__card {
+        padding: 36px 22px;
+        border-radius: 20px;
+    }
+
+    .sv-pricing__title {
+        font-size: 28px;
+    }
+
+    .sv-contact-footer {
+        padding: 64px 20px 80px;
+    }
+
+    /* Safe-area padding for notched phones (bottom) */
+    .sv-contact-footer {
+        padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE — VERY SMALL SCREENS (≤ 380px)
+══════════════════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+    .sv-hero__title {
+        font-size: 1.95rem;
+    }
+
+    .sv-pricing__cta {
+        padding: 14px 28px;
+        font-size: 12px;
+    }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TOUCH DEVICES — disable hover transforms
+══════════════════════════════════════════════════════════════ */
+@media (hover: none) {
+    .sv-media-item:hover .sv-media-frame img {
+        transform: none;
+    }
+
+    .sv-fragrance-tag:hover,
+    .sv-step:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .sv-pricing__cta:hover {
+        transform: none;
+    }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   REDUCED MOTION — honour system preference
+══════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+    .sv-media-frame img,
+    .sv-fragrance-tag,
+    .sv-step,
+    .sv-pricing__cta,
+    .sv-contact-footer__email,
+    .sv-contact-footer__email::after {
+        transition: none;
+    }
+
+    .sv-media-item:hover .sv-media-frame img {
+        transform: none;
+    }
+
+    .sv-fragrance-tag:hover,
+    .sv-step:hover {
+        transform: none;
+    }
+
+    .sv-pricing__cta:hover {
+        transform: none;
+        filter: none;
+    }
+
+    .sv-contact-footer__email:hover::after {
+        width: 100%; /* still show underline, just instantly */
+    }
+}
+
+/* ============================================================
+   PHOTO GALLERY — Bento Grid
+   4 artisan process photos with cinematic animations
+   ============================================================ */
+
+.sv-gallery {
+    padding: 0 24px 88px;
+    max-width: 1240px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* The section itself should be fully visible —
+   individual cards handle their own staggered entrance.
+   Override the global reveal-on-scroll applied by animations.js */
+.sv-gallery.reveal-on-scroll,
+.sv-gallery.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+}
+
+/* —— Header —— */
+.sv-gallery__header {
+    text-align: center;
+    margin-bottom: 36px;
+}
+
+.sv-gallery__eyebrow {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin: 0 0 12px;
+}
+
+.sv-gallery__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.7rem, 2.5vw, 2.6rem);
+    font-weight: 300;
+    color: var(--accent-emerald-deep);
+    letter-spacing: 0.015em;
+    margin: 0;
+}
+
+/* —— Bento Grid Layout ——
+
+   Desktop:
+   ┌───────────────────────┬───────────────────────┐
+   │                       │  Photo 2: setup    │← row 1
+   │  Photo 1: wax macro   ├───────────────────────┤
+   │  (hero, 2 rows tall)  │  Photo 3: bottles  │← row 2
+   ├───────────────────────┴───────────────────────┤
+   │  Photo 4: wax pour (full-width cinematic strip) │← row 3
+   └──────────────────────────────────────────────┘
+*/
+.sv-gallery__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 360px 360px 290px;
+    gap: 12px;
+}
+
+.sv-gallery-item--hero {
+    grid-column: 1;
+    grid-row: 1 / 3; /* spans both top rows */
+}
+
+.sv-gallery-item--sm-top {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.sv-gallery-item--sm-bottom {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.sv-gallery-item--wide {
+    grid-column: 1 / 3; /* full width */
+    grid-row: 3;
+}
+
+/* —— Card base —— */
+.sv-gallery-item {
+    position: relative;
+    border-radius: 22px;
+    overflow: hidden;
+    cursor: default;
+
+    /* Stagger entrance state */
+    opacity: 0;
+    transform: translateY(30px) scale(0.97);
+    transition:
+        opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.3s ease;
+}
+
+/* Individual stagger delays via data attribute */
+.sv-gallery-item[data-sv-delay="0"] {
+    transition-delay: 0s;
+}
+.sv-gallery-item[data-sv-delay="1"] {
+    transition-delay: 0.13s;
+}
+.sv-gallery-item[data-sv-delay="2"] {
+    transition-delay: 0.26s;
+}
+.sv-gallery-item[data-sv-delay="3"] {
+    transition-delay: 0.39s;
+}
+
+/* Trigger: when parent section gets .is-visible from animations.js */
+.sv-gallery.is-visible .sv-gallery-item {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Hover lift shadow */
+.sv-gallery-item:hover {
+    box-shadow: 0 22px 48px rgba(10, 28, 22, 0.22);
+}
+
+/* —— Image frame —— */
+.sv-gallery-frame {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: 22px;
+}
+
+.sv-gallery-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    /* Will-change hints GPU for smooth Ken Burns */
+    will-change: transform;
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ────────────────────────────────────────────────────
+   Ken Burns: slow ambient zoom plays once after the card
+   enters the viewport (triggered by .is-visible on parent).
+   Each card gets a slightly different duration for variety.
+──────────────────────────────────────────────────── */
+@keyframes sv-ken-burns {
+    from {
+        transform: scale(1) translate(0, 0);
+    }
+    to {
+        transform: scale(1.09) translate(-1%, -1%);
+    }
+}
+
+@keyframes sv-ken-burns-alt {
+    from {
+        transform: scale(1) translate(0, 0);
+    }
+    to {
+        transform: scale(1.08) translate(1%, -0.5%);
+    }
+}
+
+.sv-gallery.is-visible .sv-gallery-item--hero .sv-gallery-frame img {
+    animation: sv-ken-burns 18s ease-out forwards;
+}
+
+.sv-gallery.is-visible .sv-gallery-item--sm-top .sv-gallery-frame img {
+    animation: sv-ken-burns-alt 14s ease-out forwards;
+    animation-delay: 0.13s;
+}
+
+.sv-gallery.is-visible .sv-gallery-item--sm-bottom .sv-gallery-frame img {
+    animation: sv-ken-burns 15s ease-out forwards;
+    animation-delay: 0.26s;
+}
+
+.sv-gallery.is-visible .sv-gallery-item--wide .sv-gallery-frame img {
+    animation: sv-ken-burns-alt 20s ease-out forwards;
+    animation-delay: 0.39s;
+}
+
+/* Hover pauses Ken Burns and does a quicker direct zoom */
+.sv-gallery-item:hover .sv-gallery-frame img {
+    animation-play-state: paused;
+    transform: scale(1.06);
+    transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* —— Dark gradient overlay (appears on hover) —— */
+.sv-gallery-item::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: 22px;
+    background: linear-gradient(
+        160deg,
+        transparent 35%,
+        rgba(8, 24, 20, 0.55) 70%,
+        rgba(8, 24, 20, 0.82) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.42s ease;
+}
+
+.sv-gallery-item:hover::before {
+    opacity: 1;
+}
+
+/* Thin gold border shimmer that appears on hover */
+.sv-gallery-item::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    border-radius: 22px;
+    border: 1px solid rgba(201, 162, 39, 0);
+    transition: border-color 0.4s ease;
+    pointer-events: none;
+}
+
+.sv-gallery-item:hover::after {
+    border-color: rgba(201, 162, 39, 0.4);
+}
+
+/* —— Caption (slides up on hover) —— */
+.sv-gallery-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 4;
+    padding: 22px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    transform: translateY(14px);
+    opacity: 0;
+    transition:
+        transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.4s ease;
+}
+
+.sv-gallery-item:hover .sv-gallery-caption {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.sv-gallery-caption__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+    font-weight: 300;
+    color: #fff;
+    letter-spacing: 0.03em;
+    line-height: 1.15;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+}
+
+.sv-gallery-caption__sub {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.72);
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+}
+
+/* Wider caption text for the tall hero card */
+.sv-gallery-item--hero .sv-gallery-caption__title {
+    font-size: clamp(1.3rem, 2.2vw, 1.9rem);
+}
+
+/* Extra wide caption for the cinematic strip */
+.sv-gallery-item--wide .sv-gallery-caption {
+    padding: 24px 32px;
+}
+
+.sv-gallery-item--wide .sv-gallery-caption__title {
+    font-size: clamp(1.2rem, 2vw, 1.7rem);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   GALLERY RESPONSIVE
+══════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+    .sv-gallery__grid {
+        grid-template-rows: 280px 280px 220px;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 680px) {
+    .sv-gallery {
+        padding: 0 16px 64px;
+    }
+
+    .sv-gallery__grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 220px 220px 170px;
+        gap: 8px;
+    }
+
+    .sv-gallery-item {
+        border-radius: 16px;
+    }
+
+    .sv-gallery-frame {
+        border-radius: 16px;
+    }
+
+    .sv-gallery-item::before,
+    .sv-gallery-item::after {
+        border-radius: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* On very small screens: single column,
+       show captions permanently (no hover available) */
+    .sv-gallery__grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+
+    .sv-gallery-item--hero,
+    .sv-gallery-item--sm-top,
+    .sv-gallery-item--sm-bottom,
+    .sv-gallery-item--wide {
+        grid-column: 1;
+        grid-row: auto;
+        height: 300px;
+    }
+
+    .sv-gallery-item--hero {
+        height: 360px;
+    }
+
+    /* Always visible overlay + captions on touch screens */
+    .sv-gallery-item::before {
+        opacity: 1;
+        background: linear-gradient(
+            160deg,
+            transparent 45%,
+            rgba(8, 24, 20, 0.7) 100%
+        );
+    }
+
+    .sv-gallery-caption {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Gallery reduced motion overrides */
+@media (prefers-reduced-motion: reduce) {
+    .sv-gallery-item {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    .sv-gallery.is-visible .sv-gallery-item--hero .sv-gallery-frame img,
+    .sv-gallery.is-visible .sv-gallery-item--sm-top .sv-gallery-frame img,
+    .sv-gallery.is-visible .sv-gallery-item--sm-bottom .sv-gallery-frame img,
+    .sv-gallery.is-visible .sv-gallery-item--wide .sv-gallery-frame img {
+        animation: none;
+    }
+
+    .sv-gallery-item:hover .sv-gallery-frame img {
+        transform: none;
+        animation: none;
+    }
+
+    .sv-gallery-caption {
+        transform: none;
+        opacity: 1;
+    }
+}

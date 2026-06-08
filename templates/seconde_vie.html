@@ -1,0 +1,496 @@
+{% load static %}
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Seconde vie pour vos bougies — Mimosa Atelier</title>
+        <meta
+            name="description"
+            content="Donnez une seconde vie à vos contenants de bougies préférés grâce au service de rechargement artisanal Mimosa Atelier. Cire de soja naturelle, parfums de Provence."
+        />
+        <link rel="stylesheet" href="{% static 'styles.css' %}" />
+        <link rel="stylesheet" href="{% static 'seconde_vie.css' %}" />
+    </head>
+    <body class="seconde-vie-page">
+        {% include 'includes/header.html' with header_show_cart=True %}
+
+        <main id="main-content" tabindex="-1">
+            <!-- ══════════════════════════════════════════
+                 HERO BANNER
+            ══════════════════════════════════════════ -->
+            <section class="sv-hero" aria-label="Seconde vie — présentation">
+                <div
+                    class="sv-hero__ornament sv-hero__ornament--left"
+                    aria-hidden="true"
+                ></div>
+                <div
+                    class="sv-hero__ornament sv-hero__ornament--right"
+                    aria-hidden="true"
+                ></div>
+                <div class="sv-hero__inner">
+                    <p class="sv-hero__eyebrow">
+                        Mimosa Atelier — Service exclusif
+                    </p>
+                    <h1 class="sv-hero__title">
+                        <span class="sv-hero__leaf" aria-hidden="true">🌿</span>
+                        Seconde vie pour vos bougies
+                        <span class="sv-hero__leaf" aria-hidden="true">🌿</span>
+                    </h1>
+                    <p class="sv-hero__tagline">
+                        Rechargement artisanal &nbsp;·&nbsp; Cire de soja
+                        naturelle &nbsp;·&nbsp; Parfums de Provence
+                    </p>
+                    <div class="sv-hero__divider" aria-hidden="true">
+                        <span class="sv-hero__divider-gem" aria-hidden="true"
+                            >◇</span
+                        >
+                    </div>
+                </div>
+            </section>
+
+            <!-- ══════════════════════════════════════════
+                 PHOTO GALLERY — 4 bento photos
+            ══════════════════════════════════════════ -->
+            <section class="sv-gallery" aria-label="L'atelier Mimosa en images">
+                <div class="sv-gallery__header">
+                    <p class="sv-gallery__eyebrow">L'atelier en images</p>
+                    <h2 class="sv-gallery__title">L'art du rechargement</h2>
+                </div>
+
+                <div class="sv-gallery__grid">
+                    <!-- Photo 1 — dramatic macro wax (tall hero, left) -->
+                    <figure
+                        class="sv-gallery-item sv-gallery-item--hero"
+                        data-sv-delay="0"
+                    >
+                        <div class="sv-gallery-frame">
+                            <img
+                                src="{% static 'assets/images/sv-cire-close.jpg' %}"
+                                alt="Billes de cire de soja naturelle coulées dans un bol blanc"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                        </div>
+                        <figcaption class="sv-gallery-caption">
+                            <span class="sv-gallery-caption__title"
+                                >Cire de soja pure</span
+                            >
+                            <span class="sv-gallery-caption__sub"
+                                >100% naturelle &amp; éco-responsable</span
+                            >
+                        </figcaption>
+                    </figure>
+
+                    <!-- Photo 2 — scale + setup (top right) -->
+                    <figure
+                        class="sv-gallery-item sv-gallery-item--sm-top"
+                        data-sv-delay="1"
+                    >
+                        <div class="sv-gallery-frame">
+                            <img
+                                src="{% static 'assets/images/sv-wax-setup.jpg' %}"
+                                alt="Pesée précise de la cire et de l'essence parfumée"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                        </div>
+                        <figcaption class="sv-gallery-caption">
+                            <span class="sv-gallery-caption__title"
+                                >La précision</span
+                            >
+                            <span class="sv-gallery-caption__sub"
+                                >Chaque gramme, mesuré avec soin</span
+                            >
+                        </figcaption>
+                    </figure>
+
+                    <!-- Photo 3 — fragrance bottles (bottom right) -->
+                    <figure
+                        class="sv-gallery-item sv-gallery-item--sm-bottom"
+                        data-sv-delay="2"
+                    >
+                        <div class="sv-gallery-frame">
+                            <img
+                                src="{% static 'assets/images/sv-parfums.jpg' %}"
+                                alt="Collection d'essences parfumées artisanales de Provence"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                        </div>
+                        <figcaption class="sv-gallery-caption">
+                            <span class="sv-gallery-caption__title"
+                                >Nos essences</span
+                            >
+                            <span class="sv-gallery-caption__sub"
+                                >Sélectionnées en Provence</span
+                            >
+                        </figcaption>
+                    </figure>
+
+                    <!-- Photo 4 — wide wax pour (full-width bottom strip) -->
+                    <figure
+                        class="sv-gallery-item sv-gallery-item--wide"
+                        data-sv-delay="3"
+                    >
+                        <div class="sv-gallery-frame">
+                            <img
+                                src="{% static 'assets/images/sv-cire-pour.jpg' %}"
+                                alt="Billes de cire de soja versées dans un contenant artisanal"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                        </div>
+                        <figcaption class="sv-gallery-caption">
+                            <span class="sv-gallery-caption__title"
+                                >La coulée</span
+                            >
+                            <span class="sv-gallery-caption__sub"
+                                >Le moment magique de la création</span
+                            >
+                        </figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <!-- ══════════════════════════════════════════
+                 TWO-COLUMN STORYTELLING
+            ══════════════════════════════════════════ -->
+            <section class="sv-story" aria-label="Notre histoire">
+                <div class="sv-story__inner">
+                    <!-- LEFT: Image grid -->
+                    <div
+                        class="sv-story__media"
+                        aria-label="Galerie du service de rechargement"
+                    >
+                        <div class="sv-media-grid">
+                            <figure class="sv-media-item sv-media-item--tall">
+                                <div class="sv-media-frame">
+                                    <img
+                                        src="{% static 'assets/upcycling-jars.jpg' %}"
+                                        alt="Bocaux en verre vintage prêts à être rechargés"
+                                        loading="lazy"
+                                        decoding="async"
+                                        onerror="this.style.display = 'none'"
+                                    />
+                                    <div
+                                        class="sv-media-placeholder"
+                                        aria-hidden="true"
+                                    >
+                                        <span>🫙</span>
+                                    </div>
+                                </div>
+                                <figcaption class="sv-media-caption">
+                                    Bocaux &amp; contenants
+                                </figcaption>
+                            </figure>
+
+                            <figure class="sv-media-item">
+                                <div class="sv-media-frame">
+                                    <img
+                                        src="{% static 'assets/upcycling-pour.jpg' %}"
+                                        alt="Coulée artisanale de cire de soja dans un pot vintage"
+                                        loading="lazy"
+                                        decoding="async"
+                                        onerror="this.style.display = 'none'"
+                                    />
+                                    <div
+                                        class="sv-media-placeholder"
+                                        aria-hidden="true"
+                                    >
+                                        <span>🕯️</span>
+                                    </div>
+                                </div>
+                                <figcaption class="sv-media-caption">
+                                    Coulée à la main
+                                </figcaption>
+                            </figure>
+
+                            <figure class="sv-media-item">
+                                <div class="sv-media-frame">
+                                    <img
+                                        src="{% static 'assets/upcycling-result.jpg' %}"
+                                        alt="Bougie rechargée emballée avec soin, prête à offrir"
+                                        loading="lazy"
+                                        decoding="async"
+                                        onerror="this.style.display = 'none'"
+                                    />
+                                    <div
+                                        class="sv-media-placeholder"
+                                        aria-hidden="true"
+                                    >
+                                        <span>✨</span>
+                                    </div>
+                                </div>
+                                <figcaption class="sv-media-caption">
+                                    Résultat final
+                                </figcaption>
+                            </figure>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT: Story text -->
+                    <div class="sv-story__text">
+                        <p class="sv-text-intro">
+                            Chers amis et chères amies de Mimosa Atelier,
+                        </p>
+
+                        <p class="sv-text-paragraph">
+                            Nous croyons profondément que la beauté mérite une
+                            seconde chance. C'est pourquoi nous vous proposons
+                            un service unique et éco-responsable&nbsp;: la
+                            renaissance de vos contenants de bougies préférés.
+                        </p>
+
+                        <p class="sv-text-paragraph">
+                            Vos bocaux en verre ancien, vos coupes vintages, vos
+                            pots en céramique&nbsp;— chaque récipient qui vous
+                            tient à cœur peut être transformé en une nouvelle
+                            bougie artisanale, coulée à la main avec notre cire
+                            de soja naturelle et nos parfums sélectionnés en
+                            Provence.
+                        </p>
+
+                        <h2 class="sv-text-subtitle">
+                            Comment ça marche&nbsp;?
+                        </h2>
+
+                        <p class="sv-text-paragraph">
+                            Il vous suffit de nous envoyer votre contenant par
+                            courrier ou de nous le déposer en main propre. Nous
+                            l'inspectons avec soin, le nettoyons délicatement,
+                            puis le coulons à nouveau avec la fragrance de votre
+                            choix parmi notre collection.
+                        </p>
+
+                        <p class="sv-text-paragraph">
+                            Quelques jours plus tard, votre trésor retrouve une
+                            nouvelle vie&nbsp;— accompagné d'une mèche en coton
+                            naturel, d'un étiquetage personnalisé et d'un
+                            emballage soigné qui reflète l'âme de Mimosa
+                            Atelier.
+                        </p>
+
+                        <p class="sv-text-paragraph">
+                            Ce service est une invitation à ralentir, à choisir
+                            autrement, à donner une âme nouvelle aux objets qui
+                            ont déjà une histoire. Ensemble, nous prolongeons la
+                            beauté et prenons soin de notre planète.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ══════════════════════════════════════════
+                 PROCESS STEPS
+            ══════════════════════════════════════════ -->
+            <section class="sv-process" aria-label="Notre processus">
+                <div class="sv-process__inner">
+                    <h2 class="sv-process__title section-title">
+                        Le processus en 4 étapes
+                    </h2>
+                    <ol class="sv-process-steps" aria-label="Étapes du service">
+                        <li class="sv-step">
+                            <div class="sv-step__number" aria-hidden="true">
+                                01
+                            </div>
+                            <div class="sv-step__icon" aria-hidden="true">
+                                📦
+                            </div>
+                            <h3 class="sv-step__title">Envoi du contenant</h3>
+                            <p class="sv-step__text">
+                                Envoyez-nous votre bocal, pot ou coupe par
+                                courrier, ou déposez-le directement chez nous à
+                                Nîmes.
+                            </p>
+                        </li>
+                        <li class="sv-step">
+                            <div class="sv-step__number" aria-hidden="true">
+                                02
+                            </div>
+                            <div class="sv-step__icon" aria-hidden="true">
+                                🔍
+                            </div>
+                            <h3 class="sv-step__title">
+                                Inspection &amp; nettoyage
+                            </h3>
+                            <p class="sv-step__text">
+                                Nous examinons votre contenant avec soin et le
+                                nettoyons délicatement pour assurer une nouvelle
+                                vie parfaite.
+                            </p>
+                        </li>
+                        <li class="sv-step">
+                            <div class="sv-step__number" aria-hidden="true">
+                                03
+                            </div>
+                            <div class="sv-step__icon" aria-hidden="true">
+                                🕯️
+                            </div>
+                            <h3 class="sv-step__title">Coulée artisanale</h3>
+                            <p class="sv-step__text">
+                                Votre bougie est coulée à la main avec notre
+                                cire de soja et le parfum de votre choix parmi
+                                notre collection.
+                            </p>
+                        </li>
+                        <li class="sv-step">
+                            <div class="sv-step__number" aria-hidden="true">
+                                04
+                            </div>
+                            <div class="sv-step__icon" aria-hidden="true">
+                                🎁
+                            </div>
+                            <h3 class="sv-step__title">Livraison soignée</h3>
+                            <p class="sv-step__text">
+                                Votre création vous est retournée emballée avec
+                                amour, prête à illuminer votre intérieur ou à
+                                offrir.
+                            </p>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- ══════════════════════════════════════════
+                 FRAGRANCES PLACEHOLDER
+            ══════════════════════════════════════════ -->
+            <section class="sv-fragrances" aria-label="Nos parfums disponibles">
+                <div class="sv-fragrances__inner">
+                    <h2 class="sv-fragrances__title section-title">
+                        Nos Parfums Disponibles
+                    </h2>
+                    <p class="sv-fragrances__subtitle">
+                        Une sélection soigneusement choisie de fragrances
+                        artisanales
+                    </p>
+                    <ul
+                        class="sv-fragrance-grid"
+                        aria-label="Liste des parfums"
+                    >
+                        <li class="sv-fragrance-tag">
+                            <span class="sv-fragrance-icon" aria-hidden="true"
+                                >🌸</span
+                            >
+                            Fleur de mimosa
+                        </li>
+                        <li class="sv-fragrance-tag">
+                            <span class="sv-fragrance-icon" aria-hidden="true"
+                                >🌹</span
+                            >
+                            Rose de Provence
+                        </li>
+                        <li class="sv-fragrance-tag">
+                            <span class="sv-fragrance-icon" aria-hidden="true"
+                                >🌿</span
+                            >
+                            Lavande des Alpilles
+                        </li>
+                        <li class="sv-fragrance-tag">
+                            <span class="sv-fragrance-icon" aria-hidden="true"
+                                >🍋</span
+                            >
+                            Citron &amp; Bergamote
+                        </li>
+                        <li class="sv-fragrance-tag">
+                            <span class="sv-fragrance-icon" aria-hidden="true"
+                                >🌲</span
+                            >
+                            Cèdre &amp; Vétiver
+                        </li>
+                        <li class="sv-fragrance-tag">
+                            <span class="sv-fragrance-icon" aria-hidden="true"
+                                >🍦</span
+                            >
+                            Vanille douce
+                        </li>
+                        <li class="sv-fragrance-tag">
+                            <span class="sv-fragrance-icon" aria-hidden="true"
+                                >🌼</span
+                            >
+                            Jasmin &amp; Musc blanc
+                        </li>
+                        <li class="sv-fragrance-tag">
+                            <span class="sv-fragrance-icon" aria-hidden="true"
+                                >🌊</span
+                            >
+                            Air marin &amp; Sel de mer
+                        </li>
+                        <li class="sv-fragrance-tag sv-fragrance-tag--custom">
+                            <span class="sv-fragrance-icon" aria-hidden="true"
+                                >✨</span
+                            >
+                            Fragrance personnalisée sur demande
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- ══════════════════════════════════════════
+                 CTA & PRICING
+            ══════════════════════════════════════════ -->
+            <section class="sv-pricing" aria-label="Tarif sur mesure">
+                <div class="sv-pricing__inner">
+                    <div class="sv-pricing__card">
+                        <div
+                            class="sv-pricing__accent-bar"
+                            aria-hidden="true"
+                        ></div>
+                        <div class="sv-pricing__icon" aria-hidden="true">
+                            🕯️
+                        </div>
+                        <h2 class="sv-pricing__title">Tarif sur mesure</h2>
+                        <p class="sv-pricing__text">
+                            Le tarif est établi sur devis, en fonction du volume
+                            du contenant et du nombre de bougies souhaitées.
+                            Chaque projet est unique&nbsp;— nous prenons le
+                            temps de comprendre votre vision pour vous offrir un
+                            résultat qui vous ressemble.
+                        </p>
+                        <p class="sv-pricing__subtext">
+                            Contactez-nous avec une photo de votre contenant et
+                            vos parfums préférés, et nous vous répondrons sous
+                            24&nbsp;heures avec une estimation personnalisée.
+                        </p>
+                        <a
+                            href="mailto:mimosa.atelier.france@gmail.com"
+                            class="sv-pricing__cta"
+                            aria-label="Demander un devis par email"
+                        >
+                            Demander un devis
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ══════════════════════════════════════════
+                 CENTERED FOOTER CONTACT
+            ══════════════════════════════════════════ -->
+            <section
+                class="sv-contact-footer"
+                aria-label="Contact Mimosa Atelier"
+            >
+                <div class="sv-contact-footer__inner">
+                    <p class="sv-contact-footer__label">
+                        Pour toute question, écrivez-nous
+                    </p>
+                    <a
+                        class="sv-contact-footer__email"
+                        href="mailto:mimosa.atelier.france@gmail.com"
+                        aria-label="Envoyer un email à Mimosa Atelier"
+                    >
+                        mimosa.atelier.france@gmail.com
+                    </a>
+                    <p class="sv-contact-footer__signature">
+                        — L'équipe Mimosa Atelier, Nîmes, France
+                    </p>
+                </div>
+            </section>
+        </main>
+
+        {% include 'includes/footer.html' %}
+
+        <script src="{% static 'translations.js' %}" defer></script>
+        <script src="{% static 'animations.js' %}" defer></script>
+    </body>
+</html>
