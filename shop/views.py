@@ -467,21 +467,35 @@ def logout_view(request):
 @login_required
 @require_GET
 def profile_view(request):
-    orders = list(
-        Order.objects.filter(user=request.user)
-        .prefetch_related(
-            Prefetch("items", queryset=OrderItem.objects.select_related("product"))
-        )
-        .order_by("-created_at")
-    )
+    import logging
+
+    logger = logging.getLogger(__name__)
     try:
-        total_spent = sum((o.total_amount or 0) for o in orders)
-    except Exception:
+        orders = list(
+            Order.objects.filter(user=request.user)
+            .prefetch_related(
+                Prefetch("items", queryset=OrderItem.objects.select_related("product"))
+            )
+            .order_by("-created_at")
+        )
+    except Exception as e:
+        logger.error("profile_view orders query failed: %s", e, exc_info=True)
+        orders = []
+
+    try:
+        from decimal import Decimal
+
+        total_spent = sum((o.total_amount or Decimal("0")) for o in orders)
+    except Exception as e:
+        logger.error("profile_view total_spent failed: %s", e, exc_info=True)
         total_spent = 0
+
     try:
         cart_count = sum(int(qty) for qty in _get_cart(request.session).values())
-    except Exception:
+    except Exception as e:
+        logger.error("profile_view cart_count failed: %s", e, exc_info=True)
         cart_count = 0
+
     return render(
         request,
         "profile.html",

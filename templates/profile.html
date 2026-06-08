@@ -681,7 +681,7 @@
                         {% endif %}
                     </div>
 
-                    {% if orders %} {% for order in orders %}
+                    {% for order in orders %}
                     <article class="pd-order">
                         <!-- Header: order id + status -->
                         <div class="pd-order-head">
@@ -695,8 +695,7 @@
                             <span class="pd-badge pd-badge--delivered"
                                 >📦 Livré</span
                             >
-                            {% elif order.status == 'shipped' or order.status ==
-                            'in_transit' %}
+                            {% elif order.status == 'shipped' or order.status == 'in_transit' %}
                             <span class="pd-badge pd-badge--transit"
                                 >🚚 En transit</span
                             >
@@ -804,8 +803,7 @@
                         {% endif %}
 
                         <!-- Pay button for unpaid orders -->
-                        {% if order.status == 'processing' or order.status ==
-                        'pending' %}
+                        {% if order.status == 'processing' or order.status == 'pending' %}
                         <div class="pd-pay-form">
                             <form
                                 method="post"
@@ -820,15 +818,14 @@
                         </div>
                         {% endif %}
                     </article>
-                    {% endfor %} {% else %}
-
+                    {% empty %}
                     <!-- Empty state -->
                     <div class="pd-empty">
                         <div class="pd-empty-icon">🕯️</div>
                         <h3 class="pd-empty-title">Pas encore de commandes</h3>
                         <p class="pd-empty-text">
-                            Découvrez notre collection de bougies artisanales<br />
-                            et parfumez votre intérieur avec les arômes de
+                            Découvrez notre collection de bougies artisanales et
+                            parfumez votre intérieur avec les arômes de
                             Provence.
                         </p>
                         <a
@@ -838,8 +835,7 @@
                             Explorer la collection
                         </a>
                     </div>
-
-                    {% endif %}
+                    {% endfor %}
                 </section>
             </div>
         </main>
