@@ -360,7 +360,7 @@
       btn.type = "button";
       btn.className = "copilot-apply-btn";
       btn.textContent = "Вставить в описание";
-      btn.addEventListener("click", function () {
+      btn.addEventListener("click", async function () {
         const field =
           document.getElementById("id_description") ||
           document.querySelector('textarea[name="description"]');
@@ -368,11 +368,24 @@
           alert("Откройте форму товара.");
           return;
         }
-        field.value = text;
-        field.dispatchEvent(new Event("input", { bubbles: true }));
-        field.dispatchEvent(new Event("change", { bubbles: true }));
-        btn.textContent = "✓ Вставлено";
         btn.disabled = true;
+        btn.textContent = "✍️ Пишу...";
+        field.scrollIntoView({ behavior: "smooth", block: "center" });
+        await new Promise(function (r) {
+          setTimeout(r, 280);
+        });
+        var shimmer = _aiCreateShimmer(field);
+        field.classList.add("ai-field-filling");
+        field.focus({ preventScroll: true });
+        await _aiTypeIntoField(field, text);
+        field.classList.remove("ai-field-filling");
+        field.classList.add("ai-field-done");
+        if (shimmer) shimmer.remove();
+        await new Promise(function (r) {
+          setTimeout(r, 750);
+        });
+        field.classList.remove("ai-field-done");
+        btn.textContent = "✓ Вставлено";
       });
       wrap.appendChild(btn);
     }
@@ -402,17 +415,109 @@
       }
     }
 
-    function applyProductFormFields(fields) {
-      let applied = 0;
-      PRODUCT_FIELD_KEYS.forEach(function (key) {
-        if (!fields[key]) return;
-        const el = document.getElementById("id_" + key);
-        if (!el) return;
-        el.value = fields[key];
+    // ── Apple Intelligence animated field-fill ───────────────────────────────────────
+    function _aiCreateShimmer(el) {
+      var r = el.getBoundingClientRect();
+      if (!r.width || !r.height) return null;
+      var d = document.createElement("div");
+      d.className = "ai-shimmer-layer";
+      d.style.cssText =
+        "top:" +
+        r.top +
+        "px;" +
+        "left:" +
+        r.left +
+        "px;" +
+        "width:" +
+        r.width +
+        "px;" +
+        "height:" +
+        r.height +
+        "px;";
+      document.body.appendChild(d);
+      return d;
+    }
+
+    async function _aiTypeIntoField(el, text) {
+      el.value = "";
+      var chars = Array.from(text);
+      var speed =
+        chars.length > 100
+          ? 5
+          : chars.length > 50
+            ? 9
+            : chars.length > 15
+              ? 15
+              : 22;
+      for (var i = 0; i < chars.length; i++) {
+        el.value += chars[i];
         el.dispatchEvent(new Event("input", { bubbles: true }));
-        el.dispatchEvent(new Event("change", { bubbles: true }));
+        await new Promise(function (r) {
+          setTimeout(r, speed);
+        });
+      }
+      el.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+
+    async function animatedFillFields(fields) {
+      var applied = 0;
+      var entries = PRODUCT_FIELD_KEYS.filter(function (k) {
+        return !!fields[k];
+      })
+        .map(function (k) {
+          return {
+            key: k,
+            el: document.getElementById("id_" + k),
+            value: fields[k],
+          };
+        })
+        .filter(function (e) {
+          return !!e.el;
+        });
+
+      for (var i = 0; i < entries.length; i++) {
+        var entry = entries[i];
+        var el = entry.el;
+        var value = entry.value;
+        var isSel = el.tagName === "SELECT";
+
+        // Scroll into view and let it settle
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        await new Promise(function (r) {
+          setTimeout(r, 280);
+        });
+
+        // Shimmer overlay + rainbow-border glow
+        var shimmer = _aiCreateShimmer(el);
+        el.classList.add("ai-field-filling");
+        el.focus({ preventScroll: true });
+
+        // Fill content
+        if (isSel) {
+          await new Promise(function (r) {
+            setTimeout(r, 480);
+          });
+          el.value = value;
+          el.dispatchEvent(new Event("change", { bubbles: true }));
+        } else {
+          await _aiTypeIntoField(el, value);
+        }
+
+        // Completion green flash
+        el.classList.remove("ai-field-filling");
+        el.classList.add("ai-field-done");
+        if (shimmer) shimmer.remove();
         applied++;
-      });
+
+        await new Promise(function (r) {
+          setTimeout(r, 750);
+        });
+        el.classList.remove("ai-field-done");
+        await new Promise(function (r) {
+          setTimeout(r, 80);
+        });
+      }
+
       return applied;
     }
 
@@ -606,10 +711,12 @@
             appendErrorMessage(data.error || "Ошибка " + response.status);
             return;
           }
-          const applied = applyProductFormFields(data.form_fields || {});
+          const statusWrap = appendAiMessageEl("✨ Заповнюю поля...");
+          const applied = await animatedFillFields(data.form_fields || {});
+          statusWrap.remove();
           const msg =
-            (data.message || "Поля заполнены.") +
-            (applied ? " (" + applied + " полей)" : "");
+            (data.message || "Поля заповнені.") +
+            (applied ? " (" + applied + " полів)" : "");
           chat.messages.push({ role: "assistant", content: msg });
           saveChats(chats);
           const wrap = appendAiMessageEl(msg);
