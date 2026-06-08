@@ -282,78 +282,624 @@
             </section>
 
             <!-- ══════════════════════════════════════════
-                 FRAGRANCES PLACEHOLDER
+                 PREMIUM FRAGRANCE CATALOG
             ══════════════════════════════════════════ -->
-            <section class="sv-fragrances" aria-label="Nos parfums disponibles">
-                <div class="sv-fragrances__inner">
-                    <h2 class="sv-fragrances__title section-title">
-                        Nos Parfums Disponibles
-                    </h2>
-                    <p class="sv-fragrances__subtitle">
-                        Une sélection soigneusement choisie de fragrances
-                        artisanales
+            <section
+                id="spc-root"
+                class="spc"
+                data-static-url="{% get_static_prefix %}"
+                aria-label="Catalogue des parfums"
+            >
+                <!-- Header -->
+                <header class="spc-head">
+                    <p class="spc-eyebrow">La Collection Mimosa Atelier</p>
+                    <h2 class="spc-title">Nos Parfums</h2>
+                    <p class="spc-lead">
+                        Dix-huit fragrances artisanales &mdash; chacune une
+                        invitation au voyage
                     </p>
-                    <ul
-                        class="sv-fragrance-grid"
-                        aria-label="Liste des parfums"
-                    >
-                        <li class="sv-fragrance-tag">
-                            <span class="sv-fragrance-icon" aria-hidden="true"
-                                >🌸</span
-                            >
-                            Fleur de mimosa
-                        </li>
-                        <li class="sv-fragrance-tag">
-                            <span class="sv-fragrance-icon" aria-hidden="true"
-                                >🌹</span
-                            >
-                            Rose de Provence
-                        </li>
-                        <li class="sv-fragrance-tag">
-                            <span class="sv-fragrance-icon" aria-hidden="true"
-                                >🌿</span
-                            >
-                            Lavande des Alpilles
-                        </li>
-                        <li class="sv-fragrance-tag">
-                            <span class="sv-fragrance-icon" aria-hidden="true"
-                                >🍋</span
-                            >
-                            Citron &amp; Bergamote
-                        </li>
-                        <li class="sv-fragrance-tag">
-                            <span class="sv-fragrance-icon" aria-hidden="true"
-                                >🌲</span
-                            >
-                            Cèdre &amp; Vétiver
-                        </li>
-                        <li class="sv-fragrance-tag">
-                            <span class="sv-fragrance-icon" aria-hidden="true"
-                                >🍦</span
-                            >
-                            Vanille douce
-                        </li>
-                        <li class="sv-fragrance-tag">
-                            <span class="sv-fragrance-icon" aria-hidden="true"
-                                >🌼</span
-                            >
-                            Jasmin &amp; Musc blanc
-                        </li>
-                        <li class="sv-fragrance-tag">
-                            <span class="sv-fragrance-icon" aria-hidden="true"
-                                >🌊</span
-                            >
-                            Air marin &amp; Sel de mer
-                        </li>
-                        <li class="sv-fragrance-tag sv-fragrance-tag--custom">
-                            <span class="sv-fragrance-icon" aria-hidden="true"
-                                >✨</span
-                            >
-                            Fragrance personnalisée sur demande
-                        </li>
-                    </ul>
+                </header>
+
+                <!-- Horizontal name tabs -->
+                <nav class="spc-names" aria-label="Navigation par parfum">
+                    <div class="spc-names-inner">
+                        <button
+                            class="spc-tab is-active"
+                            data-id="ambre"
+                            type="button"
+                        >
+                            Ambre
+                        </button>
+                        <button
+                            class="spc-tab"
+                            data-id="bergamote"
+                            type="button"
+                        >
+                            Bergamote
+                        </button>
+                        <button
+                            class="spc-tab"
+                            data-id="bois-de-oud"
+                            type="button"
+                        >
+                            Bois de oud
+                        </button>
+                        <button
+                            class="spc-tab"
+                            data-id="bois-de-rose"
+                            type="button"
+                        >
+                            Bois de rose
+                        </button>
+                        <button
+                            class="spc-tab"
+                            data-id="bois-de-santal"
+                            type="button"
+                        >
+                            Bois de santal
+                        </button>
+                        <button
+                            class="spc-tab"
+                            data-id="cachemire-et-soie"
+                            type="button"
+                        >
+                            Cachemire et soie
+                        </button>
+                        <button
+                            class="spc-tab"
+                            data-id="citron-vert"
+                            type="button"
+                        >
+                            Citron vert
+                        </button>
+                        <button
+                            class="spc-tab"
+                            data-id="coquelicot"
+                            type="button"
+                        >
+                            Coquelicot
+                        </button>
+                        <button
+                            class="spc-tab"
+                            data-id="eucalyptus"
+                            type="button"
+                        >
+                            Eucalyptus
+                        </button>
+                        <button
+                            class="spc-tab"
+                            data-id="figue-et-santal"
+                            type="button"
+                        >
+                            Figue et Santal
+                        </button>
+                        <button
+                            class="spc-tab"
+                            data-id="fleur-dacacia"
+                            type="button"
+                        >
+                            Fleur d&rsquo;acacia
+                        </button>
+                        <button
+                            class="spc-tab"
+                            data-id="fleur-doranger"
+                            type="button"
+                        >
+                            Fleur d&rsquo;oranger
+                        </button>
+                        <button class="spc-tab" data-id="jasmin" type="button">
+                            Jasmin
+                        </button>
+                        <button class="spc-tab" data-id="lavande" type="button">
+                            Lavande
+                        </button>
+                        <button class="spc-tab" data-id="mimosa" type="button">
+                            Mimosa
+                        </button>
+                        <button class="spc-tab" data-id="musc" type="button">
+                            Musc
+                        </button>
+                        <button
+                            class="spc-tab"
+                            data-id="rose-ancienne"
+                            type="button"
+                        >
+                            Rose ancienne
+                        </button>
+                        <button class="spc-tab" data-id="rosa" type="button">
+                            Rosa
+                        </button>
+                    </div>
+                </nav>
+
+                <!-- Horizontal photo gallery -->
+                <div class="spc-gallery-wrap">
+                    <div class="spc-gallery" role="list">
+                        <article
+                            class="spc-card"
+                            data-id="ambre"
+                            role="listitem"
+                            tabindex="0"
+                            aria-label="Ambre"
+                        >
+                            <div class="spc-card-img">
+                                <img
+                                    src="{% static 'assets/images/sca-ambre.ico' %}"
+                                    alt="Ambre"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                            <footer class="spc-card-foot">
+                                <p class="spc-card-family">
+                                    Oriental · Balsamique
+                                </p>
+                                <h3 class="spc-card-name">Ambre</h3>
+                            </footer>
+                        </article>
+
+                        <article
+                            class="spc-card"
+                            data-id="bergamote"
+                            role="listitem"
+                            tabindex="0"
+                            aria-label="Bergamote"
+                        >
+                            <div class="spc-card-img">
+                                <img
+                                    src="{% static 'assets/images/sca-bergamote.ico' %}"
+                                    alt="Bergamote"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                            <footer class="spc-card-foot">
+                                <p class="spc-card-family">Héspéridé · Frais</p>
+                                <h3 class="spc-card-name">Bergamote</h3>
+                            </footer>
+                        </article>
+
+                        <article
+                            class="spc-card"
+                            data-id="bois-de-oud"
+                            role="listitem"
+                            tabindex="0"
+                            aria-label="Bois de oud"
+                        >
+                            <div class="spc-card-img">
+                                <img
+                                    src="{% static 'assets/images/sca-bois-de-oud.ico' %}"
+                                    alt="Bois de oud"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                            <footer class="spc-card-foot">
+                                <p class="spc-card-family">Boisé · Oriental</p>
+                                <h3 class="spc-card-name">Bois de oud</h3>
+                            </footer>
+                        </article>
+
+                        <article
+                            class="spc-card"
+                            data-id="bois-de-rose"
+                            role="listitem"
+                            tabindex="0"
+                            aria-label="Bois de rose"
+                        >
+                            <div class="spc-card-img">
+                                <img
+                                    src="{% static 'assets/images/sca-bois-de-rose.ico' %}"
+                                    alt="Bois de rose"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                            <footer class="spc-card-foot">
+                                <p class="spc-card-family">Floral · Boisé</p>
+                                <h3 class="spc-card-name">Bois de rose</h3>
+                            </footer>
+                        </article>
+
+                        <article
+                            class="spc-card"
+                            data-id="bois-de-santal"
+                            role="listitem"
+                            tabindex="0"
+                            aria-label="Bois de santal"
+                        >
+                            <div class="spc-card-img">
+                                <img
+                                    src="{% static 'assets/images/sca-bois-de-santal.ico' %}"
+                                    alt="Bois de santal"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                            <footer class="spc-card-foot">
+                                <p class="spc-card-family">Boisé · Crémeux</p>
+                                <h3 class="spc-card-name">Bois de santal</h3>
+                            </footer>
+                        </article>
+
+                        <article
+                            class="spc-card"
+                            data-id="cachemire-et-soie"
+                            role="listitem"
+                            tabindex="0"
+                            aria-label="Cachemire et soie"
+                        >
+                            <div class="spc-card-img">
+                                <img
+                                    src="{% static 'assets/images/sca-cachemire-et-soie.ico' %}"
+                                    alt="Cachemire et soie"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                            <footer class="spc-card-foot">
+                                <p class="spc-card-family">Poudrée · Musc</p>
+                                <h3 class="spc-card-name">Cachemire et soie</h3>
+                            </footer>
+                        </article>
+
+                        <article
+                            class="spc-card"
+                            data-id="citron-vert"
+                            role="listitem"
+                            tabindex="0"
+                            aria-label="Citron vert"
+                        >
+                            <div class="spc-card-img">
+                                <img
+                                    src="{% static 'assets/images/sca-citron-vert.ico' %}"
+                                    alt="Citron vert"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                            <footer class="spc-card-foot">
+                                <p class="spc-card-family">Héspéridé · Vert</p>
+                                <h3 class="spc-card-name">Citron vert</h3>
+                            </footer>
+                        </article>
+
+                        <article
+                            class="spc-card"
+                            data-id="coquelicot"
+                            role="listitem"
+                            tabindex="0"
+                            aria-label="Coquelicot"
+                        >
+                            <div class="spc-card-img">
+                                <img
+                                    src="{% static 'assets/images/sca-coquelicot.ico' %}"
+                                    alt="Coquelicot"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                            <footer class="spc-card-foot">
+                                <p class="spc-card-family">Floral · Poudré</p>
+                                <h3 class="spc-card-name">Coquelicot</h3>
+                            </footer>
+                        </article>
+
+                        <article
+                            class="spc-card"
+                            data-id="eucalyptus"
+                            role="listitem"
+                            tabindex="0"
+                            aria-label="Eucalyptus"
+                        >
+                            <div class="spc-card-img">
+                                <img
+                                    src="{% static 'assets/images/sca-eucalyptus.ico' %}"
+                                    alt="Eucalyptus"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                            <footer class="spc-card-foot">
+                                <p class="spc-card-family">
+                                    Aromatique · Frais
+                                </p>
+                                <h3 class="spc-card-name">Eucalyptus</h3>
+                            </footer>
+                        </article>
+
+                        <article
+                            class="spc-card"
+                            data-id="figue-et-santal"
+                            role="listitem"
+                            tabindex="0"
+                            aria-label="Figue et Santal"
+                        >
+                            <div class="spc-card-img">
+                                <img
+                                    src="{% static 'assets/images/sca-figue-et-santal.ico' %}"
+                                    alt="Figue et Santal"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                            <footer class="spc-card-foot">
+                                <p class="spc-card-family">Boisé · Fruitié</p>
+                                <h3 class="spc-card-name">Figue et Santal</h3>
+                            </footer>
+                        </article>
+
+                        <article
+                            class="spc-card"
+                            data-id="fleur-dacacia"
+                            role="listitem"
+                            tabindex="0"
+                            aria-label="Fleur d'acacia"
+                        >
+                            <div class="spc-card-img">
+                                <img
+                                    src="{% static 'assets/images/sca-fleur-dacacia.ico' %}"
+                                    alt="Fleur d'acacia"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                            <footer class="spc-card-foot">
+                                <p class="spc-card-family">Floral · Miellé</p>
+                                <h3 class="spc-card-name">
+                                    Fleur d&rsquo;acacia
+                                </h3>
+                            </footer>
+                        </article>
+
+                        <article
+                            class="spc-card"
+                            data-id="fleur-doranger"
+                            role="listitem"
+                            tabindex="0"
+                            aria-label="Fleur d'oranger"
+                        >
+                            <div class="spc-card-img">
+                                <img
+                                    src="{% static 'assets/images/sca-fleur-doranger.ico' %}"
+                                    alt="Fleur d'oranger"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                            <footer class="spc-card-foot">
+                                <p class="spc-card-family">Floral · Néroli</p>
+                                <h3 class="spc-card-name">
+                                    Fleur d&rsquo;oranger
+                                </h3>
+                            </footer>
+                        </article>
+
+                        <article
+                            class="spc-card"
+                            data-id="jasmin"
+                            role="listitem"
+                            tabindex="0"
+                            aria-label="Jasmin"
+                        >
+                            <div class="spc-card-img">
+                                <img
+                                    src="{% static 'assets/images/sca-jasmin.ico' %}"
+                                    alt="Jasmin"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                            <footer class="spc-card-foot">
+                                <p class="spc-card-family">Floral · Sensuel</p>
+                                <h3 class="spc-card-name">Jasmin</h3>
+                            </footer>
+                        </article>
+
+                        <article
+                            class="spc-card"
+                            data-id="lavande"
+                            role="listitem"
+                            tabindex="0"
+                            aria-label="Lavande"
+                        >
+                            <div class="spc-card-img">
+                                <img
+                                    src="{% static 'assets/images/sca-lavande.ico' %}"
+                                    alt="Lavande"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                            <footer class="spc-card-foot">
+                                <p class="spc-card-family">
+                                    Aromatique · Lavande
+                                </p>
+                                <h3 class="spc-card-name">Lavande</h3>
+                            </footer>
+                        </article>
+
+                        <article
+                            class="spc-card"
+                            data-id="mimosa"
+                            role="listitem"
+                            tabindex="0"
+                            aria-label="Mimosa"
+                        >
+                            <div class="spc-card-img">
+                                <img
+                                    src="{% static 'assets/images/sca-mimosa.ico' %}"
+                                    alt="Mimosa"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                            <footer class="spc-card-foot">
+                                <p class="spc-card-family">Floral · Solaire</p>
+                                <h3 class="spc-card-name">Mimosa</h3>
+                            </footer>
+                        </article>
+
+                        <article
+                            class="spc-card"
+                            data-id="musc"
+                            role="listitem"
+                            tabindex="0"
+                            aria-label="Musc"
+                        >
+                            <div class="spc-card-img">
+                                <img
+                                    src="{% static 'assets/images/sca-musc.ico' %}"
+                                    alt="Musc"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                            <footer class="spc-card-foot">
+                                <p class="spc-card-family">Musqué · Propre</p>
+                                <h3 class="spc-card-name">Musc</h3>
+                            </footer>
+                        </article>
+
+                        <article
+                            class="spc-card"
+                            data-id="rose-ancienne"
+                            role="listitem"
+                            tabindex="0"
+                            aria-label="Rose ancienne"
+                        >
+                            <div class="spc-card-img">
+                                <img
+                                    src="{% static 'assets/images/sca-rose-ancienne.ico' %}"
+                                    alt="Rose ancienne"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                            <footer class="spc-card-foot">
+                                <p class="spc-card-family">Floral · Rose</p>
+                                <h3 class="spc-card-name">Rose ancienne</h3>
+                            </footer>
+                        </article>
+
+                        <article
+                            class="spc-card"
+                            data-id="rosa"
+                            role="listitem"
+                            tabindex="0"
+                            aria-label="Rosa"
+                        >
+                            <div class="spc-card-img">
+                                <img
+                                    src="{% static 'assets/images/sca-rosa.ico' %}"
+                                    alt="Rosa"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                            <footer class="spc-card-foot">
+                                <p class="spc-card-family">Floral · Frais</p>
+                                <h3 class="spc-card-name">Rosa</h3>
+                            </footer>
+                        </article>
+                    </div>
+                    <!-- /.spc-gallery -->
                 </div>
+                <!-- /.spc-gallery-wrap -->
+
+                <!-- MODAL -->
+                <div
+                    id="spc-modal"
+                    class="spc-modal"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-hidden="true"
+                    aria-labelledby="spc-modal-name"
+                >
+                    <button
+                        id="spc-modal-bg"
+                        class="spc-modal-bg"
+                        aria-label="Fermer"
+                    ></button>
+                    <div class="spc-modal-panel">
+                        <button
+                            id="spc-modal-close"
+                            class="spc-modal-close"
+                            aria-label="Fermer"
+                        >
+                            &times;
+                        </button>
+
+                        <div class="spc-modal-img-wrap">
+                            <img id="spc-modal-img" src="" alt="" />
+                        </div>
+
+                        <div class="spc-modal-body">
+                            <p
+                                id="spc-modal-family"
+                                class="spc-modal-family"
+                            ></p>
+                            <h2 id="spc-modal-name" class="spc-modal-name"></h2>
+                            <p
+                                id="spc-modal-description"
+                                class="spc-modal-description"
+                            ></p>
+                            <p id="spc-modal-mood" class="spc-modal-mood"></p>
+
+                            <div class="spc-modal-intensity">
+                                <p class="spc-modal-label">Intensité</p>
+                                <div
+                                    id="spc-intensity-dots"
+                                    class="spc-intensity-dots"
+                                >
+                                    <span></span><span></span><span></span
+                                    ><span></span><span></span>
+                                </div>
+                            </div>
+
+                            <div class="spc-modal-grid">
+                                <div class="spc-modal-block">
+                                    <p class="spc-modal-label">
+                                        Notes olfactives
+                                    </p>
+                                    <ul
+                                        id="spc-modal-notes"
+                                        class="spc-modal-notes"
+                                    ></ul>
+                                </div>
+                                <div class="spc-modal-block">
+                                    <p class="spc-modal-label">Saisons</p>
+                                    <div
+                                        id="spc-modal-seasons"
+                                        class="spc-modal-tags"
+                                    ></div>
+                                </div>
+                                <div class="spc-modal-block">
+                                    <p class="spc-modal-label">
+                                        Moments idéaux
+                                    </p>
+                                    <div
+                                        id="spc-modal-moments"
+                                        class="spc-modal-tags"
+                                    ></div>
+                                </div>
+                            </div>
+
+                            <div class="spc-modal-pairs-block">
+                                <p class="spc-modal-label">
+                                    Se marie avec&nbsp;&mdash;
+                                </p>
+                                <div
+                                    id="spc-modal-pairs"
+                                    class="spc-modal-tags"
+                                ></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.spc-modal -->
             </section>
+            <!-- /#spc-root -->
 
             <!-- ══════════════════════════════════════════
                  CTA & PRICING
@@ -421,5 +967,6 @@
 
         <script src="{% static 'translations.js' %}" defer></script>
         <script src="{% static 'animations.js' %}" defer></script>
+        <script src="{% static 'fragrance_catalog.js' %}" defer></script>
     </body>
 </html>
