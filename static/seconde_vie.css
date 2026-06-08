@@ -240,7 +240,18 @@
     padding: 8px 4px 2px;
 }
 
-/* ── Story text (right column) ── */
+/* Full-width text-only variant (no image column) */
+.sv-story__inner--text-only {
+    grid-template-columns: 1fr;
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.sv-story__inner--text-only .sv-story__text {
+    padding-top: 0;
+}
+
+/* —— Story text (right column) —— */
 .sv-story__text {
     padding-top: 4px;
 }
