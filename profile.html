@@ -1,3 +1,4 @@
+```html
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -10,14 +11,22 @@
         <link rel="shortcut icon" href="{% static 'assets/images/logobl2.ico' %}" type="image/x-icon">
         <meta name="Keywords" content="Mimosa, Mimosa candles, Mimosa bio bougies, bougies artisanales bio, bougies naturelles, bougies parfumées, bougies écologiques, bougies végétales, bougies faites main, bougies durables, bougies respectueuses de l'environnement">
         <meta name="Keywordsru" content="Мимоза, свечи Мимоза, био свечи Мимоза, ручная работа свечей Мимоза, натуральные свечи Мимоза, ароматизированные свечи Мимоза, экологичные свечи Мимоза, вегетарианские свечи Мимоза, ручные свечи Мимоза, устойчивые свечи Мимоза, уважающие окружающую среду свечи Мимоза">
-        <meta name="Description" content="Découvrez Mimosa, votre destination pour des bougies artisanales bio, naturelles et parfumées. Nos bougies écologiques sont fabriquées à la main avec des ingrédients végétaux durables, offrant une expérience sensorielle unique tout en respectant l'environnement. Explorez notre collection de bougies faites main pour créer une ambiance chaleureuse et durable chez vous.">
+        <meta name="Description" content="Découvrez Mimosa, votre destination pour des bougies artisanales bio, naturelles et parfumées. Nos bougies écologiques sont fabriquées à la main avec des ingrédients végétaux durables, offrant une expérience sensorielle unique tout en respectant l'environnement. Explorez notre collection de bougies faites main для создания уютной атмосферы.">
         <link rel="stylesheet" href="{% static 'styles.css' %}">
         <script src="{% static 'translations.js' %}"></script>
         <script src="{% static 'animations.js' %}" defer></script>
-
 </head>
 
 <body>
+    <div class="language-switcher">
+        <button class="lang-current" type="button" aria-label="Toggle language menu" aria-expanded="false">EN</button>
+        <div class="lang-options" aria-label="Language options">
+            <button class="lang-btn active" data-lang="en" title="English" type="button">EN</button>
+            <button class="lang-btn" data-lang="fr" title="Français" type="button">FR</button>
+            <button class="lang-btn" data-lang="ua" title="Українська" type="button">UA</button>
+        </div>
+    </div>
+
     <header>
         <figure>
             <a href="{% url 'shop:home' %}">
@@ -42,17 +51,15 @@
                 <li><a href="{% url 'shop:contact' %}" data-translate="nav-contact">Contact</a></li>
             </ul>
         </nav>
-    <div class="profile-icon">
+        <div class="profile-icon">
             <a href="{% url 'shop:profile' %}">
-        
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="8" r="4" stroke="black" stroke-width="2"/>
-            <path d="M4 20c0-4 4-6 8-6s8 2 8 6" stroke="black" stroke-width="2" stroke-linecap="round"/>
-        </svg>
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="8" r="4" stroke="black" stroke-width="2"/>
+                    <path d="M4 20c0-4 4-6 8-6s8 2 8 6" stroke="black" stroke-width="2" stroke-linecap="round"/>
+                </svg>
             </a>
-</div>
+        </div>
     </header>
-
 
 <main class="profile-page">
     <section class="profile-hero-panel">
@@ -68,20 +75,36 @@
 
     <section class="profile-grid">
         <article class="profile-card profile-account-card">
-            <div class="profile-avatar">MS</div>
+            <!-- Динамическая первая буква имени или дефолтная 'M' -->
+            <div class="profile-avatar">
+                {% if request.user.first_name %}{{ request.user.first_name|slice:":1" }}{% else %}M{% endif %}
+            </div>
             <div class="profile-account-info">
-                <h2><span data-translate="profile-client-name">Mimosa Client</span></h2>
-                <p>mimosa.atelier.france@gmail.com</p>
-                <p data-translate="profile-location">Nîmes, France</p>
+                <!-- Выводим имя пользователя, если оно есть, иначе username -->
+                <h2>
+                    <span>
+                        {% if request.user.get_full_name %}{{ request.user.get_full_name }}{% else %}{{ request.user.username }}{% endif %}
+                    </span>
+                </h2>
+                <p>{{ request.user.email }}</p>
+                <p>@{{ request.user.username }}</p>
+                
+                {% if request.user.date_joined %}
+                    <p style="font-size: 0.85rem; color: #666; margin-top: 5px;">
+                        Membre depuis: {{ request.user.date_joined|date:"F Y" }}
+                    </p>
+                {% endif %}
             </div>
         </article>
 
         <article class="profile-card profile-orders-card">
             <h2><span data-translate="profile-recent-orders">Recent Orders</span></h2>
             <ul>
+                <!-- Здесь в будущем пустишь цикл {% for order in orders %} -->
                 <li><span>Order #MA-24031</span><strong data-translate="order-status-delivered">Delivered</strong></li>
                 <li><span>Order #MA-24055</span><strong data-translate="order-status-transit">In Transit</strong></li>
                 <li><span>Order #MA-24078</span><strong data-translate="order-status-processing">Processing</strong></li>
+                <!-- {% endfor %} -->
             </ul>
         </article>
 
@@ -96,9 +119,6 @@
     </section>
 </main>
 
-
-
-
 <footer>
     <div class="footer-content">
         <p>&copy; 2026 Mimosa Atelier. <span data-translate="footer-copyright">All rights reserved.</span></p>
@@ -108,8 +128,8 @@
             <a href="{% url 'shop:contact' %}" data-translate="footer-contact">Contact</a>
         </nav>
         <div class="footer-social">
-            <a href="mailto:mimosa.atelier.france@gmail.com">Email</a>
-            <a href="https://www.instagram.com/mimosa_atelier_france/" target="_blank">Instagram</a>
+            <a href="mailto:mimosa.atelier.france@gmail.com" data-translate="footer-email">Email</a>
+            <a href="https://www.instagram.com/mimosa_atelier_france/" target="_blank" data-translate="footer-instagram">Instagram</a>
         </div>
     </div>
     <p class="legal-text">Nîmes, France | SIRET: XXX XXX XXX</p>
@@ -138,7 +158,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-
 
 </body>
 </html>
