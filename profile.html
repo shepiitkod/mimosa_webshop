@@ -26,20 +26,20 @@
         </figure>
         <nav>
             <ul>
-                <li><a href="{% url 'shop:home' %}">Home</a></li>
+                <li><a href="{% url 'shop:home' %}" data-translate="nav-home">Home</a></li>
                 <li class="products-menu">
-                    <a href="{% url 'shop:products' %}">Products</a>
+                    <a href="{% url 'shop:products' %}" data-translate="nav-products">Products</a>
                     <div class="dropdown-catalog" aria-label="Product categories">
-                        <a href="{% url 'shop:products' %}" class="dropdown-item">All Products</a>
-                        <a href="{% url 'shop:product_bento' %}" class="dropdown-item">Bento Candles</a>
-                        <a href="{% url 'shop:products' %}" class="dropdown-item">Scented Candles</a>
-                        <a href="{% url 'shop:product_decorative_candles' %}" class="dropdown-item">Decorative Candles</a>
-                        <a href="{% url 'shop:products' %}" class="dropdown-item">Gift Collections</a>
-                        <a href="{% url 'shop:products' %}" class="dropdown-item">New Arrivals</a>
+                        <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-all">All Products</a>
+                        <a href="{% url 'shop:product_bento' %}" class="dropdown-item" data-translate="nav-sub-bento">Bento Candles</a>
+                        <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-scented">Scented Candles</a>
+                        <a href="{% url 'shop:product_decorative_candles' %}" class="dropdown-item" data-translate="nav-sub-rose">Decorative Candles</a>
+                        <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-gifts">Gift Collections</a>
+                        <a href="{% url 'shop:products' %}" class="dropdown-item" data-translate="nav-sub-new">New Arrivals</a>
                     </div>
                 </li>
-                <li><a href="{% url 'shop:about' %}">About Us</a></li>
-                <li><a href="{% url 'shop:contact' %}">Contact</a></li>
+                <li><a href="{% url 'shop:about' %}" data-translate="nav-about">About Us</a></li>
+                <li><a href="{% url 'shop:contact' %}" data-translate="nav-contact">Contact</a></li>
             </ul>
         </nav>
     <div class="profile-icon">
@@ -57,12 +57,12 @@
 <main class="profile-page">
     <section class="profile-hero-panel">
         <div class="profile-hero-copy">
-            <h1>My Profile</h1>
-            <p>Manage your account details, orders, and preferences in one elegant space.</p>
+            <h1><span data-translate="profile-title">My Profile</span></h1>
+            <p data-translate="profile-hero-subtitle">Manage your account details, orders, and preferences in one elegant space.</p>
         </div>
         <div class="profile-hero-actions">
-            <a href="#" class="edit-btn">Edit Profile</a>
-            <a href="#" class="profile-link">View Customer Profile</a>
+            <a href="#" class="edit-btn" data-translate="profile-edit-btn">Edit Profile</a>
+            <a href="#" class="profile-link" data-translate="profile-view-customer-btn">View Customer Profile</a>
         </div>
     </section>
 
@@ -70,27 +70,27 @@
         <article class="profile-card profile-account-card">
             <div class="profile-avatar">MS</div>
             <div class="profile-account-info">
-                <h2>Mimosa Client</h2>
+                <h2><span data-translate="profile-client-name">Mimosa Client</span></h2>
                 <p>mimosa.atelier.france@gmail.com</p>
-                <p>Nîmes, France</p>
+                <p data-translate="profile-location">Nîmes, France</p>
             </div>
         </article>
 
         <article class="profile-card profile-orders-card">
-            <h2>Recent Orders</h2>
+            <h2><span data-translate="profile-recent-orders">Recent Orders</span></h2>
             <ul>
-                <li><span>Order #MA-24031</span><strong>Delivered</strong></li>
-                <li><span>Order #MA-24055</span><strong>In Transit</strong></li>
-                <li><span>Order #MA-24078</span><strong>Processing</strong></li>
+                <li><span>Order #MA-24031</span><strong data-translate="order-status-delivered">Delivered</strong></li>
+                <li><span>Order #MA-24055</span><strong data-translate="order-status-transit">In Transit</strong></li>
+                <li><span>Order #MA-24078</span><strong data-translate="order-status-processing">Processing</strong></li>
             </ul>
         </article>
 
         <article class="profile-card profile-preferences-card">
-            <h2>Preferences</h2>
+            <h2><span data-translate="profile-preferences-title">Preferences</span></h2>
             <div class="profile-tags">
-                <span>Eco-Friendly</span>
-                <span>Floral Scents</span>
-                <span>Handmade Collections</span>
+                <span data-translate="profile-pref-eco">Eco-Friendly</span>
+                <span data-translate="profile-pref-floral">Floral Scents</span>
+                <span data-translate="profile-pref-handmade">Handmade Collections</span>
             </div>
         </article>
     </section>
@@ -101,11 +101,11 @@
 
 <footer>
     <div class="footer-content">
-        <p>&copy; 2026 Mimosa Atelier. Tous droits réservés.</p>
+        <p>&copy; 2026 Mimosa Atelier. <span data-translate="footer-copyright">All rights reserved.</span></p>
         <nav class="footer-links">
-            <a href="{% url 'shop:privacy' %}">Politique de confidentialité</a>
-            <a href="#">CGV</a>
-            <a href="{% url 'shop:contact' %}">Contact</a>
+            <a href="{% url 'shop:privacy' %}" data-translate="footer-privacy">Privacy Policy</a>
+            <a href="#" data-translate="footer-terms">Terms</a>
+            <a href="{% url 'shop:contact' %}" data-translate="footer-contact">Contact</a>
         </nav>
         <div class="footer-social">
             <a href="mailto:mimosa.atelier.france@gmail.com">Email</a>
