@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.utils import timezone
 
 IMAGE_FOCAL_POINT_VALIDATORS = [MinValueValidator(0), MaxValueValidator(100)]
 
@@ -151,9 +152,30 @@ class Order(models.Model):
     shipping_carrier = models.CharField(max_length=32, blank=True, default="")
     shipping_cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     shipping_country_code = models.CharField(max_length=2, blank=True, default="")
+    tracking_number = models.CharField(max_length=120, blank=True, default="")
+    tracking_url = models.URLField(max_length=500, blank=True, default="")
+    admin_note = models.TextField(blank=True, default="")
+    status_updated_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f"Order #{self.id} - {self.user.username}"
+
+    def save(self, *args, **kwargs):
+        if self.pk:
+            old_status = (
+                type(self)
+                .objects.filter(pk=self.pk)
+                .values_list("status", flat=True)
+                .first()
+            )
+            if old_status and old_status != self.status:
+                self.status_updated_at = timezone.now()
+                update_fields = kwargs.get("update_fields")
+                if update_fields is not None:
+                    kwargs["update_fields"] = set(update_fields) | {"status_updated_at"}
+        elif not self.status_updated_at:
+            self.status_updated_at = timezone.now()
+        super().save(*args, **kwargs)
 
 
 class OrderItem(models.Model):

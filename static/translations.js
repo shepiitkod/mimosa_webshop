@@ -272,6 +272,8 @@ const translations = {
     "order-status-canceled": "Cancelled",
     "order-status-shipped": "Shipped",
     "profile-pay-btn": "Complete payment",
+    "profile-tracking-label": "Tracking",
+    "profile-tracking-link": "Track parcel",
     "profile-empty-orders-title": "No orders yet",
     "profile-empty-orders-text":
       "Discover our artisan candle collection and fill your home with the scents of Provence.",
@@ -680,6 +682,8 @@ const translations = {
     "order-status-canceled": "Annulé",
     "order-status-shipped": "Expédié",
     "profile-pay-btn": "Finaliser le paiement",
+    "profile-tracking-label": "Suivi",
+    "profile-tracking-link": "Suivre le colis",
     "profile-empty-orders-title": "Pas encore de commandes",
     "profile-empty-orders-text":
       "Découvrez notre collection de bougies artisanales et parfumez votre intérieur avec les arômes de Provence.",
@@ -1086,6 +1090,8 @@ const translations = {
     "order-status-canceled": "Скасовано",
     "order-status-shipped": "Відправлено",
     "profile-pay-btn": "Завершити оплату",
+    "profile-tracking-label": "Відстеження",
+    "profile-tracking-link": "Відстежити посилку",
     "profile-empty-orders-title": "Замовлень ще немає",
     "profile-empty-orders-text":
       "Відкрийте нашу колекцію свічок ручної роботи та наповніть дім ароматами Провансу.",
@@ -1518,6 +1524,8 @@ const translations = {
     "order-status-canceled": "Отменён",
     "order-status-shipped": "Отправлен",
     "profile-pay-btn": "Завершить оплату",
+    "profile-tracking-label": "Отслеживание",
+    "profile-tracking-link": "Отследить посылку",
     "profile-empty-orders-title": "Заказов пока нет",
     "profile-empty-orders-text":
       "Откройте нашу коллекцию свечей ручной работы и наполните дом ароматами Прованса.",

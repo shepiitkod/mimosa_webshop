@@ -769,6 +769,18 @@
                             </span>
                         </div>
                         {% endif %}
+                        {% if order.tracking_number or order.tracking_url %}
+                        <div class="pd-shipping">
+                            <span class="pd-shipping-icon" aria-hidden="true">📦</span>
+                            <span class="pd-shipping-text">
+                                <strong data-translate="profile-tracking-label">Tracking</strong>
+                                {% if order.tracking_number %}{{ order.tracking_number }}{% endif %}
+                                {% if order.tracking_url %}
+                                <a href="{{ order.tracking_url }}" target="_blank" rel="noopener" data-translate="profile-tracking-link">Track parcel</a>
+                                {% endif %}
+                            </span>
+                        </div>
+                        {% endif %}
 
                         {% if order.status == 'processing' or order.status == 'pending' %}
                         <div class="pd-pay-form">

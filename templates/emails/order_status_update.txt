@@ -1,0 +1,16 @@
+MIMOSA ATELIER — Order status update
+
+Dear {{ customer_name }},
+
+Your order #{{ order.id }} is now: {{ status_label }}.
+
+{% if order.tracking_number %}Tracking number: {{ order.tracking_number }}
+{% endif %}{% if order.tracking_url %}Tracking link: {{ order.tracking_url }}
+{% endif %}
+Order total: {{ order.total_amount }} EUR
+
+View your orders: {{ site_url }}/profile/
+
+Questions? hello@mimosa-atelier.com
+
+© MIMOSA Atelier

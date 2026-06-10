@@ -5,6 +5,7 @@ from django.contrib import admin
 from django.db.models import Sum
 from django.utils.html import format_html
 
+from .emails import send_order_status_update_email
 from .models import CartItem, NewsletterUser, Order, OrderItem, Product
 
 FRAMING_FIELDS = (
@@ -174,12 +175,23 @@ class OrderAdmin(admin.ModelAdmin):
         "shipping_address",
         "city",
         "postal_code",
+        "tracking_number",
         "status",
+        "status_updated_at",
         "created_at",
     )
     list_editable = ("status",)
     list_filter = ("status", "created_at", "country")
-    search_fields = ("id", "user__username", "shipping_address", "city", "postal_code")
+    search_fields = (
+        "id",
+        "user__username",
+        "user__email",
+        "shipping_address",
+        "city",
+        "postal_code",
+        "tracking_number",
+        "admin_note",
+    )
     inlines = [OrderItemInline]
     fieldsets = (
         (
@@ -191,7 +203,10 @@ class OrderAdmin(admin.ModelAdmin):
                     "shipping_cost",
                     "shipping_carrier",
                     "shipping_country_code",
+                    "tracking_number",
+                    "tracking_url",
                     "status",
+                    "status_updated_at",
                     "created_at",
                 ),
             },
@@ -200,8 +215,15 @@ class OrderAdmin(admin.ModelAdmin):
             "Shipping Address",
             {"fields": ("shipping_address", "city", "postal_code", "country")},
         ),
+        (
+            "Internal note",
+            {
+                "fields": ("admin_note",),
+                "description": "Private staff note. It is not shown to customers.",
+            },
+        ),
     )
-    readonly_fields = ("created_at",)
+    readonly_fields = ("created_at", "status_updated_at")
 
     def total_price(self, obj):
         return obj.total_amount
@@ -244,6 +266,16 @@ class OrderAdmin(admin.ModelAdmin):
         }
 
         return response
+
+    def save_model(self, request, obj, form, change):
+        old_status = None
+        if change and obj.pk:
+            old_status = (
+                Order.objects.filter(pk=obj.pk).values_list("status", flat=True).first()
+            )
+        super().save_model(request, obj, form, change)
+        if old_status and old_status != obj.status:
+            send_order_status_update_email(obj, old_status=old_status)
 
 
 @admin.register(OrderItem)

@@ -33,7 +33,11 @@ from .ai_service import (
     stream_sse_events,
     wants_product_form_fill,
 )
-from .emails import send_admin_order_notification, send_order_confirmation_email
+from .emails import (
+    send_admin_order_notification,
+    send_order_confirmation_email,
+    send_order_status_update_email,
+)
 from .models import CartItem, NewsletterUser, Order, OrderItem, Product
 
 CATEGORY_SLUG_ALIASES = {
@@ -208,7 +212,7 @@ def _build_admin_copilot_context(prompt: str) -> str:
             if part
         )
         lines.append(
-            f"- id={order.id}; user={order.user.username}; email={order.user.email or '-'}; status={order.status}; total={_format_money(order.total_amount)}; date={order.created_at:%Y-%m-%d}; shipping={shipping or '-'}; items={'; '.join(item_bits) or '-'}"
+            f"- id={order.id}; user={order.user.username}; email={order.user.email or '-'}; status={order.status}; total={_format_money(order.total_amount)}; date={order.created_at:%Y-%m-%d}; tracking_number={order.tracking_number or '-'}; tracking_url={order.tracking_url or '-'}; admin_note={order.admin_note or '-'}; shipping={shipping or '-'}; items={'; '.join(item_bits) or '-'}"
         )
 
     lines.append("")
@@ -1231,10 +1235,62 @@ def copilot_admin_action(request):
             old_status = order.status
             order.status = status
             order.save(update_fields=["status"])
+            email_sent = send_order_status_update_email(order, old_status=old_status)
             return JsonResponse(
                 {
                     "success": True,
-                    "message": f"Order #{order.id}: status changed from {old_status} to {status}.",
+                    "message": (
+                        f"Order #{order.id}: status changed from {old_status} to {status}. "
+                        + (
+                            "Customer email notification sent."
+                            if email_sent
+                            else "Customer email notification skipped (email not configured or customer email missing)."
+                        )
+                    ),
+                    "url": f"/admin/shop/order/{order.id}/change/",
+                }
+            )
+
+        if action == "update_order_tracking":
+            order_id = int(params.get("order_id"))
+            tracking_number = (params.get("tracking_number") or "").strip()[:120]
+            tracking_url = (params.get("tracking_url") or "").strip()[:500]
+            if tracking_url:
+                if not tracking_url.startswith(("http://", "https://")):
+                    return JsonResponse(
+                        {"success": False, "error": "Tracking URL must start with http:// or https://."},
+                        status=400,
+                    )
+            order = get_object_or_404(Order, id=order_id)
+            order.tracking_number = tracking_number
+            order.tracking_url = tracking_url
+            order.save(update_fields=["tracking_number", "tracking_url"])
+            email_sent = send_order_status_update_email(order, old_status=order.status)
+            return JsonResponse(
+                {
+                    "success": True,
+                    "message": (
+                        f"Tracking updated for order #{order.id}. "
+                        + (
+                            "Customer email notification sent."
+                            if email_sent
+                            else "Customer email notification skipped (email not configured or customer email missing)."
+                        )
+                    ),
+                    "url": f"/admin/shop/order/{order.id}/change/",
+                }
+            )
+
+        if action == "update_order_note":
+            order_id = int(params.get("order_id"))
+            admin_note = (params.get("admin_note") or "").strip()[:2000]
+            order = get_object_or_404(Order, id=order_id)
+            order.admin_note = admin_note
+            order.save(update_fields=["admin_note"])
+            return JsonResponse(
+                {
+                    "success": True,
+                    "message": f"Internal note saved for order #{order.id}.",
                     "url": f"/admin/shop/order/{order.id}/change/",
                 }
             )
