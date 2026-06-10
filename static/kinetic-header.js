@@ -19,10 +19,8 @@
 
         if (mode === 'top') {
             header.classList.add('site-header--at-top');
-        } else if (mode === 'hidden') {
-            header.classList.add('site-header--hidden');
         } else {
-            header.classList.add('site-header--dock');
+            header.classList.add('site-header--hidden');
         }
 
         var t = Math.min(1, window.scrollY / 1400);
@@ -36,13 +34,7 @@
 
         var y = window.scrollY;
 
-        if (y <= TOP_THRESHOLD) {
-            mode = 'top';
-        } else if (y > prevScroll) {
-            mode = 'hidden';
-        } else if (y < prevScroll) {
-            mode = 'dock';
-        }
+        mode = y <= TOP_THRESHOLD ? 'top' : 'hidden';
 
         prevScroll = y;
         applyClasses();
