@@ -369,6 +369,30 @@
     color: #a7f3d0;
 }
 
+.copilot-action-btn {
+    display: inline-block;
+    margin-top: 8px;
+    margin-right: 6px;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    border: 1px solid rgba(212, 175, 55, 0.75);
+    border-radius: 4px;
+    background: rgba(212, 175, 55, 0.16);
+    color: #f8dc7a;
+    cursor: pointer;
+    transition:
+        background 0.15s,
+        opacity 0.15s;
+}
+.copilot-action-btn:hover:not(:disabled) {
+    background: rgba(212, 175, 55, 0.28);
+}
+.copilot-action-btn:disabled {
+    cursor: default;
+    opacity: 0.65;
+}
+
 /* ── Input area ─────────────────────────────────────────────────────────── */
 .copilot-input-area {
     flex-shrink: 0;

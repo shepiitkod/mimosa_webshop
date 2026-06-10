@@ -105,6 +105,24 @@
   function stripNavCommands(text) {
     return text.replace(/\[\[NAV:[^\]]+\]\]/g, "").trim();
   }
+  function parseActionCommands(text) {
+    const found = [];
+    const re = /\[\[ACTION:([^|]+)\|(\{[^\]]+\})\|([^\]]+)\]\]/g;
+    let m;
+    while ((m = re.exec(text)) !== null) {
+      try {
+        found.push({
+          action: m[1].trim(),
+          params: JSON.parse(m[2]),
+          label: m[3].trim(),
+        });
+      } catch {}
+    }
+    return found;
+  }
+  function stripCopilotCommands(text) {
+    return stripNavCommands(text).replace(/\[\[ACTION:[^\]]+\]\]/g, "").trim();
+  }
 
   // ─── Admin page detection ─────────────────────────────────────────────────
   function isAdminPage() {
@@ -303,11 +321,14 @@
         if (msg.role === "user") {
           appendUserMessageEl(msg.content);
         } else if (msg.role === "assistant") {
-          const clean = stripNavCommands(msg.content);
+          const clean = stripCopilotCommands(msg.content);
           const wrap = appendAiMessageEl(clean);
           const navs = parseNavCommands(msg.content);
           navs.forEach(function (nav) {
             appendNavButton(wrap, nav.url, nav.label);
+          });
+          parseActionCommands(msg.content).forEach(function (action) {
+            appendActionButton(wrap, action.action, action.params, action.label);
           });
           if (msg.applyDescription && isProductFormPage()) {
             appendApplyBtn(wrap, msg.content);
@@ -352,6 +373,43 @@
       btn.href = url;
       btn.className = "copilot-nav-btn";
       btn.textContent = "→ " + label;
+      wrap.appendChild(btn);
+    }
+
+    function appendActionButton(wrap, action, params, label) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "copilot-action-btn";
+      btn.textContent = "✓ " + label;
+      btn.addEventListener("click", async function () {
+        if (!window.confirm("Подтвердить действие: " + label + "?")) return;
+        btn.disabled = true;
+        const oldText = btn.textContent;
+        btn.textContent = "Выполняю...";
+        try {
+          const response = await fetch("/admin/api/copilot-action/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+              "X-CSRFToken": getCsrfToken(),
+            },
+            credentials: "same-origin",
+            body: JSON.stringify({ action: action, params: params || {} }),
+          });
+          const data = await response.json().catch(function () {
+            return {};
+          });
+          if (!response.ok || !data.success) {
+            throw new Error(data.error || "Ошибка действия");
+          }
+          btn.textContent = "Готово";
+          appendAiMessageEl(data.message || "Действие выполнено.");
+        } catch (err) {
+          btn.disabled = false;
+          btn.textContent = oldText;
+          appendErrorMessage("❌ " + (err.message || "Не удалось выполнить действие"));
+        }
+      });
       wrap.appendChild(btn);
     }
 
@@ -745,13 +803,16 @@
             appendErrorMessage("Пустой ответ.");
             return;
           }
+          textEl.textContent = stripCopilotCommands(fullText);
 
-          // Parse nav commands and add buttons
           const navs = parseNavCommands(fullText);
           navs.forEach((nav) => appendNavButton(wrap, nav.url, nav.label));
+          parseActionCommands(fullText).forEach((action) =>
+            appendActionButton(wrap, action.action, action.params, action.label),
+          );
 
           // Apply to description button on product form
-          if (onProductForm) appendApplyBtn(wrap, stripNavCommands(fullText));
+          if (onProductForm) appendApplyBtn(wrap, stripCopilotCommands(fullText));
 
           chat.messages.push({ role: "assistant", content: fullText });
           saveChats(chats);
@@ -774,9 +835,12 @@
         const reply = data.enhanced_description || "";
         chat.messages.push({ role: "assistant", content: reply });
         saveChats(chats);
-        const wrap = appendAiMessageEl(stripNavCommands(reply));
+        const wrap = appendAiMessageEl(stripCopilotCommands(reply));
         parseNavCommands(reply).forEach((nav) =>
           appendNavButton(wrap, nav.url, nav.label),
+        );
+        parseActionCommands(reply).forEach((action) =>
+          appendActionButton(wrap, action.action, action.params, action.label),
         );
         if (onProductForm) appendApplyBtn(wrap, reply);
       } catch (err) {

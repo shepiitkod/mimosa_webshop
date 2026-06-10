@@ -1,5 +1,6 @@
 import json
 import traceback
+from datetime import timedelta
 from decimal import Decimal, InvalidOperation
 from typing import Optional
 
@@ -15,10 +16,11 @@ from django.contrib.messages import get_messages
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.db import IntegrityError, transaction
-from django.db.models import Count, Prefetch
+from django.db.models import Count, Prefetch, Sum
 from django.http import HttpResponse, JsonResponse, StreamingHttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.text import slugify
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
@@ -84,6 +86,34 @@ def _build_admin_copilot_context(prompt: str) -> str:
         for row in Product.objects.values("category").annotate(total=Count("id"))
     }
 
+    now = timezone.now()
+    today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    week_start = now - timedelta(days=7)
+    month_start = now - timedelta(days=30)
+
+    def _order_metrics_since(start):
+        qs = Order.objects.filter(created_at__gte=start)
+        return {
+            "count": qs.count(),
+            "amount": qs.aggregate(total=Sum("total_amount"))["total"] or Decimal("0"),
+        }
+
+    today_metrics = _order_metrics_since(today_start)
+    week_metrics = _order_metrics_since(week_start)
+    month_metrics = _order_metrics_since(month_start)
+    unpaid_orders = Order.objects.filter(
+        status__in=[Order.STATUS_PROCESSING]
+    ).count()
+    paid_orders = Order.objects.filter(status=Order.STATUS_PAID).count()
+    shipped_orders = Order.objects.filter(status=Order.STATUS_SHIPPED).count()
+    delivered_orders = Order.objects.filter(status=Order.STATUS_DELIVERED).count()
+    canceled_orders = Order.objects.filter(status=Order.STATUS_CANCELED).count()
+    top_products = (
+        OrderItem.objects.values("product__id", "product__title")
+        .annotate(quantity=Sum("quantity"), revenue=Sum("price_at_purchase"))
+        .order_by("-quantity")[:10]
+    )
+
     revenue = sum((order.total_amount or Decimal("0")) for order in orders)
     all_revenue = sum(
         (row.total_amount or Decimal("0"))
@@ -106,6 +136,20 @@ def _build_admin_copilot_context(prompt: str) -> str:
         f"- Cart rows: total={cart_item_total}, recent_sample_qty={cart_units}",
         f"- Order status counts: {status_counts or {}}",
         f"- Product category counts: {category_counts or {}}",
+        "",
+        "ANALYTICS:",
+        f"- Today: orders={today_metrics['count']}, amount={_format_money(today_metrics['amount'])}",
+        f"- Last 7 days: orders={week_metrics['count']}, amount={_format_money(week_metrics['amount'])}",
+        f"- Last 30 days: orders={month_metrics['count']}, amount={_format_money(month_metrics['amount'])}",
+        f"- Pipeline: unpaid/processing={unpaid_orders}, paid={paid_orders}, shipped={shipped_orders}, delivered={delivered_orders}, canceled={canceled_orders}",
+        "- Top products by quantity: "
+        + (
+            "; ".join(
+                f"{row['product__title']} (qty={row['quantity']}, revenue={_format_money(row['revenue'] or 0)})"
+                for row in top_products
+            )
+            or "no order item data"
+        ),
         "",
         "USERS:",
     ]
@@ -1155,3 +1199,130 @@ def ai_enhance_description(request):
         return JsonResponse({"error": "Invalid JSON."}, status=400)
     except Exception as exc:
         return JsonResponse({"error": str(exc)}, status=500)
+
+
+@staff_member_required
+@require_POST
+def copilot_admin_action(request):
+    try:
+        body = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({"success": False, "error": "Invalid JSON."}, status=400)
+
+    action = (body.get("action") or "").strip()
+    params = body.get("params") or {}
+    if not isinstance(params, dict):
+        return JsonResponse(
+            {"success": False, "error": "Action params must be an object."},
+            status=400,
+        )
+
+    try:
+        if action == "update_order_status":
+            order_id = int(params.get("order_id"))
+            status = (params.get("status") or "").strip()
+            allowed_statuses = {value for value, _label in Order.STATUS_CHOICES}
+            if status not in allowed_statuses:
+                return JsonResponse(
+                    {"success": False, "error": "Unsupported order status."},
+                    status=400,
+                )
+            order = get_object_or_404(Order, id=order_id)
+            old_status = order.status
+            order.status = status
+            order.save(update_fields=["status"])
+            return JsonResponse(
+                {
+                    "success": True,
+                    "message": f"Order #{order.id}: status changed from {old_status} to {status}.",
+                    "url": f"/admin/shop/order/{order.id}/change/",
+                }
+            )
+
+        if action == "update_product_stock":
+            product_id = int(params.get("product_id"))
+            stock = int(params.get("stock"))
+            if stock < 0:
+                return JsonResponse(
+                    {"success": False, "error": "Stock cannot be negative."},
+                    status=400,
+                )
+            product = get_object_or_404(Product, id=product_id)
+            old_stock = product.stock
+            product.stock = stock
+            product.save(update_fields=["stock"])
+            return JsonResponse(
+                {
+                    "success": True,
+                    "message": f"{product.title}: stock changed from {old_stock} to {stock}.",
+                    "url": f"/admin/shop/product/{product.id}/change/",
+                }
+            )
+
+        if action == "adjust_product_stock":
+            product_id = int(params.get("product_id"))
+            delta = int(params.get("delta"))
+            product = get_object_or_404(Product, id=product_id)
+            old_stock = product.stock
+            new_stock = old_stock + delta
+            if new_stock < 0:
+                return JsonResponse(
+                    {"success": False, "error": "Stock cannot become negative."},
+                    status=400,
+                )
+            product.stock = new_stock
+            product.save(update_fields=["stock"])
+            return JsonResponse(
+                {
+                    "success": True,
+                    "message": f"{product.title}: stock changed from {old_stock} to {new_stock}.",
+                    "url": f"/admin/shop/product/{product.id}/change/",
+                }
+            )
+
+        if action == "update_product_price":
+            product_id = int(params.get("product_id"))
+            price = Decimal(str(params.get("price"))).quantize(Decimal("0.01"))
+            if price < 0:
+                return JsonResponse(
+                    {"success": False, "error": "Price cannot be negative."},
+                    status=400,
+                )
+            product = get_object_or_404(Product, id=product_id)
+            old_price = product.price
+            product.price = price
+            product.save(update_fields=["price"])
+            return JsonResponse(
+                {
+                    "success": True,
+                    "message": f"{product.title}: price changed from {_format_money(old_price)} to {_format_money(price)}.",
+                    "url": f"/admin/shop/product/{product.id}/change/",
+                }
+            )
+
+        if action == "create_newsletter_subscriber":
+            email = (params.get("email") or "").strip().lower()
+            validate_email(email)
+            subscriber, created = NewsletterUser.objects.get_or_create(email=email)
+            return JsonResponse(
+                {
+                    "success": True,
+                    "message": (
+                        f"{subscriber.email} added to newsletter."
+                        if created
+                        else f"{subscriber.email} is already subscribed."
+                    ),
+                    "url": "/admin/shop/newsletteruser/",
+                }
+            )
+
+    except (TypeError, ValueError, InvalidOperation, ValidationError):
+        return JsonResponse(
+            {"success": False, "error": "Invalid action parameters."},
+            status=400,
+        )
+
+    return JsonResponse(
+        {"success": False, "error": "Unsupported action."},
+        status=400,
+    )
