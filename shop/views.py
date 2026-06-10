@@ -8,6 +8,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import login, logout
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.messages import get_messages
@@ -31,13 +32,157 @@ from .ai_service import (
     wants_product_form_fill,
 )
 from .emails import send_admin_order_notification, send_order_confirmation_email
-from .models import NewsletterUser, Order, OrderItem, Product
+from .models import CartItem, NewsletterUser, Order, OrderItem, Product
 
 CATEGORY_SLUG_ALIASES = {
     "decorative-rose": "scented-candles",
     "new-arrivals": "scented-candles",
     "bougies-de-ceremonie": "ceremony-candles",
 }
+
+
+def _format_money(value) -> str:
+    try:
+        amount = Decimal(value or 0).quantize(Decimal("0.01"))
+    except (InvalidOperation, TypeError):
+        amount = Decimal("0.00")
+    return f"€{amount}"
+
+
+def _build_admin_copilot_context(prompt: str) -> str:
+    """Return a compact live admin snapshot for staff-only AI answers."""
+    users = list(User.objects.order_by("username")[:80])
+    admin_users = list(User.objects.filter(is_staff=True).order_by("username")[:80])
+    products = list(Product.objects.order_by("title")[:80])
+    orders = list(
+        Order.objects.select_related("user")
+        .prefetch_related(
+            Prefetch("items", queryset=OrderItem.objects.select_related("product"))
+        )
+        .order_by("-created_at")[:40]
+    )
+    newsletter_users = list(NewsletterUser.objects.order_by("-date_added")[:40])
+    cart_items = list(
+        CartItem.objects.select_related("user", "product").order_by("-created_at")[:40]
+    )
+
+    user_total = User.objects.count()
+    staff_total = User.objects.filter(is_staff=True).count()
+    superuser_total = User.objects.filter(is_superuser=True).count()
+    active_total = User.objects.filter(is_active=True).count()
+    product_total = Product.objects.count()
+    order_total = Order.objects.count()
+    newsletter_total = NewsletterUser.objects.count()
+    cart_item_total = CartItem.objects.count()
+
+    status_counts = {
+        row["status"]: row["total"]
+        for row in Order.objects.values("status").annotate(total=Count("id"))
+    }
+    category_counts = {
+        row["category"]: row["total"]
+        for row in Product.objects.values("category").annotate(total=Count("id"))
+    }
+
+    revenue = sum((order.total_amount or Decimal("0")) for order in orders)
+    all_revenue = sum(
+        (row.total_amount or Decimal("0"))
+        for row in Order.objects.only("total_amount").iterator()
+    )
+    inventory_units = sum(product.stock or 0 for product in products)
+    cart_units = sum(item.quantity or 0 for item in cart_items)
+
+    lines = [
+        "<admin_database_context>",
+        "This is a live staff-only snapshot from the MIMOSA Django admin database.",
+        "Use it to answer directly. If the answer is present here, do not tell the user to look it up manually.",
+        f"User request: {prompt[:700]}",
+        "",
+        "SUMMARY:",
+        f"- Users: total={user_total}, active={active_total}, staff/admin={staff_total}, superusers={superuser_total}",
+        f"- Products: total={product_total}, visible_sample={len(products)}, sample_stock_units={inventory_units}",
+        f"- Orders: total={order_total}, recent_sample={len(orders)}, all_time_total_amount={_format_money(all_revenue)}, recent_sample_amount={_format_money(revenue)}",
+        f"- Newsletter subscribers: total={newsletter_total}",
+        f"- Cart rows: total={cart_item_total}, recent_sample_qty={cart_units}",
+        f"- Order status counts: {status_counts or {}}",
+        f"- Product category counts: {category_counts or {}}",
+        "",
+        "USERS:",
+    ]
+
+    for user in users:
+        flags = []
+        if user.is_superuser:
+            flags.append("superuser")
+        if user.is_staff:
+            flags.append("staff")
+        if not user.is_active:
+            flags.append("inactive")
+        full_name = (user.get_full_name() or "").strip()
+        lines.append(
+            f"- id={user.id}; username={user.username}; email={user.email or '-'}; name={full_name or '-'}; flags={','.join(flags) or 'customer'}; joined={user.date_joined:%Y-%m-%d}"
+        )
+
+    lines.append("")
+    lines.append("STAFF / ADMIN USERS:")
+    for user in admin_users:
+        role = "superuser" if user.is_superuser else "staff"
+        full_name = (user.get_full_name() or "").strip()
+        lines.append(
+            f"- id={user.id}; username={user.username}; email={user.email or '-'}; name={full_name or '-'}; role={role}; active={user.is_active}"
+        )
+
+    lines.append("")
+    lines.append("PRODUCTS:")
+    for product in products:
+        lines.append(
+            f"- id={product.id}; title={product.title}; category={product.category}; price={_format_money(product.price)}; stock={product.stock}; scent={product.scent or '-'}; weight={product.weight or '-'}"
+        )
+
+    low_stock = [p for p in products if (p.stock or 0) <= 3]
+    if low_stock:
+        lines.append("")
+        lines.append("LOW STOCK PRODUCTS (sample, stock <= 3):")
+        for product in low_stock[:20]:
+            lines.append(f"- id={product.id}; {product.title}; stock={product.stock}")
+
+    lines.append("")
+    lines.append("RECENT ORDERS:")
+    for order in orders:
+        item_bits = [
+            f"{item.product.title} x{item.quantity} ({_format_money(item.price_at_purchase)})"
+            for item in order.items.all()
+        ]
+        shipping = ", ".join(
+            part
+            for part in [
+                order.shipping_address,
+                order.city,
+                order.postal_code,
+                order.country,
+            ]
+            if part
+        )
+        lines.append(
+            f"- id={order.id}; user={order.user.username}; email={order.user.email or '-'}; status={order.status}; total={_format_money(order.total_amount)}; date={order.created_at:%Y-%m-%d}; shipping={shipping or '-'}; items={'; '.join(item_bits) or '-'}"
+        )
+
+    lines.append("")
+    lines.append("RECENT NEWSLETTER SUBSCRIBERS:")
+    for subscriber in newsletter_users:
+        lines.append(
+            f"- id={subscriber.id}; email={subscriber.email}; date={subscriber.date_added:%Y-%m-%d}"
+        )
+
+    lines.append("")
+    lines.append("RECENT CART ITEMS:")
+    for item in cart_items:
+        lines.append(
+            f"- user={item.user.username}; product={item.product.title}; quantity={item.quantity}; created={item.created_at:%Y-%m-%d}"
+        )
+
+    lines.append("</admin_database_context>")
+    return "\n".join(lines)
 
 
 def _get_validated_stripe_secret_key() -> str:
@@ -982,17 +1127,25 @@ def ai_enhance_description(request):
                 json_dumps_params={"ensure_ascii": False},
             )
 
+        admin_context = _build_admin_copilot_context(prompt)
+        prompt_with_admin_context = (
+            f"{admin_context}\n\n"
+            "<admin_page_and_user_request>\n"
+            f"{prompt}\n"
+            "</admin_page_and_user_request>"
+        )
+
         use_stream = body.get("stream", True)
         if use_stream:
             response = StreamingHttpResponse(
-                stream_sse_events(prompt, history=history),
+                stream_sse_events(prompt_with_admin_context, history=history),
                 content_type="text/event-stream; charset=utf-8",
             )
             response["Cache-Control"] = "no-cache"
             response["X-Accel-Buffering"] = "no"
             return response
 
-        enhanced = generate_chat_reply(prompt, history=history)
+        enhanced = generate_chat_reply(prompt_with_admin_context, history=history)
         return JsonResponse(
             {"enhanced_description": enhanced},
             json_dumps_params={"ensure_ascii": False},
