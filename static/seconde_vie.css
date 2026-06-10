@@ -16,7 +16,7 @@
 ══════════════════════════════════════════════════════════════ */
 .sv-hero {
     position: relative;
-    padding: 96px 24px 80px;
+    padding: 88px 24px 64px;
     text-align: center;
     overflow: hidden;
 }
@@ -66,47 +66,9 @@
 .sv-hero__inner {
     position: relative;
     z-index: 1;
-    max-width: 1080px;
+    max-width: 860px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1fr);
-    align-items: center;
-    gap: clamp(32px, 6vw, 76px);
-    text-align: left;
-}
-
-.sv-hero__visual {
-    position: relative;
-    margin: 0;
-    width: min(100%, 420px);
-    justify-self: end;
-    border-radius: 28px;
-    overflow: hidden;
-    background: linear-gradient(145deg, #f4ead8, #e7d7bc);
-    box-shadow:
-        0 22px 54px rgba(15, 64, 57, 0.16),
-        0 1px 0 rgba(255, 255, 255, 0.85) inset;
-}
-
-.sv-hero__visual::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border: 1px solid rgba(255, 255, 255, 0.72);
-    border-radius: inherit;
-    pointer-events: none;
-}
-
-.sv-hero__visual picture,
-.sv-hero__visual img {
-    display: block;
-    width: 100%;
-}
-
-.sv-hero__visual img {
-    aspect-ratio: 887 / 1280;
-    height: auto;
-    object-fit: cover;
+    text-align: center;
 }
 
 .sv-hero__eyebrow {
@@ -748,18 +710,6 @@
 @media (max-width: 900px) {
     .sv-hero {
         padding: 90px 24px 64px;
-    }
-
-    .sv-hero__inner {
-        grid-template-columns: 1fr;
-        gap: 32px;
-        text-align: center;
-    }
-
-    .sv-hero__visual {
-        width: min(100%, 360px);
-        justify-self: center;
-        border-radius: 22px;
     }
 
     .sv-hero__divider {
