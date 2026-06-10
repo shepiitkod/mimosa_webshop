@@ -238,6 +238,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "apikey"  # SendGrid requires literal "apikey"
 EMAIL_HOST_PASSWORD = os.getenv("SENDGRID_API_KEY", "")
 DEFAULT_FROM_EMAIL = os.getenv(
-    "DEFAULT_FROM_EMAIL", "Mimosa Atelier <noreply@mimosa-atelier.com>"
+    "DEFAULT_FROM_EMAIL", "MIMOSA Atelier <noreply@mimosa-atelier.com>"
 )
 ADMIN_ORDER_EMAIL = os.getenv("ADMIN_ORDER_EMAIL", "")  # store owner's email

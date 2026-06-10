@@ -2,7 +2,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>Mimosa Home Page</title>
+        <title>MIMOSA Home Page</title>
         <meta charset="UTF-8" />
         <meta name="Authors" content="Yuliia Sagan and Denys Shepitko" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,11 +14,11 @@
         />
         <meta
             name="Keywords"
-            content="Mimosa, Mimosa candles, Mimosa bio bougies, bougies artisanales bio, bougies naturelles, bougies parfumées, bougies écologiques, bougies végétales, bougies faites main, bougies durables, bougies respectueuses de l'environnement"
+            content="MIMOSA, MIMOSA candles, MIMOSA bio bougies, bougies artisanales bio, bougies naturelles, bougies parfumées, bougies écologiques, bougies végétales, bougies faites main, bougies durables, bougies respectueuses de l'environnement"
         />
         <meta
             name="Description"
-            content="Découvrez Mimosa, votre destination pour des bougies artisanales bio, naturelles et parfumées. Nos bougies écologiques sont fabriquées à la main avec des ingrédients végétaux durables, offrant une expérience sensorielle unique tout en respectant l'environnement."
+            content="Découvrez MIMOSA, votre destination pour des bougies artisanales bio, naturelles et parfumées. Nos bougies écologiques sont fabriquées à la main avec des ingrédients végétaux durables, offrant une expérience sensorielle unique tout en respectant l'environnement."
         />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -42,9 +42,9 @@
 
         <section class="hero">
             <div class="hero-photos">
-                {% include 'includes/picture_opt.html' with rel='assets/images/photo1' class_name='hero-photo hero-photo-1' w=900 h=1348 alt='Candle from collection 1' fetchpriority='high' only %}
-                {% include 'includes/picture_opt.html' with rel='assets/images/photo2' class_name='hero-photo hero-photo-2' w=853 h=1280 alt='Photo model for the new collection' loading='lazy' only %}
-                {% include 'includes/picture_opt.html' with rel='assets/images/photo3' class_name='hero-photo hero-photo-3' w=900 h=1348 alt='Candle from collection 2' loading='lazy' only %}
+                {% include 'includes/picture_opt.html' with rel='assets/images/photo1' class_name='hero-photo hero-photo-1' w=900 h=1348 sizes='(max-width: 900px) 30vw, 400px' alt='Candle from collection 1' fetchpriority='high' only %}
+                {% include 'includes/picture_opt.html' with rel='assets/images/photo2' class_name='hero-photo hero-photo-2' w=853 h=1280 sizes='(max-width: 900px) 30vw, 400px' alt='Photo model for the new collection' loading='lazy' only %}
+                {% include 'includes/picture_opt.html' with rel='assets/images/photo3' class_name='hero-photo hero-photo-3' w=900 h=1348 sizes='(max-width: 900px) 30vw, 400px' alt='Candle from collection 2' loading='lazy' only %}
             </div>
             <div class="hero-content">
                 <div class="hero-content-bg" aria-hidden="true">
@@ -53,8 +53,15 @@
                         {% include 'includes/hero_marquee_set.html' %}
                     </div>
                 </div>
+                <a
+                    href="{% url 'shop:home' %}"
+                    class="hero-brand"
+                    aria-label="MIMOSA home"
+                >
+                    {% include 'includes/picture_opt.html' with rel='assets/images/mimosa-logo' class_name='hero-brand__logo' w=800 h=382 alt='MIMOSA Atelier' fetchpriority='high' only %}
+                </a>
                 <h1 class="hero-headline" data-translate="hero-title">
-                    L'art de la couture sur mesure.
+                    The art of bespoke couture.
                 </h1>
                 <p class="hero-subtitle" data-translate="hero-subtitle">
                     Handcrafted candles, natural soy wax, fragrances from
@@ -128,7 +135,7 @@
 
         <section class="about-snippet">
             <h2 data-translate="about-snippet-title">
-                Welcome to Mimosa Atelier
+                Welcome to MIMOSA Atelier
             </h2>
             <p data-translate="about-snippet-text">
                 Every candle is a story, crafted by hand with 100% natural soy
@@ -193,13 +200,13 @@
                     </a>
                     <a
                         class="home-categories__card"
-                        href="{% url 'shop:products_by_category' 'bougies-de-ceremonie' %}"
+                    href="{% url 'shop:products_by_category' 'ceremony-candles' %}"
                     >
                         <h3
                             class="home-categories__name"
                             data-translate="nav-sub-ceremony"
                         >
-                            Bougies de cérémonie
+                            Ceremony Candles
                         </h3>
                         <p
                             class="home-categories__subtitle"
@@ -253,7 +260,9 @@
                     <p class="product-desc">
                         {{ product.description|truncatechars:90 }}
                     </p>
-                    <p class="product-composition">{{ product.category }}</p>
+                    <p class="product-composition">
+                        {% if product.category_translation_key %}<span data-translate="{{ product.category_translation_key }}">{{ product.category_display_name }}</span>{% else %}{{ product.category }}{% endif %}
+                    </p>
                     <p class="product-price">€{{ product.price }}</p>
                     <form
                         action="{% url 'shop:cart_add' product.id %}"

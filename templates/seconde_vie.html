@@ -4,10 +4,16 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Seconde vie pour vos bougies — Mimosa Atelier</title>
+        <title>Seconde vie pour vos bougies — MIMOSA Atelier</title>
         <meta
             name="description"
-            content="Donnez une seconde vie à vos contenants de bougies préférés grâce au service de rechargement artisanal Mimosa Atelier. Cire de soja naturelle, parfums de Provence."
+            content="Donnez une seconde vie à vos contenants de bougies préférés grâce au service de rechargement artisanal MIMOSA Atelier. Cire de soja naturelle, parfums de Provence."
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap"
+            rel="stylesheet"
         />
         <link rel="stylesheet" href="{% static 'styles.css' %}" />
         <link rel="stylesheet" href="{% static 'seconde_vie.css' %}" />
@@ -29,15 +35,33 @@
                     aria-hidden="true"
                 ></div>
                 <div class="sv-hero__inner">
+                    <figure class="sv-hero__visual">
+                        <picture>
+                            <source
+                                type="image/webp"
+                                srcset="{% static 'assets/images/sv-hero-refill.webp' %}"
+                            />
+                            <img
+                                src="{% static 'assets/images/sv-hero-refill.jpg' %}"
+                                alt="Atelier de rechargement artisanal de bougies MIMOSA"
+                                width="887"
+                                height="1280"
+                                fetchpriority="high"
+                                decoding="async"
+                            />
+                        </picture>
+                    </figure>
                     <p
                         class="sv-hero__eyebrow"
                         data-translate="sv-hero-eyebrow"
                     >
-                        Mimosa Atelier — Service exclusif
+                        MIMOSA Atelier — Service exclusif
                     </p>
                     <h1 class="sv-hero__title">
                         <span class="sv-hero__leaf" aria-hidden="true">🌿</span>
-                        Seconde vie pour vos bougies
+                        <span data-translate="sv-hero-title"
+                            >Seconde vie pour vos bougies</span
+                        >
                         <span class="sv-hero__leaf" aria-hidden="true">🌿</span>
                     </h1>
                     <p
@@ -58,7 +82,7 @@
             <!-- ══════════════════════════════════════════
                  PHOTO GALLERY — 4 bento photos
             ══════════════════════════════════════════ -->
-            <section class="sv-gallery" aria-label="L'atelier Mimosa en images">
+            <section class="sv-gallery" aria-label="L'atelier MIMOSA en images">
                 <div class="sv-gallery__header">
                     <p
                         class="sv-gallery__eyebrow"
@@ -89,10 +113,14 @@
                             />
                         </div>
                         <figcaption class="sv-gallery-caption">
-                            <span class="sv-gallery-caption__title"
+                            <span
+                                class="sv-gallery-caption__title"
+                                data-translate="sv-gal1-title"
                                 >Cire de soja pure</span
                             >
-                            <span class="sv-gallery-caption__sub"
+                            <span
+                                class="sv-gallery-caption__sub"
+                                data-translate="sv-gal1-sub"
                                 >100% naturelle &amp; éco-responsable</span
                             >
                         </figcaption>
@@ -112,10 +140,14 @@
                             />
                         </div>
                         <figcaption class="sv-gallery-caption">
-                            <span class="sv-gallery-caption__title"
+                            <span
+                                class="sv-gallery-caption__title"
+                                data-translate="sv-gal2-title"
                                 >La précision</span
                             >
-                            <span class="sv-gallery-caption__sub"
+                            <span
+                                class="sv-gallery-caption__sub"
+                                data-translate="sv-gal2-sub"
                                 >Chaque gramme, mesuré avec soin</span
                             >
                         </figcaption>
@@ -135,10 +167,14 @@
                             />
                         </div>
                         <figcaption class="sv-gallery-caption">
-                            <span class="sv-gallery-caption__title"
+                            <span
+                                class="sv-gallery-caption__title"
+                                data-translate="sv-gal3-title"
                                 >Nos essences</span
                             >
-                            <span class="sv-gallery-caption__sub"
+                            <span
+                                class="sv-gallery-caption__sub"
+                                data-translate="sv-gal3-sub"
                                 >Sélectionnées en Provence</span
                             >
                         </figcaption>
@@ -158,10 +194,14 @@
                             />
                         </div>
                         <figcaption class="sv-gallery-caption">
-                            <span class="sv-gallery-caption__title"
+                            <span
+                                class="sv-gallery-caption__title"
+                                data-translate="sv-gal4-title"
                                 >La coulée</span
                             >
-                            <span class="sv-gallery-caption__sub"
+                            <span
+                                class="sv-gallery-caption__sub"
+                                data-translate="sv-gal4-sub"
                                 >Le moment magique de la création</span
                             >
                         </figcaption>
@@ -180,7 +220,7 @@
                             class="sv-text-intro"
                             data-translate="sv-story-intro"
                         >
-                            Chers amis et chères amies de Mimosa Atelier,
+                            Chers amis et chères amies de MIMOSA Atelier,
                         </p>
 
                         <p
@@ -230,7 +270,7 @@
                             Quelques jours plus tard, votre trésor retrouve une
                             nouvelle vie&nbsp;— accompagné d'une mèche en coton
                             naturel, d'un étiquetage personnalisé et d'un
-                            emballage soigné qui reflète l'âme de Mimosa
+                            emballage soigné qui reflète l'âme de MIMOSA
                             Atelier.
                         </p>
 
@@ -363,7 +403,7 @@
                 <!-- Header -->
                 <header class="spc-head">
                     <p class="spc-eyebrow" data-translate="sv-catalog-eyebrow">
-                        La Collection Mimosa Atelier
+                        La Collection MIMOSA Atelier
                     </p>
                     <h2 class="spc-title" data-translate="sv-catalog-title">
                         Nos Parfums
@@ -468,7 +508,7 @@
                             Lavande
                         </button>
                         <button class="spc-tab" data-id="mimosa" type="button">
-                            Mimosa
+                            MIMOSA
                         </button>
                         <button class="spc-tab" data-id="musc" type="button">
                             Musc
@@ -798,19 +838,19 @@
                             data-id="mimosa"
                             role="listitem"
                             tabindex="0"
-                            aria-label="Mimosa"
+                            aria-label="MIMOSA"
                         >
                             <div class="spc-card-img">
                                 <img
                                     src="{% static 'assets/images/sca-mimosa.ico' %}"
-                                    alt="Mimosa"
+                                    alt="MIMOSA"
                                     loading="lazy"
                                     decoding="async"
                                 />
                             </div>
                             <footer class="spc-card-foot">
                                 <p class="spc-card-family">Floral · Solaire</p>
-                                <h3 class="spc-card-name">Mimosa</h3>
+                                <h3 class="spc-card-name">MIMOSA</h3>
                             </footer>
                         </article>
 
@@ -1049,7 +1089,7 @@
             ══════════════════════════════════════════ -->
             <section
                 class="sv-contact-footer"
-                aria-label="Contact Mimosa Atelier"
+                aria-label="Contact MIMOSA Atelier"
             >
                 <div class="sv-contact-footer__inner">
                     <p
@@ -1061,7 +1101,7 @@
                     <a
                         class="sv-contact-footer__email"
                         href="mailto:mimosa.atelier.france@gmail.com"
-                        aria-label="Envoyer un email à Mimosa Atelier"
+                        aria-label="Envoyer un email à MIMOSA Atelier"
                     >
                         mimosa.atelier.france@gmail.com
                     </a>
@@ -1069,7 +1109,7 @@
                         class="sv-contact-footer__signature"
                         data-translate="sv-contact-sign"
                     >
-                        — L'équipe Mimosa Atelier, Nîmes, France
+                        — L'équipe MIMOSA Atelier, Nîmes, France
                     </p>
                 </div>
             </section>

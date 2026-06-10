@@ -9,6 +9,27 @@
     style="--kinetic-scroll: 0"
 >
     <div class="site-header__surface">
+        <a
+            href="{% url 'shop:home' %}"
+            class="site-header__brand site-header__logo-link"
+            aria-label="MIMOSA home"
+        >
+            <picture>
+                <source
+                    type="image/webp"
+                    srcset="{% static 'assets/images/mimosa-logo.webp' %}"
+                />
+                <img
+                    class="site-header__logo-img"
+                    src="{% static 'assets/images/mimosa-logo.jpg' %}"
+                    alt="MIMOSA"
+                    width="800"
+                    height="382"
+                    decoding="async"
+                />
+            </picture>
+        </a>
+
         <div class="site-header__tools">
             <div class="language-switcher" aria-label="Language switcher">
                 <button
@@ -116,7 +137,8 @@
                     <a
                         href="{% url 'shop:cart' %}"
                         class="site-header__link magnetic-link nav-link-cart"
-                        >Cart ({{ cart_items_count }})</a
+                        ><span data-translate="nav-cart">Cart</span>
+                        (<span class="nav-cart-count">{{ cart_items_count }}</span>)</a
                     >
                 </li>
                 {% endif %}

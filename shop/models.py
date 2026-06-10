@@ -10,14 +10,16 @@ class Product(models.Model):
     CATEGORY_BENTO = "Bento Candles"
     CATEGORY_SCENTED = "Scented Candles"
     CATEGORY_DECORATIVE = "Decorative Candles"
-    CATEGORY_CEREMONY = "Bougies de cérémonie"
+    CATEGORY_CEREMONY = "Ceremony Candles"
+    CATEGORY_CEREMONY_LEGACY = "Bougies de cérémonie"
 
     CATEGORY_CHOICES = [
         (CATEGORY_BENTO, "Bento Candles"),
         (CATEGORY_SCENTED, "Scented Candles"),
         (CATEGORY_DECORATIVE, "Decorative Candles"),
         (CATEGORY_GIFTS, "Gift Collections"),
-        (CATEGORY_CEREMONY, "Bougies de cérémonie"),
+        (CATEGORY_CEREMONY, "Ceremony Candles"),
+        (CATEGORY_CEREMONY_LEGACY, "Ceremony Candles"),
     ]
 
     title = models.CharField(max_length=255)
@@ -79,6 +81,28 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+    @property
+    def category_translation_key(self):
+        return {
+            self.CATEGORY_BENTO: "nav-sub-bento",
+            self.CATEGORY_SCENTED: "nav-sub-scented",
+            self.CATEGORY_DECORATIVE: "nav-sub-decorative",
+            self.CATEGORY_GIFTS: "nav-sub-gifts",
+            self.CATEGORY_CEREMONY: "nav-sub-ceremony",
+            self.CATEGORY_CEREMONY_LEGACY: "nav-sub-ceremony",
+        }.get(self.category, "")
+
+    @property
+    def category_display_name(self):
+        return {
+            self.CATEGORY_BENTO: "Bento Candles",
+            self.CATEGORY_SCENTED: "Scented Candles",
+            self.CATEGORY_DECORATIVE: "Decorative Candles",
+            self.CATEGORY_GIFTS: "Gift Collections",
+            self.CATEGORY_CEREMONY: "Ceremony Candles",
+            self.CATEGORY_CEREMONY_LEGACY: "Ceremony Candles",
+        }.get(self.category, self.category)
 
     @property
     def image_object_position(self):

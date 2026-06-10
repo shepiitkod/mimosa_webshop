@@ -4,6 +4,7 @@ const translations = {
     "nav-products": "Products",
     "nav-about": "About Us",
     "nav-contact": "Contact",
+    "nav-cart": "Cart",
     "nav-sub-all": "All Products",
     "nav-sub-bento": "Bento Candles",
     "nav-sub-scented": "Scented Candles",
@@ -26,7 +27,7 @@ const translations = {
     "home-category-ceremony-subtitle":
       "Ceremonial candles for your special moments",
 
-    "about-snippet-title": "Welcome to Mimosa Atelier",
+    "about-snippet-title": "Welcome to MIMOSA Atelier",
     "about-snippet-text":
       "Every candle is a story, crafted by hand with 100% natural soy wax and exclusive fragrances from Provence. We believe in beauty, sustainability, and the art of slow living.",
 
@@ -40,7 +41,7 @@ const translations = {
     "promo-cta": "Build my order",
 
     "products-title": "Portfolio",
-    "product1-name": "Bento Bougie",
+    "product1-name": "Bento Candle",
     "product1-desc": "Perfect for birthdays and weddings",
     "product1-composition": "100% soy wax, natural fragrance",
 
@@ -85,6 +86,11 @@ const translations = {
     "detail-sku-label": "SKU:",
     "catalog-sidebar-title": "Categories",
     "catalog-all-heading": "All products",
+    "catalog-view-btn": "View",
+    "catalog-empty-title": "No products in this category yet",
+    "catalog-empty-text": "Try selecting a different category from the sidebar.",
+    "catalog-items-count": "{count} items",
+    "catalog-no-categories": "No categories available yet. Check back soon!",
     "bento-color-label": "Color",
     "bento-color-white": "White",
     "bento-color-pink": "Pink",
@@ -250,13 +256,26 @@ const translations = {
     "profile-hero-subtitle": "Manage your account details, orders, and preferences in one elegant space.",
     "profile-edit-btn": "Edit Profile",
     "profile-view-customer-btn": "View Customer Profile",
-    "profile-client-name": "Mimosa Client",
+    "profile-client-name": "MIMOSA Client",
     "profile-location": "Nîmes, France",
     "profile-recent-orders": "Recent Orders",
     "profile-preferences-title": "Preferences",
     "profile-pref-eco": "Eco-Friendly",
     "profile-pref-floral": "Floral Scents",
     "profile-pref-handmade": "Handmade Collections",
+    "profile-member-since": "Member since",
+    "profile-stat-orders-one": "order",
+    "profile-stat-orders-many": "orders",
+    "profile-stat-spent": "spent",
+    "profile-browse-candles": "Browse candles",
+    "order-status-paid": "Paid",
+    "order-status-canceled": "Cancelled",
+    "order-status-shipped": "Shipped",
+    "profile-pay-btn": "Complete payment",
+    "profile-empty-orders-title": "No orders yet",
+    "profile-empty-orders-text":
+      "Discover our artisan candle collection and fill your home with the scents of Provence.",
+    "profile-empty-orders-cta": "Explore the collection",
 
     "footer-copyright": "All rights reserved.",
     "footer-privacy": "Privacy Policy",
@@ -264,7 +283,42 @@ const translations = {
     "footer-contact": "Contact",
     "footer-email": "Email",
     "footer-instagram": "Instagram",
-    "newsletter-title": "Join the Mimosa Atelier",
+    "footer-tagline":
+      "Handcrafted candles, natural soy wax, fragrances from Provence.",
+    "footer-shop": "Shop",
+    "footer-cart": "Cart",
+    "footer-profile": "My account",
+    "footer-company": "Company",
+    "footer-help": "Help",
+    "footer-shipping": "Shipping & delivery",
+    "footer-returns": "Returns & refunds",
+    "footer-location": "Location",
+    "footer-response": "Response time",
+    "footer-response-value": "Within 24 hours",
+    "home-link": "Go to home",
+    "login-brand-desc":
+      "Handmade candles from Nimes with natural fragrance and warm character.",
+    "login-note":
+      "Return to your personal account to manage orders and profile in the atmosphere of MIMOSA.",
+    "login-kicker": "MIMOSA Access",
+    "login-title": "Sign in to account",
+    "login-subtitle": "Enter your username and password to continue.",
+    "login-label": "Username",
+    "password-label": "Password",
+    "login-btn": "Sign In",
+    "register-link": "Create an account",
+    "register-brand-desc":
+      "Natural candles, graceful details and a calm design language inspired by Provence.",
+    "register-note":
+      "Create an account and get quick access to cart, orders and personal profile.",
+    "register-kicker": "Create Account",
+    "register-title": "Registration",
+    "register-subtitle": "Fill in the fields below to create an account.",
+    "password1-label": "Password",
+    "password2-label": "Confirm password",
+    "register-btn": "Register",
+    "register-link-login": "Already have an account? Sign in",
+    "newsletter-title": "Join the MIMOSA Atelier",
     "newsletter-subtitle":
       "Be the first to know about new scent collections, artisan stories, and exclusive offers.",
     "newsletter-placeholder": "Your email address",
@@ -284,14 +338,31 @@ const translations = {
     "cookie-decline": "Decline",
     "order-now": "Order Now",
 
+    "pay-cancel-title": "Payment cancelled",
+    "pay-cancel-text1":
+      "Your payment was not completed. Your cart has been restored — you can resume your order whenever you like.",
+    "pay-cancel-text2":
+      "If you encountered an issue, please do not hesitate to contact us.",
+    "pay-cancel-btn-cart": "Return to cart",
+    "pay-cancel-btn-contact": "Contact us",
+
     // ── Seconde vie page ──────────────────────────────────────────────────
-    "nav-sub-seconde-vie": "🌿 Seconde vie",
-    "sv-hero-eyebrow": "Mimosa Atelier \u2014 Exclusive Service",
+    "nav-sub-seconde-vie": "🌿 Second Life",
+    "sv-hero-title": "Second Life for Your Candles",
+    "sv-hero-eyebrow": "MIMOSA Atelier \u2014 Exclusive Service",
     "sv-hero-tagline":
       "Artisan Refilling \u00b7 Natural Soy Wax \u00b7 Fragrances from Provence",
     "sv-gallery-eyebrow": "The Atelier in Images",
     "sv-gallery-heading": "The Art of Refilling",
-    "sv-story-intro": "Dear friends of Mimosa Atelier,",
+    "sv-gal1-title": "Pure soy wax",
+    "sv-gal1-sub": "100% natural & eco-conscious",
+    "sv-gal2-title": "Precision",
+    "sv-gal2-sub": "Every gram, carefully measured",
+    "sv-gal3-title": "Our essences",
+    "sv-gal3-sub": "Selected in Provence",
+    "sv-gal4-title": "The pour",
+    "sv-gal4-sub": "The magical moment of creation",
+    "sv-story-intro": "Dear friends of MIMOSA Atelier,",
     "sv-story-p1":
       "We deeply believe that beauty deserves a second chance. That is why we offer a unique eco-conscious service: the rebirth of your favourite candle containers.",
     "sv-story-p2":
@@ -300,7 +371,7 @@ const translations = {
     "sv-story-p3":
       "Simply send us your container by post or drop it off in person. We inspect it with care, clean it gently, then refill it with the fragrance of your choice from our collection.",
     "sv-story-p4":
-      "A few days later, your treasure is reborn — accompanied by a natural cotton wick, a personalised label and careful packaging that reflects the soul of Mimosa Atelier.",
+      "A few days later, your treasure is reborn — accompanied by a natural cotton wick, a personalised label and careful packaging that reflects the soul of MIMOSA Atelier.",
     "sv-story-p5":
       "This service is an invitation to slow down, to choose differently, to give new life to objects that already have a story. Together, we extend beauty and care for our planet.",
     "sv-process-title": "The Process in 4 Steps",
@@ -316,7 +387,7 @@ const translations = {
     "sv-step4-title": "Careful Delivery",
     "sv-step4-text":
       "Your creation is returned to you lovingly packaged, ready to illuminate your interior or be gifted.",
-    "sv-catalog-eyebrow": "The Mimosa Atelier Collection",
+    "sv-catalog-eyebrow": "The MIMOSA Atelier Collection",
     "sv-catalog-title": "Our Fragrances",
     "sv-catalog-lead":
       "Eighteen artisan fragrances \u2014 each an invitation to travel",
@@ -332,7 +403,7 @@ const translations = {
       "Send us a photo of your container and your favourite fragrances, and we will respond within 24 hours with a personalised estimate.",
     "sv-pricing-cta": "Request a Quote",
     "sv-contact-label": "For any questions, write to us",
-    "sv-contact-sign": "\u2014 The Mimosa Atelier team, N\u00eemes, France",
+    "sv-contact-sign": "\u2014 The MIMOSA Atelier team, N\u00eemes, France",
   },
 
   fr: {
@@ -340,6 +411,7 @@ const translations = {
     "nav-products": "Produits",
     "nav-about": "À propos",
     "nav-contact": "Contact",
+    "nav-cart": "Panier",
     "nav-sub-all": "Tous les produits",
     "nav-sub-bento": "Bougies Bento",
     "nav-sub-scented": "Bougies parfumées",
@@ -363,7 +435,7 @@ const translations = {
     "home-category-ceremony-subtitle":
       "Bougies artisanales pour vos moments de cérémonie",
 
-    "about-snippet-title": "Bienvenue chez Mimosa Atelier",
+    "about-snippet-title": "Bienvenue chez MIMOSA Atelier",
     "about-snippet-text":
       "Chaque bougie est une histoire, fabriquée à la main avec de la cire de soja 100% naturelle et des fragrances exclusives de Provence. Nous croyons en la beauté, la durabilité et l'art de vivre lentement.",
 
@@ -377,7 +449,7 @@ const translations = {
     "promo-cta": "Constituer mon panier",
 
     "products-title": "Portfolio",
-    "product1-name": "Bento Bougie",
+    "product1-name": "Bento Candle",
     "product1-desc": "Parfait pour anniversaires et mariages",
     "product1-composition": "100% cire de soja, parfum naturel",
 
@@ -422,6 +494,11 @@ const translations = {
     "detail-sku-label": "Réf. :",
     "catalog-sidebar-title": "Catégories",
     "catalog-all-heading": "Tous les produits",
+    "catalog-view-btn": "Voir",
+    "catalog-empty-title": "Aucun produit dans cette catégorie pour le moment",
+    "catalog-empty-text": "Essayez une autre catégorie dans le menu latéral.",
+    "catalog-items-count": "{count} article(s)",
+    "catalog-no-categories": "Aucune catégorie disponible pour le moment. Revenez bientôt !",
     "bento-color-label": "Couleur",
     "bento-color-white": "Blanc",
     "bento-color-pink": "Rose",
@@ -587,13 +664,26 @@ const translations = {
     "profile-hero-subtitle": "Gérez les détails de votre compte, vos commandes et vos préférences dans un espace élégant.",
     "profile-edit-btn": "Modifier le profil",
     "profile-view-customer-btn": "Voir le profil client",
-    "profile-client-name": "Client Mimosa",
+    "profile-client-name": "Client MIMOSA",
     "profile-location": "Nîmes, France",
     "profile-recent-orders": "Commandes récentes",
     "profile-preferences-title": "Préférences",
     "profile-pref-eco": "Écologique",
     "profile-pref-floral": "Parfums Floraux",
     "profile-pref-handmade": "Collections Faites Main",
+    "profile-member-since": "Membre depuis",
+    "profile-stat-orders-one": "commande",
+    "profile-stat-orders-many": "commandes",
+    "profile-stat-spent": "dépensé",
+    "profile-browse-candles": "Parcourir les bougies",
+    "order-status-paid": "Payé",
+    "order-status-canceled": "Annulé",
+    "order-status-shipped": "Expédié",
+    "profile-pay-btn": "Finaliser le paiement",
+    "profile-empty-orders-title": "Pas encore de commandes",
+    "profile-empty-orders-text":
+      "Découvrez notre collection de bougies artisanales et parfumez votre intérieur avec les arômes de Provence.",
+    "profile-empty-orders-cta": "Explorer la collection",
 
     "footer-copyright": "Tous droits réservés.",
     "footer-privacy": "Politique de Confidentialité",
@@ -601,7 +691,42 @@ const translations = {
     "footer-contact": "Contact",
     "footer-email": "Email",
     "footer-instagram": "Instagram",
-    "newsletter-title": "Rejoignez Mimosa Atelier",
+    "footer-tagline":
+      "Bougies artisanales, cire de soja naturelle et parfums de Provence.",
+    "footer-shop": "Boutique",
+    "footer-cart": "Panier",
+    "footer-profile": "Mon compte",
+    "footer-company": "Maison",
+    "footer-help": "Aide",
+    "footer-shipping": "Livraison",
+    "footer-returns": "Retours et remboursements",
+    "footer-location": "Lieu",
+    "footer-response": "Délai de réponse",
+    "footer-response-value": "Sous 24 heures",
+    "home-link": "Retour à l'accueil",
+    "login-brand-desc":
+      "Bougies faites main à Nîmes, aux parfums naturels et au caractère chaleureux.",
+    "login-note":
+      "Connectez-vous à votre espace personnel pour gérer vos commandes et votre profil dans l'univers MIMOSA.",
+    "login-kicker": "Accès MIMOSA",
+    "login-title": "Connexion au compte",
+    "login-subtitle": "Entrez votre identifiant et votre mot de passe.",
+    "login-label": "Identifiant",
+    "password-label": "Mot de passe",
+    "login-btn": "Se connecter",
+    "register-link": "Créer un compte",
+    "register-brand-desc":
+      "Bougies naturelles, détails délicats et design apaisé inspiré de la Provence.",
+    "register-note":
+      "Créez un compte pour accéder rapidement au panier, aux commandes et à votre profil.",
+    "register-kicker": "Créer un compte",
+    "register-title": "Inscription",
+    "register-subtitle": "Remplissez les champs ci-dessous pour créer un compte.",
+    "password1-label": "Mot de passe",
+    "password2-label": "Confirmer le mot de passe",
+    "register-btn": "S'inscrire",
+    "register-link-login": "Vous avez déjà un compte ? Se connecter",
+    "newsletter-title": "Rejoignez MIMOSA Atelier",
     "newsletter-subtitle":
       "Soyez le premier à découvrir nos nouvelles collections de parfums, les histoires de nos artisans et nos offres exclusives.",
     "newsletter-placeholder": "Votre adresse email",
@@ -620,14 +745,31 @@ const translations = {
     "cookie-decline": "Refuser",
     "order-now": "Commander",
 
+    "pay-cancel-title": "Paiement annulé",
+    "pay-cancel-text1":
+      "Votre paiement n'a pas été complété. Votre panier a été restauré — vous pouvez reprendre votre commande quand vous le souhaitez.",
+    "pay-cancel-text2":
+      "Si vous avez rencontré un problème, n'hésitez pas à nous contacter.",
+    "pay-cancel-btn-cart": "Retourner au panier",
+    "pay-cancel-btn-contact": "Nous contacter",
+
     // ── Page Seconde vie ──────────────────────────────────────────────────
     "nav-sub-seconde-vie": "🌿 Seconde vie",
-    "sv-hero-eyebrow": "Mimosa Atelier \u2014 Service exclusif",
+    "sv-hero-title": "Seconde vie pour vos bougies",
+    "sv-hero-eyebrow": "MIMOSA Atelier \u2014 Service exclusif",
     "sv-hero-tagline":
       "Rechargement artisanal \u00b7 Cire de soja naturelle \u00b7 Parfums de Provence",
     "sv-gallery-eyebrow": "L\u2019atelier en images",
     "sv-gallery-heading": "L\u2019art du rechargement",
-    "sv-story-intro": "Chers amis et ch\u00e8res amies de Mimosa Atelier,",
+    "sv-gal1-title": "Cire de soja pure",
+    "sv-gal1-sub": "100\u00a0% naturelle & \u00e9co-responsable",
+    "sv-gal2-title": "La pr\u00e9cision",
+    "sv-gal2-sub": "Chaque gramme, mesur\u00e9 avec soin",
+    "sv-gal3-title": "Nos essences",
+    "sv-gal3-sub": "S\u00e9lectionn\u00e9es en Provence",
+    "sv-gal4-title": "La coul\u00e9e",
+    "sv-gal4-sub": "Le moment magique de la cr\u00e9ation",
+    "sv-story-intro": "Chers amis et ch\u00e8res amies de MIMOSA Atelier,",
     "sv-story-p1":
       "Nous croyons profond\u00e9ment que la beaut\u00e9 m\u00e9rite une seconde chance. C\u2019est pourquoi nous vous proposons un service unique et \u00e9co-responsable\u00a0: la renaissance de vos contenants de bougies pr\u00e9f\u00e9r\u00e9s.",
     "sv-story-p2":
@@ -636,7 +778,7 @@ const translations = {
     "sv-story-p3":
       "Il vous suffit de nous envoyer votre contenant par courrier ou de nous le d\u00e9poser en main propre. Nous l\u2019inspectons avec soin, le nettoyons d\u00e9licatement, puis le coulons \u00e0 nouveau avec la fragrance de votre choix parmi notre collection.",
     "sv-story-p4":
-      "Quelques jours plus tard, votre tr\u00e9sor retrouve une nouvelle vie\u00a0\u2014 accompagn\u00e9 d\u2019une m\u00e8che en coton naturel, d\u2019un \u00e9tiquetage personnalis\u00e9 et d\u2019un emballage soign\u00e9 qui refl\u00e8te l\u2019\u00e2me de Mimosa Atelier.",
+      "Quelques jours plus tard, votre tr\u00e9sor retrouve une nouvelle vie\u00a0\u2014 accompagn\u00e9 d\u2019une m\u00e8che en coton naturel, d\u2019un \u00e9tiquetage personnalis\u00e9 et d\u2019un emballage soign\u00e9 qui refl\u00e8te l\u2019\u00e2me de MIMOSA Atelier.",
     "sv-story-p5":
       "Ce service est une invitation \u00e0 ralentir, \u00e0 choisir autrement, \u00e0 donner une \u00e2me nouvelle aux objets qui ont d\u00e9j\u00e0 une histoire. Ensemble, nous prolongeons la beaut\u00e9 et prenons soin de notre plan\u00e8te.",
     "sv-process-title": "Le processus en 4 \u00e9tapes",
@@ -652,7 +794,7 @@ const translations = {
     "sv-step4-title": "Livraison soign\u00e9e",
     "sv-step4-text":
       "Votre cr\u00e9ation vous est retourn\u00e9e emball\u00e9e avec amour, pr\u00eate \u00e0 illuminer votre int\u00e9rieur ou \u00e0 offrir.",
-    "sv-catalog-eyebrow": "La Collection Mimosa Atelier",
+    "sv-catalog-eyebrow": "La Collection MIMOSA Atelier",
     "sv-catalog-title": "Nos Parfums",
     "sv-catalog-lead":
       "Dix-huit fragrances artisanales \u2014 chacune une invitation au voyage",
@@ -669,7 +811,7 @@ const translations = {
     "sv-pricing-cta": "Demander un devis",
     "sv-contact-label": "Pour toute question, \u00e9crivez-nous",
     "sv-contact-sign":
-      "\u2014 L\u2019\u00e9quipe Mimosa Atelier, N\u00eemes, France",
+      "\u2014 L\u2019\u00e9quipe MIMOSA Atelier, N\u00eemes, France",
   },
 
   ua: {
@@ -677,8 +819,9 @@ const translations = {
     "nav-products": "Товари",
     "nav-about": "Про нас",
     "nav-contact": "Контакти",
+    "nav-cart": "Кошик",
     "nav-sub-all": "Усі товари",
-    "nav-sub-bento": "Свічки Bento",
+    "nav-sub-bento": "Бенто-свічки",
     "nav-sub-scented": "Ароматичні свічки",
     "nav-sub-rose": "Декоративні свічки",
     "nav-sub-decorative": "Декоративні свічки",
@@ -698,7 +841,7 @@ const translations = {
     "home-category-decorative-subtitle": "Персоналізовані свічки на замовлення",
     "home-category-ceremony-subtitle": "Свічки для урочистих подій",
 
-    "about-snippet-title": "Ласкаво просимо до Mimosa Atelier",
+    "about-snippet-title": "Ласкаво просимо до MIMOSA Atelier",
     "about-snippet-text":
       "Кожна свічка — це історія, виготовлена вручну зі 100% натурального соєвого воску та ексклюзивних ароматів з Провансу. Ми віримо в красу, сталість та мистецтво повільного життя.",
 
@@ -757,6 +900,11 @@ const translations = {
     "detail-sku-label": "Артикул:",
     "catalog-sidebar-title": "Категорії",
     "catalog-all-heading": "Усі товари",
+    "catalog-view-btn": "Переглянути",
+    "catalog-empty-title": "У цій категорії ще немає товарів",
+    "catalog-empty-text": "Спробуйте обрати іншу категорію в бічному меню.",
+    "catalog-items-count": "{count} товарів",
+    "catalog-no-categories": "Категорії ще недоступні. Завітайте пізніше!",
     "bento-color-label": "Колір",
     "bento-color-white": "Білий",
     "bento-color-pink": "Рожевий",
@@ -922,13 +1070,26 @@ const translations = {
     "profile-hero-subtitle": "Керуйте деталями свого облікового запису, замовленнями та вподобаннями в одному елегантному просторі.",
     "profile-edit-btn": "Редагувати профіль",
     "profile-view-customer-btn": "Переглянути профіль клієнта",
-    "profile-client-name": "Клієнт Mimosa",
+    "profile-client-name": "Клієнт MIMOSA",
     "profile-location": "Нім, Франція",
     "profile-recent-orders": "Останні замовлення",
     "profile-preferences-title": "Вподобання",
     "profile-pref-eco": "Екологічно чистий",
     "profile-pref-floral": "Квіткові Аромати",
     "profile-pref-handmade": "Колекції ручної роботи",
+    "profile-member-since": "Учасник з",
+    "profile-stat-orders-one": "замовлення",
+    "profile-stat-orders-many": "замовлень",
+    "profile-stat-spent": "витрачено",
+    "profile-browse-candles": "Переглянути свічки",
+    "order-status-paid": "Оплачено",
+    "order-status-canceled": "Скасовано",
+    "order-status-shipped": "Відправлено",
+    "profile-pay-btn": "Завершити оплату",
+    "profile-empty-orders-title": "Замовлень ще немає",
+    "profile-empty-orders-text":
+      "Відкрийте нашу колекцію свічок ручної роботи та наповніть дім ароматами Провансу.",
+    "profile-empty-orders-cta": "Переглянути колекцію",
 
     "footer-copyright": "Всі права захищені.",
     "footer-privacy": "Політика Конфіденційності",
@@ -936,7 +1097,42 @@ const translations = {
     "footer-contact": "Контакти",
     "footer-email": "Електронна пошта",
     "footer-instagram": "Instagram",
-    "newsletter-title": "Приєднайтеся до Mimosa Atelier",
+    "footer-tagline":
+      "Свічки ручної роботи, натуральний соєвий віск і аромати Провансу.",
+    "footer-shop": "Крамниця",
+    "footer-cart": "Кошик",
+    "footer-profile": "Мій акаунт",
+    "footer-company": "Бренд",
+    "footer-help": "Допомога",
+    "footer-shipping": "Доставка",
+    "footer-returns": "Повернення та відшкодування",
+    "footer-location": "Локація",
+    "footer-response": "Час відповіді",
+    "footer-response-value": "Протягом 24 годин",
+    "home-link": "На головну",
+    "login-brand-desc":
+      "Свічки ручної роботи з Німа з натуральними ароматами та теплим характером.",
+    "login-note":
+      "Поверніться до особистого кабінету, щоб керувати замовленнями та профілем в атмосфері MIMOSA.",
+    "login-kicker": "Доступ MIMOSA",
+    "login-title": "Вхід до акаунта",
+    "login-subtitle": "Введіть ім'я користувача та пароль, щоб продовжити.",
+    "login-label": "Ім'я користувача",
+    "password-label": "Пароль",
+    "login-btn": "Увійти",
+    "register-link": "Створити акаунт",
+    "register-brand-desc":
+      "Натуральні свічки, витончені деталі та спокійна мова дизайну, натхненна Провансом.",
+    "register-note":
+      "Створіть акаунт, щоб швидко мати доступ до кошика, замовлень і профілю.",
+    "register-kicker": "Створити акаунт",
+    "register-title": "Реєстрація",
+    "register-subtitle": "Заповніть поля нижче, щоб створити акаунт.",
+    "password1-label": "Пароль",
+    "password2-label": "Підтвердьте пароль",
+    "register-btn": "Зареєструватися",
+    "register-link-login": "Вже маєте акаунт? Увійти",
+    "newsletter-title": "Приєднайтеся до MIMOSA Atelier",
     "newsletter-subtitle":
       "Будьте першими, хто дізнається про нові колекції ароматів, історії наших майстрів та виключні пропозиції.",
     "newsletter-placeholder": "Ваша адреса електронної пошти",
@@ -956,14 +1152,31 @@ const translations = {
     "cookie-decline": "Відхилити",
     "order-now": "Замовити",
 
+    "pay-cancel-title": "Оплату скасовано",
+    "pay-cancel-text1":
+      "Ваш платіж не було завершено. Кошик відновлено — ви можете продовжити замовлення, коли забажаєте.",
+    "pay-cancel-text2":
+      "Якщо виникла проблема, будь ласка, зв'яжіться з нами.",
+    "pay-cancel-btn-cart": "Повернутися до кошика",
+    "pay-cancel-btn-contact": "Зв'язатися з нами",
+
     // ── Сторінка Seconde vie ──────────────────────────────────────────
-    "nav-sub-seconde-vie": "🌿 Seconde vie",
-    "sv-hero-eyebrow": "Mimosa Atelier \u2014 Ексклюзивна послуга",
+    "nav-sub-seconde-vie": "🌿 Друге життя",
+    "sv-hero-title": "Друге життя для ваших свічок",
+    "sv-hero-eyebrow": "MIMOSA Atelier \u2014 Ексклюзивна послуга",
     "sv-hero-tagline":
       "Ремісниче відновлення \u00b7 Натуральний соєвий віск \u00b7 Аромати з Провансу",
     "sv-gallery-eyebrow": "Ательє в фотографіях",
     "sv-gallery-heading": "Мистецтво відновлення",
-    "sv-story-intro": "Дорогі друзі Mimosa Atelier,",
+    "sv-gal1-title": "Чистий соєвий віск",
+    "sv-gal1-sub": "100\u00a0% натуральний та екологічний",
+    "sv-gal2-title": "Точність",
+    "sv-gal2-sub": "Кожен грам, виміряний з турботою",
+    "sv-gal3-title": "Наші есенції",
+    "sv-gal3-sub": "Відібрані в Провансі",
+    "sv-gal4-title": "Заливка",
+    "sv-gal4-sub": "Чарівний момент творення",
+    "sv-story-intro": "Дорогі друзі MIMOSA Atelier,",
     "sv-story-p1":
       "Ми щиро віримо, що краса заслуговує на другий шанс. Саме тому ми пропонуємо унікальну еко-послугу: відродження ваших улюблених свічників та же він відбувся.",
     "sv-story-p2":
@@ -972,7 +1185,7 @@ const translations = {
     "sv-story-p3":
       "Достатньо надіслати нам ємність поштою або занести особисто. Ми ретельно її перевіримо, делікатно очистимо, а потім заллємо знову із обраним вами ароматом з нашої колекції.",
     "sv-story-p4":
-      "Через кілька днів ваш скарб знаходить нове життя \u2014 з бавовняним фітилем, персоналізованим етикетуванням та дбайливою упаковкою, що відображає душу Mimosa Atelier.",
+      "Через кілька днів ваш скарб знаходить нове життя \u2014 з бавовняним фітилем, персоналізованим етикетуванням та дбайливою упаковкою, що відображає душу MIMOSA Atelier.",
     "sv-story-p5":
       "Ця послуга \u2014 запрошення ссповільнитися, обирати інакше, дарувати нову душу предметам, які вже мають свою історію. Разом ми продовжуємо красу і дбаємо про нашу планету.",
     "sv-process-title": "Процес у 4 кроки",
@@ -988,7 +1201,7 @@ const translations = {
     "sv-step4-title": "Дбайлива доставка",
     "sv-step4-text":
       "Ваш виріб повертається до вас з любов'юзапакованим, готовий прикрасити ваш інтер'єр або стати подарунком.",
-    "sv-catalog-eyebrow": "Колекція Mimosa Atelier",
+    "sv-catalog-eyebrow": "Колекція MIMOSA Atelier",
     "sv-catalog-title": "Наші Аромати",
     "sv-catalog-lead":
       "Вісімнадцять ремісничних ароматів \u2014 кожен є запрошенням до подорожі",
@@ -1004,7 +1217,7 @@ const translations = {
       "Надішліть нам фото вашої ємності та улюблені аромати, і ми відповімо протягом 24 годин з персональною оцінкою.",
     "sv-pricing-cta": "Запросити пропозицію",
     "sv-contact-label": "Якщо є запитання, пишіть нам",
-    "sv-contact-sign": "\u2014 Команда Mimosa Atelier, Нім, Франція",
+    "sv-contact-sign": "\u2014 Команда MIMOSA Atelier, Нім, Франція",
   },
 
   ru: {
@@ -1012,8 +1225,9 @@ const translations = {
     "nav-products": "Товары",
     "nav-about": "О нас",
     "nav-contact": "Контакты",
+    "nav-cart": "Корзина",
     "nav-sub-all": "Все товары",
-    "nav-sub-bento": "Свечи Bento",
+    "nav-sub-bento": "Бенто-свечи",
     "nav-sub-scented": "Ароматические свечи",
     "nav-sub-rose": "Декоративные свечи",
     "nav-sub-decorative": "Декоративные свечи",
@@ -1042,7 +1256,7 @@ const translations = {
       "Соберите в корзину подарки, свечи для дома, согласованные по аромату. Чем богаче заказ, тем естественнее пройти порог 50 € — и каждая квалификационная покупка участвует в розыгрыше.",
     "promo-cta": "Собрать заказ",
 
-    "about-snippet-title": "Добро пожаловать в Mimosa Atelier",
+    "about-snippet-title": "Добро пожаловать в MIMOSA Atelier",
     "about-snippet-text":
       "Каждая свеча — это история, созданная вручную из 100% натурального соевого воска и эксклюзивных ароматов из Прованса. Мы верим в красоту, устойчивость и искусство медленной жизни.",
 
@@ -1092,6 +1306,11 @@ const translations = {
     "detail-sku-label": "Артикул:",
     "catalog-sidebar-title": "Категории",
     "catalog-all-heading": "Все товары",
+    "catalog-view-btn": "Смотреть",
+    "catalog-empty-title": "В этой категории пока нет товаров",
+    "catalog-empty-text": "Попробуйте выбрать другую категорию в боковом меню.",
+    "catalog-items-count": "{count} товаров",
+    "catalog-no-categories": "Категории пока недоступны. Загляните позже!",
     "bento-color-label": "Цвет",
     "bento-color-white": "Белый",
     "bento-color-pink": "Розовый",
@@ -1107,11 +1326,11 @@ const translations = {
     "login-btn": "Войти",
     "register-link": "Создать аккаунт",
     "home-link": "На главную",
-    "login-kicker": "Mimosa Access",
+    "login-kicker": "Доступ MIMOSA",
     "login-brand-desc":
       "Ручные свечи из Нима с натуральным ароматом и теплым характером.",
     "login-note":
-      "Вернитесь в личный кабинет, чтобы управлять заказами и профилем в атмосфере Mimosa.",
+      "Вернитесь в личный кабинет, чтобы управлять заказами и профилем в атмосфере MIMOSA.",
 
     "register-title": "Регистрация",
     "register-subtitle": "Заполните поля ниже, чтобы создать аккаунт.",
@@ -1283,13 +1502,26 @@ const translations = {
     "profile-hero-subtitle": "Управляйте данными своего аккаунта, заказами и предпочтениями в одном элегантном пространстве.",
     "profile-edit-btn": "Редактировать профиль",
     "profile-view-customer-btn": "Просмотреть профиль клиента",
-    "profile-client-name": "Клиент Mimosa",
+    "profile-client-name": "Клиент MIMOSA",
     "profile-location": "Ним, Франция",
     "profile-recent-orders": "Последние заказы",
     "profile-preferences-title": "Предпочтения",
     "profile-pref-eco": "Экологичный",
     "profile-pref-floral": "Цветочные Ароматы",
     "profile-pref-handmade": "Коллекции ручной работы",
+    "profile-member-since": "Участник с",
+    "profile-stat-orders-one": "заказ",
+    "profile-stat-orders-many": "заказов",
+    "profile-stat-spent": "потрачено",
+    "profile-browse-candles": "Смотреть свечи",
+    "order-status-paid": "Оплачено",
+    "order-status-canceled": "Отменён",
+    "order-status-shipped": "Отправлен",
+    "profile-pay-btn": "Завершить оплату",
+    "profile-empty-orders-title": "Заказов пока нет",
+    "profile-empty-orders-text":
+      "Откройте нашу коллекцию свечей ручной работы и наполните дом ароматами Прованса.",
+    "profile-empty-orders-cta": "Смотреть коллекцию",
 
     "footer-copyright": "Все права защищены.",
     "footer-privacy": "Политика конфиденциальности",
@@ -1297,7 +1529,19 @@ const translations = {
     "footer-contact": "Контакты",
     "footer-email": "Электронная почта",
     "footer-instagram": "Instagram",
-    "newsletter-title": "Присоединитесь к Mimosa Atelier",
+    "footer-tagline":
+      "Свечи ручной работы, натуральный соевый воск и ароматы Прованса.",
+    "footer-shop": "Магазин",
+    "footer-cart": "Корзина",
+    "footer-profile": "Мой аккаунт",
+    "footer-company": "Бренд",
+    "footer-help": "Помощь",
+    "footer-shipping": "Доставка",
+    "footer-returns": "Возвраты и компенсации",
+    "footer-location": "Локация",
+    "footer-response": "Время ответа",
+    "footer-response-value": "В течение 24 часов",
+    "newsletter-title": "Присоединитесь к MIMOSA Atelier",
     "newsletter-subtitle":
       "Будьте первыми, кто узнает о новых ароматных коллекциях, историях наших мастеров и эксклюзивных предложениях.",
     "newsletter-placeholder": "Ваш адрес электронной почты",
@@ -1317,14 +1561,31 @@ const translations = {
     "cookie-decline": "Отклонить",
     "order-now": "Заказать",
 
+    "pay-cancel-title": "Оплата отменена",
+    "pay-cancel-text1":
+      "Ваш платёж не был завершён. Корзина восстановлена — вы можете продолжить заказ, когда будете готовы.",
+    "pay-cancel-text2":
+      "Если возникла проблема, пожалуйста, свяжитесь с нами.",
+    "pay-cancel-btn-cart": "Вернуться в корзину",
+    "pay-cancel-btn-contact": "Связаться с нами",
+
     // ── Страница Seconde vie ─────────────────────────────────────────
-    "nav-sub-seconde-vie": "🌿 Seconde vie",
-    "sv-hero-eyebrow": "Mimosa Atelier \u2014 Эксклюзивная услуга",
+    "nav-sub-seconde-vie": "🌿 Вторая жизнь",
+    "sv-hero-title": "Вторая жизнь для ваших свечей",
+    "sv-hero-eyebrow": "MIMOSA Atelier \u2014 Эксклюзивная услуга",
     "sv-hero-tagline":
       "Ремесленное восстановление \u00b7 Натуральный соевый воск \u00b7 Ароматы Прованса",
     "sv-gallery-eyebrow": "Ателье в фотографиях",
     "sv-gallery-heading": "Искусство восстановления",
-    "sv-story-intro": "Дорогие друзья Mimosa Atelier,",
+    "sv-gal1-title": "Чистый соевый воск",
+    "sv-gal1-sub": "100\u00a0% натуральный и экологичный",
+    "sv-gal2-title": "Точность",
+    "sv-gal2-sub": "Каждый грамм, измеренный с заботой",
+    "sv-gal3-title": "Наши эссенции",
+    "sv-gal3-sub": "Отобранные в Провансе",
+    "sv-gal4-title": "Заливка",
+    "sv-gal4-sub": "Волшебный момент создания",
+    "sv-story-intro": "Дорогие друзья MIMOSA Atelier,",
     "sv-story-p1":
       "Мы глубоко убеждены, что красота заслуживает второго шанса. Именно поэтому мы предлагаем уникальную эко-услугу: возрождение ваших любимых подсвечников и уже состоялось.",
     "sv-story-p2":
@@ -1333,7 +1594,7 @@ const translations = {
     "sv-story-p3":
       "Просто отправьте нам ваш контейнер почтой или принесите лично. Мы осмотрим его с заботой, бережно очистим, затем зальём заново с выбранным вами ароматом из нашей коллекции.",
     "sv-story-p4":
-      "Через несколько дней ваша свеча обретает новую жизнь \u2014 с хлопковым фитилём, персонализированной этикеткой и бережной упаковкой, отражающей душу Mimosa Atelier.",
+      "Через несколько дней ваша свеча обретает новую жизнь \u2014 с хлопковым фитилём, персонализированной этикеткой и бережной упаковкой, отражающей душу MIMOSA Atelier.",
     "sv-story-p5":
       "Эта услуга \u2014 приглашение замедлиться, выбирать иначе, дарить новую жизнь предметам, у которых уже есть своя история. Вместе мы продлеваем красоту и заботимся о нашей планете.",
     "sv-process-title": "Процесс в 4 шага",
@@ -1349,7 +1610,7 @@ const translations = {
     "sv-step4-title": "Бережная доставка",
     "sv-step4-text":
       "Ваше творение возвращается к вам с любовью упакованным, готовое украсить ваш интерьер или стать подарком.",
-    "sv-catalog-eyebrow": "Коллекция Mimosa Atelier",
+    "sv-catalog-eyebrow": "Коллекция MIMOSA Atelier",
     "sv-catalog-title": "Наши Ароматы",
     "sv-catalog-lead":
       "Восемнадцать ремесленных ароматов \u2014 каждый является приглашением к путешествию",
@@ -1365,7 +1626,7 @@ const translations = {
       "Пришлите нам фото вашей емкости и любимые ароматы, и мы ответим в течение 24 часов с персональным расчётом.",
     "sv-pricing-cta": "Запросить предложение",
     "sv-contact-label": "По любым вопросам, пишите нам",
-    "sv-contact-sign": "\u2014 Команда Mimosa Atelier, Ним, Франция",
+    "sv-contact-sign": "\u2014 Команда MIMOSA Atelier, Ним, Франция",
   },
 };
 
@@ -1382,7 +1643,19 @@ function switchLanguage(lang) {
   document.querySelectorAll("[data-translate]").forEach((element) => {
     const key = element.getAttribute("data-translate");
     if (translations[lang] && translations[lang][key]) {
-      element.textContent = translations[lang][key];
+      let value = translations[lang][key];
+      const count = element.getAttribute("data-count");
+      if (count !== null && value.includes("{count}")) {
+        value = value.replace("{count}", count);
+      }
+      element.textContent = value;
+    }
+  });
+
+  document.querySelectorAll("[data-translate-html]").forEach((element) => {
+    const key = element.getAttribute("data-translate-html");
+    if (translations[lang] && translations[lang][key]) {
+      element.innerHTML = translations[lang][key];
     }
   });
 

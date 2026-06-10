@@ -22,4 +22,4 @@ View your orders: {{ site_url }}/profile/
 
 Questions? hello@mimosa-atelier.com
 
-© Mimosa Atelier
+© MIMOSA Atelier

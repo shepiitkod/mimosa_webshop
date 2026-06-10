@@ -917,6 +917,21 @@ nav:not(.site-header__nav) ul li a:hover::before {
     width: 100%;
 }
 
+.hero-brand {
+    display: block;
+    margin: 0 auto 28px;
+    max-width: min(420px, 78vw);
+    text-decoration: none;
+    animation: fadeInUp 0.8s ease-out 0.05s backwards;
+}
+
+.hero-brand__logo {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 10px 28px rgba(31, 24, 16, 0.1));
+}
+
 .hero h1 {
     font-family: var(--font-display);
     font-size: 72px;
@@ -3578,6 +3593,11 @@ footer {
 
     .hero-content {
         padding: 44px 16px 56px;
+    }
+
+    .hero-brand {
+        max-width: min(300px, 70vw);
+        margin-bottom: 18px;
     }
 
     .hero h1 {
@@ -6701,6 +6721,9 @@ body.is-loaded header figure::after {
 .product-framed-image {
     object-fit: cover;
     object-position: var(--product-image-position, 50% 50%);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translateZ(0);
 }
 
 .product-page .main-image img.product-framed-image,

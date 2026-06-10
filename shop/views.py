@@ -36,6 +36,7 @@ from .models import NewsletterUser, Order, OrderItem, Product
 CATEGORY_SLUG_ALIASES = {
     "decorative-rose": "scented-candles",
     "new-arrivals": "scented-candles",
+    "bougies-de-ceremonie": "ceremony-candles",
 }
 
 
@@ -320,10 +321,16 @@ def products_catalog_view(request, category_slug=None):
         )
 
     products_qs = Product.objects.all().order_by("title")
-    counts_map = {
-        row["category"]: row["total"]
-        for row in Product.objects.values("category").annotate(total=Count("id"))
-    }
+    raw_counts = Product.objects.values("category").annotate(total=Count("id"))
+    counts_map = {}
+    for row in raw_counts:
+        category = row["category"]
+        canonical = (
+            Product.CATEGORY_CEREMONY
+            if category == Product.CATEGORY_CEREMONY_LEGACY
+            else category
+        )
+        counts_map[canonical] = counts_map.get(canonical, 0) + row["total"]
 
     visible_categories = (
         Product.CATEGORY_BENTO,
@@ -336,9 +343,15 @@ def products_catalog_view(request, category_slug=None):
     for name in visible_categories:
         category_items.append(
             {
-                "name": name,
+                "name": Product(category=name).category_display_name,
                 "slug": slugify(name),
                 "count": counts_map.get(name, 0),
+                "translate_key": Product(category=name).category_translation_key,
+                "filter_values": (
+                    [Product.CATEGORY_CEREMONY, Product.CATEGORY_CEREMONY_LEGACY]
+                    if name == Product.CATEGORY_CEREMONY
+                    else [name]
+                ),
             }
         )
 
@@ -348,7 +361,9 @@ def products_catalog_view(request, category_slug=None):
             (item for item in category_items if item["slug"] == category_slug), None
         )
         if active_category:
-            products_qs = products_qs.filter(category=active_category["name"])
+            products_qs = products_qs.filter(
+                category__in=active_category["filter_values"]
+            )
 
     total_products_count = Product.objects.count()
 
@@ -496,6 +511,10 @@ def profile_view(request):
         logger.error("profile_view cart_count failed: %s", e, exc_info=True)
         cart_count = 0
 
+    user = request.user
+    display_name = (user.get_full_name() or "").strip() or user.username
+    user_initial = (user.username[:1] or "?").upper()
+
     return render(
         request,
         "profile.html",
@@ -504,6 +523,8 @@ def profile_view(request):
             "orders_count": len(orders),
             "total_spent": total_spent,
             "cart_count": cart_count,
+            "user_display_name": display_name,
+            "user_initial": user_initial,
         },
     )
 

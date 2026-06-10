@@ -1,5 +1,5 @@
 """
-Email utilities for Mimosa Atelier order notifications.
+Email utilities for MIMOSA Atelier order notifications.
 Uses Django's built-in email backend (configured for SendGrid SMTP).
 """
 
@@ -50,7 +50,7 @@ def send_order_confirmation_email(order) -> bool:
         text_body = render_to_string("emails/order_confirmation.txt", context)
 
         msg = EmailMultiAlternatives(
-            subject=f"Mimosa Atelier — Your order #{order.id} is confirmed ✨",
+            subject=f"MIMOSA Atelier — Your order #{order.id} is confirmed ✨",
             body=text_body,
             from_email=settings.DEFAULT_FROM_EMAIL,
             to=[customer_email],
@@ -90,7 +90,7 @@ def send_admin_order_notification(order) -> bool:
         html_body = render_to_string("emails/order_notification_admin.html", context)
 
         msg = EmailMultiAlternatives(
-            subject=f"[Mimosa] New paid order #{order.id} — {order.user.username}",
+            subject=f"[MIMOSA] New paid order #{order.id} — {order.user.username}",
             body=(
                 f"New paid order #{order.id}.\n"
                 f"Customer: {order.user.username} <{order.user.email}>\n"

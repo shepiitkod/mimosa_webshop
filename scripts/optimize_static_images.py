@@ -6,7 +6,9 @@ from pathlib import Path
 
 from PIL import Image
 
-BASE = Path(__file__).resolve().parent.parent / "static" / "assets" / "images"
+ROOT = Path(__file__).resolve().parent.parent
+BASE = ROOT / "static" / "assets" / "images"
+SOURCE_BASE = ROOT / "assets" / "images"
 
 # (output stem, max width, max height, source filename)
 JOBS: list[tuple[str, int | None, int | None, str]] = [
@@ -16,6 +18,8 @@ JOBS: list[tuple[str, int | None, int | None, str]] = [
     *[(f"MAIN{i}", 800, None, f"MAIN{i}.ico") for i in range(1, 13)],
     ("bento", 600, None, "bento.ico"),
     ("contest-bouquet", 900, None, "contest-bouquet.png"),
+    ("sv-hero-refill", 1100, None, "2026-06-10 14.40.35.ico"),
+    ("mimosa-logo", 800, None, "logobl2.ico"),
 ]
 
 
@@ -42,6 +46,8 @@ def _resize(im: Image.Image, max_w: int | None, max_h: int | None) -> Image.Imag
 def main() -> None:
     for stem, max_w, max_h, src_name in JOBS:
         src = BASE / src_name
+        if not src.exists():
+            src = SOURCE_BASE / src_name
         if not src.exists():
             print("skip (missing):", src)
             continue

@@ -1,22 +1,22 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Оплата отменена</title>
+    <title>Payment Cancelled — MIMOSA Atelier</title>
     <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body class="home-page">
     {% include 'includes/header.html' with header_show_cart=True %}
 
     <main id="main-content" tabindex="-1" class="about-snippet" style="margin-top: 80px; max-width: 760px;">
-        <h1>Оплата отменена</h1>
-        <p>Платеж не был завершен. Вы можете вернуться в корзину и попробовать снова.</p>
-        <a class="hero-btn" href="{% url 'shop:cart' %}">Вернуться в корзину</a>
+        <h1 data-translate="pay-cancel-title">Payment cancelled</h1>
+        <p data-translate="pay-cancel-text1">Your payment was not completed. Your cart has been restored — you can resume your order whenever you like.</p>
+        <a class="hero-btn" href="{% url 'shop:cart' %}" data-translate="pay-cancel-btn-cart">Return to cart</a>
     </main>
 
-    {% include 'includes/footer.html' with footer_lang='ru' %}
+    {% include 'includes/footer.html' %}
     <script src="{% static 'translations.js' %}" defer></script>
 </body>
 </html>
