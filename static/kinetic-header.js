@@ -1,5 +1,5 @@
 /**
- * Kinetic header: scroll states, magnetic nav links, mobile curtain menu.
+ * Header helpers: magnetic nav links and mobile curtain menu.
  * Respects prefers-reduced-motion.
  */
 (function () {
@@ -10,66 +10,9 @@
     var header = document.getElementById('kinetic-header');
     if (!header) return;
 
-    var TOP_THRESHOLD = 64;
-    var prevScroll = window.scrollY;
-    var mode = 'top';
-
-    function applyClasses() {
-        header.classList.remove('site-header--at-top', 'site-header--hidden', 'site-header--dock');
-
-        if (mode === 'top') {
-            header.classList.add('site-header--at-top');
-        } else {
-            header.classList.add('site-header--hidden');
-        }
-
-        var t = Math.min(1, window.scrollY / 1400);
-        header.style.setProperty('--kinetic-scroll', String(t));
-    }
-
-    function onScrollFrame() {
-        if (reduceMotion.matches) {
-            return;
-        }
-
-        var y = window.scrollY;
-
-        mode = y <= TOP_THRESHOLD ? 'top' : 'hidden';
-
-        prevScroll = y;
-        applyClasses();
-    }
-
-    var ticking = false;
-    function onScroll() {
-        if (reduceMotion.matches) return;
-        if (!ticking) {
-            window.requestAnimationFrame(function () {
-                onScrollFrame();
-                ticking = false;
-            });
-            ticking = true;
-        }
-    }
-
-    if (!reduceMotion.matches) {
-        window.addEventListener('scroll', onScroll, { passive: true });
-        applyClasses();
-    } else {
-        header.classList.add('site-header--at-top');
-    }
-
-    reduceMotion.addEventListener('change', function () {
-        if (reduceMotion.matches) {
-            window.removeEventListener('scroll', onScroll);
-            header.classList.remove('site-header--hidden', 'site-header--dock');
-            header.classList.add('site-header--at-top');
-        } else {
-            prevScroll = window.scrollY;
-            window.addEventListener('scroll', onScroll, { passive: true });
-            onScrollFrame();
-        }
-    });
+    header.classList.remove('site-header--hidden', 'site-header--dock');
+    header.classList.add('site-header--at-top');
+    header.style.setProperty('--kinetic-scroll', '0');
 
     /* ——— Magnetic links (desktop) ——— */
     function initMagnetic() {
