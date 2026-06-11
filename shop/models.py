@@ -185,9 +185,12 @@ class OrderItem(models.Model):
     )
     quantity = models.PositiveIntegerField(default=1)
     price_at_purchase = models.DecimalField(max_digits=10, decimal_places=2)
+    selected_color_name = models.CharField(max_length=80, blank=True, default="")
+    selected_color_hex = models.CharField(max_length=16, blank=True, default="")
 
     def __str__(self):
-        return f"{self.product.title} x {self.quantity} (Order #{self.order_id})"
+        color = f" / {self.selected_color_name}" if self.selected_color_name else ""
+        return f"{self.product.title}{color} x {self.quantity} (Order #{self.order_id})"
 
 
 class ContestEntry(Order):

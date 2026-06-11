@@ -12,7 +12,7 @@ Date: {{ order.created_at|date:"d F Y" }}
 
 ITEMS:
 {% for item in items %}
-- {{ item.product.title }} x {{ item.quantity }} — {{ item.price_at_purchase }} EUR
+- {{ item.product.title }}{% if item.selected_color_name %} (Color: {{ item.selected_color_name }}){% endif %} x {{ item.quantity }} — {{ item.price_at_purchase }} EUR
 {% endfor %}
 {% if order.shipping_cost %}Shipping: {{ order.shipping_cost }} EUR{% endif %}
 

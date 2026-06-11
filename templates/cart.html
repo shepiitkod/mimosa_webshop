@@ -31,6 +31,15 @@
                     <article class="Product1" style="padding: 20px;">
                         <h3>{{ item.product.title }}</h3>
                         <p class="product-desc">Категория: {{ item.product.category }}</p>
+                        {% if item.selected_color_name %}
+                            <p class="product-desc">
+                                <span data-translate="cart-color-label">Color</span>:
+                                {% if item.selected_color_hex %}
+                                    <span class="cart-color-dot" style="background: {{ item.selected_color_hex }};"></span>
+                                {% endif %}
+                                <strong>{{ item.selected_color_name }}</strong>
+                            </p>
+                        {% endif %}
                         <p class="product-composition">Цена: EUR {{ item.product.price }}</p>
                         <p class="product-price">EUR {{ item.line_total }}</p>
                         <p class="product-desc" style="font-size: 0.9rem;">Poids (expédition): {{ item.product.weight_grams }} g</p>
@@ -39,11 +48,13 @@
                             {% csrf_token %}
                             <input type="number" name="quantity" value="{{ item.quantity }}" min="1" style="width:90px; padding:8px;">
                             <input type="hidden" name="update" value="1">
+                            <input type="hidden" name="cart_key" value="{{ item.cart_key }}">
                             <button type="submit" class="btn-add-cart">Обновить количество</button>
                         </form>
 
                         <form method="post" action="{% url 'shop:cart_remove' item.product.id %}" style="margin-top:12px;">
                             {% csrf_token %}
+                            <input type="hidden" name="cart_key" value="{{ item.cart_key }}">
                             <button type="submit" class="btn-wishlist" style="width:auto; padding:10px 16px; border-radius:14px;">Удалить</button>
                         </form>
                     </article>

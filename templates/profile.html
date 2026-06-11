@@ -752,6 +752,15 @@
                                     <span class="pd-item-qty"
                                         >× {{ item.quantity }}</span
                                     >
+                                    {% if item.selected_color_name %}
+                                    <span class="pd-item-qty">
+                                        <span data-translate="cart-color-label">Color</span>:
+                                        {% if item.selected_color_hex %}
+                                        <span class="order-color-dot" style="background: {{ item.selected_color_hex }};"></span>
+                                        {% endif %}
+                                        {{ item.selected_color_name }}
+                                    </span>
+                                    {% endif %}
                                 </div>
                                 <span class="pd-item-price"
                                     >€{{ item.price_at_purchase }}</span

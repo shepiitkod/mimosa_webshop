@@ -37,7 +37,12 @@
       <tbody>
         {% for item in items %}
         <tr>
-          <td>{{ item.product.title }}</td>
+          <td>
+            {{ item.product.title }}
+            {% if item.selected_color_name %}
+            <br><span style="font-size:12px;color:#7a5533;">Color: {{ item.selected_color_name }}</span>
+            {% endif %}
+          </td>
           <td>{{ item.quantity }}</td>
           <td>{{ item.price_at_purchase }} &euro;</td>
         </tr>

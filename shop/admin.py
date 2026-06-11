@@ -163,6 +163,28 @@ class ProductAdmin(admin.ModelAdmin):
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
     extra = 0
+    readonly_fields = ("color_preview",)
+    fields = (
+        "product",
+        "quantity",
+        "price_at_purchase",
+        "selected_color_name",
+        "selected_color_hex",
+        "color_preview",
+    )
+
+    def color_preview(self, obj):
+        if not obj or not obj.selected_color_name:
+            return "—"
+        if obj.selected_color_hex:
+            return format_html(
+                '<span style="display:inline-flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;border:1px solid #cdbf9d;background:{};"></span>{}</span>',
+                obj.selected_color_hex,
+                obj.selected_color_name,
+            )
+        return obj.selected_color_name
+
+    color_preview.short_description = "Selected color"
 
 
 @admin.register(Order)
@@ -191,6 +213,7 @@ class OrderAdmin(admin.ModelAdmin):
         "postal_code",
         "tracking_number",
         "admin_note",
+        "items__selected_color_name",
     )
     inlines = [OrderItemInline]
     fieldsets = (

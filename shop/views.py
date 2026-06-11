@@ -1,4 +1,5 @@
 import json
+import re
 import traceback
 from datetime import timedelta
 from decimal import Decimal, InvalidOperation
@@ -45,6 +46,8 @@ CATEGORY_SLUG_ALIASES = {
     "new-arrivals": "scented-candles",
     "bougies-de-ceremonie": "ceremony-candles",
 }
+
+COLOR_HEX_RE = re.compile(r"^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$")
 
 
 def _format_money(value) -> str:
@@ -205,7 +208,7 @@ def _build_admin_copilot_context(prompt: str) -> str:
     lines.append("RECENT ORDERS:")
     for order in orders:
         item_bits = [
-            f"{item.product.title} x{item.quantity} ({_format_money(item.price_at_purchase)})"
+            f"{item.product.title}{f' color={item.selected_color_name}' if item.selected_color_name else ''} x{item.quantity} ({_format_money(item.price_at_purchase)})"
             for item in order.items.all()
         ]
         shipping = ", ".join(
@@ -314,12 +317,17 @@ def _create_stripe_session_for_order(request, order):
     )
     cancel_url = _https(_build_site_url(reverse("shop:cancel")))
 
+    def _stripe_item_name(item):
+        if item.selected_color_name:
+            return f"{item.product.title} — Color: {item.selected_color_name}"
+        return item.product.title
+
     line_items = [
         {
             "price_data": {
                 "currency": "eur",
                 "product_data": {
-                    "name": item.product.title,
+                    "name": _stripe_item_name(item),
                 },
                 "unit_amount": int(round(item.product.price * 100)),
             },
@@ -481,30 +489,84 @@ def _get_cart(session):
     return session.setdefault("cart", {})
 
 
+def _cart_count(session) -> int:
+    total = 0
+    for raw in _get_cart(session).values():
+        if isinstance(raw, dict):
+            raw = raw.get("quantity", 0)
+        try:
+            total += int(raw)
+        except (TypeError, ValueError):
+            continue
+    return total
+
+
+def _cart_key(product_id: int, color_name: str = "") -> str:
+    color_slug = slugify(color_name or "")
+    return f"{product_id}:{color_slug}" if color_slug else str(product_id)
+
+
+def _clean_color_hex(value: str) -> str:
+    value = (value or "").strip()
+    return value if COLOR_HEX_RE.match(value) else ""
+
+
+def _cart_product_id(cart_key: str) -> Optional[int]:
+    try:
+        return int(str(cart_key).split(":", 1)[0])
+    except (TypeError, ValueError):
+        return None
+
+
+def _cart_entry(raw) -> dict[str, object]:
+    if isinstance(raw, dict):
+        try:
+            quantity = int(raw.get("quantity", 0))
+        except (TypeError, ValueError):
+            quantity = 0
+        return {
+            "quantity": quantity,
+            "selected_color_name": str(raw.get("selected_color_name") or "").strip(),
+            "selected_color_hex": _clean_color_hex(str(raw.get("selected_color_hex") or "")),
+        }
+    try:
+        quantity = int(raw)
+    except (TypeError, ValueError):
+        quantity = 0
+    return {"quantity": quantity, "selected_color_name": "", "selected_color_hex": ""}
+
+
 def _cart_summary(session):
     cart = _get_cart(session)
     if not cart:
         return [], Decimal("0.00")
 
-    product_ids = [int(pid) for pid in cart.keys()]
+    product_ids = [pid for pid in (_cart_product_id(key) for key in cart.keys()) if pid]
     products = Product.objects.filter(id__in=product_ids)
     products_map = {product.id: product for product in products}
 
     items = []
     total = Decimal("0.00")
 
-    for pid_str, quantity in cart.items():
-        product = products_map.get(int(pid_str))
+    for cart_key, raw_entry in cart.items():
+        product_id = _cart_product_id(cart_key)
+        if not product_id:
+            continue
+        entry = _cart_entry(raw_entry)
+        product = products_map.get(product_id)
         if not product:
             continue
-        qty = int(quantity)
+        qty = max(1, int(entry["quantity"]))
         line_total = (product.price * qty).quantize(Decimal("0.01"))
         total += line_total
         items.append(
             {
+                "cart_key": cart_key,
                 "product": product,
                 "quantity": qty,
                 "line_total": line_total,
+                "selected_color_name": entry["selected_color_name"],
+                "selected_color_hex": entry["selected_color_hex"],
             }
         )
 
@@ -523,7 +585,7 @@ def _cart_total_weight_grams(items) -> int:
 def index_view(request):
     # Home: show the three most recently added products (by id) under "Our New Collection".
     products = Product.objects.all().order_by("-id")[:3]
-    cart_count = sum(int(qty) for qty in _get_cart(request.session).values())
+    cart_count = _cart_count(request.session)
     return render(
         request, "index.html", {"products": products, "cart_count": cart_count}
     )
@@ -585,7 +647,7 @@ def products_catalog_view(request, category_slug=None):
 
     total_products_count = Product.objects.count()
 
-    cart_count = sum(int(qty) for qty in _get_cart(request.session).values())
+    cart_count = _cart_count(request.session)
     return render(
         request,
         "products_catalog.html",
@@ -724,7 +786,7 @@ def profile_view(request):
         total_spent = 0
 
     try:
-        cart_count = sum(int(qty) for qty in _get_cart(request.session).values())
+        cart_count = _cart_count(request.session)
     except Exception as e:
         logger.error("profile_view cart_count failed: %s", e, exc_info=True)
         cart_count = 0
@@ -749,20 +811,32 @@ def profile_view(request):
 
 @require_POST
 def cart_add(request, product_id):
-    get_object_or_404(Product, id=product_id)
+    product = get_object_or_404(Product, id=product_id)
     quantity = int(request.POST.get("quantity", 1) or 1)
     update = request.POST.get("update") == "1"
+    selected_color_name = (request.POST.get("selected_color_name") or "").strip()[:80]
+    selected_color_hex = _clean_color_hex(request.POST.get("selected_color_hex") or "")
+    cart_line_key = (request.POST.get("cart_key") or "").strip()
 
     if quantity < 1:
         quantity = 1
 
     cart = _get_cart(request.session)
-    pid = str(product_id)
+    key = cart_line_key if update and cart_line_key in cart else _cart_key(product.id, selected_color_name)
+    old_entry = _cart_entry(cart.get(key, 0))
 
     if update:
-        cart[pid] = quantity
+        cart[key] = {
+            "quantity": quantity,
+            "selected_color_name": old_entry["selected_color_name"] or selected_color_name,
+            "selected_color_hex": old_entry["selected_color_hex"] or selected_color_hex,
+        }
     else:
-        cart[pid] = int(cart.get(pid, 0)) + quantity
+        cart[key] = {
+            "quantity": int(old_entry["quantity"]) + quantity,
+            "selected_color_name": selected_color_name,
+            "selected_color_hex": selected_color_hex,
+        }
 
     request.session.modified = True
     return redirect("shop:cart_detail")
@@ -779,6 +853,8 @@ def cart_detail(request):
             "price": str(line["product"].price),
             "lineTotal": str(line["line_total"]),
             "weightGrams": int(getattr(line["product"], "weight_grams", 200) or 200),
+            "selectedColorName": line.get("selected_color_name", ""),
+            "selectedColorHex": line.get("selected_color_hex", ""),
         }
         for line in items
     ]
@@ -803,7 +879,8 @@ def cart_detail(request):
 @require_POST
 def cart_remove(request, product_id):
     cart = _get_cart(request.session)
-    pid = str(product_id)
+    cart_key = (request.POST.get("cart_key") or "").strip()
+    pid = cart_key if cart_key in cart else str(product_id)
     if pid in cart:
         del cart[pid]
         request.session.modified = True
@@ -847,6 +924,8 @@ def order_create(request):
                 product=item["product"],
                 quantity=item["quantity"],
                 price_at_purchase=item["product"].price,
+                selected_color_name=item.get("selected_color_name", ""),
+                selected_color_hex=item.get("selected_color_hex", ""),
             )
 
     request.session["cart"] = {}
@@ -901,6 +980,8 @@ def create_order_from_product(request):
     description = (
         payload.get("description") or "Product from storefront"
     ).strip() or "Product from storefront"
+    selected_color_name = str(payload.get("selected_color_name") or "").strip()[:80]
+    selected_color_hex = _clean_color_hex(str(payload.get("selected_color_hex") or ""))
 
     with transaction.atomic():
         product, _ = Product.objects.get_or_create(
@@ -924,6 +1005,8 @@ def create_order_from_product(request):
             product=product,
             quantity=quantity,
             price_at_purchase=price_at_purchase,
+            selected_color_name=selected_color_name,
+            selected_color_hex=selected_color_hex,
         )
 
     return JsonResponse(
@@ -975,6 +1058,8 @@ def create_checkout_session(request):
                 product=item["product"],
                 quantity=item["quantity"],
                 price_at_purchase=item["product"].price,
+                selected_color_name=item.get("selected_color_name", ""),
+                selected_color_hex=item.get("selected_color_hex", ""),
             )
 
     # Create Stripe session outside the DB transaction to avoid holding the

@@ -6767,6 +6767,18 @@ body.is-loaded header figure::after {
     transform: translateZ(0);
 }
 
+.cart-color-dot,
+.order-color-dot {
+    display: inline-block;
+    width: 0.85em;
+    height: 0.85em;
+    margin: 0 0.35em 0 0.2em;
+    border: 1px solid rgba(88, 61, 36, 0.22);
+    border-radius: 999px;
+    vertical-align: -0.08em;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
 .product-page .main-image img.product-framed-image,
 .home-page
     .Products.portfolio-masonry
