@@ -1514,12 +1514,13 @@
     inset: 0;
     z-index: 9000;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    padding: 24px;
+    padding: max(72px, env(safe-area-inset-top)) 24px 32px;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.38s ease;
+    overflow-y: auto;
 }
 
 .spc-modal.is-open {
@@ -1544,7 +1545,7 @@
     position: relative;
     z-index: 1;
     width: min(900px, 100%);
-    max-height: min(90vh, 680px);
+    max-height: min(calc(100vh - 112px), 680px);
     display: grid;
     grid-template-columns: 340px 1fr;
     border-radius: 28px;
@@ -1790,7 +1791,7 @@
     .spc-modal-panel {
         grid-template-columns: 1fr;
         grid-template-rows: 260px 1fr;
-        max-height: 92vh;
+        max-height: calc(100vh - 104px);
     }
 
     .spc-modal-grid {
@@ -1832,6 +1833,7 @@
     .spc-modal {
         padding: 0;
         align-items: flex-end;
+        overflow-y: hidden;
     }
 
     .spc-modal-panel {
