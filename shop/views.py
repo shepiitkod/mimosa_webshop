@@ -67,6 +67,11 @@ def _build_admin_copilot_context(prompt: str) -> str:
         )
         .order_by("-created_at")[:40]
     )
+    contest_orders = list(
+        Order.objects.select_related("user")
+        .filter(total_amount__gte=Decimal("50.00"))
+        .order_by("-created_at")[:60]
+    )
     newsletter_users = list(NewsletterUser.objects.order_by("-date_added")[:40])
     cart_items = list(
         CartItem.objects.select_related("user", "product").order_by("-created_at")[:40]
@@ -78,6 +83,7 @@ def _build_admin_copilot_context(prompt: str) -> str:
     active_total = User.objects.filter(is_active=True).count()
     product_total = Product.objects.count()
     order_total = Order.objects.count()
+    contest_total = Order.objects.filter(total_amount__gte=Decimal("50.00")).count()
     newsletter_total = NewsletterUser.objects.count()
     cart_item_total = CartItem.objects.count()
 
@@ -136,6 +142,7 @@ def _build_admin_copilot_context(prompt: str) -> str:
         f"- Users: total={user_total}, active={active_total}, staff/admin={staff_total}, superusers={superuser_total}",
         f"- Products: total={product_total}, visible_sample={len(products)}, sample_stock_units={inventory_units}",
         f"- Orders: total={order_total}, recent_sample={len(orders)}, all_time_total_amount={_format_money(all_revenue)}, recent_sample_amount={_format_money(revenue)}",
+        f"- Contest entries (€50+ orders): total={contest_total}, visible_sample={len(contest_orders)}",
         f"- Newsletter subscribers: total={newsletter_total}",
         f"- Cart rows: total={cart_item_total}, recent_sample_qty={cart_units}",
         f"- Order status counts: {status_counts or {}}",
@@ -213,6 +220,24 @@ def _build_admin_copilot_context(prompt: str) -> str:
         )
         lines.append(
             f"- id={order.id}; user={order.user.username}; email={order.user.email or '-'}; status={order.status}; total={_format_money(order.total_amount)}; date={order.created_at:%Y-%m-%d}; tracking_number={order.tracking_number or '-'}; tracking_url={order.tracking_url or '-'}; admin_note={order.admin_note or '-'}; shipping={shipping or '-'}; items={'; '.join(item_bits) or '-'}"
+        )
+
+    lines.append("")
+    lines.append("CONTEST ENTRIES (€50+ ORDERS):")
+    for order in contest_orders:
+        shipping = ", ".join(
+            part
+            for part in [
+                order.shipping_address,
+                order.city,
+                order.postal_code,
+                order.country,
+            ]
+            if part
+        )
+        customer_name = order.user.get_full_name() or order.user.username
+        lines.append(
+            f"- order_id={order.id}; customer={customer_name}; username={order.user.username}; email={order.user.email or '-'}; total={_format_money(order.total_amount)}; status={order.status}; delivery={shipping or '-'}"
         )
 
     lines.append("")

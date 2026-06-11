@@ -2,13 +2,11 @@
 <picture>
     <source
         type="image/webp"
-        srcset="{% static rel|add:'.webp' %}{% if w %} {{ w }}w{% endif %}"
-        {% if sizes %}sizes="{{ sizes }}"{% endif %}
+        srcset="{% static rel|add:'.webp' %}"
     >
     <img
         {% if class_name %}class="{{ class_name }}"{% endif %}
         src="{% static rel|add:'.jpg' %}"
-        {% if w %}srcset="{% static rel|add:'.webp' %} {{ w }}w, {% static rel|add:'.jpg' %} {{ w }}w"{% endif %}
         {% if sizes %}sizes="{{ sizes }}"{% endif %}
         alt="{{ alt|default:'' }}"
         width="{{ w }}"

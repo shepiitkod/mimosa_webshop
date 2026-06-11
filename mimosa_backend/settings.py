@@ -166,12 +166,16 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-CLOUDINARY_CLOUD_NAME = os.getenv("CLOUDINARY_CLOUD_NAME", "")
-CLOUDINARY_API_KEY = os.getenv("CLOUDINARY_API_KEY", "")
+CLOUDINARY_CLOUD_NAME = os.getenv("CLOUDINARY_CLOUD_NAME", "dv6cc5whi")
+CLOUDINARY_API_KEY = os.getenv("CLOUDINARY_API_KEY", "156856357986283")
 CLOUDINARY_API_SECRET = os.getenv("CLOUDINARY_API_SECRET", "")
 USE_CLOUDINARY_MEDIA = bool(
-    os.getenv("CLOUDINARY_URL")
-    or (CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET)
+    os.getenv(
+        "USE_CLOUDINARY_MEDIA",
+        "True" if (not DEBUG and CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_KEY) else "False",
+    ).lower()
+    in ("true", "1", "yes")
+    or bool(os.getenv("CLOUDINARY_URL"))
 )
 
 CLOUDINARY_STORAGE = {

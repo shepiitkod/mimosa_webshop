@@ -190,6 +190,13 @@ class OrderItem(models.Model):
         return f"{self.product.title} x {self.quantity} (Order #{self.order_id})"
 
 
+class ContestEntry(Order):
+    class Meta:
+        proxy = True
+        verbose_name = "Contest entry"
+        verbose_name_plural = "Contest entries"
+
+
 class CartItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="cart_items")
     product = models.ForeignKey(

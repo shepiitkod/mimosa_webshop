@@ -6,7 +6,7 @@ from django.db.models import Sum
 from django.utils.html import format_html
 
 from .emails import send_order_status_update_email
-from .models import CartItem, NewsletterUser, Order, OrderItem, Product
+from .models import CartItem, ContestEntry, NewsletterUser, Order, OrderItem, Product
 
 FRAMING_FIELDS = (
     "image_focal_x",
@@ -276,6 +276,86 @@ class OrderAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
         if old_status and old_status != obj.status:
             send_order_status_update_email(obj, old_status=old_status)
+
+
+@admin.register(ContestEntry)
+class ContestEntryAdmin(admin.ModelAdmin):
+    """Read-only admin list of orders qualified for the €50 contest draw."""
+
+    list_display = (
+        "id",
+        "customer_name",
+        "customer_email",
+        "total_amount",
+        "status",
+        "shipping_summary",
+        "created_at",
+    )
+    list_filter = ("status", "created_at", "country")
+    search_fields = (
+        "id",
+        "user__username",
+        "user__email",
+        "shipping_address",
+        "city",
+        "postal_code",
+        "country",
+    )
+    ordering = ("-created_at",)
+    readonly_fields = (
+        "user",
+        "total_amount",
+        "status",
+        "created_at",
+        "shipping_address",
+        "city",
+        "postal_code",
+        "country",
+        "shipping_carrier",
+        "shipping_cost",
+        "shipping_country_code",
+        "tracking_number",
+        "tracking_url",
+        "admin_note",
+        "status_updated_at",
+    )
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def get_queryset(self, request):
+        return (
+            super()
+            .get_queryset(request)
+            .select_related("user")
+            .filter(total_amount__gte=Decimal("50.00"))
+        )
+
+    def customer_name(self, obj):
+        return obj.user.get_full_name() or obj.user.username
+
+    customer_name.short_description = "Customer"
+    customer_name.admin_order_field = "user__username"
+
+    def customer_email(self, obj):
+        return obj.user.email or "-"
+
+    customer_email.short_description = "Email"
+    customer_email.admin_order_field = "user__email"
+
+    def shipping_summary(self, obj):
+        parts = [
+            obj.shipping_address,
+            obj.city,
+            obj.postal_code,
+            obj.country,
+        ]
+        return ", ".join(part for part in parts if part) or "-"
+
+    shipping_summary.short_description = "Delivery information"
 
 
 @admin.register(OrderItem)

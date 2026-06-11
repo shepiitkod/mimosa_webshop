@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Resize and save WebP + JPEG next to source assets in static/assets/images/."""
+"""Resize and save high-quality WebP + JPEG next to source static assets."""
 from __future__ import annotations
 
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageOps
 
 ROOT = Path(__file__).resolve().parent.parent
 BASE = ROOT / "static" / "assets" / "images"
@@ -12,19 +12,19 @@ SOURCE_BASE = ROOT / "assets" / "images"
 
 # (output stem, max width, max height, source filename)
 JOBS: list[tuple[str, int | None, int | None, str]] = [
-    ("photo1", 900, None, "photo1.ico"),
-    ("photo2", 900, None, "photo2.ico"),
-    ("photo3", 900, None, "photo3.ico"),
-    *[(f"MAIN{i}", 800, None, f"MAIN{i}.ico") for i in range(1, 13)],
-    ("bento", 600, None, "bento.ico"),
-    ("contest-bouquet", 900, None, "contest-bouquet.png"),
-    ("sv-hero-refill", 1100, None, "2026-06-10 14.40.35.ico"),
-    ("mimosa-logo", 800, None, "logobl2.ico"),
+    ("photo1", 1400, None, "photo1.ico"),
+    ("photo2", 1400, None, "photo2.ico"),
+    ("photo3", 1400, None, "photo3.ico"),
+    *[(f"MAIN{i}", 1200, None, f"MAIN{i}.ico") for i in range(1, 13)],
+    ("bento", 1000, None, "bento.ico"),
+    ("contest-bouquet", 1400, None, "contest-bouquet.png"),
+    ("sv-hero-refill", 1400, None, "2026-06-10 14.40.35.ico"),
+    ("mimosa-logo", 1000, None, "logobl2.ico"),
 ]
 
 
 def _open_any(path: Path) -> Image.Image:
-    im = Image.open(path)
+    im = ImageOps.exif_transpose(Image.open(path))
     if im.mode in ("RGBA", "P", "LA"):
         return im.convert("RGBA")
     return im.convert("RGB")
@@ -62,13 +62,14 @@ def main() -> None:
         im.save(
             webp,
             "WEBP",
-            quality=86,
+            quality=94,
             method=6,
         )
         im.save(
             jpg,
             "JPEG",
-            quality=88,
+            quality=94,
+            subsampling=0,
             optimize=True,
             progressive=True,
         )
