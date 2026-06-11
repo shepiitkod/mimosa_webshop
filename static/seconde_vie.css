@@ -1514,9 +1514,10 @@
     inset: 0;
     z-index: 9000;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-    padding: max(72px, env(safe-area-inset-top)) 24px 32px;
+    padding: max(72px, env(safe-area-inset-top)) 24px
+        max(72px, env(safe-area-inset-bottom));
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.38s ease;
@@ -1545,7 +1546,7 @@
     position: relative;
     z-index: 1;
     width: min(900px, 100%);
-    max-height: min(calc(100vh - 112px), 680px);
+    max-height: min(calc(100vh - 144px), 680px);
     display: grid;
     grid-template-columns: 340px 1fr;
     border-radius: 28px;
@@ -1791,7 +1792,7 @@
     .spc-modal-panel {
         grid-template-columns: 1fr;
         grid-template-rows: 260px 1fr;
-        max-height: calc(100vh - 104px);
+        max-height: calc(100vh - 144px);
     }
 
     .spc-modal-grid {
