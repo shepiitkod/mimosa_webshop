@@ -16,7 +16,7 @@
             rel="stylesheet"
         />
         <link rel="stylesheet" href="{% static 'styles.css' %}?v=20260612-mobile" />
-        <link rel="stylesheet" href="{% static 'seconde_vie.css' %}" />
+        <link rel="stylesheet" href="{% static 'seconde_vie.css' %}?v=20260612-modal-scroll" />
     </head>
     <body class="seconde-vie-page">
         {% include 'includes/header.html' with header_show_cart=True %}
@@ -1103,6 +1103,6 @@
 
         <script src="{% static 'translations.js' %}" defer></script>
         <script src="{% static 'animations.js' %}" defer></script>
-        <script src="{% static 'fragrance_catalog.js' %}" defer></script>
+        <script src="{% static 'fragrance_catalog.js' %}?v=20260612-modal-scroll" defer></script>
     </body>
 </html>

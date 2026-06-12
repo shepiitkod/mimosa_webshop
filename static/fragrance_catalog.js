@@ -326,6 +326,7 @@
    * ───────────────────────────────────────────────────────────────────────── */
 
   let staticUrl = "";
+  let modalScrollY = 0;
 
   /* ─────────────────────────────────────────────────────────────────────────
    * HELPERS
@@ -427,15 +428,24 @@
       });
     }
 
+    modalScrollY = window.scrollY || window.pageYOffset || 0;
     modal.classList.add("is-open");
     modal.removeAttribute("aria-hidden");
-    document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = "-" + modalScrollY + "px";
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
 
     /* Focus the close button for accessibility */
     var closeBtn = document.getElementById("spc-modal-close");
     if (closeBtn) {
       setTimeout(function () {
-        closeBtn.focus();
+        try {
+          closeBtn.focus({ preventScroll: true });
+        } catch (e) {
+          closeBtn.focus();
+        }
       }, 60);
     }
   }
@@ -445,7 +455,12 @@
     if (!modal) return;
     modal.classList.remove("is-open");
     modal.setAttribute("aria-hidden", "true");
-    document.body.style.overflow = "";
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.left = "";
+    document.body.style.right = "";
+    document.body.style.width = "";
+    window.scrollTo(0, modalScrollY);
   }
 
   /* ─────────────────────────────────────────────────────────────────────────
