@@ -12,7 +12,7 @@
     <meta property="og:type" content="product">
     <link rel="canonical" href="{% url 'shop:product_detail' product.id canonical_slug %}">
     <link rel="shortcut icon" href="{% static 'assets/images/logobl2.ico' %}" type="image/x-icon">
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'styles.css' %}?v=20260612-mobile">
     <style>
         .main-image { position: relative; cursor: crosshair; }
         .zoom-lens {
@@ -146,7 +146,17 @@
         const result = document.getElementById('zoomResult');
         if (!container || !img || !lens || !result) return;
 
-        if (window.innerWidth <= 1100) return;
+        function disableZoom() {
+            lens.style.display = 'none';
+            result.style.display = 'none';
+            container.onmouseenter = null;
+            container.onmouseleave = null;
+            container.onmousemove = null;
+        }
+
+        disableZoom();
+
+        if (window.innerWidth <= 1100 || window.matchMedia('(hover: none)').matches) return;
 
         const ZOOM = 2.8;
 
@@ -216,7 +226,7 @@
     </script>
     <script src="{% static 'translations.js' %}"></script>
     {% if product.category == "Bento Candles" %}
-    <script src="{% static 'bento_color_picker.js' %}" defer></script>
+    <script src="{% static 'bento_color_picker.js' %}?v=20260612-mobile" defer></script>
     {% endif %}
 </body>
 </html>

@@ -416,3 +416,53 @@
         white-space: normal;
     }
 }
+
+@media (max-width: 560px) {
+    .shipping-module {
+        width: 100%;
+        max-width: 100%;
+        margin-top: 1.25rem;
+        padding: 1.25rem 1rem;
+        border-radius: 18px;
+    }
+
+    .shipping-country {
+        max-width: 100%;
+    }
+
+    .shipping-country__btn,
+    .shipping-country__option,
+    .shipping-carrier-card {
+        min-height: 48px;
+        font-size: 16px;
+    }
+
+    .shipping-country__panel {
+        max-height: min(58vh, 360px);
+        z-index: 120;
+    }
+
+    .shipping-carrier-card__row,
+    .shipping-totals__row {
+        gap: 8px;
+    }
+
+    .shipping-carrier-card__price-wrap {
+        align-items: flex-start;
+        text-align: left;
+        width: 100%;
+    }
+
+    .shipping-totals {
+        font-size: 0.95rem;
+    }
+
+    .shipping-totals__grand {
+        font-size: 1.22rem;
+    }
+
+    .cart-checkout-btn,
+    .cart-checkout-btn__inner {
+        width: 100%;
+    }
+}

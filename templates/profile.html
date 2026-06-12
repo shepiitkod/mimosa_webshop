@@ -11,7 +11,7 @@
             href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap"
             rel="stylesheet"
         />
-        <link rel="stylesheet" href="{% static 'styles.css' %}" />
+        <link rel="stylesheet" href="{% static 'styles.css' %}?v=20260612-mobile" />
         <script src="{% static 'translations.js' %}"></script>
         <style>
             /* ─── Profile Dashboard — enhanced ─────────────────────────── */
@@ -619,6 +619,55 @@
                 .pd-item-img-placeholder {
                     width: 40px;
                     height: 40px;
+                }
+
+                .pd-card {
+                    padding: 22px 18px;
+                }
+
+                .pd-orders-header {
+                    padding: 12px 4px 0;
+                }
+
+                .pd-order-head,
+                .pd-order-meta {
+                    padding-left: 14px;
+                    padding-right: 14px;
+                }
+
+                .pd-items {
+                    padding-left: 14px;
+                    padding-right: 14px;
+                }
+
+                .pd-item {
+                    align-items: flex-start;
+                    gap: 10px;
+                }
+
+                .pd-item-info {
+                    min-width: 0;
+                }
+
+                .pd-item-name {
+                    white-space: normal;
+                    line-height: 1.35;
+                }
+
+                .pd-item-price {
+                    font-size: 15px;
+                    text-align: right;
+                    white-space: nowrap;
+                }
+
+                .pd-shipping {
+                    margin-left: 14px;
+                    margin-right: 14px;
+                }
+
+                .pd-pay-form {
+                    padding-left: 14px;
+                    padding-right: 14px;
                 }
             }
         </style>
