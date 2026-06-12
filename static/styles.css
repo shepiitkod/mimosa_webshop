@@ -1422,8 +1422,8 @@ main p {
     padding: 1.35rem 1rem 1.5rem;
     background: linear-gradient(
         to top,
-        rgba(10, 46, 41, 0.88) 0%,
-        rgba(10, 46, 41, 0.2) 45%,
+        rgba(244, 224, 184, 0.9) 0%,
+        rgba(252, 244, 224, 0.34) 45%,
         transparent 72%
     );
     opacity: 0;
@@ -1445,10 +1445,10 @@ main p {
     font-family: var(--font-display);
     font-size: clamp(1.05rem, 2.5vw, 1.35rem);
     font-weight: 600;
-    color: #fdfbf7;
+    color: #3b2a16;
     text-align: center;
     line-height: 1.35;
-    text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35);
+    text-shadow: 0 1px 14px rgba(255, 250, 236, 0.78);
     transform: translateY(10px);
     transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
