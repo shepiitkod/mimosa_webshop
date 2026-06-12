@@ -12,7 +12,7 @@
             rel="stylesheet"
         />
         <link rel="stylesheet" href="{% static 'styles.css' %}" />
-        <link rel="stylesheet" href="{% static 'catalog.css' %}" />
+        <link rel="stylesheet" href="{% static 'catalog.css' %}?v=20260612-pagination" />
     </head>
     <body class="catalog-page">
         <div class="mimosa-petals" aria-hidden="true">
@@ -136,6 +136,7 @@
 
                 {% if page_obj.paginator.num_pages > 1 %}
                 <nav class="catalog-pagination" aria-label="Catalog pages">
+                    <div class="catalog-pagination__shell">
                     {% if page_obj.has_previous %}
                     <a
                         class="catalog-page-link catalog-page-link--control"
@@ -173,6 +174,7 @@
                         data-translate="catalog-page-next"
                     >Next</span>
                     {% endif %}
+                    </div>
                 </nav>
                 {% endif %}
             </section>
