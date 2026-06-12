@@ -1,6 +1,15 @@
 {% load static %}
 <a href="#main-content" class="skip-to-content">Skip to main content</a>
 {% include 'includes/promo_ribbon.html' %}
+<style>
+    @media (max-width: 900px) {
+        body.kinetic-menu-open .site-header__brand {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+    }
+</style>
 
 <header
     class="site-header site-header--at-top"
