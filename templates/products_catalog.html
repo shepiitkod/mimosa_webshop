@@ -64,9 +64,9 @@
                     </h1>
                     <p
                         data-translate="catalog-items-count"
-                        data-count="{{ products|length }}"
+                        data-count="{{ total_products_count }}"
                     >
-                        {{ products|length }} items
+                        {{ total_products_count }} items
                     </p>
                 </div>
 
@@ -133,6 +133,48 @@
                     </article>
                     {% endfor %}
                 </div>
+
+                {% if page_obj.paginator.num_pages > 1 %}
+                <nav class="catalog-pagination" aria-label="Catalog pages">
+                    {% if page_obj.has_previous %}
+                    <a
+                        class="catalog-page-link catalog-page-link--control"
+                        href="?page={{ page_obj.previous_page_number }}"
+                        data-translate="catalog-page-prev"
+                    >Previous</a>
+                    {% else %}
+                    <span
+                        class="catalog-page-link catalog-page-link--control is-disabled"
+                        data-translate="catalog-page-prev"
+                    >Previous</span>
+                    {% endif %}
+
+                    <div class="catalog-page-numbers">
+                        {% for page_number in page_range %}
+                            {% if page_number == page_obj.paginator.ELLIPSIS %}
+                            <span class="catalog-page-ellipsis">{{ page_number }}</span>
+                            {% elif page_number == page_obj.number %}
+                            <span class="catalog-page-link is-current" aria-current="page">{{ page_number }}</span>
+                            {% else %}
+                            <a class="catalog-page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    {% if page_obj.has_next %}
+                    <a
+                        class="catalog-page-link catalog-page-link--control"
+                        href="?page={{ page_obj.next_page_number }}"
+                        data-translate="catalog-page-next"
+                    >Next</a>
+                    {% else %}
+                    <span
+                        class="catalog-page-link catalog-page-link--control is-disabled"
+                        data-translate="catalog-page-next"
+                    >Next</span>
+                    {% endif %}
+                </nav>
+                {% endif %}
             </section>
         </main>
 

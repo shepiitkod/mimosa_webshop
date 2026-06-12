@@ -15,6 +15,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.messages import get_messages
 from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator
 from django.core.validators import validate_email
 from django.db import IntegrityError, transaction
 from django.db.models import Count, Prefetch, Sum
@@ -645,14 +646,24 @@ def products_catalog_view(request, category_slug=None):
                 category__in=active_category["filter_values"]
             )
 
-    total_products_count = Product.objects.count()
+    paginator = Paginator(products_qs, 15)
+    page_obj = paginator.get_page(request.GET.get("page"))
+    page_range = paginator.get_elided_page_range(
+        number=page_obj.number,
+        on_each_side=1,
+        on_ends=1,
+    )
+
+    total_products_count = paginator.count
 
     cart_count = _cart_count(request.session)
     return render(
         request,
         "products_catalog.html",
         {
-            "products": products_qs,
+            "products": page_obj.object_list,
+            "page_obj": page_obj,
+            "page_range": page_range,
             "total_products_count": total_products_count,
             "categories": category_items,
             "active_category": active_category,
