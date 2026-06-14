@@ -7352,7 +7352,6 @@ section.about-snippet,
 .fab-consultation,
 .back-to-top,
 .promo-banner__cta,
-.catalog-card,
 .portfolio-card__figure {
     transition:
         transform var(--motion-fast) var(--ease-out),
@@ -7371,14 +7370,12 @@ section.about-snippet,
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .catalog-card:hover,
     .portfolio-card__figure:hover {
         transform: translateY(-3px);
     }
 }
 
 @media (hover: none), (pointer: coarse) {
-    .catalog-card:active,
     .portfolio-card__figure:active {
         transform: scale(0.99);
     }

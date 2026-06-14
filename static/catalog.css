@@ -110,15 +110,31 @@
 .catalog-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
+    gap: 20px;
+    align-items: stretch;
 }
 
 .catalog-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 100%;
     border-radius: 16px;
     overflow: hidden;
     border: 1px solid rgba(100, 76, 24, 0.14);
     background: rgba(255, 255, 255, 0.88);
     transition: transform 180ms ease, box-shadow 180ms ease;
+    isolation: isolate;
+}
+
+.catalog-card.reveal-on-scroll,
+.catalog-card.reveal-on-scroll.is-visible {
+    transform: none;
+}
+
+.catalog-card.reveal-on-scroll:not(.is-visible) {
+    opacity: 0;
+    transform: none;
 }
 
 .catalog-card:hover {
@@ -128,27 +144,46 @@
 
 .catalog-card figure {
     margin: 0;
+    flex: 0 0 auto;
+    width: 100%;
     aspect-ratio: 4 / 5;
+    overflow: hidden;
     background: linear-gradient(145deg, #f4efe5, #efe8dc);
 }
 
 .catalog-card figure a {
-    display: flex;
+    display: block;
     width: 100%;
     height: 100%;
-    align-items: center;
-    justify-content: center;
+    line-height: 0;
 }
 
-.catalog-card img {
+.catalog-card figure picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.catalog-card img,
+.catalog-card .product-framed-image {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: var(--product-image-position, 50% 50%);
+    opacity: 1;
+    transform: none;
 }
 
 .catalog-card-body {
-    padding: 12px;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 14px 14px 16px;
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.88);
 }
 
 .catalog-chip {
@@ -173,15 +208,21 @@
     color: #635a48;
     font-size: 13px;
     line-height: 1.45;
-    min-height: 40px;
+    min-height: 2.9em;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
 }
 
 .catalog-card-bottom {
-    margin-top: 12px;
+    margin-top: auto;
+    padding-top: 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 .catalog-price {
@@ -377,7 +418,17 @@
 
     .catalog-grid {
         grid-template-columns: 1fr;
-        gap: 18px;
+        gap: 20px;
+    }
+
+    .catalog-card figure {
+        aspect-ratio: 4 / 5;
+    }
+
+    .catalog-card img,
+    .catalog-card .product-framed-image {
+        height: 100%;
+        max-height: none;
     }
 
     .catalog-pagination {
@@ -411,15 +462,6 @@
 
     .catalog-card {
         border-radius: 16px;
-    }
-
-    .catalog-card figure {
-        aspect-ratio: auto;
-    }
-
-    .catalog-card img {
-        height: auto;
-        max-height: 430px;
     }
 
     .catalog-card-bottom {
