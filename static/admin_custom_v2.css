@@ -671,6 +671,15 @@ body.app-shop.model-order.change-list #result_list thead th {
 body.app-shop.model-order.change-list #result_list tbody tr {
     background: #fffdf8 !important;
     box-shadow: 0 10px 24px rgba(47, 42, 34, 0.06);
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        background 180ms ease;
+}
+
+body.app-shop.model-order.change-list #result_list tbody tr:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(31, 24, 18, 0.08);
 }
 
 body.app-shop.model-order.change-list #result_list tbody td,
@@ -2432,5 +2441,13 @@ body.dashboard #content-related {
     body,
     body::before {
         animation: none !important;
+    }
+
+    body.app-shop.model-order.change-list #result_list tbody tr {
+        transition: none;
+    }
+
+    body.app-shop.model-order.change-list #result_list tbody tr:hover {
+        transform: none;
     }
 }

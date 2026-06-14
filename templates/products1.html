@@ -10,7 +10,6 @@
     <link rel="shortcut icon" href="{% static 'assets/images/logobl2.ico' %}" type="image/x-icon">
     <meta name="Description" content="Bento candle – perfect for birthdays and weddings.">
     <link rel="stylesheet" href="{% static 'styles.css' %}?v=20260612-mobile">
-    <script src="{% static 'animations.js' %}" defer></script>
     <script src="{% static 'bento_color_picker.js' %}?v=20260612-mobile" defer></script>
 </head>
 
@@ -460,14 +459,8 @@
         });
 
 
-        const backToTopBtn = document.getElementById('back-to-top');
-        window.addEventListener('scroll', () => {
-            backToTopBtn.classList.toggle('show', window.pageYOffset > 300);
-        });
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
     });
     </script>
+    {% include 'includes/site_scripts.html' %}
 </body>
 </html>

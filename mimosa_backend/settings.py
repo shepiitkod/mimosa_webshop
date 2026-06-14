@@ -78,7 +78,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
     "cloudinary",
-    "shop",
+    "shop.apps.ShopConfig",
 ]
 
 MIDDLEWARE = [

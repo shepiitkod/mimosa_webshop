@@ -1,4 +1,4 @@
-{% load static %}
+{% load static product_media %}
 <!doctype html>
 <html lang="en">
     <head>
@@ -26,15 +26,13 @@
             href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap"
             rel="stylesheet"
         />
-        <link rel="stylesheet" href="{% static 'styles.css' %}?v=20260612-mobile" />
+        <link rel="stylesheet" href="{% static 'styles.css' %}?v=20260614" />
         <link
             rel="preload"
             as="image"
             href="{% static 'assets/images/photo1.webp' %}"
             type="image/webp"
         />
-        <script src="{% static 'translations.js' %}"></script>
-        <script src="{% static 'animations.js' %}" defer></script>
     </head>
 
     <body class="home-page">
@@ -48,9 +46,13 @@
             </div>
             <div class="hero-content">
                 <div class="hero-content-bg" aria-hidden="true">
-                    <div class="hero-bg-track">
+                    <div class="hero-bg-track hero-bg-track--full">
                         {% include 'includes/hero_marquee_set.html' %}
                         {% include 'includes/hero_marquee_set.html' %}
+                    </div>
+                    <div class="hero-bg-track hero-bg-track--lite">
+                        {% include 'includes/hero_marquee_set_lite.html' %}
+                        {% include 'includes/hero_marquee_set_lite.html' %}
                     </div>
                 </div>
                 <h1 class="hero-headline" data-translate="hero-title">
@@ -235,17 +237,7 @@
                     >
                         <figure class="portfolio-card__figure">
                             <div class="portfolio-card__media">
-                                <img
-                                    class="product-framed-image"
-                                    src="{{ product.image.url }}"
-                                    alt=""
-                                    width="600"
-                                    height="750"
-                                    sizes="(max-width: 768px) 48vw, (max-width: 900px) 50vw, 360px"
-                                    loading="lazy"
-                                    decoding="async"
-                                    style="--product-image-position: {{ product.image_object_position }};"
-                                />
+                                {% product_picture product.image alt=product.title css_class="product-framed-image" w=600 h=750 loading="lazy" object_position=product.image_object_position sizes="(max-width: 767px) 48vw, (max-width: 1023px) 50vw, 360px" %}
                                 <div
                                     class="portfolio-card__overlay"
                                     aria-hidden="true"
@@ -459,24 +451,8 @@
                     localStorage.setItem("cookieConsent", "declined");
                     cookieBanner.classList.remove("show");
                 });
-
-                const backToTopBtn = document.getElementById("back-to-top");
-
-                window.addEventListener("scroll", function () {
-                    if (window.pageYOffset > 300) {
-                        backToTopBtn.classList.add("show");
-                    } else {
-                        backToTopBtn.classList.remove("show");
-                    }
-                });
-
-                backToTopBtn.addEventListener("click", function () {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: "smooth",
-                    });
-                });
             });
         </script>
+        {% include 'includes/site_scripts.html' %}
     </body>
 </html>

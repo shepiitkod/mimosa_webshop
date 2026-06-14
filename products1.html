@@ -473,16 +473,8 @@
             localStorage.setItem('cookieConsent', 'declined');
             cookieBanner.classList.remove('show');
         });
-
-
-        const backToTopBtn = document.getElementById('back-to-top');
-        window.addEventListener('scroll', () => {
-            backToTopBtn.classList.toggle('show', window.pageYOffset > 300);
-        });
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
     });
     </script>
+    {% include 'includes/site_scripts.html' %}
 </body>
 </html>

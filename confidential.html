@@ -11,8 +11,6 @@
     <meta name="Keywords" content="Mimosa, Mimosa candles, Mimosa bio bougies, bougies artisanales bio, bougies naturelles, bougies parfumées, bougies écologiques, bougies végétales, bougies faites main, bougies durables, bougies respectueuses de l'environnement">
     <meta name="Description" content="Découvrez Mimosa, votre destination pour des bougies artisanales bio, naturelles et parfumées. Nos bougies écologiques sont fabriquées à la main avec des ingrédients végétaux durables, offrant une expérience sensorielle unique tout en respectant l'environnement.">
     <link rel="stylesheet" href="{% static 'styles.css' %}">
-    <script src="{% static 'translations.js' %}"></script>
-    <script src="{% static 'animations.js' %}" defer></script>
 </head>
 
 <body>
@@ -246,6 +244,7 @@
         });
     </script>
 
+    {% include 'includes/site_scripts.html' %}
       </body>
 
 

@@ -12,7 +12,6 @@
             rel="stylesheet"
         />
         <link rel="stylesheet" href="{% static 'styles.css' %}?v=20260612-mobile" />
-        <script src="{% static 'translations.js' %}"></script>
         <style>
             /* ─── Profile Dashboard — enhanced ─────────────────────────── */
 
@@ -873,6 +872,6 @@
             window.STRIPE_PUBLISHABLE_KEY =
                 "{{ STRIPE_PUBLISHABLE_KEY|escapejs }}";
         </script>
-        <script src="{% static 'animations.js' %}" defer></script>
+        {% include 'includes/site_scripts.html' %}
     </body>
 </html>

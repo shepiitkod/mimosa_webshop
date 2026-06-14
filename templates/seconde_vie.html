@@ -1101,8 +1101,7 @@
 
         {% include 'includes/footer.html' %}
 
-        <script src="{% static 'translations.js' %}" defer></script>
-        <script src="{% static 'animations.js' %}" defer></script>
+        {% include 'includes/site_scripts.html' %}
         <script src="{% static 'fragrance_catalog.js' %}?v=20260612-modal-scroll" defer></script>
     </body>
 </html>

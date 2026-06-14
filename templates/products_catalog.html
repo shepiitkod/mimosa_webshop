@@ -1,4 +1,4 @@
-{% load static %}
+{% load static product_media %}
 <!doctype html>
 <html lang="en">
     <head>
@@ -11,8 +11,8 @@
             href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap"
             rel="stylesheet"
         />
-        <link rel="stylesheet" href="{% static 'styles.css' %}?v=20260612-mobile" />
-        <link rel="stylesheet" href="{% static 'catalog.css' %}?v=20260612-mobile" />
+        <link rel="stylesheet" href="{% static 'styles.css' %}?v=20260614" />
+        <link rel="stylesheet" href="{% static 'catalog.css' %}?v=20260614" />
     </head>
     <body class="catalog-page">
         <div class="mimosa-petals" aria-hidden="true">
@@ -78,12 +78,7 @@
                                 href="{% url 'shop:product_detail' product.id product.title|slugify %}"
                                 aria-label="{{ product.title }} details"
                             >
-                                <img
-                                    class="product-framed-image"
-                                    src="{{ product.image.url }}"
-                                    alt="{{ product.title }}"
-                                    style="--product-image-position: {{ product.image_object_position }};"
-                                />
+                                {% product_picture product.image alt=product.title css_class="product-framed-image catalog-card__media-img" w=400 h=500 loading="lazy" object_position=product.image_object_position %}
                             </a>
                         </figure>
                         <div class="catalog-card-body">
@@ -181,8 +176,6 @@
         </main>
 
         {% include 'includes/footer.html' %}
-
-        <script src="{% static 'translations.js' %}" defer></script>
 
         <style>
             .mimosa-petals {
@@ -396,5 +389,6 @@
                 animation-timing-function: ease-in;
             }
         </style>
+        {% include 'includes/site_scripts.html' %}
     </body>
 </html>

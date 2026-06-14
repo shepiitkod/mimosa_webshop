@@ -1,4 +1,4 @@
-{% load static %}
+{% load static product_media %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,11 +62,11 @@
         <div class="product-container">
             <div class="product-gallery">
                 <div class="main-image" id="zoomContainer">
-                    <img id="mainProductImage" class="product-framed-image" src="{{ product.image.url }}" alt="{{ product.title }}" data-object-position="{{ product.image_object_position }}" style="--product-image-position: {{ product.image_object_position }};">
+                    {% product_picture product.image alt=product.title css_class="product-framed-image" img_id="mainProductImage" w=800 h=800 loading="eager" fetchpriority="high" object_position=product.image_object_position %}
                     <div id="zoomLens" class="zoom-lens" aria-hidden="true"></div>
                 </div>
                 <div class="thumbnail-images">
-                    <img src="{{ product.image.url }}" alt="{{ product.title }}" class="thumbnail product-framed-image active" data-object-position="{{ product.image_object_position }}" style="--product-image-position: {{ product.image_object_position }};" onclick="changeImage(this)">
+                    <img src="{{ product.image.url }}" alt="{{ product.title }}" class="thumbnail product-framed-image active" data-object-position="{{ product.image_object_position }}" style="--product-image-position: {{ product.image_object_position }};" onclick="changeImage(this)" loading="lazy">
                     {% if product.image_2 %}<img src="{{ product.image_2.url }}" alt="{{ product.title }} photo 2" class="thumbnail product-framed-image" data-object-position="{{ product.image_2_object_position }}" style="--product-image-position: {{ product.image_2_object_position }};" onclick="changeImage(this)">{% endif %}
                     {% if product.image_3 %}<img src="{{ product.image_3.url }}" alt="{{ product.title }} photo 3" class="thumbnail product-framed-image" data-object-position="{{ product.image_3_object_position }}" style="--product-image-position: {{ product.image_3_object_position }};" onclick="changeImage(this)">{% endif %}
                 </div>
@@ -113,7 +113,7 @@
             <div class="related-grid">
                 {% for item in related_products %}
                 <a class="related-card" href="{% url 'shop:product_detail' item.id item.title|slugify %}" style="cursor:pointer; text-decoration:none; color:inherit; display:block;">
-                    <img class="product-framed-image" src="{{ item.image.url }}" alt="{{ item.title }}" style="--product-image-position: {{ item.image_object_position }};">
+                    {% product_picture item.image alt=item.title css_class="product-framed-image" w=400 h=400 loading="lazy" object_position=item.image_object_position %}
                     <h3>{{ item.title }}</h3>
                     <p class="price">EUR {{ item.price }}</p>
                 </a>
@@ -224,7 +224,7 @@
     document.addEventListener('DOMContentLoaded', initZoom);
     window.addEventListener('resize', initZoom);
     </script>
-    <script src="{% static 'translations.js' %}"></script>
+    {% include 'includes/site_scripts.html' %}
     {% if product.category == "Bento Candles" %}
     <script src="{% static 'bento_color_picker.js' %}?v=20260612-mobile" defer></script>
     {% endif %}

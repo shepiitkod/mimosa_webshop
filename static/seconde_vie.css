@@ -707,7 +707,7 @@
 /* ══════════════════════════════════════════════════════════════
    RESPONSIVE — SMALL TABLET  (≤ 900px)
 ══════════════════════════════════════════════════════════════ */
-@media (max-width: 900px) {
+@media (max-width: 1023px) {
     .sv-hero {
         padding: 90px 24px 64px;
     }
@@ -1170,7 +1170,7 @@
 /* ══════════════════════════════════════════════════════════════
    GALLERY RESPONSIVE
 ══════════════════════════════════════════════════════════════ */
-@media (max-width: 900px) {
+@media (max-width: 1023px) {
     .sv-gallery__grid {
         grid-template-rows: 280px 280px 220px;
         gap: 10px;
@@ -1784,7 +1784,7 @@
 }
 
 /* ──────────── RESPONSIVE ──────────── */
-@media (max-width: 900px) {
+@media (max-width: 1023px) {
     .spc {
         padding: 64px 0 80px;
     }

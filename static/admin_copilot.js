@@ -465,7 +465,8 @@
         const el = document.createElement("div");
         el.className = "copilot-msg copilot-msg--loading";
         el.id = "copilot-loading";
-        el.textContent = "Думаю…";
+        el.innerHTML =
+          '<span class="copilot-typing-label">Думаю</span><span class="copilot-typing-dots" aria-hidden="true"><span></span><span></span><span></span></span>';
         messagesEl.appendChild(el);
         messagesEl.scrollTop = messagesEl.scrollHeight;
       } else if (!on && existing) {

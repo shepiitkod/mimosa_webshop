@@ -12,8 +12,6 @@
         <meta name="Keywordsru" content="Мимоза, свечи Мимоза, био свечи Мимоза, ручная работа свечей Мимоза, натуральные свечи Мимоза, ароматизированные свечи Мимоза, экологичные свечи Мимоза, вегетарианские свечи Мимоза, ручные свечи Мимоза, устойчивые свечи Мимоза, уважающие окружающую среду свечи Мимоза">
         <meta name="Description" content="Découvrez Mimosa, votre destination pour des bougies artisanales bio, naturelles et parfumées. Nos bougies écologiques sont fabriquées à la main avec des ingrédients végétaux durables, offrant une expérience sensorielle unique tout en respectant l'environnement. Explorez notre collection de bougies faites main pour créer une ambiance chaleureuse et durable chez vous.">
         <link rel="stylesheet" href="{% static 'styles.css' %}">
-        <script src="{% static 'translations.js' %}"></script>
-        <script src="{% static 'animations.js' %}" defer></script>
 
 </head>
 
@@ -121,32 +119,7 @@
 <button id="back-to-top" class="back-to-top">
     <span>↑</span>
 </button>
-<script>
-
-document.addEventListener('DOMContentLoaded', function() {
-    const backToTopBtn = document.getElementById('back-to-top');
-    
-
-    window.addEventListener('scroll', function() {
-        if (window.pageYOffset > 300) {
-            backToTopBtn.classList.add('show');
-        } else {
-            backToTopBtn.classList.remove('show');
-        }
-    });
-    
-
-    backToTopBtn.addEventListener('click', function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-});
-</script>
-
-
-
+{% include 'includes/site_scripts.html' %}
 
 </body>
 </html>

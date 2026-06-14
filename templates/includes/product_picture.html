@@ -1,0 +1,18 @@
+<picture>
+    {% if srcset %}
+    <source type="image/webp" srcset="{{ srcset }}" sizes="{{ sizes }}">
+    {% endif %}
+    <img
+        {% if img_id %}id="{{ img_id }}"{% endif %}
+        {% if class_name %}class="{{ class_name }}"{% endif %}
+        src="{{ src }}"
+        alt="{{ alt }}"
+        width="{{ w }}"
+        height="{{ h }}"
+        decoding="async"
+        {% if loading %}loading="{{ loading }}"{% endif %}
+        {% if fetchpriority %}fetchpriority="{{ fetchpriority }}"{% endif %}
+        {% if sizes %}sizes="{{ sizes }}"{% endif %}
+        style="--product-image-position: {{ object_position }};"
+    />
+</picture>

@@ -131,8 +131,7 @@
     <script>
         window.STRIPE_PUBLISHABLE_KEY = "{{ STRIPE_PUBLISHABLE_KEY|escapejs }}";
     </script>
-
-    <script src="{% static 'translations.js' %}" defer></script>
+    {% include 'includes/site_scripts.html' %}
     <script src="{% static 'shipping.js' %}" defer></script>
 </body>
 </html>

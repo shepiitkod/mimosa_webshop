@@ -81,7 +81,7 @@
 
     {% include 'includes/footer.html' with footer_mode='auth' footer_lang='ru' %}
 
+    {% include 'includes/site_scripts.html' with site_scripts_animations=False %}
     <script src="{% static 'auth.js' %}" defer></script>
-    <script src="{% static 'translations.js' %}" defer></script>
 </body>
 </html>
