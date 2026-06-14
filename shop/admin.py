@@ -3,8 +3,10 @@ from decimal import Decimal
 from django import forms
 from django.contrib import admin
 from django.db.models import Sum
-from django.utils.html import format_html
+from django.utils import timezone
+from django.utils.html import format_html, format_html_join
 
+from . import shipping
 from .emails import send_order_status_update_email
 from .models import CartItem, ContestEntry, NewsletterUser, Order, OrderItem, Product
 
@@ -16,6 +18,51 @@ FRAMING_FIELDS = (
     "image_3_focal_x",
     "image_3_focal_y",
 )
+
+PAYMENT_METHOD_LABEL = "Stripe Checkout · card"
+
+
+def _format_admin_money(value):
+    amount = value or Decimal("0.00")
+    return f"€{amount:.2f}"
+
+
+def _customer_display_name(user):
+    return (user.get_full_name() or "").strip() or user.username
+
+
+def _shipping_address_parts(order):
+    return [
+        part
+        for part in [
+            order.shipping_address,
+            order.city,
+            order.postal_code,
+            order.country,
+        ]
+        if part
+    ]
+
+
+def _shipping_summary(order):
+    return ", ".join(_shipping_address_parts(order)) or "Address not provided"
+
+
+def _carrier_name(order):
+    carrier_key = (order.shipping_carrier or "").strip().lower()
+    if not carrier_key:
+        return "Delivery method not selected"
+    return shipping.CARRIER_LABELS.get(carrier_key, {}).get(
+        "name", carrier_key.replace("_", " ").title()
+    )
+
+
+def _payment_state(order):
+    if order.status in {Order.STATUS_PAID, Order.STATUS_SHIPPED, Order.STATUS_DELIVERED}:
+        return "Paid via Stripe"
+    if order.status == Order.STATUS_CANCELED:
+        return "Canceled"
+    return "Awaiting Stripe payment"
 
 
 class ProductAdminForm(forms.ModelForm):
@@ -191,32 +238,50 @@ class OrderItemInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     change_list_template = "admin/shop/order/change_list.html"
     list_display = (
-        "id",
-        "user",
-        "total_price",
-        "shipping_address",
-        "city",
-        "postal_code",
-        "tracking_number",
+        "order_number",
+        "customer_summary",
+        "payment_summary",
+        "delivery_summary",
+        "shipping_method_summary",
+        "timeline_summary",
         "status",
-        "status_updated_at",
-        "created_at",
     )
+    list_display_links = ("order_number",)
     list_editable = ("status",)
-    list_filter = ("status", "created_at", "country")
+    list_filter = ("status", "created_at", "country", "shipping_carrier")
+    list_select_related = ("user",)
+    list_per_page = 25
+    ordering = ("-created_at", "-id")
+    date_hierarchy = "created_at"
     search_fields = (
         "id",
         "user__username",
         "user__email",
+        "user__first_name",
+        "user__last_name",
         "shipping_address",
         "city",
         "postal_code",
+        "country",
         "tracking_number",
         "admin_note",
         "items__selected_color_name",
     )
     inlines = [OrderItemInline]
     fieldsets = (
+        (
+            "Order snapshot",
+            {
+                "fields": (
+                    "order_overview_card",
+                    "customer_card",
+                    "payment_card",
+                    "delivery_card",
+                    "timeline_card",
+                ),
+                "description": "Readable staff overview for packing, payment checks, and customer support.",
+            },
+        ),
         (
             "Order Info",
             {
@@ -246,7 +311,34 @@ class OrderAdmin(admin.ModelAdmin):
             },
         ),
     )
-    readonly_fields = ("created_at", "status_updated_at")
+    readonly_fields = (
+        "order_overview_card",
+        "customer_card",
+        "payment_card",
+        "delivery_card",
+        "timeline_card",
+        "created_at",
+        "status_updated_at",
+    )
+
+    class Media:
+        css = {"all": ("admin_custom_v2.css",)}
+
+    def get_queryset(self, request):
+        return (
+            super()
+            .get_queryset(request)
+            .select_related("user")
+            .prefetch_related("items__product")
+        )
+
+    def _status_badge(self, obj):
+        status = obj.status or Order.STATUS_PROCESSING
+        return format_html(
+            '<span class="mimosa-order-status mimosa-order-status--{}">{}</span>',
+            status,
+            obj.get_status_display(),
+        )
 
     def total_price(self, obj):
         return obj.total_amount
@@ -263,6 +355,193 @@ class OrderAdmin(admin.ModelAdmin):
 
     address_short.short_description = "Address"
     address_short.admin_order_field = "shipping_address"
+
+    def order_number(self, obj):
+        return format_html(
+            '<div class="mimosa-order-cell mimosa-order-number">'
+            '<strong>#{}</strong>'
+            '<span>{}</span>'
+            '<small>{}</small>'
+            "</div>",
+            obj.id,
+            _format_admin_money(obj.total_amount),
+            obj.created_at.strftime("%d.%m.%Y %H:%M"),
+        )
+
+    order_number.short_description = "Order"
+    order_number.admin_order_field = "id"
+
+    def customer_summary(self, obj):
+        return format_html(
+            '<div class="mimosa-order-cell">'
+            "<strong>{}</strong>"
+            '<span class="mimosa-order-muted">FIO / client</span>'
+            "<small>{}</small>"
+            "</div>",
+            _customer_display_name(obj.user),
+            obj.user.email or obj.user.username,
+        )
+
+    customer_summary.short_description = "Customer"
+    customer_summary.admin_order_field = "user__username"
+
+    def payment_summary(self, obj):
+        return format_html(
+            '<div class="mimosa-order-cell">'
+            "<strong>{}</strong>"
+            '<span>{}</span>'
+            "<small>{}</small>"
+            "</div>",
+            _format_admin_money(obj.total_amount),
+            PAYMENT_METHOD_LABEL,
+            _payment_state(obj),
+        )
+
+    payment_summary.short_description = "Payment"
+    payment_summary.admin_order_field = "total_amount"
+
+    def delivery_summary(self, obj):
+        return format_html(
+            '<div class="mimosa-order-cell mimosa-order-address">'
+            "<strong>{}</strong>"
+            "<span>{}</span>"
+            "</div>",
+            obj.city or obj.country or "Destination pending",
+            _shipping_summary(obj),
+        )
+
+    delivery_summary.short_description = "Address"
+    delivery_summary.admin_order_field = "city"
+
+    def shipping_method_summary(self, obj):
+        tracking = obj.tracking_number or "No tracking yet"
+        return format_html(
+            '<div class="mimosa-order-cell">'
+            "<strong>{}</strong>"
+            "<span>{}</span>"
+            "<small>{}</small>"
+            "</div>",
+            _carrier_name(obj),
+            f"Delivery: {_format_admin_money(obj.shipping_cost)}",
+            tracking,
+        )
+
+    shipping_method_summary.short_description = "Delivery"
+    shipping_method_summary.admin_order_field = "shipping_carrier"
+
+    def timeline_summary(self, obj):
+        return format_html(
+            '<div class="mimosa-order-cell">'
+            "<strong>{}</strong>"
+            "<span>Created</span>"
+            "<small>Status updated: {}</small>"
+            "</div>",
+            timezone.localtime(obj.created_at).strftime("%d.%m.%Y %H:%M"),
+            timezone.localtime(obj.status_updated_at).strftime("%d.%m.%Y %H:%M"),
+        )
+
+    timeline_summary.short_description = "Date / time"
+    timeline_summary.admin_order_field = "created_at"
+
+    def order_overview_card(self, obj):
+        if not obj or not obj.pk:
+            return "Save the order first to see the overview."
+        item_count = sum(item.quantity for item in obj.items.all())
+        return format_html(
+            '<div class="mimosa-order-detail-grid">'
+            '<section class="mimosa-order-detail-card mimosa-order-detail-card--hero">'
+            "<p>Order number</p><strong>#{}</strong><span>{} item(s) · {}</span>"
+            "</section>"
+            '<section class="mimosa-order-detail-card">'
+            "<p>Status</p><strong>{}</strong><span>{}</span>"
+            "</section>"
+            "</div>",
+            obj.id,
+            item_count,
+            _format_admin_money(obj.total_amount),
+            obj.get_status_display(),
+            PAYMENT_METHOD_LABEL,
+        )
+
+    order_overview_card.short_description = "Order overview"
+
+    def customer_card(self, obj):
+        if not obj or not obj.pk:
+            return "Save the order first to see customer details."
+        return format_html(
+            '<div class="mimosa-order-detail-card">'
+            "<p>Customer</p><strong>{}</strong>"
+            "<span>Email: {}</span><span>Username: {}</span>"
+            "</div>",
+            _customer_display_name(obj.user),
+            obj.user.email or "-",
+            obj.user.username,
+        )
+
+    customer_card.short_description = "FIO / customer"
+
+    def payment_card(self, obj):
+        if not obj or not obj.pk:
+            return "Save the order first to see payment details."
+        return format_html(
+            '<div class="mimosa-order-detail-card">'
+            "<p>Payment</p><strong>{}</strong>"
+            "<span>Method: {}</span><span>Payment: {}</span><span>Order status: {}</span><span>Shipping: {}</span>"
+            "</div>",
+            _format_admin_money(obj.total_amount),
+            PAYMENT_METHOD_LABEL,
+            _payment_state(obj),
+            obj.get_status_display(),
+            _format_admin_money(obj.shipping_cost),
+        )
+
+    payment_card.short_description = "Payment details"
+
+    def delivery_card(self, obj):
+        if not obj or not obj.pk:
+            return "Save the order first to see delivery details."
+        tracking_html = (
+            format_html(
+                '<a href="{}" target="_blank" rel="noopener">{}</a>',
+                obj.tracking_url,
+                obj.tracking_number,
+            )
+            if obj.tracking_url and obj.tracking_number
+            else obj.tracking_number or "-"
+        )
+        return format_html(
+            '<div class="mimosa-order-detail-card">'
+            "<p>Delivery</p><strong>{}</strong>"
+            "<span>Address: {}</span><span>Country code: {}</span><span>Tracking: {}</span>"
+            "</div>",
+            _carrier_name(obj),
+            _shipping_summary(obj),
+            obj.shipping_country_code or "-",
+            tracking_html,
+        )
+
+    delivery_card.short_description = "Address / delivery"
+
+    def timeline_card(self, obj):
+        if not obj or not obj.pk:
+            return "Save the order first to see date and time."
+        created = timezone.localtime(obj.created_at).strftime("%d.%m.%Y %H:%M")
+        updated = timezone.localtime(obj.status_updated_at).strftime("%d.%m.%Y %H:%M")
+        rows = [
+            ("Created", created),
+            ("Status updated", updated),
+        ]
+        return format_html(
+            '<div class="mimosa-order-detail-card">'
+            "<p>Date and time</p>{}</div>",
+            format_html_join(
+                "",
+                "<span><strong>{}</strong>: {}</span>",
+                rows,
+            ),
+        )
+
+    timeline_card.short_description = "Date / time"
 
     def changelist_view(self, request, extra_context=None):
         extra_context = extra_context or {}

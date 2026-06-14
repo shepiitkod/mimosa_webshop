@@ -128,6 +128,64 @@ def _build_admin_copilot_context(prompt: str) -> str:
         .order_by("-quantity")[:10]
     )
 
+    def _order_items(order):
+        return [
+            f"{item.product.title}{f' color={item.selected_color_name}' if item.selected_color_name else ''} x{item.quantity} ({_format_money(item.price_at_purchase)})"
+            for item in order.items.all()
+        ]
+
+    def _order_shipping(order):
+        return ", ".join(
+            part
+            for part in [
+                order.shipping_address,
+                order.city,
+                order.postal_code,
+                order.country,
+            ]
+            if part
+        )
+
+    def _order_carrier(order):
+        carrier_key = (order.shipping_carrier or "").strip().lower()
+        if not carrier_key:
+            return "-"
+        return shipping.CARRIER_LABELS.get(carrier_key, {}).get(
+            "name", carrier_key.replace("_", " ").title()
+        )
+
+    def _order_customer_name(order):
+        return (order.user.get_full_name() or "").strip() or order.user.username
+
+    def _order_payment_state(order):
+        if order.status in {
+            Order.STATUS_PAID,
+            Order.STATUS_SHIPPED,
+            Order.STATUS_DELIVERED,
+        }:
+            return "paid via Stripe"
+        if order.status == Order.STATUS_CANCELED:
+            return "canceled"
+        return "awaiting Stripe payment"
+
+    def _order_context_line(order, *, prefix="-"):
+        created = timezone.localtime(order.created_at).strftime("%Y-%m-%d %H:%M")
+        updated = timezone.localtime(order.status_updated_at).strftime("%Y-%m-%d %H:%M")
+        item_bits = _order_items(order)
+        shipping_address = _order_shipping(order)
+        return (
+            f"{prefix} order_number=#{order.id}; customer_name={_order_customer_name(order)}; "
+            f"username={order.user.username}; email={order.user.email or '-'}; "
+            f"payment_method=Stripe Checkout card; payment_status={_order_payment_state(order)}; "
+            f"status_display={order.get_status_display()}; total={_format_money(order.total_amount)}; "
+            f"created_at={created}; status_updated_at={updated}; "
+            f"delivery_method={_order_carrier(order)}; shipping_cost={_format_money(order.shipping_cost)}; "
+            f"shipping_country_code={order.shipping_country_code or '-'}; address={shipping_address or '-'}; "
+            f"tracking_number={order.tracking_number or '-'}; tracking_url={order.tracking_url or '-'}; "
+            f"admin_note={order.admin_note or '-'}; admin_url=/admin/shop/order/{order.id}/change/; "
+            f"items={'; '.join(item_bits) or '-'}"
+        )
+
     revenue = sum((order.total_amount or Decimal("0")) for order in orders)
     all_revenue = sum(
         (row.total_amount or Decimal("0"))
@@ -206,25 +264,16 @@ def _build_admin_copilot_context(prompt: str) -> str:
             lines.append(f"- id={product.id}; {product.title}; stock={product.stock}")
 
     lines.append("")
+    lines.append("LATEST ORDER:")
+    if orders:
+        lines.append(_order_context_line(orders[0]))
+    else:
+        lines.append("- no orders yet")
+
+    lines.append("")
     lines.append("RECENT ORDERS:")
     for order in orders:
-        item_bits = [
-            f"{item.product.title}{f' color={item.selected_color_name}' if item.selected_color_name else ''} x{item.quantity} ({_format_money(item.price_at_purchase)})"
-            for item in order.items.all()
-        ]
-        shipping = ", ".join(
-            part
-            for part in [
-                order.shipping_address,
-                order.city,
-                order.postal_code,
-                order.country,
-            ]
-            if part
-        )
-        lines.append(
-            f"- id={order.id}; user={order.user.username}; email={order.user.email or '-'}; status={order.status}; total={_format_money(order.total_amount)}; date={order.created_at:%Y-%m-%d}; tracking_number={order.tracking_number or '-'}; tracking_url={order.tracking_url or '-'}; admin_note={order.admin_note or '-'}; shipping={shipping or '-'}; items={'; '.join(item_bits) or '-'}"
-        )
+        lines.append(_order_context_line(order))
 
     lines.append("")
     lines.append("CONTEST ENTRIES (€50+ ORDERS):")

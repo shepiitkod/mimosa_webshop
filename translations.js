@@ -24,12 +24,12 @@ const translations = {
         'about-snippet-title': 'Welcome to Mimosa Atelier',
         'about-snippet-text': 'Every candle is a story, crafted by hand with 100% natural soy wax and exclusive fragrances from Provence. We believe in beauty, sustainability, and the art of slow living.',
 
-        'promo-eyebrow': 'Exclusive draw',
-        'promo-title': 'This bouquet could be yours',
-        'promo-threshold': '€50 minimum order · automatic entry',
-        'promo-text': 'Every order of €50 or more enters you into our draw for this handcrafted floral candle bouquet from the atelier.',
-        'promo-subtext': 'Add gifts, home pieces, and candles you love. The more you build your order, the easier it is to pass the threshold — and each qualifying order is another entry.',
-        'promo-cta': 'Build my order',
+        'promo-eyebrow': 'Exclusive atelier service',
+        'promo-title': 'Seconde vie for your candle',
+        'promo-threshold': 'Exclusive refill & renewal service',
+        'promo-text': 'Give your favorite MIMOSA piece a new life with our intimate Seconde Vie service: refill, renew, and keep the object you love.',
+        'promo-subtext': 'Reserved for atelier pieces, this exclusive experience turns an empty candle into a fresh ritual, handcrafted again with natural soy wax and refined fragrance.',
+        'promo-cta': 'Discover Seconde Vie',
 
         
         'products-title': 'Portfolio',
@@ -215,12 +215,12 @@ const translations = {
         'about-snippet-title': 'Bienvenue chez Mimosa Atelier',
         'about-snippet-text': 'Chaque bougie est une histoire, fabriquée à la main avec de la cire de soja 100% naturelle et des fragrances exclusives de Provence. Nous croyons en la beauté, la durabilité et l\'art de vivre lentement.',
 
-        'promo-eyebrow': 'Tirage exclusif',
-        'promo-title': 'Ce bouquet pourrait être le vôtre',
-        'promo-threshold': '50 € d\'achat min. · participation automatique',
-        'promo-text': 'Chaque commande d\'au moins 50 € vous inscrit au tirage pour ce bouquet floral en bougies, pièce d\'exception de l\'atelier.',
-        'promo-subtext': 'Enrichissez votre panier : cadeaux, idées pour la maison, parfums à associer. Atteindre le palier 50 € devient un plaisir — chaque commande valide compte pour le concours.',
-        'promo-cta': 'Constituer mon panier',
+        'promo-eyebrow': 'Service exclusif de l\'atelier',
+        'promo-title': 'Seconde vie pour votre bougie',
+        'promo-threshold': 'Recharge & renaissance en exclusivité',
+        'promo-text': 'Offrez une nouvelle vie à votre pièce MIMOSA préférée grâce à notre service intime Seconde Vie : recharger, renouveler et garder l\'objet que vous aimez.',
+        'promo-subtext': 'Réservée aux créations de l\'atelier, cette expérience exclusive transforme une bougie vide en nouveau rituel, façonné à nouveau avec cire de soja naturelle et parfum raffiné.',
+        'promo-cta': 'Découvrir Seconde Vie',
 
         
         'products-title': 'Portfolio',

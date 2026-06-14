@@ -31,14 +31,14 @@ const translations = {
     "about-snippet-text":
       "Every candle is a story, crafted by hand with 100% natural soy wax and exclusive fragrances from Provence. We believe in beauty, sustainability, and the art of slow living.",
 
-    "promo-eyebrow": "Exclusive draw",
-    "promo-title": "This bouquet could be yours",
-    "promo-threshold": "€50 minimum order · automatic entry",
+    "promo-eyebrow": "Exclusive atelier service",
+    "promo-title": "Seconde vie for your candle",
+    "promo-threshold": "Exclusive refill & renewal service",
     "promo-text":
-      "Every order of €50 or more enters you into our draw for this handcrafted floral candle bouquet from the atelier.",
+      "Give your favorite MIMOSA piece a new life with our intimate Seconde Vie service: refill, renew, and keep the object you love.",
     "promo-subtext":
-      "Add gifts, home pieces, and candles you love. The more you build your order, the easier it is to pass the threshold — and each qualifying order is another entry.",
-    "promo-cta": "Build my order",
+      "Reserved for atelier pieces, this exclusive experience turns an empty candle into a fresh ritual, handcrafted again with natural soy wax and refined fragrance.",
+    "promo-cta": "Discover Seconde Vie",
 
     "products-title": "Portfolio",
     "product1-name": "Bento Candle",
@@ -444,14 +444,14 @@ const translations = {
     "about-snippet-text":
       "Chaque bougie est une histoire, fabriquée à la main avec de la cire de soja 100% naturelle et des fragrances exclusives de Provence. Nous croyons en la beauté, la durabilité et l'art de vivre lentement.",
 
-    "promo-eyebrow": "Tirage exclusif",
-    "promo-title": "Ce bouquet pourrait être le vôtre",
-    "promo-threshold": "50 € d'achat min. · participation automatique",
+    "promo-eyebrow": "Service exclusif de l'atelier",
+    "promo-title": "Seconde vie pour votre bougie",
+    "promo-threshold": "Recharge & renaissance en exclusivité",
     "promo-text":
-      "Chaque commande d'au moins 50 € vous inscrit au tirage pour ce bouquet floral en bougies, pièce d'exception de l'atelier.",
+      "Offrez une nouvelle vie à votre pièce MIMOSA préférée grâce à notre service intime Seconde Vie : recharger, renouveler et garder l'objet que vous aimez.",
     "promo-subtext":
-      "Enrichissez votre panier : cadeaux, idées pour la maison, parfums à associer. Atteindre le palier 50 € devient un plaisir — chaque commande valide compte pour le concours.",
-    "promo-cta": "Constituer mon panier",
+      "Réservée aux créations de l'atelier, cette expérience exclusive transforme une bougie vide en nouveau rituel, façonné à nouveau avec cire de soja naturelle et parfum raffiné.",
+    "promo-cta": "Découvrir Seconde Vie",
 
     "products-title": "Portfolio",
     "product1-name": "Bento Candle",
@@ -855,14 +855,14 @@ const translations = {
     "about-snippet-text":
       "Кожна свічка — це історія, виготовлена вручну зі 100% натурального соєвого воску та ексклюзивних ароматів з Провансу. Ми віримо в красу, сталість та мистецтво повільного життя.",
 
-    "promo-eyebrow": "Ексклюзивний розіграш",
-    "promo-title": "Цей букет може бути вашим",
-    "promo-threshold": "Від 50 € за замовлення · автоучасть",
+    "promo-eyebrow": "Ексклюзивна послуга ательє",
+    "promo-title": "Друге життя для вашої свічки",
+    "promo-threshold": "Ексклюзивне оновлення та дозаправка",
     "promo-text":
-      "Кожне замовлення від 50 € вносить вас у розіграш цього квіткового букета зі свічок — роботи ательє.",
+      "Подаруйте улюбленому виробу MIMOSA нове життя з нашою камерною послугою Seconde Vie: дозаправити, оновити й зберегти річ, яку ви любите.",
     "promo-subtext":
-      "Додавайте подарунки, свічки для дому, комплектні аромати. Що більше ви збираєте в кошик, тим простіше перетнути 50 € — кожна кваліфікаційна покупка дає шанс.",
-    "promo-cta": "Зібрати замовлення",
+      "Цей ексклюзивний досвід доступний для виробів ательє та перетворює порожню свічку на новий ритуал, знову створений із натурального соєвого воску й вишуканого аромату.",
+    "promo-cta": "Відкрити Seconde Vie",
 
     "products-title": "Портфоліо",
     "product1-name": "Свічка Бенто",
@@ -1262,14 +1262,14 @@ const translations = {
     "home-category-decorative-subtitle": "Персонализированные свечи на заказ",
     "home-category-ceremony-subtitle": "Свечи для торжественных событий",
 
-    "promo-eyebrow": "Эксклюзивный розыгрыш",
-    "promo-title": "Этот букет может стать вашим",
-    "promo-threshold": "От 50 € за заказ · автоматическое участие",
+    "promo-eyebrow": "Эксклюзивная услуга ателье",
+    "promo-title": "Вторая жизнь для вашей свечи",
+    "promo-threshold": "Эксклюзивное обновление и дозаправка",
     "promo-text":
-      "Каждый заказ от 50 € даёт вам шанс выиграть этот букет из цветочных свечей — украшение, созданное в ателье.",
+      "Подарите любимому изделию MIMOSA новую жизнь с нашей камерной услугой Seconde Vie: дозаправить, обновить и сохранить вещь, которую вы любите.",
     "promo-subtext":
-      "Соберите в корзину подарки, свечи для дома, согласованные по аромату. Чем богаче заказ, тем естественнее пройти порог 50 € — и каждая квалификационная покупка участвует в розыгрыше.",
-    "promo-cta": "Собрать заказ",
+      "Этот эксклюзивный опыт доступен для изделий ателье и превращает пустую свечу в новый ритуал, снова созданный из натурального соевого воска и изысканного аромата.",
+    "promo-cta": "Открыть Seconde Vie",
 
     "about-snippet-title": "Добро пожаловать в MIMOSA Atelier",
     "about-snippet-text":

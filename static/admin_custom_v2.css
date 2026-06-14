@@ -653,6 +653,184 @@ body.app-shop.model-order.change-list .commission-note {
     font-size: 12px;
 }
 
+/* Orders: Stripe-like readable rows and detail cards */
+body.app-shop.model-order.change-list #result_list {
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+body.app-shop.model-order.change-list #result_list thead th {
+    background: transparent !important;
+    border: 0 !important;
+    color: #746a58 !important;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+body.app-shop.model-order.change-list #result_list tbody tr {
+    background: #fffdf8 !important;
+    box-shadow: 0 10px 24px rgba(47, 42, 34, 0.06);
+}
+
+body.app-shop.model-order.change-list #result_list tbody td,
+body.app-shop.model-order.change-list #result_list tbody th {
+    border-top: 1px solid #efe6c8 !important;
+    border-bottom: 1px solid #efe6c8 !important;
+    padding: 14px 12px !important;
+    vertical-align: middle;
+}
+
+body.app-shop.model-order.change-list #result_list tbody th:first-child,
+body.app-shop.model-order.change-list #result_list tbody td:first-child {
+    border-left: 1px solid #efe6c8 !important;
+    border-radius: 16px 0 0 16px;
+}
+
+body.app-shop.model-order.change-list #result_list tbody td:last-child {
+    border-right: 1px solid #efe6c8 !important;
+    border-radius: 0 16px 16px 0;
+}
+
+.mimosa-order-cell {
+    display: grid;
+    gap: 4px;
+    min-width: 140px;
+    color: #2f2a22;
+}
+
+.mimosa-order-cell strong {
+    color: #1f1a13;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.mimosa-order-cell span,
+.mimosa-order-cell small {
+    color: #746a58;
+    font-size: 12px;
+    line-height: 1.35;
+}
+
+.mimosa-order-number strong {
+    color: #0f4f43;
+    font-size: 15px;
+}
+
+.mimosa-order-address {
+    min-width: 220px;
+    max-width: 320px;
+}
+
+.mimosa-order-muted {
+    color: #9a8a6f !important;
+    font-size: 11px !important;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.mimosa-order-status {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 4px 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+}
+
+.mimosa-order-status--paid {
+    background: #e8f6ef;
+    color: #0f6b45;
+}
+
+.mimosa-order-status--processing {
+    background: #fff3bf;
+    color: #765600;
+}
+
+.mimosa-order-status--shipped {
+    background: #e8f0ff;
+    color: #244f91;
+}
+
+.mimosa-order-status--delivered {
+    background: #e7f7dc;
+    color: #3f6f1f;
+}
+
+.mimosa-order-status--canceled {
+    background: #fde7e7;
+    color: #9a2929;
+}
+
+body.app-shop.model-order.change-form .form-row.field-order_overview_card,
+body.app-shop.model-order.change-form .form-row.field-customer_card,
+body.app-shop.model-order.change-form .form-row.field-payment_card,
+body.app-shop.model-order.change-form .form-row.field-delivery_card,
+body.app-shop.model-order.change-form .form-row.field-timeline_card {
+    border-bottom: 0 !important;
+    padding: 8px 12px !important;
+}
+
+body.app-shop.model-order.change-form .form-row.field-order_overview_card > div,
+body.app-shop.model-order.change-form .form-row.field-customer_card > div,
+body.app-shop.model-order.change-form .form-row.field-payment_card > div,
+body.app-shop.model-order.change-form .form-row.field-delivery_card > div,
+body.app-shop.model-order.change-form .form-row.field-timeline_card > div {
+    margin-left: 0 !important;
+}
+
+.mimosa-order-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+}
+
+.mimosa-order-detail-card {
+    display: grid;
+    gap: 7px;
+    padding: 16px;
+    background: linear-gradient(180deg, #fffdf8 0%, #fff8e8 100%);
+    border: 1px solid #efe2b7;
+    border-radius: 18px;
+    box-shadow: 0 12px 28px rgba(47, 42, 34, 0.06);
+    color: #2f2a22;
+}
+
+.mimosa-order-detail-card--hero {
+    background: linear-gradient(135deg, #0f4f43 0%, #1c6c5d 100%);
+    border-color: rgba(15, 79, 67, 0.35);
+    color: #fffaf0;
+}
+
+.mimosa-order-detail-card p {
+    margin: 0;
+    color: #8a7a62;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.mimosa-order-detail-card--hero p,
+.mimosa-order-detail-card--hero span {
+    color: rgba(255, 250, 240, 0.8);
+}
+
+.mimosa-order-detail-card strong {
+    color: inherit;
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.mimosa-order-detail-card span {
+    color: #5c5348;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
 /* Changelist table/filter spacing */
 body.app-admin #changelist,
 body.dashboard #changelist,
