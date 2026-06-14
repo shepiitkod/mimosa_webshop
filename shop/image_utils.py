@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import os
 from pathlib import Path
 
 from django.conf import settings
@@ -13,6 +12,16 @@ except ImportError:  # pragma: no cover
 PRODUCT_IMAGE_WIDTHS = (400, 800, 1200)
 
 
+def _local_image_path(image_field) -> Path | None:
+    """Return filesystem path when storage supports it (local dev); else None (Cloudinary)."""
+    if not image_field or not getattr(image_field, "name", None):
+        return None
+    try:
+        return Path(image_field.path)
+    except (NotImplementedError, AttributeError, OSError, ValueError):
+        return None
+
+
 def _open_image(path: Path):
     if Image is None or not path.exists():
         return None
@@ -23,12 +32,12 @@ def _open_image(path: Path):
 
 
 def generate_product_image_variants(image_field) -> None:
-    """Create WebP width variants beside the uploaded product image."""
+    """Create WebP width variants beside the uploaded product image (local storage only)."""
     if not image_field or Image is None:
         return
 
-    source_path = Path(image_field.path)
-    if not source_path.exists():
+    source_path = _local_image_path(image_field)
+    if source_path is None or not source_path.exists():
         return
 
     image = _open_image(source_path)
@@ -52,11 +61,13 @@ def generate_product_image_variants(image_field) -> None:
 
 
 def product_variant_url(image_field, width: int) -> str | None:
-    if not image_field:
+    source_path = _local_image_path(image_field)
+    if source_path is None:
         return None
-    source_path = Path(image_field.path)
+
     variant = source_path.parent / f"{source_path.stem}_{width}.webp"
     if not variant.exists():
         return None
+
     media_root = Path(settings.MEDIA_ROOT).resolve()
     return variant.resolve().relative_to(media_root).as_posix()
