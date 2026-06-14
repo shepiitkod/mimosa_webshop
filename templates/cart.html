@@ -42,7 +42,6 @@
                         {% endif %}
                         <p class="product-composition">Цена: EUR {{ item.product.price }}</p>
                         <p class="product-price">EUR {{ item.line_total }}</p>
-                        <p class="product-desc" style="font-size: 0.9rem;">Poids (expédition): {{ item.product.weight_grams }} g</p>
 
                         <form method="post" action="{% url 'shop:cart_add' item.product.id %}" style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
                             {% csrf_token %}

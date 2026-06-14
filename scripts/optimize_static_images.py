@@ -19,6 +19,7 @@ JOBS: list[tuple[str, int | None, int | None, str]] = [
     ("bento", 1000, None, "bento.ico"),
     ("contest-bouquet", 1400, None, "contest-bouquet.png"),
     ("sv-hero-refill", 1400, None, "2026-06-10 14.40.35.ico"),
+    ("mainpipi", 1200, None, "mainpipi.ico"),
     ("mimosa-logo", 1000, None, "logobl2.ico"),
 ]
 

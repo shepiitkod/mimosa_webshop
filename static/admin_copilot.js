@@ -166,8 +166,6 @@
     "stock",
     "scent",
     "wick",
-    "weight",
-    "weight_grams",
     "burn_time",
     "composition",
     "form_capacity",
@@ -923,7 +921,6 @@
         "price",
         "scent",
         "wick",
-        "weight",
         "burn_time",
         "composition",
         "form_capacity",
@@ -951,7 +948,6 @@
       if (values.form_capacity)
         lines.push("Форма/объём: " + values.form_capacity);
       if (values.wick) lines.push("Фитиль: " + values.wick);
-      if (values.weight) lines.push("Вес: " + values.weight);
       if (values.burn_time) lines.push("Время горения: " + values.burn_time);
 
       return (

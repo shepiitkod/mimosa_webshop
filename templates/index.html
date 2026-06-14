@@ -123,14 +123,7 @@
                     <figure
                         class="promo-banner__media promo-banner__media--main"
                     >
-                        <img
-                            src="{% static 'assets/images/mainpipi.ico' %}"
-                            alt="Seconde Vie candle renewal service"
-                            width="1024"
-                            height="1280"
-                            decoding="async"
-                            loading="lazy"
-                        />
+                        {% include 'includes/picture_opt.html' with rel='assets/images/mainpipi' w=887 h=1280 alt='Seconde Vie candle renewal service' loading='lazy' only %}
                     </figure>
                 </div>
             </div>

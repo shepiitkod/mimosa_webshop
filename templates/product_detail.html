@@ -84,7 +84,6 @@
                     <ul class="product-specs-primary">
                         <li><strong><span data-translate="detail-parfum-label">Fragrance:</span></strong> {% if product.scent %}{{ product.scent }}{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}</li>
                         <li><strong><span data-translate="detail-meche-label">Wick:</span></strong> {% if product.wick %}{{ product.wick }}{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}</li>
-                        <li><strong><span data-translate="detail-poids-label">Weight:</span></strong> {% if product.weight %}{{ product.weight }}{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}</li>
                         <li><strong><span data-translate="burn-time-label">Burn time:</span></strong> {% if product.burn_time %}{{ product.burn_time }}{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}</li>
                     </ul>
                     <ul class="product-specs-secondary">
@@ -92,8 +91,6 @@
                         {% if product.composition %}<li><strong><span data-translate="composition-label">Composition:</span></strong> {{ product.composition }}</li>{% endif %}
                         {% if product.form_capacity %}<li><strong><span data-translate="detail-form-label">Form / capacity:</span></strong> {{ product.form_capacity }}</li>{% endif %}
                         {% if product.wax_type %}<li><strong><span data-translate="detail-wax-label">Wax:</span></strong> {{ product.wax_type }}</li>{% endif %}
-                        <li><strong><span data-translate="detail-stock-label">Stock:</span></strong> {{ product.stock }}</li>
-                        <li><strong><span data-translate="detail-sku-label">SKU:</span></strong> #{{ product.id }}</li>
                     </ul>
                 </div>
 

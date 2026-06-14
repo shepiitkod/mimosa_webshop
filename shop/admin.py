@@ -108,7 +108,6 @@ class ProductAdmin(admin.ModelAdmin):
         "wax_type",
         "scent",
         "wick",
-        "weight",
     )
 
     fieldsets = (
@@ -150,8 +149,6 @@ class ProductAdmin(admin.ModelAdmin):
                 "fields": (
                     "scent",
                     "wick",
-                    "weight",
-                    "weight_grams",
                     "burn_time",
                     "composition",
                     "form_capacity",
