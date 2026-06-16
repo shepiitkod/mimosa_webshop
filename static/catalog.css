@@ -137,6 +137,13 @@
     transform: none;
 }
 
+@media (max-width: 767px) {
+    .catalog-card.reveal-on-scroll:not(.is-visible) {
+        opacity: 1;
+        transform: none;
+    }
+}
+
 .catalog-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 14px 24px rgba(73, 54, 14, 0.18);

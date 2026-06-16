@@ -11,16 +11,12 @@
             return;
         }
 
-        if (!('IntersectionObserver' in window)) {
-            return;
-        }
-
         var revealSelectors = [
             'section.hero',
             'section.promo-banner',
             'section.about-snippet',
             'main h2.section-title',
-            'main section',
+            'main section:not(.portfolio-masonry)',
             '.Products:not(.portfolio-masonry) > article',
             '.Products.portfolio-masonry > article:not(.Product4)',
             '.Products:not(.portfolio-masonry) .Product4',
@@ -42,6 +38,13 @@
             '.newsletter-section'
         ];
 
+        if (!('IntersectionObserver' in window)) {
+            document.querySelectorAll(revealSelectors.join(', ')).forEach(function (el) {
+                el.classList.add('reveal-on-scroll', 'is-visible');
+            });
+            return;
+        }
+
         var textBlurSelector =
             'section.promo-banner, section.about-snippet, main h2.section-title, .sv-hero, .newsletter-section';
 
@@ -62,8 +65,8 @@
             },
             {
                 root: null,
-                threshold: 0.12,
-                rootMargin: '0px 0px -8% 0px'
+                threshold: 0.08,
+                rootMargin: '0px 0px 0px 0px'
             }
         );
 
