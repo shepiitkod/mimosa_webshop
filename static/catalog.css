@@ -3,6 +3,12 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    position: relative;
+}
+
+.catalog-page .catalog-layout {
+    position: relative;
+    z-index: 1;
 }
 
 .catalog-layout {

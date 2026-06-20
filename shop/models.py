@@ -79,9 +79,42 @@ class Product(models.Model):
     )
     burn_time = models.CharField(max_length=120, blank=True, default="")
     stock = models.PositiveIntegerField(default=0)
+    i18n = models.JSONField(default=dict, blank=True)
+
+    I18N_FIELDS = (
+        "title",
+        "description",
+        "scent",
+        "wick",
+        "burn_time",
+        "composition",
+        "form_capacity",
+        "wax_type",
+    )
 
     def __str__(self):
         return self.title
+
+    def get_i18n_data(self) -> dict:
+        from .translation_service import I18N_FIELDS, SUPPORTED_LANGS, _fallback_i18n, _source_payload
+
+        payload = _source_payload(self)
+        stored = self.i18n if isinstance(self.i18n, dict) else {}
+        result = {}
+
+        for lang in SUPPORTED_LANGS:
+            lang_data = stored.get(lang)
+            if isinstance(lang_data, dict):
+                result[lang] = {
+                    field: str(lang_data.get(field, payload.get(field, ""))).strip()
+                    for field in I18N_FIELDS
+                }
+            else:
+                result[lang] = dict(payload)
+
+        if not any(payload.values()):
+            return _fallback_i18n(payload)
+        return result
 
     @property
     def category_translation_key(self):

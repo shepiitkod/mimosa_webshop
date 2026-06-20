@@ -5,6 +5,17 @@ from shop.image_utils import product_variant_url
 register = template.Library()
 
 
+@register.filter
+def product_i18n_json(product):
+    import json
+
+    from django.utils.html import escape
+
+    if not product:
+        return ""
+    return escape(json.dumps(product.get_i18n_data(), ensure_ascii=False))
+
+
 @register.inclusion_tag("includes/product_picture.html", takes_context=False)
 def product_picture(
     image_field,

@@ -6074,9 +6074,19 @@ body.is-loaded header figure::after {
         transform: none;
     }
 
-    .catalog-card.reveal-on-scroll:not(.is-visible) {
+    .catalog-card.reveal-on-scroll:not(.is-visible),
+    .catalog-sidebar.reveal-on-scroll:not(.is-visible),
+    .catalog-content.reveal-on-scroll:not(.is-visible) {
         opacity: 1;
         transform: none;
+        filter: none;
+    }
+
+    .product-framed-image,
+    .portfolio-card__media img,
+    .catalog-card img.product-framed-image,
+    .catalog-card figure img {
+        opacity: 1 !important;
     }
 }
 

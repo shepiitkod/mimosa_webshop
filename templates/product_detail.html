@@ -12,7 +12,7 @@
     <meta property="og:type" content="product">
     <link rel="canonical" href="{% url 'shop:product_detail' product.id canonical_slug %}">
     <link rel="shortcut icon" href="{% static 'assets/images/logobl2.ico' %}" type="image/x-icon">
-    <link rel="stylesheet" href="{% static 'styles.css' %}?v=20260612-mobile">
+    <link rel="stylesheet" href="{% static 'styles.css' %}?v=20260620">
     <style>
         .main-image { position: relative; cursor: crosshair; }
         .zoom-lens {
@@ -56,7 +56,10 @@
             <span>/</span>
             <a href="{% url 'shop:products' %}" data-translate="nav-products">Products</a>
             <span>/</span>
-            <span>{{ product.title }}</span>
+            <span
+                data-product-i18n="{{ product|product_i18n_json }}"
+                data-i18n-field="title"
+            >{{ product.title }}</span>
         </div>
 
         <div class="product-container">
@@ -73,24 +76,32 @@
             </div>
 
             <div class="product-info">
-                <h1>{{ product.title }}</h1>
+                <h1
+                    data-product-i18n="{{ product|product_i18n_json }}"
+                    data-i18n-field="title"
+                >{{ product.title }}</h1>
                 <p class="product-price-large">EUR {{ product.price }}</p>
-                <p class="product-description">{{ product.description }}</p>
+                <p
+                    class="product-description"
+                    data-product-i18n="{{ product|product_i18n_json }}"
+                    data-i18n-field="description"
+                    data-i18n-html="true"
+                >{{ product.description }}</p>
 
                 {% if product.category == "Bento Candles" %}{% include 'includes/bento_color_picker.html' with bento_white_src=product.image.url %}{% endif %}
 
                 <div class="product-details">
                     <h3 data-translate="details-title">Product Details</h3>
                     <ul class="product-specs-primary">
-                        <li><strong><span data-translate="detail-parfum-label">Fragrance:</span></strong> {% if product.scent %}{{ product.scent }}{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}</li>
-                        <li><strong><span data-translate="detail-meche-label">Wick:</span></strong> {% if product.wick %}{{ product.wick }}{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}</li>
-                        <li><strong><span data-translate="burn-time-label">Burn time:</span></strong> {% if product.burn_time %}{{ product.burn_time }}{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}</li>
+                        <li><strong><span data-translate="detail-parfum-label">Fragrance:</span></strong> {% if product.scent %}<span data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="scent">{{ product.scent }}</span>{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}</li>
+                        <li><strong><span data-translate="detail-meche-label">Wick:</span></strong> {% if product.wick %}<span data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="wick">{{ product.wick }}</span>{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}</li>
+                        <li><strong><span data-translate="burn-time-label">Burn time:</span></strong> {% if product.burn_time %}<span data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="burn_time">{{ product.burn_time }}</span>{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}</li>
                     </ul>
                     <ul class="product-specs-secondary">
                         <li><strong><span data-translate="detail-category-label">Category:</span></strong> {% if product.category_translation_key %}<span data-translate="{{ product.category_translation_key }}">{{ product.category_display_name }}</span>{% else %}{{ product.category }}{% endif %}</li>
-                        {% if product.composition %}<li><strong><span data-translate="composition-label">Composition:</span></strong> {{ product.composition }}</li>{% endif %}
-                        {% if product.form_capacity %}<li><strong><span data-translate="detail-form-label">Form / capacity:</span></strong> {{ product.form_capacity }}</li>{% endif %}
-                        {% if product.wax_type %}<li><strong><span data-translate="detail-wax-label">Wax:</span></strong> {{ product.wax_type }}</li>{% endif %}
+                        {% if product.composition %}<li><strong><span data-translate="composition-label">Composition:</span></strong> <span data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="composition">{{ product.composition }}</span></li>{% endif %}
+                        {% if product.form_capacity %}<li><strong><span data-translate="detail-form-label">Form / capacity:</span></strong> <span data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="form_capacity">{{ product.form_capacity }}</span></li>{% endif %}
+                        {% if product.wax_type %}<li><strong><span data-translate="detail-wax-label">Wax:</span></strong> <span data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="wax_type">{{ product.wax_type }}</span></li>{% endif %}
                     </ul>
                 </div>
 
@@ -111,7 +122,10 @@
                 {% for item in related_products %}
                 <a class="related-card" href="{% url 'shop:product_detail' item.id item.title|slugify %}" style="cursor:pointer; text-decoration:none; color:inherit; display:block;">
                     {% product_picture item.image alt=item.title css_class="product-framed-image" w=400 h=400 loading="lazy" object_position=item.image_object_position %}
-                    <h3>{{ item.title }}</h3>
+                    <h3
+                        data-product-i18n="{{ item|product_i18n_json }}"
+                        data-i18n-field="title"
+                    >{{ item.title }}</h3>
                     <p class="price">EUR {{ item.price }}</p>
                 </a>
                 {% endfor %}

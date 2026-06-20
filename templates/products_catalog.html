@@ -11,8 +11,8 @@
             href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap"
             rel="stylesheet"
         />
-        <link rel="stylesheet" href="{% static 'styles.css' %}?v=20260616" />
-        <link rel="stylesheet" href="{% static 'catalog.css' %}?v=20260616" />
+        <link rel="stylesheet" href="{% static 'styles.css' %}?v=20260620" />
+        <link rel="stylesheet" href="{% static 'catalog.css' %}?v=20260620" />
     </head>
     <body class="catalog-page">
         <div class="mimosa-petals" aria-hidden="true">
@@ -92,10 +92,17 @@
                                         text-decoration: none;
                                         color: inherit;
                                     "
+                                    data-product-i18n="{{ product|product_i18n_json }}"
+                                    data-i18n-field="title"
                                     >{{ product.title }}</a
                                 >
                             </h3>
-                            <p class="catalog-desc">
+                            <p
+                                class="catalog-desc"
+                                data-product-i18n="{{ product|product_i18n_json }}"
+                                data-i18n-field="description"
+                                data-i18n-html="true"
+                            >
                                 {{ product.description|truncatechars:100 }}
                             </p>
                             <div class="catalog-card-bottom">

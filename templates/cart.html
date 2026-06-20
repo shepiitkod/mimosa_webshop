@@ -1,4 +1,4 @@
-{% load static %}
+{% load static product_media %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,14 +8,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'styles.css' %}?v=20260612-mobile">
+    <link rel="stylesheet" href="{% static 'styles.css' %}?v=20260620">
     <link rel="stylesheet" href="{% static 'shipping.css' %}?v=20260612-mobile">
 </head>
 <body class="home-page">
     {% include 'includes/header.html' with header_show_cart=True %}
 
     <main id="main-content" tabindex="-1" class="product-page">
-        <h1 class="section-title">Корзина</h1>
+        <h1 class="section-title" data-translate="cart-title">Cart</h1>
 
         {{ toast_messages|json_script:"shipping-toast-messages" }}
         <script>
@@ -29,8 +29,18 @@
             <section class="Products" style="grid-template-columns: 1fr; max-width: 900px;">
                 {% for item in cart_items %}
                     <article class="Product1" style="padding: 20px;">
-                        <h3>{{ item.product.title }}</h3>
-                        <p class="product-desc">Категория: {{ item.product.category }}</p>
+                        <h3
+                            data-product-i18n="{{ item.product|product_i18n_json }}"
+                            data-i18n-field="title"
+                        >{{ item.product.title }}</h3>
+                        <p class="product-desc">
+                            <span data-translate="cart-category-label">Category</span>:
+                            {% if item.product.category_translation_key %}
+                                <span data-translate="{{ item.product.category_translation_key }}">{{ item.product.category_display_name }}</span>
+                            {% else %}
+                                {{ item.product.category }}
+                            {% endif %}
+                        </p>
                         {% if item.selected_color_name %}
                             <p class="product-desc">
                                 <span data-translate="cart-color-label">Color</span>:
@@ -40,7 +50,7 @@
                                 <strong>{{ item.selected_color_name }}</strong>
                             </p>
                         {% endif %}
-                        <p class="product-composition">Цена: EUR {{ item.product.price }}</p>
+                        <p class="product-composition"><span data-translate="cart-price-label">Price</span>: EUR {{ item.product.price }}</p>
                         <p class="product-price">EUR {{ item.line_total }}</p>
 
                         <form method="post" action="{% url 'shop:cart_add' item.product.id %}" style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
@@ -48,13 +58,13 @@
                             <input type="number" name="quantity" value="{{ item.quantity }}" min="1" style="width:90px; padding:8px;">
                             <input type="hidden" name="update" value="1">
                             <input type="hidden" name="cart_key" value="{{ item.cart_key }}">
-                            <button type="submit" class="btn-add-cart">Обновить количество</button>
+                            <button type="submit" class="btn-add-cart" data-translate="cart-update-qty">Update quantity</button>
                         </form>
 
                         <form method="post" action="{% url 'shop:cart_remove' item.product.id %}" style="margin-top:12px;">
                             {% csrf_token %}
                             <input type="hidden" name="cart_key" value="{{ item.cart_key }}">
-                            <button type="submit" class="btn-wishlist" style="width:auto; padding:10px 16px; border-radius:14px;">Удалить</button>
+                            <button type="submit" class="btn-wishlist" style="width:auto; padding:10px 16px; border-radius:14px;" data-translate="cart-remove">Remove</button>
                         </form>
                     </article>
                 {% endfor %}
@@ -64,10 +74,10 @@
                 <form method="post" action="{% url 'shop:create_checkout_session' %}" data-checkout-form>
                     {% csrf_token %}
                     <div class="shipping-module" data-shipping-root>
-                        <h2 class="shipping-module__title">Livraison</h2>
+                        <h2 class="shipping-module__title" data-translate="shipping-title">Delivery</h2>
 
                         <div class="shipping-module__field">
-                            <span class="shipping-module__label" id="ship-country-label">Pays de destination</span>
+                            <span class="shipping-module__label" id="ship-country-label" data-translate="ship-country-label">Destination country</span>
                             <div class="shipping-country">
                                 <button
                                     type="button"
@@ -86,22 +96,22 @@
                         </div>
 
                         <div class="shipping-module__field">
-                            <span class="shipping-module__label">Mode de livraison</span>
+                            <span class="shipping-module__label" data-translate="shipping-mode-label">Delivery method</span>
                             <div class="shipping-carriers" data-carrier-cards role="radiogroup" aria-label="Shipping options"></div>
                             <input type="hidden" name="shipping_carrier" value="" data-shipping-carrier-input>
                         </div>
 
                         <div class="shipping-totals">
                             <div class="shipping-totals__row">
-                                <span>Sous-total</span>
+                                <span data-translate="shipping-subtotal">Subtotal</span>
                                 <span data-summary-subtotal>EUR {{ cart_total }}</span>
                             </div>
                             <div class="shipping-totals__row">
-                                <span>Livraison</span>
+                                <span data-translate="shipping-cost">Delivery</span>
                                 <span data-summary-shipping>—</span>
                             </div>
                             <div class="shipping-totals__row shipping-totals__grand">
-                                <span>Total commande</span>
+                                <span data-translate="shipping-grand-total">Order total</span>
                                 <span data-summary-grand>—</span>
                             </div>
                         </div>
@@ -112,7 +122,7 @@
                         <span class="cart-checkout-btn__inner">
                             <span class="cart-checkout-btn__spinner" aria-hidden="true"></span>
                             <span class="cart-checkout-btn__label" data-translate="cart-checkout">Place order</span>
-                            <span class="cart-checkout-btn__loading-text" data-checkout-loading-text>Sécurisation en cours…</span>
+                            <span class="cart-checkout-btn__loading-text" data-translate="shipping-checkout-loading">Securing checkout…</span>
                         </span>
                     </button>
                 </form>

@@ -243,6 +243,18 @@ const translations = {
     "cart-empty-text": "Add items from the home page.",
     "cart-go-to-products": "Go to products",
     "cart-checkout": "Place order",
+    "cart-title": "Cart",
+    "cart-category-label": "Category",
+    "cart-price-label": "Price",
+    "cart-update-qty": "Update quantity",
+    "cart-remove": "Remove",
+    "shipping-title": "Delivery",
+    "ship-country-label": "Destination country",
+    "shipping-mode-label": "Delivery method",
+    "shipping-subtotal": "Subtotal",
+    "shipping-cost": "Delivery",
+    "shipping-grand-total": "Order total",
+    "shipping-checkout-loading": "Securing checkout…",
 
     "profile-title": "My Profile",
     "profile-orders": "My Orders",
@@ -656,6 +668,18 @@ const translations = {
     "cart-empty-text": "Ajoutez des articles depuis la page d'accueil.",
     "cart-go-to-products": "Aller aux produits",
     "cart-checkout": "Passer la commande",
+    "cart-title": "Panier",
+    "cart-category-label": "Catégorie",
+    "cart-price-label": "Prix",
+    "cart-update-qty": "Mettre à jour la quantité",
+    "cart-remove": "Supprimer",
+    "shipping-title": "Livraison",
+    "ship-country-label": "Pays de destination",
+    "shipping-mode-label": "Mode de livraison",
+    "shipping-subtotal": "Sous-total",
+    "shipping-cost": "Livraison",
+    "shipping-grand-total": "Total commande",
+    "shipping-checkout-loading": "Sécurisation en cours…",
 
     "profile-title": "Mon Profil",
     "profile-orders": "Mes Commandes",
@@ -1067,6 +1091,18 @@ const translations = {
     "cart-empty-text": "Додайте товари з домашної сторінки.",
     "cart-go-to-products": "Перейти до товарів",
     "cart-checkout": "Розмістити замовлення",
+    "cart-title": "Кошик",
+    "cart-category-label": "Категорія",
+    "cart-price-label": "Ціна",
+    "cart-update-qty": "Оновити кількість",
+    "cart-remove": "Видалити",
+    "shipping-title": "Доставка",
+    "ship-country-label": "Країна доставки",
+    "shipping-mode-label": "Спосіб доставки",
+    "shipping-subtotal": "Проміжний підсумок",
+    "shipping-cost": "Доставка",
+    "shipping-grand-total": "Разом",
+    "shipping-checkout-loading": "Підготовка оплати…",
 
     "profile-title": "Мій Профіль",
     "profile-orders": "Мої Замовлення",
@@ -1504,6 +1540,18 @@ const translations = {
     "cart-empty-text": "Добавьте товары с главной страницы.",
     "cart-go-to-products": "Перейти к товарам",
     "cart-checkout": "Оформить заказ",
+    "cart-title": "Корзина",
+    "cart-category-label": "Категория",
+    "cart-price-label": "Цена",
+    "cart-update-qty": "Обновить количество",
+    "cart-remove": "Удалить",
+    "shipping-title": "Доставка",
+    "ship-country-label": "Страна доставки",
+    "shipping-mode-label": "Способ доставки",
+    "shipping-subtotal": "Подытог",
+    "shipping-cost": "Доставка",
+    "shipping-grand-total": "Итого",
+    "shipping-checkout-loading": "Подготовка оплаты…",
 
     "profile-title": "Мой профиль",
     "profile-orders": "Мои заказы",
@@ -1650,8 +1698,63 @@ const translations = {
   },
 };
 
+function applyProductI18n(lang) {
+  document.querySelectorAll("[data-product-i18n]").forEach((element) => {
+    const raw = element.getAttribute("data-product-i18n");
+    if (!raw) {
+      return;
+    }
+
+    let data;
+    try {
+      data = JSON.parse(raw);
+    } catch (error) {
+      return;
+    }
+
+    const field = element.getAttribute("data-i18n-field");
+    if (!field || !data[lang] || data[lang][field] === undefined) {
+      return;
+    }
+
+    const value = data[lang][field];
+    if (element.hasAttribute("data-i18n-html")) {
+      element.innerHTML = value;
+    } else {
+      element.textContent = value;
+    }
+  });
+
+  document.querySelectorAll("meta[name='description']").forEach((meta) => {
+    const productDescription = document.querySelector(
+      ".product-description[data-product-i18n][data-i18n-field='description']",
+    );
+    if (!productDescription) {
+      return;
+    }
+
+    const raw = productDescription.getAttribute("data-product-i18n");
+    if (!raw) {
+      return;
+    }
+
+    try {
+      const data = JSON.parse(raw);
+      if (data[lang] && data[lang].description) {
+        meta.setAttribute(
+          "content",
+          data[lang].description.replace(/<[^>]+>/g, " ").slice(0, 155),
+        );
+      }
+    } catch (error) {
+      /* ignore malformed product i18n payloads */
+    }
+  });
+}
+
 function switchLanguage(lang) {
   localStorage.setItem("selectedLanguage", lang);
+  document.documentElement.lang = lang;
 
   document.querySelectorAll(".lang-btn").forEach((btn) => {
     btn.classList.remove("active");
@@ -1686,6 +1789,7 @@ function switchLanguage(lang) {
     }
   });
 
+  applyProductI18n(lang);
   updateCompactLanguageUI();
 }
 
