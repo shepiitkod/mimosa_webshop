@@ -16,10 +16,8 @@
         var revealSelectors = [
             'section.hero',
             'section.promo-banner',
-            'section.about-snippet',
-            'section.home-categories',
             'main h2.section-title',
-            'main section:not(.portfolio-masonry)',
+            'main section:not(.portfolio-masonry):not(.discover):not(.welcome-float)',
             '.Products:not(.portfolio-masonry) > article',
             '.Products.portfolio-masonry > article:not(.Product4)',
             '.Products:not(.portfolio-masonry) .Product4',

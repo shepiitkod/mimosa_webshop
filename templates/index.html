@@ -1,4 +1,4 @@
-{% load static product_media %}
+{% load static %}
 <!doctype html>
 <html lang="en">
     <head>
@@ -26,7 +26,7 @@
             href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap"
             rel="stylesheet"
         />
-        <link rel="stylesheet" href="{% static 'styles.css' %}?v=20260620" />
+        <link rel="stylesheet" href="{% static 'styles.css' %}?v=20260805e" />
         <link
             rel="preload"
             as="image"
@@ -129,179 +129,111 @@
             </div>
         </section>
 
-        <section class="about-snippet">
-            <h2 data-translate="about-snippet-title">
-                Welcome to MIMOSA Atelier
-            </h2>
-            <p data-translate="about-snippet-text">
-                Every candle is a story, crafted by hand with 100% natural soy
-                wax and exclusive fragrances from Provence. We believe in
-                beauty, sustainability, and the art of slow living.
-            </p>
-        </section>
-
-        <section class="home-categories" aria-label="Product categories">
-            <div class="home-categories__inner">
-                <h2
-                    class="home-categories__title"
-                    data-translate="home-categories-title"
-                >
-                    Categories
-                </h2>
-                <div class="home-categories__grid">
-                    <a
-                        class="home-categories__card"
-                        href="{% url 'shop:products_by_category' 'bento-candles' %}"
-                    >
-                        <h3
-                            class="home-categories__name"
-                            data-translate="nav-sub-bento"
-                        >
-                            Bento Candles
-                        </h3>
-                    </a>
-                    <a
-                        class="home-categories__card"
-                        href="{% url 'shop:products_by_category' 'scented-candles' %}"
-                    >
-                        <h3
-                            class="home-categories__name"
-                            data-translate="nav-sub-scented"
-                        >
-                            Scented Candles
-                        </h3>
-                        <p
-                            class="home-categories__subtitle"
-                            data-translate="home-category-scented-subtitle"
-                        >
-                            Candles for ceremonies and celebrations
-                        </p>
-                    </a>
-                    <a
-                        class="home-categories__card"
-                        href="{% url 'shop:products_by_category' 'decorative-candles' %}"
-                    >
-                        <h3
-                            class="home-categories__name"
-                            data-translate="nav-sub-decorative"
-                        >
-                            Decorative Candles
-                        </h3>
-                        <p
-                            class="home-categories__subtitle"
-                            data-translate="home-category-decorative-subtitle"
-                        >
-                            Personalized custom candles
-                        </p>
-                    </a>
-                    <a
-                        class="home-categories__card"
-                    href="{% url 'shop:products_by_category' 'ceremony-candles' %}"
-                    >
-                        <h3
-                            class="home-categories__name"
-                            data-translate="nav-sub-ceremony"
-                        >
-                            Ceremony Candles
-                        </h3>
-                        <p
-                            class="home-categories__subtitle"
-                            data-translate="home-category-ceremony-subtitle"
-                        >
-                            Ceremonial candles for your special moments
-                        </p>
-                    </a>
-                </div>
-            </div>
-        </section>
-
         <main id="main-content" tabindex="-1">
-            <h2 class="section-title" data-translate="products-title">
-                Portfolio
-            </h2>
+            <section
+                class="welcome-float"
+                aria-labelledby="welcome-float-heading"
+            >
+                <div class="welcome-float__ambiance" aria-hidden="true">
+                    <span class="welcome-float__glow welcome-float__glow--a"></span>
+                    <span class="welcome-float__glow welcome-float__glow--b"></span>
+                </div>
+                <div class="welcome-float__stage" aria-hidden="true">
+                    <figure class="welcome-float__piece" data-depth="far" data-lane="0">
+                        <img src="{% static 'assets/images/MAIN1.webp' %}" alt="" width="200" height="266" loading="lazy" decoding="async" draggable="false" />
+                    </figure>
+                    <figure class="welcome-float__piece" data-depth="mid" data-lane="1">
+                        <img src="{% static 'assets/images/MAIN5.webp' %}" alt="" width="200" height="266" loading="lazy" decoding="async" draggable="false" />
+                    </figure>
+                    <figure class="welcome-float__piece" data-depth="near" data-lane="2">
+                        <img src="{% static 'assets/images/MAIN3.webp' %}" alt="" width="200" height="266" loading="lazy" decoding="async" draggable="false" />
+                    </figure>
+                    <figure class="welcome-float__piece" data-depth="far" data-lane="3">
+                        <img src="{% static 'assets/images/MAIN8.webp' %}" alt="" width="200" height="266" loading="lazy" decoding="async" draggable="false" />
+                    </figure>
+                    <figure class="welcome-float__piece" data-depth="mid" data-lane="4">
+                        <img src="{% static 'assets/images/MAIN11.webp' %}" alt="" width="200" height="266" loading="lazy" decoding="async" draggable="false" />
+                    </figure>
+                </div>
+                <div class="welcome-float__veil" aria-hidden="true"></div>
+                <div class="welcome-float__content">
+                    <p class="welcome-float__eyebrow">
+                        <span>Atelier</span>
+                        <span class="welcome-float__eyebrow-dot" aria-hidden="true"></span>
+                        <span>Nîmes</span>
+                    </p>
+                    <h2 id="welcome-float-heading" data-translate="about-snippet-title">
+                        Welcome to MIMOSA Atelier
+                    </h2>
+                    <span class="welcome-float__rule" aria-hidden="true"></span>
+                    <p data-translate="about-snippet-text">
+                        Every candle is a story, crafted by hand with 100%
+                        natural soy wax and exclusive fragrances from Provence.
+                        We believe in beauty, sustainability, and the art of
+                        slow living.
+                    </p>
+                </div>
+            </section>
 
-            <section class="Products portfolio-masonry" aria-label="Portfolio">
-                {% for product in products %}
-                <article id="product{{ product.id }}" class="Product1">
-                    <a
-                        href="{% url 'shop:product_detail' product.id product.title|slugify %}"
-                        class="product-link"
-                        aria-label="{{ product.title }} details"
-                    >
-                        <figure class="portfolio-card__figure">
-                            <div class="portfolio-card__media">
-                                {% product_picture product.image alt=product.title css_class="product-framed-image" w=600 h=750 loading="lazy" object_position=product.image_object_position sizes="(max-width: 767px) 48vw, (max-width: 1023px) 50vw, 360px" %}
-                                <div
-                                    class="portfolio-card__overlay"
-                                    aria-hidden="true"
-                                >
-                                    <span class="portfolio-card__overlay-text"
-                                        >{{ product.title }}</span
-                                    >
-                                </div>
-                            </div>
-                        </figure>
-                        <h3
-                            data-product-i18n="{{ product|product_i18n_json }}"
-                            data-i18n-field="title"
-                        >{{ product.title }}</h3>
-                    </a>
+            <section
+                class="discover"
+                aria-labelledby="discover-heading"
+            >
+                <div class="discover__header">
                     <p
-                        class="product-desc"
-                        data-product-i18n="{{ product|product_i18n_json }}"
-                        data-i18n-field="description"
-                        data-i18n-html="true"
+                        class="discover__eyebrow"
+                        data-translate="discover-eyebrow"
                     >
-                        {{ product.description|truncatechars:90 }}
+                        Collections
                     </p>
-                    <p class="product-composition">
-                        {% if product.category_translation_key %}<span data-translate="{{ product.category_translation_key }}">{{ product.category_display_name }}</span>{% else %}{{ product.category }}{% endif %}
-                    </p>
-                    <p class="product-price">€{{ product.price }}</p>
-                    <form
-                        action="{% url 'shop:cart_add' product.id %}"
-                        method="post"
-                        class="add-cart-form"
+                    <h2
+                        id="discover-heading"
+                        data-translate="home-categories-title"
                     >
-                        {% csrf_token %}
-                        <input type="hidden" name="quantity" value="1" />
-                        <button class="btn-add-to-cart" type="submit">
-                            <span data-translate="add-to-cart"
-                                >Add to Cart</span
-                            >
-                        </button>
-                    </form>
-                    <button
-                        class="btn-order"
-                        type="button"
-                        data-translate="order-now"
-                        onclick="orderProduct('{{ product.title|escapejs }}', '{{ product.price }}', '{{ product.category|escapejs }}')"
-                    >
-                        Order Now
-                    </button>
-                </article>
-                {% empty %}
-                <article class="Product4">
-                    <h3>Coming Soon</h3>
-                    <p class="product-desc">
-                        New products will be available shortly. Stay tuned!
-                    </p>
-                </article>
-                {% endfor %}
-                <article class="Product4">
+                        Nos Créations
+                    </h2>
+                    <span class="discover__rule" aria-hidden="true"></span>
+                </div>
+                <div class="discover__grid">
+                    {% for cat in home_categories %}
                     <a
-                        href="{% url 'shop:products' %}"
-                        class="product-link"
-                        aria-label="See all products"
+                        class="discover__card"
+                        href="{% url 'shop:products_by_category' cat.slug %}"
+                        style="--discover-i: {{ forloop.counter0 }}"
+                        data-index="{{ forloop.counter|stringformat:'02d' }}"
                     >
-                        <h3 data-translate="product4-name">
-                            New Products Coming Soon
-                        </h3>
+                        <div class="discover__card-media">
+                            {% include 'includes/picture_opt.html' with rel=cat.image class_name='discover__card-image' w=cat.image_w h=cat.image_h alt=cat.name loading='lazy' sizes='(max-width: 640px) 46vw, (max-width: 1023px) 48vw, 420px' only %}
+                            <span
+                                class="discover__card-shade"
+                                aria-hidden="true"
+                            ></span>
+                        </div>
+                        <div class="discover__card-body">
+                            <span class="discover__index" aria-hidden="true"
+                                >{{ forloop.counter|stringformat:"02d" }}</span
+                            >
+                            <h3
+                                class="discover__card-name"
+                                data-translate="{{ cat.translate_key }}"
+                            >
+                                {{ cat.name }}
+                            </h3>
+                            <p
+                                class="discover__card-subtitle"
+                                data-translate="{{ cat.subtitle_key }}"
+                            >
+                                {{ cat.subtitle }}
+                            </p>
+                            <span
+                                class="discover__card-cta"
+                                data-translate="discover-card-cta"
+                                >Explore</span
+                            >
+                        </div>
                     </a>
-                    <p class="product-desc" data-translate="product4-desc">
-                        Stay tuned for our next release!
-                    </p>
-                </article>
+                    {% endfor %}
+                </div>
             </section>
         </main>
 
@@ -455,5 +387,7 @@
             });
         </script>
         {% include 'includes/site_scripts.html' %}
+        <script src="{% static 'welcome-float.js' %}?v=20260805c" defer></script>
+        <script src="{% static 'discover-atelier.js' %}?v=20260805d" defer></script>
     </body>
 </html>

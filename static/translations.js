@@ -13,6 +13,8 @@ const translations = {
     "nav-sub-gifts": "Gift Collections",
     "nav-sub-new": "New Arrivals",
     "nav-sub-ceremony": "Ceremony Candles",
+    "nav-sub-sachets": "Plaster Sachets",
+    "nav-badge-new": "New",
 
     "hero-title": "The art of bespoke couture.",
     "hero-subtitle":
@@ -21,11 +23,14 @@ const translations = {
     "fab-consultation": "Book a Consultation",
     "promo-ribbon-delivery": "Free delivery on orders over €85 (France only)",
 
-    "home-categories-title": "Categories",
+    "home-categories-title": "Nos Créations",
+    "discover-eyebrow": "Collections",
+    "home-category-bento-subtitle": "Playful bento-box candle sets",
     "home-category-scented-subtitle": "Candles for ceremonies and celebrations",
     "home-category-decorative-subtitle": "Personalized custom candles",
     "home-category-ceremony-subtitle":
       "Ceremonial candles for your special moments",
+    "discover-card-cta": "Explore",
 
     "about-snippet-title": "Welcome to MIMOSA Atelier",
     "about-snippet-text":
@@ -421,6 +426,27 @@ const translations = {
     "sv-pricing-cta": "Request a Quote",
     "sv-contact-label": "For any questions, write to us",
     "sv-contact-sign": "\u2014 The MIMOSA Atelier team, N\u00eemes, France",
+
+    "sachets-eyebrow": "New Collection",
+    "sachets-hero-title": "Plaster Scented Sachets",
+    "sachets-p1": "Discover our newest creation \u2014 the plaster scented sachet.",
+    "sachets-p2":
+      "More than a simple home fragrance, it's a true decorative object that elevates your everyday life by diffusing delicate, refined scents.",
+    "sachets-p3":
+      "Designed to last, your sachet can be refreshed every three weeks with your favourite fragrance \u2014 an elegant, responsible, and eco-friendly approach.",
+    "sachets-p4":
+      "All our fragrances are certified and sourced from Grasse, the world capital of French haute perfumery, birthplace of the finest olfactory compositions.",
+    "sachets-p5":
+      "Every sachet is entirely handcrafted in our atelier from natural materials, with meticulous attention to every detail.",
+    "sachets-p6":
+      "Our collection comes in four scents inspired by the emblematic flowers of the South of France: Mimosa, Rose, Poppy, and Lavender.",
+    "sachets-p7":
+      "For lovers of beauty, we've imagined four delicate creations: Angel Wings, Camellia, Flowering Heart, and an elegant Plaque decorated with Ylang-Ylang leaves.",
+    "sachets-p8":
+      "Treat yourself to a moment of softness, or delight someone you love. In a car, a bathroom, a closet, or a bedroom \u2014 every sachet diffuses a refined olfactory signature and brings a touch of poetry to your home.",
+    "sachets-products-title": "Our Sachets Collection",
+    "sachets-empty-title": "New pieces are being handcrafted",
+    "sachets-empty-text": "Check back soon \u2014 the first sachets are on their way!",
   },
 
   fr: {
@@ -437,6 +463,8 @@ const translations = {
     "nav-sub-gifts": "Collections cadeaux",
     "nav-sub-new": "Nouveautés",
     "nav-sub-ceremony": "Bougies de cérémonie",
+    "nav-sub-sachets": "Sachets Parfumés",
+    "nav-badge-new": "Nouveau",
 
     "hero-title": "L'art de la couture sur mesure.",
     "hero-subtitle":
@@ -446,11 +474,14 @@ const translations = {
     "promo-ribbon-delivery":
       "Livraison offerte dès 85 € d'achat — France uniquement",
 
-    "home-categories-title": "Catégories",
+    "home-categories-title": "Nos Créations",
+    "discover-eyebrow": "Collections",
+    "home-category-bento-subtitle": "Coffrets de bougies bento ludiques",
     "home-category-scented-subtitle": "Bougies pour cérémonies et célébrations",
     "home-category-decorative-subtitle": "Bougies personnalisées sur mesure",
     "home-category-ceremony-subtitle":
       "Bougies artisanales pour vos moments de cérémonie",
+    "discover-card-cta": "Découvrir",
 
     "about-snippet-title": "Bienvenue chez MIMOSA Atelier",
     "about-snippet-text":
@@ -846,6 +877,28 @@ const translations = {
     "sv-contact-label": "Pour toute question, \u00e9crivez-nous",
     "sv-contact-sign":
       "\u2014 L\u2019\u00e9quipe MIMOSA Atelier, N\u00eemes, France",
+
+    "sachets-eyebrow": "Nouvelle Collection",
+    "sachets-hero-title": "Sachets Parfum\u00e9s en Pl\u00e2tre",
+    "sachets-p1":
+      "D\u00e9couvrez notre nouvelle cr\u00e9ation \u2013 le sachet parfum\u00e9 en pl\u00e2tre.",
+    "sachets-p2":
+      "Plus qu\u2019un simple parfum d\u2019int\u00e9rieur, c\u2019est un v\u00e9ritable objet de d\u00e9coration qui sublime votre quotidien en diffusant des fragrances d\u00e9licates et raffin\u00e9es.",
+    "sachets-p3":
+      "Con\u00e7u pour durer, votre sachet peut \u00eatre recharg\u00e9 toutes les trois semaines avec votre parfum pr\u00e9f\u00e9r\u00e9. Une approche \u00e9l\u00e9gante, responsable et respectueuse de l\u2019environnement.",
+    "sachets-p4":
+      "Toutes nos fragrances sont certifi\u00e9es et proviennent de Grasse, berceau mondial de la haute parfumerie fran\u00e7aise, o\u00f9 naissent les plus belles compositions olfactives.",
+    "sachets-p5":
+      "Chaque sachet est enti\u00e8rement fa\u00e7onn\u00e9 \u00e0 la main dans notre atelier, \u00e0 partir de mat\u00e9riaux naturels, avec une attention particuli\u00e8re port\u00e9e \u00e0 chaque d\u00e9tail.",
+    "sachets-p6":
+      "Notre collection se d\u00e9cline en quatre senteurs inspir\u00e9es des fleurs embl\u00e9matiques du Sud de la France\u00a0: Mimosa, Rose, Coquelicot et Lavande.",
+    "sachets-p7":
+      "Pour satisfaire les amoureux du beau, nous avons imagin\u00e9 quatre cr\u00e9ations d\u00e9licates\u00a0: Ailes d\u2019Ange, Cam\u00e9lia, C\u0153ur Fleuri et une \u00e9l\u00e9gante Plaque d\u00e9cor\u00e9e de feuilles d\u2019Ylang-Ylang.",
+    "sachets-p8":
+      "Offrez-vous un moment de douceur ou faites plaisir \u00e0 ceux que vous aimez. Dans une voiture, une salle de bain, un dressing ou une chambre, chaque sachet diffuse une signature olfactive raffin\u00e9e et apporte une touche de po\u00e9sie \u00e0 votre int\u00e9rieur.",
+    "sachets-products-title": "Notre Collection de Sachets",
+    "sachets-empty-title": "De nouvelles pi\u00e8ces sont en cours de fa\u00e7onnage",
+    "sachets-empty-text": "Revenez bient\u00f4t \u2014 les premiers sachets arrivent !",
   },
 
   ua: {
@@ -862,6 +915,8 @@ const translations = {
     "nav-sub-gifts": "Подарункові колекції",
     "nav-sub-new": "Новинки",
     "nav-sub-ceremony": "Церемоніальні свічки",
+    "nav-sub-sachets": "Ароматичні саше",
+    "nav-badge-new": "Новинка",
 
     "hero-title": "Мистецтво кутюру на замовлення.",
     "hero-subtitle":
@@ -870,10 +925,13 @@ const translations = {
     "fab-consultation": "Записатися на консультацію",
     "promo-ribbon-delivery": "Безкоштовна доставка від 85 € (лише по Франції)",
 
-    "home-categories-title": "Категорії",
+    "home-categories-title": "Nos Créations",
+    "discover-eyebrow": "Колекції",
+    "home-category-bento-subtitle": "Грайливі набори свічок бенто",
     "home-category-scented-subtitle": "Свічки для церемоній та святкувань",
     "home-category-decorative-subtitle": "Персоналізовані свічки на замовлення",
     "home-category-ceremony-subtitle": "Свічки для урочистих подій",
+    "discover-card-cta": "Відкрити",
 
     "about-snippet-title": "Ласкаво просимо до MIMOSA Atelier",
     "about-snippet-text":
@@ -1269,6 +1327,27 @@ const translations = {
     "sv-pricing-cta": "Запросити пропозицію",
     "sv-contact-label": "Якщо є запитання, пишіть нам",
     "sv-contact-sign": "\u2014 Команда MIMOSA Atelier, Нім, Франція",
+
+    "sachets-eyebrow": "Нова колекція",
+    "sachets-hero-title": "Ароматичні саше з гіпсу",
+    "sachets-p1": "Відкрийте наше найновіше творіння — ароматичне саше з гіпсу.",
+    "sachets-p2":
+      "Це більше, ніж просто аромат для дому: справжній декоративний виріб, який прикрашає вашу повсякденність, наповнюючи простір ніжними та витонченими ароматами.",
+    "sachets-p3":
+      "Створене, щоб служити довго, ваше саше можна освіжати улюбленим ароматом кожні три тижні. Елегантний, відповідальний та екологічний підхід.",
+    "sachets-p4":
+      "Усі наші аромати сертифіковані та походять із Граса — світової столиці французької парфумерії, де народжуються найкрасивіші ароматичні композиції.",
+    "sachets-p5":
+      "Кожне саше повністю виготовлене вручну в нашій майстерні з натуральних матеріалів, з особливою увагою до кожної деталі.",
+    "sachets-p6":
+      "Наша колекція представлена у чотирьох ароматах, натхненних символічними квітами Півдня Франції: мімоза, троянда, мак і лаванда.",
+    "sachets-p7":
+      "Для поціновувачів прекрасного ми створили чотири вишукані вироби: «Крила ангела», «Камелія», «Квітуче серце» та елегантну табличку, прикрашену листям іланг-ілангу.",
+    "sachets-p8":
+      "Подаруйте собі мить ніжності або порадуйте тих, кого любите. В автомобілі, ванній кімнаті, гардеробній чи спальні — кожне саше поширює вишуканий ароматичний підпис і додає нотку поезії у ваш інтер'єр.",
+    "sachets-products-title": "Наша колекція саше",
+    "sachets-empty-title": "Нові вироби вже виготовляються",
+    "sachets-empty-text": "Завітайте незабаром — перші саше вже в дорозі!",
   },
 
   ru: {
@@ -1285,6 +1364,8 @@ const translations = {
     "nav-sub-gifts": "Подарочные коллекции",
     "nav-sub-new": "Новинки",
     "nav-sub-ceremony": "Церемониальные свечи",
+    "nav-sub-sachets": "Ароматические саше",
+    "nav-badge-new": "Новинка",
 
     "hero-title": "Искусство кутюра на заказ.",
     "hero-subtitle":
@@ -1293,10 +1374,13 @@ const translations = {
     "fab-consultation": "Записаться на консультацию",
     "promo-ribbon-delivery": "Бесплатная доставка от 85 € (только по Франции)",
 
-    "home-categories-title": "Категории",
+    "home-categories-title": "Nos Créations",
+    "discover-eyebrow": "Коллекции",
+    "home-category-bento-subtitle": "Игривые наборы свечей бенто",
     "home-category-scented-subtitle": "Свечи для церемоний и праздников",
     "home-category-decorative-subtitle": "Персонализированные свечи на заказ",
     "home-category-ceremony-subtitle": "Свечи для торжественных событий",
+    "discover-card-cta": "Открыть",
 
     "promo-eyebrow": "Эксклюзивная услуга ателье",
     "promo-title": "Вторая жизнь для вашей свечи",
@@ -1695,6 +1779,27 @@ const translations = {
     "sv-pricing-cta": "Запросить предложение",
     "sv-contact-label": "По любым вопросам, пишите нам",
     "sv-contact-sign": "\u2014 Команда MIMOSA Atelier, Ним, Франция",
+
+    "sachets-eyebrow": "Новая коллекция",
+    "sachets-hero-title": "Ароматические саше из гипса",
+    "sachets-p1": "Откройте для себя наше новое творение — ароматическое саше из гипса.",
+    "sachets-p2":
+      "Это больше, чем просто аромат для дома — это настоящий декоративный предмет, который украшает вашу повседневность, источая нежные и изысканные ароматы.",
+    "sachets-p3":
+      "Созданное, чтобы служить долго, ваше саше можно освежать любимым ароматом каждые три недели. Элегантный, ответственный и экологичный подход.",
+    "sachets-p4":
+      "Все наши ароматы сертифицированы и происходят из Грасса — мировой столицы французской парфюмерии, где рождаются самые прекрасные ольфакторные композиции.",
+    "sachets-p5":
+      "Каждое саше полностью изготовлено вручную в нашей мастерской из натуральных материалов, с особым вниманием к каждой детали.",
+    "sachets-p6":
+      "Наша коллекция представлена в четырёх ароматах, вдохновлённых символическими цветами юга Франции: мимоза, роза, мак и лаванда.",
+    "sachets-p7":
+      "Для ценителей прекрасного мы создали четыре изысканных изделия: «Крылья ангела», «Камелия», «Цветущее сердце» и элегантную табличку, украшенную листьями иланг-иланга.",
+    "sachets-p8":
+      "Подарите себе момент нежности или порадуйте тех, кого любите. В машине, ванной комнате, гардеробной или спальне — каждое саше распространяет изысканную ольфакторную подпись и добавляет нотку поэзии в ваш интерьер.",
+    "sachets-products-title": "Наша коллекция саше",
+    "sachets-empty-title": "Новые изделия уже готовятся",
+    "sachets-empty-text": "Загляните позже — первые саше уже в пути!",
   },
 };
 
