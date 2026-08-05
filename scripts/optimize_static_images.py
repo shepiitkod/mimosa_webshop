@@ -9,6 +9,7 @@ from PIL import Image, ImageOps
 ROOT = Path(__file__).resolve().parent.parent
 BASE = ROOT / "static" / "assets" / "images"
 SOURCE_BASE = ROOT / "assets" / "images"
+SOURCE_ROOT = ROOT / "assets"
 
 # (output stem, max width, max height, source filename)
 JOBS: list[tuple[str, int | None, int | None, str]] = [
@@ -21,6 +22,9 @@ JOBS: list[tuple[str, int | None, int | None, str]] = [
     ("sv-hero-refill", 1400, None, "2026-06-10 14.40.35.ico"),
     ("mainpipi", 1200, None, "mainpipi.ico"),
     ("mimosa-logo", 1000, None, "logobl2.ico"),
+    ("sachets-hero", 1400, None, "photo_2026-07-30 11.59.40.jpeg"),
+    ("sachets-flatlay", 1400, None, "photo_2026-07-30 11.59.33.jpeg"),
+    ("sachets-dressing", 1400, None, "photo_2026-07-30 11.59.43.jpeg"),
 ]
 
 
@@ -49,6 +53,8 @@ def main() -> None:
         src = BASE / src_name
         if not src.exists():
             src = SOURCE_BASE / src_name
+        if not src.exists():
+            src = SOURCE_ROOT / src_name
         if not src.exists():
             print("skip (missing):", src)
             continue

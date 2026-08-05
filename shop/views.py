@@ -636,9 +636,78 @@ def index_view(request):
     # Home: show the three most recently added products (by id) under "Our New Collection".
     products = Product.objects.all().order_by("-id")[:3]
     cart_count = _cart_count(request.session)
+    home_categories = _home_category_cards()
     return render(
-        request, "index.html", {"products": products, "cart_count": cart_count}
+        request,
+        "index.html",
+        {
+            "products": products,
+            "cart_count": cart_count,
+            "home_categories": home_categories,
+        },
     )
+
+
+def _home_category_cards():
+    """Category tiles for the homepage discovery grid. Each tile uses a
+    hand-picked atelier photo (rather than a random product image) so the
+    grid always looks curated, even before the catalog is fully stocked."""
+    specs = (
+        {
+            "slug": "bento-candles",
+            "translate_key": "nav-sub-bento",
+            "subtitle_key": "home-category-bento-subtitle",
+            "name": Product.CATEGORY_BENTO,
+            "subtitle": "Playful bento-box candle sets",
+            "image": "assets/images/bento",
+            "image_w": 801,
+            "image_h": 1200,
+        },
+        {
+            "slug": "scented-candles",
+            "translate_key": "nav-sub-scented",
+            "subtitle_key": "home-category-scented-subtitle",
+            "name": Product.CATEGORY_SCENTED,
+            "subtitle": "Candles for ceremonies and celebrations",
+            "image": "assets/images/MAIN10",
+            "image_w": 801,
+            "image_h": 1200,
+        },
+        {
+            "slug": "decorative-candles",
+            "translate_key": "nav-sub-decorative",
+            "subtitle_key": "home-category-decorative-subtitle",
+            "name": Product.CATEGORY_DECORATIVE,
+            "subtitle": "Personalized custom candles",
+            "image": "assets/images/MAIN9",
+            "image_w": 801,
+            "image_h": 1200,
+        },
+        {
+            "slug": "ceremony-candles",
+            "translate_key": "nav-sub-ceremony",
+            "subtitle_key": "home-category-ceremony-subtitle",
+            "name": Product.CATEGORY_CEREMONY,
+            "subtitle": "Ceremonial candles for your special moments",
+            "image": "assets/images/MAIN1",
+            "image_w": 1200,
+            "image_h": 1600,
+        },
+    )
+
+    return [
+        {
+            "slug": spec["slug"],
+            "translate_key": spec["translate_key"],
+            "subtitle_key": spec["subtitle_key"],
+            "name": Product(category=spec["name"]).category_display_name,
+            "subtitle": spec["subtitle"],
+            "image": spec["image"],
+            "image_w": spec["image_w"],
+            "image_h": spec["image_h"],
+        }
+        for spec in specs
+    ]
 
 
 @require_GET
@@ -744,6 +813,22 @@ def product_detail_view(request, product_id, slug=None):
             "canonical_slug": canonical_slug,
             "related_products": related_products,
         },
+    )
+
+
+@require_GET
+def product_sachets_view(request):
+    """Landing page for the new Plaster Scented Sachets ("sachet parfumé en
+    plâtre") collection — hero photo, story text, and the live products the
+    admin has added under this category."""
+    products = Product.objects.filter(category=Product.CATEGORY_SACHETS).order_by(
+        "-id"
+    )
+    cart_count = _cart_count(request.session)
+    return render(
+        request,
+        "product_sachets.html",
+        {"products": products, "cart_count": cart_count},
     )
 
 

@@ -1,0 +1,167 @@
+{% load static product_media %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Plaster Scented Sachets — MIMOSA Atelier</title>
+        <meta
+            name="description"
+            content="Discover MIMOSA Atelier's new plaster scented sachets — handcrafted decorative fragrance pieces in four scents from the South of France: Mimosa, Rose, Poppy, and Lavender."
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="{% static 'styles.css' %}?v=20260730" />
+        <link rel="stylesheet" href="{% static 'catalog.css' %}?v=20260730" />
+        <link rel="stylesheet" href="{% static 'sachets.css' %}?v=20260730" />
+    </head>
+    <body class="sachets-page">
+        {% include 'includes/header.html' with header_show_cart=True %}
+
+        <main id="main-content" tabindex="-1">
+            <!-- ══════════════════════════════════════════
+                 HERO — one main photo
+            ══════════════════════════════════════════ -->
+            <section class="sachets-hero" aria-label="Plaster scented sachets — introduction">
+                <div class="sachets-hero__glow" aria-hidden="true"></div>
+                <p class="sachets-eyebrow" data-translate="sachets-eyebrow">
+                    New Collection
+                </p>
+                <h1 class="sachets-hero__title" data-translate="sachets-hero-title">
+                    Plaster Scented Sachets
+                </h1>
+                <div class="sachets-hero__divider" aria-hidden="true">
+                    <span class="sachets-hero__divider-gem">◇</span>
+                </div>
+                <figure class="sachets-hero__frame">
+                    {% include 'includes/picture_opt.html' with rel='assets/images/sachets-hero' class_name='sachets-hero__image' w=928 h=1200 alt='MIMOSA plaster scented sachets — angel wings and heart in a gift box' loading='eager' fetchpriority='high' sizes='(max-width: 767px) 92vw, 560px' only %}
+                </figure>
+            </section>
+
+            <!-- ══════════════════════════════════════════
+                 STORY / DESCRIPTION
+            ══════════════════════════════════════════ -->
+            <section class="sachets-story" aria-label="About the plaster scented sachets">
+                <div class="sachets-story__inner">
+                    <p class="sachets-lead" data-translate="sachets-p1">
+                        Discover our newest creation — the plaster scented sachet.
+                    </p>
+                    <p class="sachets-paragraph" data-translate="sachets-p2">
+                        More than a simple home fragrance, it's a true decorative
+                        object that elevates your everyday life by diffusing
+                        delicate, refined scents.
+                    </p>
+                    <p class="sachets-paragraph" data-translate="sachets-p3">
+                        Designed to last, your sachet can be refreshed every
+                        three weeks with your favourite fragrance — an elegant,
+                        responsible, and eco-friendly approach.
+                    </p>
+                    <p class="sachets-paragraph" data-translate="sachets-p4">
+                        All our fragrances are certified and sourced from
+                        Grasse, the world capital of French haute perfumery,
+                        birthplace of the finest olfactory compositions.
+                    </p>
+                    <p class="sachets-paragraph" data-translate="sachets-p5">
+                        Every sachet is entirely handcrafted in our atelier from
+                        natural materials, with meticulous attention to every
+                        detail.
+                    </p>
+                    <p class="sachets-paragraph" data-translate="sachets-p6">
+                        Our collection comes in four scents inspired by the
+                        emblematic flowers of the South of France: Mimosa,
+                        Rose, Poppy, and Lavender.
+                    </p>
+                    <p class="sachets-paragraph" data-translate="sachets-p7">
+                        For lovers of beauty, we've imagined four delicate
+                        creations: Angel Wings, Camellia, Flowering Heart, and
+                        an elegant Plaque decorated with Ylang-Ylang leaves.
+                    </p>
+                    <p class="sachets-paragraph" data-translate="sachets-p8">
+                        Treat yourself to a moment of softness, or delight
+                        someone you love. In a car, a bathroom, a closet, or a
+                        bedroom — every sachet diffuses a refined olfactory
+                        signature and brings a touch of poetry to your home.
+                    </p>
+                </div>
+
+                <div class="sachets-accent-grid" aria-hidden="false">
+                    <figure class="sachets-accent-item">
+                        {% include 'includes/picture_opt.html' with rel='assets/images/sachets-flatlay' class_name='sachets-accent-image' w=843 h=1200 alt='Colorful plaster sachets in rose, heart, and wing shapes' loading='lazy' sizes='(max-width: 767px) 46vw, 320px' only %}
+                    </figure>
+                    <figure class="sachets-accent-item">
+                        {% include 'includes/picture_opt.html' with rel='assets/images/sachets-dressing' class_name='sachets-accent-image' w=800 h=1200 alt='A rose-shaped sachet hanging in a wardrobe' loading='lazy' sizes='(max-width: 767px) 46vw, 320px' only %}
+                    </figure>
+                </div>
+            </section>
+
+            <!-- ══════════════════════════════════════════
+                 PRODUCTS — managed from the admin panel
+            ══════════════════════════════════════════ -->
+            <section class="sachets-products" aria-label="Plaster sachets for sale">
+                <h2 class="sachets-products__title" data-translate="sachets-products-title">
+                    Our Sachets Collection
+                </h2>
+
+                <div class="catalog-grid sachets-grid">
+                    {% for product in products %}
+                    <article class="catalog-card">
+                        <figure>
+                            <a
+                                href="{% url 'shop:product_detail' product.id product.title|slugify %}"
+                                aria-label="{{ product.title }} details"
+                            >
+                                {% product_picture product.image alt=product.title css_class="product-framed-image catalog-card__media-img" w=400 h=500 loading="lazy" object_position=product.image_object_position %}
+                            </a>
+                        </figure>
+                        <div class="catalog-card-body">
+                            <h3>
+                                <a
+                                    href="{% url 'shop:product_detail' product.id product.title|slugify %}"
+                                    style="text-decoration: none; color: inherit;"
+                                    data-product-i18n="{{ product|product_i18n_json }}"
+                                    data-i18n-field="title"
+                                    >{{ product.title }}</a
+                                >
+                            </h3>
+                            <p
+                                class="catalog-desc"
+                                data-product-i18n="{{ product|product_i18n_json }}"
+                                data-i18n-field="description"
+                                data-i18n-html="true"
+                            >
+                                {{ product.description|truncatechars:100 }}
+                            </p>
+                            <div class="catalog-card-bottom">
+                                <span class="catalog-price">EUR {{ product.price }}</span>
+                                <a
+                                    href="{% url 'shop:product_detail' product.id product.title|slugify %}"
+                                    class="catalog-add-btn"
+                                    style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;"
+                                    data-translate="catalog-view-btn"
+                                    >View</a
+                                >
+                            </div>
+                        </div>
+                    </article>
+                    {% empty %}
+                    <article class="catalog-card catalog-card-empty">
+                        <h3 data-translate="sachets-empty-title">
+                            New pieces are being handcrafted
+                        </h3>
+                        <p data-translate="sachets-empty-text">
+                            Check back soon — the first sachets are on their way!
+                        </p>
+                    </article>
+                    {% endfor %}
+                </div>
+            </section>
+        </main>
+
+        {% include 'includes/footer.html' %}
+        {% include 'includes/site_scripts.html' %}
+    </body>
+</html>

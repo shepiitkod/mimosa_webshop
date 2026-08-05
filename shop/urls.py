@@ -29,6 +29,11 @@ urlpatterns = [
         name="product_decorative_candles",
     ),
     path("products/rose/", views.product_rose_view, name="product_rose"),
+    path(
+        "products/plaster-sachets/",
+        views.product_sachets_view,
+        name="product_sachets",
+    ),
     path("seconde-vie/", views.seconde_vie_view, name="seconde_vie"),
     path("about/", views.about_view, name="about"),
     path("contact/", views.contact_view, name="contact"),

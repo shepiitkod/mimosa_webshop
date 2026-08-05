@@ -13,6 +13,7 @@ class Product(models.Model):
     CATEGORY_DECORATIVE = "Decorative Candles"
     CATEGORY_CEREMONY = "Ceremony Candles"
     CATEGORY_CEREMONY_LEGACY = "Bougies de cérémonie"
+    CATEGORY_SACHETS = "Plaster Sachets"
 
     CATEGORY_CHOICES = [
         (CATEGORY_BENTO, "Bento Candles"),
@@ -21,6 +22,7 @@ class Product(models.Model):
         (CATEGORY_GIFTS, "Gift Collections"),
         (CATEGORY_CEREMONY, "Ceremony Candles"),
         (CATEGORY_CEREMONY_LEGACY, "Ceremony Candles"),
+        (CATEGORY_SACHETS, "Plaster Sachets"),
     ]
 
     title = models.CharField(max_length=255)
@@ -125,6 +127,7 @@ class Product(models.Model):
             self.CATEGORY_GIFTS: "nav-sub-gifts",
             self.CATEGORY_CEREMONY: "nav-sub-ceremony",
             self.CATEGORY_CEREMONY_LEGACY: "nav-sub-ceremony",
+            self.CATEGORY_SACHETS: "nav-sub-sachets",
         }.get(self.category, "")
 
     @property
@@ -136,6 +139,7 @@ class Product(models.Model):
             self.CATEGORY_GIFTS: "Gift Collections",
             self.CATEGORY_CEREMONY: "Ceremony Candles",
             self.CATEGORY_CEREMONY_LEGACY: "Ceremony Candles",
+            self.CATEGORY_SACHETS: "Plaster Sachets",
         }.get(self.category, self.category)
 
     @property
