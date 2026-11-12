@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "django",
+  "buildCommand": "python vercel_build.py",
+  "functions": {
+    "mimosa_backend/wsgi.py": {
+      "maxDuration": 60
+    }
+  }
+}

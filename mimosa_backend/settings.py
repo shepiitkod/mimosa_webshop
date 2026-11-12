@@ -51,6 +51,18 @@ if DEBUG:
         ]
     )
 
+# Vercel: allow this deployment's own *.vercel.app hostnames.
+IS_VERCEL = bool(os.getenv("VERCEL"))
+for _var in ("VERCEL_URL", "VERCEL_BRANCH_URL", "VERCEL_PROJECT_PRODUCTION_URL"):
+    _host = os.getenv(_var)
+    if _host and _host not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(_host)
+        CSRF_TRUSTED_ORIGINS.append(f"https://{_host}")
+
+# Render and Vercel terminate HTTPS at their proxy and pass the original
+# scheme in X-Forwarded-Proto; without this, SECURE_SSL_REDIRECT loops.
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 # Security settings for HTTPS in production
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
@@ -69,13 +81,15 @@ if not DEBUG:
 # Application definition
 
 INSTALLED_APPS = [
-    "cloudinary_storage",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # After staticfiles: Cloudinary stores media (product photos) only, and
+    # Django's own collectstatic must win so Vercel can serve /static/.
+    "cloudinary_storage",
     "django.contrib.sitemaps",
     "cloudinary",
     "shop.apps.ShopConfig",
@@ -120,9 +134,14 @@ WSGI_APPLICATION = "mimosa_backend.wsgi.application"
 DATABASES = {
     "default": dj_database_url.config(
         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        conn_max_age=600,
+        conn_max_age=60 if IS_VERCEL else 600,
+        conn_health_checks=True,
     )
 }
+if IS_VERCEL:
+    # Neon's pooled endpoint (PgBouncer, transaction mode) doesn't support
+    # server-side cursors.
+    DATABASES["default"]["DISABLE_SERVER_SIDE_CURSORS"] = True
 
 
 # Password validation
@@ -185,7 +204,8 @@ CLOUDINARY_STORAGE = {
     "FOLDER": os.getenv("CLOUDINARY_FOLDER", "mimosa_webshop"),
 }
 
-if DEBUG:
+if DEBUG or IS_VERCEL:
+    # On Vercel, collectstatic runs at build time and the CDN serves /static/.
     STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
     STATICFILES_BACKEND = "django.contrib.staticfiles.storage.StaticFilesStorage"
 else:
