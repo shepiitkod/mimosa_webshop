@@ -644,8 +644,47 @@ def index_view(request):
             "products": products,
             "cart_count": cart_count,
             "home_categories": home_categories,
+            "atelier_steps": ATELIER_STEPS,
         },
     )
+
+
+# "Fait main à Nîmes" on the homepage: the four gestures behind every candle.
+# Text defaults are French (the brand language); translations.js localises them.
+ATELIER_STEPS = (
+    {
+        "key": "geste-cire",
+        "title": "La cire",
+        "text": "Cire de soja naturelle, fondue lentement, à basse température. Rien d’autre que la matière et le temps.",
+        "image": "assets/images/sv-cire-pour",
+        "w": 800,
+        "h": 1200,
+    },
+    {
+        "key": "geste-moule",
+        "title": "Le moule",
+        "text": "Coulée à la main, mèche après mèche. Chaque pièce repose une nuit entière avant de se révéler.",
+        "image": "assets/images/mainpipi",
+        "w": 887,
+        "h": 1280,
+    },
+    {
+        "key": "geste-or",
+        "title": "L’or",
+        "text": "Une feuille d’or posée au pinceau, à main levée. Aucune bougie n’est tout à fait la même.",
+        "image": "assets/images/MAIN4",
+        "w": 801,
+        "h": 1200,
+    },
+    {
+        "key": "geste-ecrin",
+        "title": "L’écrin",
+        "text": "Emballée à l’atelier, nouée d’un ruban, prête à être offerte — ou gardée pour soi.",
+        "image": "assets/images/MAIN3",
+        "w": 1200,
+        "h": 1600,
+    },
+)
 
 
 def _home_category_cards():
@@ -655,6 +694,7 @@ def _home_category_cards():
     specs = (
         {
             "slug": "bento-candles",
+            "tint": "bento",
             "translate_key": "nav-sub-bento",
             "subtitle_key": "home-category-bento-subtitle",
             "name": Product.CATEGORY_BENTO,
@@ -665,16 +705,18 @@ def _home_category_cards():
         },
         {
             "slug": "scented-candles",
+            "tint": "scented",
             "translate_key": "nav-sub-scented",
             "subtitle_key": "home-category-scented-subtitle",
             "name": Product.CATEGORY_SCENTED,
             "subtitle": "Candles for ceremonies and celebrations",
-            "image": "assets/images/MAIN10",
+            "image": "assets/images/MAIN11",
             "image_w": 801,
             "image_h": 1200,
         },
         {
             "slug": "decorative-candles",
+            "tint": "decorative",
             "translate_key": "nav-sub-decorative",
             "subtitle_key": "home-category-decorative-subtitle",
             "name": Product.CATEGORY_DECORATIVE,
@@ -685,6 +727,7 @@ def _home_category_cards():
         },
         {
             "slug": "ceremony-candles",
+            "tint": "ceremony",
             "translate_key": "nav-sub-ceremony",
             "subtitle_key": "home-category-ceremony-subtitle",
             "name": Product.CATEGORY_CEREMONY,
@@ -698,6 +741,7 @@ def _home_category_cards():
     return [
         {
             "slug": spec["slug"],
+            "tint": spec["tint"],
             "translate_key": spec["translate_key"],
             "subtitle_key": spec["subtitle_key"],
             "name": Product(category=spec["name"]).category_display_name,

@@ -16,227 +16,134 @@
             content="Découvrez MIMOSA, votre destination pour des bougies artisanales bio, naturelles et parfumées. Nos bougies écologiques sont fabriquées à la main avec des ingrédients végétaux durables, offrant une expérience sensorielle unique tout en respectant l'environnement."
         />
         {% include 'includes/head_assets.html' %}
-        <link
-            rel="preload"
-            as="image"
-            href="{% static 'assets/images/photo1.webp' %}"
-            type="image/webp"
-        />
+        <link rel="preload" as="image" href="{% static 'assets/images/MAIN10.webp' %}" type="image/webp" fetchpriority="high" />
     </head>
 
     <body class="home-page">
         {% include 'includes/header.html' with header_show_cart=True %}
 
-        <section class="hero">
-            <div class="hero-photos">
-                {% include 'includes/picture_opt.html' with rel='assets/images/photo1' class_name='hero-photo hero-photo-1' w=900 h=1348 sizes='(max-width: 900px) 30vw, 400px' alt='Candle from collection 1' fetchpriority='high' only %}
-                {% include 'includes/picture_opt.html' with rel='assets/images/photo2' class_name='hero-photo hero-photo-2' w=853 h=1280 sizes='(max-width: 900px) 30vw, 400px' alt='Photo model for the new collection' loading='lazy' only %}
-                {% include 'includes/picture_opt.html' with rel='assets/images/photo3' class_name='hero-photo hero-photo-3' w=900 h=1348 sizes='(max-width: 900px) 30vw, 400px' alt='Candle from collection 2' loading='lazy' only %}
-            </div>
-            <div class="hero-content">
-                <div class="hero-content-bg" aria-hidden="true">
-                    <div class="hero-bg-track hero-bg-track--full">
-                        {% include 'includes/hero_marquee_set.html' %}
-                        {% include 'includes/hero_marquee_set.html' %}
-                    </div>
-                    <div class="hero-bg-track hero-bg-track--lite">
-                        {% include 'includes/hero_marquee_set_lite.html' %}
-                        {% include 'includes/hero_marquee_set_lite.html' %}
-                    </div>
-                </div>
-                <h1 class="hero-headline" data-translate="hero-title">
-                    The art of bespoke couture.
-                </h1>
-                <p class="hero-subtitle" data-translate="hero-subtitle">
-                    Handcrafted candles, natural soy wax, fragrances from
-                    Provence. Nîmes, France.
-                </p>
-                <a
-                    href="{% url 'shop:products' %}"
-                    class="hero-btn"
-                    data-translate="hero-btn"
-                    >Explore Collection</a
-                >
-            </div>
-        </section>
-
-        {% if products %}
-        <section class="nouveautes" aria-labelledby="nouveautes-title">
-            <div class="nouveautes__head">
-                <p class="eyebrow" data-translate="home-new-eyebrow">Nouveautés</p>
-                <h2 id="nouveautes-title" class="display-title nouveautes__title" data-translate-html="home-new-title">Les <em>nouvelles</em> lumières</h2>
-                <a class="text-link nouveautes__all" href="{% url 'shop:products' %}" data-translate="home-new-all">Toute la collection</a>
-            </div>
-            <div class="nouveautes__grid">
-                {% for product in products %}
-                {% include 'includes/product_card.html' with product=product card_size='large' %}
-                {% endfor %}
-            </div>
-        </section>
-        {% endif %}
-
-        <section
-            class="promo-banner promo-banner--contest"
-            aria-labelledby="promo-banner-heading"
-        >
-            <div class="promo-banner__inner promo-banner__inner--prize">
-                <div class="promo-banner__content">
-                    <p
-                        class="promo-banner__eyebrow"
-                        data-translate="promo-eyebrow"
-                    >
-                        Exclusive atelier service
-                    </p>
-                    <h2
-                        id="promo-banner-heading"
-                        class="promo-banner__title"
-                        data-translate="promo-title"
-                    >
-                        Seconde vie for your candle
-                    </h2>
-                    <p
-                        class="promo-banner__threshold"
-                        data-translate="promo-threshold"
-                    >
-                        Exclusive refill & renewal service
-                    </p>
-                    <p class="promo-banner__text" data-translate="promo-text">
-                        Give your favorite MIMOSA piece a new life with our
-                        intimate Seconde Vie service: refill, renew, and keep
-                        the object you love.
-                    </p>
-                    <p
-                        class="promo-banner__subtext"
-                        data-translate="promo-subtext"
-                    >
-                        Reserved for atelier pieces, this exclusive experience
-                        turns an empty candle into a fresh ritual, handcrafted
-                        again with natural soy wax and refined fragrance.
-                    </p>
-                    <a
-                        href="{% url 'shop:seconde_vie' %}"
-                        class="hero-btn promo-banner__cta"
-                        data-translate="promo-cta"
-                        >Discover Seconde Vie</a
-                    >
-                </div>
-                <div
-                    class="promo-banner__gallery promo-banner__gallery--single"
-                    aria-label="Seconde Vie service image"
-                >
-                    <figure
-                        class="promo-banner__media promo-banner__media--main"
-                    >
-                        {% include 'includes/picture_opt.html' with rel='assets/images/mainpipi' w=887 h=1280 alt='Seconde Vie candle renewal service' loading='lazy' only %}
-                    </figure>
-                </div>
-            </div>
-        </section>
-
         <main id="main-content" tabindex="-1">
-            <section
-                class="welcome-float"
-                aria-labelledby="welcome-float-heading"
-            >
-                <div class="welcome-float__ambiance" aria-hidden="true">
-                    <span class="welcome-float__glow welcome-float__glow--a"></span>
-                    <span class="welcome-float__glow welcome-float__glow--b"></span>
+            {# ── 1. Allumer la bougie ─────────────────────────────── #}
+            <section class="lumiere" data-own-motion aria-labelledby="lumiere-title">
+                <div class="lumiere__media">
+                    <div class="lumiere__frame">
+                        <div class="lumiere__photo" data-parallax="0.06">
+                            {% include 'includes/picture_opt.html' with rel='assets/images/MAIN10' class_name='lumiere__img' w=801 h=1200 sizes='(max-width: 767px) 140vw, 520px' alt='Bougie pivoine allumée sur une pile de livres, branches de cerisier' fetchpriority='high' only %}
+                        </div>
+                        <span class="lumiere__bloom" aria-hidden="true"></span>
+                        <span class="lumiere__halo" aria-hidden="true"></span>
+                        <span class="lumiere__flame" aria-hidden="true"><span class="lumiere__flame-core"></span></span>
+                    </div>
                 </div>
-                <div class="welcome-float__stage" aria-hidden="true">
-                    <figure class="welcome-float__piece" data-depth="far" data-lane="0">
-                        <img src="{% static 'assets/images/MAIN1.webp' %}" alt="" width="200" height="266" loading="lazy" decoding="async" draggable="false" />
-                    </figure>
-                    <figure class="welcome-float__piece" data-depth="mid" data-lane="1">
-                        <img src="{% static 'assets/images/MAIN5.webp' %}" alt="" width="200" height="266" loading="lazy" decoding="async" draggable="false" />
-                    </figure>
-                    <figure class="welcome-float__piece" data-depth="near" data-lane="2">
-                        <img src="{% static 'assets/images/MAIN3.webp' %}" alt="" width="200" height="266" loading="lazy" decoding="async" draggable="false" />
-                    </figure>
-                    <figure class="welcome-float__piece" data-depth="far" data-lane="3">
-                        <img src="{% static 'assets/images/MAIN8.webp' %}" alt="" width="200" height="266" loading="lazy" decoding="async" draggable="false" />
-                    </figure>
-                    <figure class="welcome-float__piece" data-depth="mid" data-lane="4">
-                        <img src="{% static 'assets/images/MAIN11.webp' %}" alt="" width="200" height="266" loading="lazy" decoding="async" draggable="false" />
-                    </figure>
+                <div class="lumiere__veil" aria-hidden="true"></div>
+                <div class="lumiere__content">
+                    <p class="eyebrow lumiere__eyebrow" data-translate="hero-eyebrow">Atelier · Nîmes</p>
+                    <h1 id="lumiere-title" class="lumiere__title" data-translate-html="hero-title-lumiere"><span class="l"><span>L’art</span></span><span class="l"><span><em>de la</em> bougie</span></span></h1>
+                    <p class="lumiere__sub" data-translate="hero-subtitle">Bougies coulées à la main, cire de soja naturelle, parfums de Provence. Nîmes, France.</p>
+                    <div class="lumiere__actions">
+                        <a href="{% url 'shop:products' %}" class="btn hero-btn" data-translate="hero-btn">Explore Collection</a>
+                        <a href="#nos-creations" class="text-link" data-translate="hero-secondary">Nos créations</a>
+                    </div>
                 </div>
-                <div class="welcome-float__veil" aria-hidden="true"></div>
-                <div class="welcome-float__content">
-                    <p class="welcome-float__eyebrow">
-                        <span>Atelier</span>
-                        <span class="welcome-float__eyebrow-dot" aria-hidden="true"></span>
-                        <span>Nîmes</span>
-                    </p>
-                    <h2 id="welcome-float-heading" data-translate="about-snippet-title">
-                        Welcome to MIMOSA Atelier
-                    </h2>
-                    <span class="welcome-float__rule" aria-hidden="true"></span>
-                    <p data-translate="about-snippet-text">
-                        Every candle is a story, crafted by hand with 100%
-                        natural soy wax and exclusive fragrances from Provence.
-                        We believe in beauty, sustainability, and the art of
-                        slow living.
-                    </p>
+                <span class="lumiere__cue" aria-hidden="true"></span>
+            </section>
+
+            {% include 'includes/marquee.html' with marquee_set='a' %}
+
+            {# ── 2. Nouveautés ────────────────────────────────────── #}
+            {% if products %}
+            <section class="nouveautes" id="nouveautes" data-own-motion aria-labelledby="nouveautes-title">
+                <div class="nouveautes__head">
+                    <p class="eyebrow" data-translate="home-new-eyebrow" data-reveal>Nouveautés</p>
+                    <h2 id="nouveautes-title" class="display-title nouveautes__title" data-translate-html="home-new-title" data-reveal="lines">Les <em>nouvelles</em> lumières</h2>
+                    <a class="text-link nouveautes__all" href="{% url 'shop:products' %}" data-translate="home-new-all" data-reveal>Toute la collection</a>
+                </div>
+                <div class="nouveautes__grid">
+                    {% for product in products %}
+                    {% include 'includes/product_card.html' with product=product card_size='large' %}
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            {# ── 3. Nos Créations: horizontal showcase ────────────── #}
+            <section class="creations" id="nos-creations" data-own-motion data-creations aria-labelledby="creations-title">
+                <div class="creations__sticky">
+                    <div class="creations__head">
+                        <p class="eyebrow" data-translate="discover-eyebrow">Collections</p>
+                        <h2 id="creations-title" class="display-title creations__title" data-translate="home-categories-title">Nos Créations</h2>
+                        <p class="creations__progress" aria-hidden="true"><span class="creations__progress-now">01</span> / {{ home_categories|length|stringformat:"02d" }}</p>
+                    </div>
+                    <div class="creations__track">
+                        {% for cat in home_categories %}
+                        <a class="creation" href="{% url 'shop:products_by_category' cat.slug %}" data-tint="{{ cat.tint }}" style="--tint: var(--tint-{{ cat.tint }})">
+                            <span class="creation__index" aria-hidden="true">{{ forloop.counter|stringformat:"02d" }}</span>
+                            <figure class="creation__media">
+                                {% include 'includes/picture_opt.html' with rel=cat.image class_name='creation__img' w=cat.image_w h=cat.image_h alt=cat.name loading='lazy' sizes='(max-width: 767px) 78vw, 34vw' only %}
+                            </figure>
+                            <div class="creation__body">
+                                <h3 class="creation__name" data-translate="{{ cat.translate_key }}">{{ cat.name }}</h3>
+                                <p class="creation__subtitle" data-translate="{{ cat.subtitle_key }}">{{ cat.subtitle }}</p>
+                                <span class="text-link creation__cta" data-translate="discover-card-cta">Explore</span>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
                 </div>
             </section>
 
-            <section
-                class="discover"
-                aria-labelledby="discover-heading"
-            >
-                <div class="discover__header">
-                    <p
-                        class="discover__eyebrow"
-                        data-translate="discover-eyebrow"
-                    >
-                        Collections
-                    </p>
-                    <h2
-                        id="discover-heading"
-                        data-translate="home-categories-title"
-                    >
-                        Nos Créations
-                    </h2>
-                    <span class="discover__rule" aria-hidden="true"></span>
+            {% include 'includes/marquee.html' with marquee_set='b' %}
+
+            {# ── 4. Fait main à Nîmes: the four gestures ──────────── #}
+            <section class="gestes" data-own-motion data-gestes aria-labelledby="gestes-title">
+                <div class="gestes__intro">
+                    <p class="eyebrow" data-translate="gestes-eyebrow" data-reveal>Savoir-faire</p>
+                    <h2 id="gestes-title" class="display-title gestes__title" data-translate-html="gestes-title" data-reveal="lines">Fait main <em>à Nîmes</em></h2>
                 </div>
-                <div class="discover__grid">
-                    {% for cat in home_categories %}
-                    <a
-                        class="discover__card"
-                        href="{% url 'shop:products_by_category' cat.slug %}"
-                        style="--discover-i: {{ forloop.counter0 }}"
-                        data-index="{{ forloop.counter|stringformat:'02d' }}"
-                    >
-                        <div class="discover__card-media">
-                            {% include 'includes/picture_opt.html' with rel=cat.image class_name='discover__card-image' w=cat.image_w h=cat.image_h alt=cat.name loading='lazy' sizes='(max-width: 640px) 46vw, (max-width: 1023px) 48vw, 420px' only %}
-                            <span
-                                class="discover__card-shade"
-                                aria-hidden="true"
-                            ></span>
+                <div class="gestes__layout">
+                    <div class="gestes__visual" aria-hidden="true">
+                        <div class="gestes__frame">
+                            {% for step in atelier_steps %}
+                            <div class="gestes__img{% if forloop.first %} is-active{% endif %}" data-step-img="{{ forloop.counter0 }}">
+                                {% include 'includes/picture_opt.html' with rel=step.image class_name='' w=step.w h=step.h alt='' loading='lazy' sizes='(max-width: 767px) 92vw, 40vw' only %}
+                            </div>
+                            {% endfor %}
+                            <span class="gestes__counter"><span data-step-now>01</span>&thinsp;/&thinsp;{{ atelier_steps|length|stringformat:"02d" }}</span>
                         </div>
-                        <div class="discover__card-body">
-                            <span class="discover__index" aria-hidden="true"
-                                >{{ forloop.counter|stringformat:"02d" }}</span
-                            >
-                            <h3
-                                class="discover__card-name"
-                                data-translate="{{ cat.translate_key }}"
-                            >
-                                {{ cat.name }}
-                            </h3>
-                            <p
-                                class="discover__card-subtitle"
-                                data-translate="{{ cat.subtitle_key }}"
-                            >
-                                {{ cat.subtitle }}
-                            </p>
-                            <span
-                                class="discover__card-cta"
-                                data-translate="discover-card-cta"
-                                >Explore</span
-                            >
-                        </div>
-                    </a>
-                    {% endfor %}
+                    </div>
+                    <ol class="gestes__steps">
+                        {% for step in atelier_steps %}
+                        <li class="geste{% if forloop.first %} is-active{% endif %}" data-step="{{ forloop.counter0 }}">
+                            <div class="geste__mobile-img">
+                                {% include 'includes/picture_opt.html' with rel=step.image class_name='' w=step.w h=step.h alt='' loading='lazy' sizes='92vw' only %}
+                            </div>
+                            <span class="geste__num">{{ forloop.counter|stringformat:"02d" }}</span>
+                            <h3 class="geste__title" data-translate="{{ step.key }}-title">{{ step.title }}</h3>
+                            <p class="geste__text" data-translate="{{ step.key }}-text">{{ step.text }}</p>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                </div>
+            </section>
+
+            {# ── 5. Manifesto ─────────────────────────────────────── #}
+            <section class="manifeste" data-own-motion aria-labelledby="manifeste-title">
+                <p class="eyebrow" data-reveal><span>Atelier</span> · <span>Nîmes</span></p>
+                <h2 id="manifeste-title" class="visually-hidden" data-translate="about-snippet-title">Welcome to MIMOSA Atelier</h2>
+                <p class="manifeste__text" data-translate="about-snippet-text" data-reveal="lines">Every candle is a story, crafted by hand with 100% natural soy wax and exclusive fragrances from Provence. We believe in beauty, sustainability, and the art of slow living.</p>
+                <span class="manifeste__signature" data-reveal>MIMOSA Atelier — Nîmes</span>
+            </section>
+
+            {# ── 6. Seconde vie ───────────────────────────────────── #}
+            <section class="sv-teaser" data-own-motion aria-labelledby="sv-teaser-title">
+                <figure class="sv-teaser__media" data-parallax="0.08">
+                    {% include 'includes/picture_opt.html' with rel='assets/images/mainpipi' w=887 h=1280 alt='Seconde vie : une bougie MIMOSA recoulée à l’atelier' loading='lazy' sizes='(max-width: 767px) 100vw, 45vw' only %}
+                </figure>
+                <div class="sv-teaser__body">
+                    <p class="eyebrow" data-translate="promo-eyebrow" data-reveal>Exclusive atelier service</p>
+                    <h2 id="sv-teaser-title" class="display-title sv-teaser__title" data-translate="promo-title" data-reveal="lines">Seconde vie for your candle</h2>
+                    <p class="sv-teaser__text" data-translate="promo-text" data-reveal>Give your favorite MIMOSA piece a new life with our intimate Seconde Vie service: refill, renew, and keep the object you love.</p>
+                    <a href="{% url 'shop:seconde_vie' %}" class="btn btn--ghost" data-translate="promo-cta" data-reveal>Discover Seconde Vie</a>
                 </div>
             </section>
         </main>
@@ -370,7 +277,6 @@
             });
         </script>
         {% include 'includes/site_scripts.html' %}
-        <script src="{% static 'welcome-float.js' %}?v=20260805c" defer></script>
-        <script src="{% static 'discover-atelier.js' %}?v=20260805d" defer></script>
+
     </body>
 </html>

@@ -1,0 +1,20 @@
+{# Thin brand ribbon between sections. Phrases stay French on purpose (brand voice); keys exist in every language. #}
+<div class="marquee marquee--{{ marquee_set }}" aria-hidden="true">
+    <div class="marquee__track">
+        {% for _ in "1234" %}
+        <p class="marquee__group">
+            {% if marquee_set == 'b' %}
+            <span data-translate="marquee-b-1">La lumière lente</span><i class="marquee__dot"></i>
+            <span data-translate="marquee-b-2">Feuille d’or posée à la main</span><i class="marquee__dot"></i>
+            <span data-translate="marquee-b-3">Une seconde vie pour chaque bougie</span><i class="marquee__dot"></i>
+            <span data-translate="marquee-b-4">Fait main à Nîmes</span><i class="marquee__dot"></i>
+            {% else %}
+            <span data-translate="marquee-a-1">Coulée à la main</span><i class="marquee__dot"></i>
+            <span data-translate="marquee-a-2">Cire de soja naturelle</span><i class="marquee__dot"></i>
+            <span data-translate="marquee-a-3">Parfums de Provence</span><i class="marquee__dot"></i>
+            <span data-translate="marquee-a-4">Atelier à Nîmes</span><i class="marquee__dot"></i>
+            {% endif %}
+        </p>
+        {% endfor %}
+    </div>
+</div>

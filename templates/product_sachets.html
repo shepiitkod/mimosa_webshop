@@ -100,45 +100,7 @@
 
                 <div class="catalog-grid sachets-grid">
                     {% for product in products %}
-                    <article class="catalog-card">
-                        <figure>
-                            <a
-                                href="{% url 'shop:product_detail' product.id product.title|slugify %}"
-                                aria-label="{{ product.title }} details"
-                            >
-                                {% product_picture product.image alt=product.title css_class="product-framed-image catalog-card__media-img" w=400 h=500 loading="lazy" object_position=product.image_object_position %}
-                            </a>
-                        </figure>
-                        <div class="catalog-card-body">
-                            <h3>
-                                <a
-                                    href="{% url 'shop:product_detail' product.id product.title|slugify %}"
-                                    style="text-decoration: none; color: inherit;"
-                                    data-product-i18n="{{ product|product_i18n_json }}"
-                                    data-i18n-field="title"
-                                    >{{ product.title }}</a
-                                >
-                            </h3>
-                            <p
-                                class="catalog-desc"
-                                data-product-i18n="{{ product|product_i18n_json }}"
-                                data-i18n-field="description"
-                                data-i18n-html="true"
-                            >
-                                {{ product.description|truncatechars:100 }}
-                            </p>
-                            <div class="catalog-card-bottom">
-                                <span class="catalog-price">EUR {{ product.price }}</span>
-                                <a
-                                    href="{% url 'shop:product_detail' product.id product.title|slugify %}"
-                                    class="catalog-add-btn"
-                                    style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;"
-                                    data-translate="catalog-view-btn"
-                                    >View</a
-                                >
-                            </div>
-                        </div>
-                    </article>
+                    {% include 'includes/product_card.html' with product=product %}
                     {% empty %}
                     <article class="catalog-card catalog-card-empty">
                         <h3 data-translate="sachets-empty-title">
