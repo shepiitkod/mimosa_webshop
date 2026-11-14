@@ -141,7 +141,24 @@ DATABASES = {
         conn_health_checks=True,
     )
 }
-if IS_VERCEL:
+# Design-review previews of the site-redesign branch run on a throwaway
+# SQLite database in /tmp with demo products (shop/demo.py), so the preview
+# never needs migrations on the shared Neon database. No effect elsewhere.
+DEMO_PREVIEW = (
+    IS_VERCEL
+    and os.getenv("VERCEL_ENV") == "preview"
+    and os.getenv("VERCEL_GIT_COMMIT_REF", "") == "site-redesign"
+)
+if DEMO_PREVIEW:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": "/tmp/mimosa-preview.sqlite3",
+        }
+    }
+    SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+
+if IS_VERCEL and not DEMO_PREVIEW:
     # Neon's pooled endpoint (PgBouncer, transaction mode) doesn't support
     # server-side cursors.
     DATABASES["default"]["DISABLE_SERVER_SIDE_CURSORS"] = True
@@ -214,6 +231,14 @@ if DEBUG or IS_VERCEL:
 else:
     STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
     STATICFILES_BACKEND = "whitenoise.storage.CompressedStaticFilesStorage"
+
+if DEMO_PREVIEW:
+    # Demo products point at the atelier photos shipped in static/.
+    USE_CLOUDINARY_MEDIA = False
+    # Their URLs resolve to /static/assets/images/...; uploads (Sur mesure
+    # reference photos) go to /tmp, the only writable place on Vercel.
+    MEDIA_URL = "/static/assets/"
+    MEDIA_ROOT = "/tmp/mimosa-media"
 
 STORAGES = {
     "default": {

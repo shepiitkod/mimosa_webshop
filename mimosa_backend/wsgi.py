@@ -14,3 +14,10 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mimosa_backend.settings')
 
 application = get_wsgi_application()
+
+from django.conf import settings  # noqa: E402
+
+if getattr(settings, "DEMO_PREVIEW", False):
+    from shop.demo import ensure_demo_database  # noqa: E402
+
+    ensure_demo_database()
