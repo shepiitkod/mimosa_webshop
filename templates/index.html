@@ -60,6 +60,21 @@
             </div>
         </section>
 
+        {% if products %}
+        <section class="nouveautes" aria-labelledby="nouveautes-title">
+            <div class="nouveautes__head">
+                <p class="eyebrow" data-translate="home-new-eyebrow">Nouveautés</p>
+                <h2 id="nouveautes-title" class="display-title nouveautes__title" data-translate-html="home-new-title">Les <em>nouvelles</em> lumières</h2>
+                <a class="text-link nouveautes__all" href="{% url 'shop:products' %}" data-translate="home-new-all">Toute la collection</a>
+            </div>
+            <div class="nouveautes__grid">
+                {% for product in products %}
+                {% include 'includes/product_card.html' with product=product card_size='large' %}
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
         <section
             class="promo-banner promo-banner--contest"
             aria-labelledby="promo-banner-heading"

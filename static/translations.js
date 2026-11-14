@@ -451,6 +451,9 @@ const translations = {
     "cookie-short": "We use cookies to make your visit smoother.",
     "cookie-learn-more": "Learn more",
     "fab-consultation-short": "Consultation",
+    "home-new-eyebrow": "New arrivals",
+    "home-new-title": "The <em>newest</em> lights",
+    "home-new-all": "The whole collection",
   },
 
   fr: {
@@ -907,6 +910,9 @@ const translations = {
     "cookie-short": "Nous utilisons des cookies pour une visite plus douce.",
     "cookie-learn-more": "En savoir plus",
     "fab-consultation-short": "Consultation",
+    "home-new-eyebrow": "Nouveautés",
+    "home-new-title": "Les <em>nouvelles</em> lumières",
+    "home-new-all": "Toute la collection",
   },
 
   ua: {
@@ -1360,6 +1366,9 @@ const translations = {
     "cookie-short": "Ми використовуємо cookies, щоб зробити ваш візит зручнішим.",
     "cookie-learn-more": "Детальніше",
     "fab-consultation-short": "Консультація",
+    "home-new-eyebrow": "Новинки",
+    "home-new-title": "<em>Нове</em> світло",
+    "home-new-all": "Уся колекція",
   },
 
   ru: {
@@ -1816,6 +1825,9 @@ const translations = {
     "cookie-short": "Мы используем cookies, чтобы сделать визит удобнее.",
     "cookie-learn-more": "Подробнее",
     "fab-consultation-short": "Консультация",
+    "home-new-eyebrow": "Новинки",
+    "home-new-title": "<em>Новый</em> свет",
+    "home-new-all": "Вся коллекция",
   },
 };
 

@@ -682,6 +682,7 @@ body.kinetic-menu-open .fab-consultation {
         min-height: 0;
         padding: 0;
         border-radius: 50%;
+        left: auto;
         right: max(16px, env(safe-area-inset-right));
         bottom: max(16px, env(safe-area-inset-bottom));
     }
@@ -964,5 +965,105 @@ body.kinetic-menu-open .fab-consultation {
     .p-card:hover,
     .p-card:hover .p-card__img {
         transform: none !important;
+    }
+
+    /* styles.css forces the FAB visible under reduced motion; keep it
+       hidden on the first screen anyway, just without the fade. */
+    .fab-consultation:not(.fab-consultation--visible) {
+        opacity: 0 !important;
+        visibility: hidden;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Homepage — Nouveautés (latest products)
+   -------------------------------------------------------------------------- */
+
+.nouveautes {
+    padding: var(--section-y) var(--gutter);
+    background: var(--paper);
+}
+
+.nouveautes__head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 12px 32px;
+    max-width: var(--content-max);
+    margin: 0 auto clamp(32px, 5vw, 64px);
+}
+
+.nouveautes__head .eyebrow {
+    grid-column: 1 / -1;
+}
+
+.nouveautes__title {
+    margin: 0;
+    font-size: clamp(2.6rem, 6vw, 5.2rem);
+}
+
+.nouveautes__all {
+    margin-bottom: 0.9em;
+}
+
+.nouveautes__grid {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr 1fr;
+    align-items: start;
+    gap: clamp(16px, 2.4vw, 36px);
+    max-width: var(--content-max);
+    margin: 0 auto;
+}
+
+/* Gentle editorial rhythm: the middle piece sits a little lower. */
+.nouveautes__grid > .p-card:nth-child(2) {
+    margin-top: clamp(24px, 6vw, 96px);
+}
+
+.nouveautes__grid > .p-card:first-child .p-card__media {
+    aspect-ratio: 4 / 5.4;
+}
+
+.nouveautes .p-card__title {
+    font-size: clamp(1.4rem, 2vw, 1.85rem);
+}
+
+@media (max-width: 767px) {
+    .nouveautes__head {
+        grid-template-columns: 1fr;
+    }
+
+    .nouveautes__all {
+        justify-self: start;
+        margin: 4px 0 0;
+    }
+
+    .nouveautes__grid {
+        display: flex;
+        gap: 14px;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scroll-snap-type: x mandatory;
+        margin-inline: calc(var(--gutter) * -1);
+        padding: 0 var(--gutter) 8px;
+        scroll-padding-inline: var(--gutter);
+        scrollbar-width: none;
+    }
+
+    .nouveautes__grid::-webkit-scrollbar {
+        display: none;
+    }
+
+    .nouveautes__grid > .p-card {
+        flex: 0 0 76%;
+        scroll-snap-align: start;
+    }
+
+    .nouveautes__grid > .p-card:nth-child(2) {
+        margin-top: 0;
+    }
+
+    .nouveautes__grid > .p-card:first-child .p-card__media {
+        aspect-ratio: 4 / 5;
     }
 }
