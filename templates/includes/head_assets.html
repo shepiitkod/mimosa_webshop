@@ -1,8 +1,9 @@
-{% load static %}<script>(function(d){var c=" js";try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches)c+=" motion";if(sessionStorage.getItem("mimosa-intro"))c+=" intro-seen"}catch(e){}d.className+=c})(document.documentElement)</script>{# Shared <head> assets for every public page: fonts, favicon, core stylesheet, optional page stylesheets, then atelier.css (the design system) last so it wins the cascade. #}
+{% load static %}<script>(function(d){var c=" js",l="";try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches)c+=" motion";if(sessionStorage.getItem("mimosa-intro"))c+=" intro-seen";l=localStorage.getItem("selectedLanguage")||""}catch(e){}if(!l){var n=((navigator.languages&&navigator.languages[0])||navigator.language||"").slice(0,2).toLowerCase();l={fr:"fr",uk:"ua",ru:"ru"}[n]||"en"}d.className+=c;d.lang=l;d.setAttribute("data-lang",l)})(document.documentElement)</script>{# Shared <head> assets for every public page: fonts, favicon, core stylesheet, optional page stylesheets, then atelier.css (the design system) last so it wins the cascade. #}
 <link rel="shortcut icon" href="{% static 'assets/images/logobl2.ico' %}" type="image/x-icon" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+<link rel="preload" href="{% static 'fonts/cormorant-garamond-normal-300-latin.woff2' %}" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="{% static 'fonts/cormorant-garamond-italic-300-latin.woff2' %}" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="{% static 'fonts/dm-sans-normal-300-600-latin.woff2' %}" as="font" type="font/woff2" crossorigin />
+<style>{% include 'includes/fonts_css.html' %}</style>
 <link rel="stylesheet" href="{% static 'styles.css' %}?v=20261114a" />
 {% if page_css %}<link rel="stylesheet" href="{% static page_css %}?v=20261114a" />{% endif %}
 {% if page_css_2 %}<link rel="stylesheet" href="{% static page_css_2 %}?v=20261114a" />{% endif %}

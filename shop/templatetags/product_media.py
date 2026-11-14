@@ -30,14 +30,23 @@ def product_picture(
     object_position="50% 50%",
 ):
     srcset_parts = []
+    src = image_field.url if image_field else ""
     if image_field:
-        for width in (400, 800, 1200):
-            rel = product_variant_url(image_field, width)
-            if rel:
-                srcset_parts.append(f"{image_field.storage.url(rel)} {width}w")
+        cloud_upload = "/image/upload/"
+        if cloud_upload in src:
+            # Cloudinary: let the CDN resize and pick avif/webp per browser.
+            head, tail = src.split(cloud_upload, 1)
+            for width in (400, 800, 1200):
+                srcset_parts.append(f"{head}{cloud_upload}f_auto,q_auto,c_limit,w_{width}/{tail} {width}w")
+            src = f"{head}{cloud_upload}f_auto,q_auto,c_limit,w_1200/{tail}"
+        else:
+            for width in (400, 800, 1200):
+                rel = product_variant_url(image_field, width)
+                if rel:
+                    srcset_parts.append(f"{image_field.storage.url(rel)} {width}w")
 
     return {
-        "src": image_field.url if image_field else "",
+        "src": src,
         "srcset": ", ".join(srcset_parts),
         "alt": alt,
         "class_name": css_class,

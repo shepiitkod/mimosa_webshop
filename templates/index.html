@@ -54,6 +54,9 @@
                     <div class="intro__fade" aria-hidden="true"></div>
                     <span class="intro__cue" aria-hidden="true"><span data-translate="intro-scroll">Défiler</span><i></i></span>
                 </div>
+                {# Translate the intro before its first paint so the headline (the LCP)
+                   never changes after load. Same strings as translations.js. #}
+                <script>(function(){var t={"en":{"intro-eyebrow":"Candle atelier · Nîmes","intro-title":"<span class=\"l\">The art of the</span> <span class=\"l\"><em>candle</em></span>","intro-sub":"Hand-poured in the South of France, for the moments that deserve a flame.","intro-cta-shop":"Shop","intro-cta-custom":"Made to order","intro-scroll":"Scroll"},"ua":{"intro-eyebrow":"Ательє свічок · Нім","intro-title":"<span class=\"l\">Мистецтво</span> <span class=\"l\"><em>свічки</em></span>","intro-sub":"Відлиті вручну на півдні Франції — для моментів, гідних полум’я.","intro-cta-shop":"Магазин","intro-cta-custom":"На замовлення","intro-scroll":"Гортайте"},"ru":{"intro-eyebrow":"Ателье свечей · Ним","intro-title":"<span class=\"l\">Искусство</span> <span class=\"l\"><em>свечи</em></span>","intro-sub":"Отлиты вручную на юге Франции — для моментов, достойных пламени.","intro-cta-shop":"Магазин","intro-cta-custom":"На заказ","intro-scroll":"Листайте"}},l=document.documentElement.getAttribute("data-lang"),s=t[l];if(!s)return;document.querySelectorAll("[data-intro] [data-translate],[data-intro] [data-translate-html]").forEach(function(e){var k=e.getAttribute("data-translate")||e.getAttribute("data-translate-html");if(s[k]){if(e.hasAttribute("data-translate-html"))e.innerHTML=s[k];else e.textContent=s[k]}})})()</script>
             </section>
 
 
@@ -219,7 +222,7 @@
 
         <script>
             function getOrderMessages() {
-                const lang = localStorage.getItem("selectedLanguage") || "en";
+                const lang = document.documentElement.lang || "en";
                 if (lang === "fr") {
                     return {
                         created: "Commande #",

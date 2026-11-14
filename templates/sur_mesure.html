@@ -109,7 +109,7 @@
     // Remember the visitor's language with the request so we answer in it.
     (function () {
         var f = document.querySelector('[data-lang-field]');
-        if (f) { try { f.value = localStorage.getItem('selectedLanguage') || 'en'; } catch (e) {} }
+        if (f) f.value = document.documentElement.lang || 'en';
     })();
 </script>
 {% endblock %}

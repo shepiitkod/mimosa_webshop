@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Helper function to get current language
     function getCurrentLanguage() {
-        return localStorage.getItem('selectedLanguage') || 'en';
+        return document.documentElement.lang || 'en';
     }
 
     form.addEventListener('submit', async function(e) {

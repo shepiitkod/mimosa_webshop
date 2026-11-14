@@ -2733,8 +2733,14 @@ function applyProductI18n(lang) {
   });
 }
 
-function switchLanguage(lang) {
-  localStorage.setItem("selectedLanguage", lang);
+function switchLanguage(lang, remember) {
+  if (remember !== false) {
+    try {
+      localStorage.setItem("selectedLanguage", lang);
+    } catch (error) {
+      /* storage blocked */
+    }
+  }
   document.documentElement.lang = lang;
 
   document.querySelectorAll(".lang-btn").forEach((btn) => {
@@ -2752,14 +2758,17 @@ function switchLanguage(lang) {
       if (count !== null && value.includes("{count}")) {
         value = value.replace("{count}", count);
       }
-      element.textContent = value;
+      // Only touch the DOM when the text really changes (keeps the first
+      // paint stable and avoids needless layout).
+      if (element.textContent !== value) element.textContent = value;
     }
   });
 
   document.querySelectorAll("[data-translate-html]").forEach((element) => {
     const key = element.getAttribute("data-translate-html");
     if (translations[lang] && translations[lang][key]) {
-      element.innerHTML = translations[lang][key];
+      const value = translations[lang][key];
+      if (element.innerHTML !== value) element.innerHTML = value;
     }
   });
 
@@ -2794,8 +2803,16 @@ function updateCompactLanguageUI() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  const savedLang = localStorage.getItem("selectedLanguage") || "en";
-  switchLanguage(savedLang);
+  // Saved choice first, otherwise the language picked in <head> from the
+  // browser (fr / ua / ru, English for everyone else).
+  let savedLang = null;
+  try {
+    savedLang = localStorage.getItem("selectedLanguage");
+  } catch (error) {
+    /* storage blocked */
+  }
+  savedLang = savedLang || document.documentElement.getAttribute("data-lang") || "en";
+  switchLanguage(savedLang, false);
 
   document.querySelectorAll(".lang-btn").forEach((btn) => {
     btn.addEventListener("click", function () {

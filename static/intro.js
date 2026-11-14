@@ -96,6 +96,17 @@
         } catch (e) { gl = null; }
         if (!gl) return false;
 
+        // Software rasterisers (SwiftShader, llvmpipe…) draw the shader on the
+        // CPU: keep the CSS flame there instead of blocking the main thread.
+        try {
+            var info = gl.getExtension('WEBGL_debug_renderer_info');
+            var renderer = info ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL)) : '';
+            if (/swiftshader|llvmpipe|software|softpipe|basic render/i.test(renderer) && location.search.indexOf('introgl') < 0) {
+                gl = null;
+                return false;
+            }
+        } catch (e) { /* extension blocked: keep going */ }
+
         function shader(type, src) {
             var s = gl.createShader(type);
             gl.shaderSource(s, src);

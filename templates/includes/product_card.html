@@ -1,9 +1,9 @@
 {% load product_media %}{# Shared product card: the whole card is clickable (stretched title link); the quick-add form sits above it. #}
 <article class="p-card{% if card_size %} p-card--{{ card_size }}{% endif %}{% if product.image_2 %} p-card--has-alt{% endif %}">
     <div class="p-card__media">
-        {% product_picture product.image alt=product.title css_class="p-card__img p-card__img--main" w=600 h=750 loading="lazy" sizes="(max-width: 767px) 70vw, (max-width: 1199px) 33vw, 380px" object_position=product.image_object_position %}
+        {% product_picture product.image alt=product.title css_class="p-card__img p-card__img--main" w=600 h=750 loading="lazy" sizes="(max-width: 767px) 46vw, (max-width: 1199px) 30vw, 320px" object_position=product.image_object_position %}
         {% if product.image_2 %}
-        {% product_picture product.image_2 alt="" css_class="p-card__img p-card__img--alt" w=600 h=750 loading="lazy" sizes="(max-width: 767px) 70vw, (max-width: 1199px) 33vw, 380px" object_position=product.image_2_object_position %}
+        {% product_picture product.image_2 alt="" css_class="p-card__img p-card__img--alt" w=600 h=750 loading="lazy" sizes="(max-width: 767px) 46vw, (max-width: 1199px) 30vw, 320px" object_position=product.image_2_object_position %}
         {% endif %}
         <span class="p-card__glow" aria-hidden="true"></span>
     </div>
