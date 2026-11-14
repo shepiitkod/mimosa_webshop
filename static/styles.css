@@ -609,7 +609,7 @@ h2,
 }
 
 /* Legacy pages without kinetic shell */
-header:not(.site-header) {
+header:not(.site-header):not(.mh) {
     background: var(--color-page-bg);
     padding: 22px 40px;
     display: flex;
@@ -622,16 +622,16 @@ header:not(.site-header) {
     border-bottom: 1px solid #e8e8e8;
 }
 
-header:not(.site-header) figure {
+header:not(.site-header):not(.mh) figure {
     margin: 0 0 18px 0;
 }
 
-header:not(.site-header) img {
+header:not(.site-header):not(.mh) img {
     display: block;
 }
 
 /* Shared nav lists (legacy + dropdowns; exclude kinetic main nav) */
-nav:not(.site-header__nav) ul {
+nav:not(.site-header__nav):not(.nx) ul {
     list-style: none;
     display: flex;
     justify-content: center;
@@ -639,11 +639,11 @@ nav:not(.site-header__nav) ul {
     padding: 0;
 }
 
-nav:not(.site-header__nav) ul li {
+nav:not(.site-header__nav):not(.nx) ul li {
     position: relative;
 }
 
-nav:not(.site-header__nav) ul li a {
+nav:not(.site-header__nav):not(.nx) ul li a {
     text-decoration: none;
     color: #3a3a3a;
     font-size: 16px;
@@ -654,7 +654,7 @@ nav:not(.site-header__nav) ul li a {
     display: inline-block;
 }
 
-nav:not(.site-header__nav) ul li a::before {
+nav:not(.site-header__nav):not(.nx) ul li a::before {
     content: "";
     position: absolute;
     bottom: 0;
@@ -666,11 +666,11 @@ nav:not(.site-header__nav) ul li a::before {
     transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-nav:not(.site-header__nav) ul li a:hover {
+nav:not(.site-header__nav):not(.nx) ul li a:hover {
     color: #1a1a1a;
 }
 
-nav:not(.site-header__nav) ul li a:hover::before {
+nav:not(.site-header__nav):not(.nx) ul li a:hover::before {
     transform: translateX(-50%) scaleX(1);
 }
 
@@ -4905,23 +4905,23 @@ footer {
         min-width: 0;
     }
 
-    header:not(.site-header) {
+    header:not(.site-header):not(.mh) {
         position: static;
         top: auto;
         z-index: auto;
         padding: 12px 12px 10px;
     }
 
-    header:not(.site-header) img {
+    header:not(.site-header):not(.mh) img {
         width: min(190px, 58vw);
         height: auto;
     }
 
-    nav:not(.site-header__nav) {
+    nav:not(.site-header__nav):not(.nx) {
         width: 100%;
     }
 
-    nav:not(.site-header__nav) ul {
+    nav:not(.site-header__nav):not(.nx) ul {
         width: 100%;
         justify-content: center;
         gap: 10px;
@@ -4932,25 +4932,25 @@ footer {
         scrollbar-width: none;
     }
 
-    nav:not(.site-header__nav) ul::-webkit-scrollbar {
+    nav:not(.site-header__nav):not(.nx) ul::-webkit-scrollbar {
         display: none;
     }
 
-    nav:not(.site-header__nav) ul li {
+    nav:not(.site-header__nav):not(.nx) ul li {
         flex: 0 0 auto;
     }
 
-    nav:not(.site-header__nav) ul li a {
+    nav:not(.site-header__nav):not(.nx) ul li a {
         white-space: nowrap;
         font-size: 14px;
         min-height: 40px;
         padding: 8px 4px;
     }
 
-    nav:not(.site-header__nav) .products-menu::after,
-    nav:not(.site-header__nav) .products-menu:hover .dropdown-catalog,
-    nav:not(.site-header__nav) .products-menu:focus-within .dropdown-catalog,
-    nav:not(.site-header__nav) .products-menu .dropdown-catalog {
+    nav:not(.site-header__nav):not(.nx) .products-menu::after,
+    nav:not(.site-header__nav):not(.nx) .products-menu:hover .dropdown-catalog,
+    nav:not(.site-header__nav):not(.nx) .products-menu:focus-within .dropdown-catalog,
+    nav:not(.site-header__nav):not(.nx) .products-menu .dropdown-catalog {
         display: none;
     }
 
@@ -7844,23 +7844,23 @@ body.is-loaded header figure::after {
 }
 
 @media (max-width: 767px) {
-    header:not(.site-header) {
+    header:not(.site-header):not(.mh) {
         position: static;
         top: auto;
         z-index: auto;
         padding: 12px 12px 10px;
     }
 
-    header:not(.site-header) img {
+    header:not(.site-header):not(.mh) img {
         width: min(190px, 58vw);
         height: auto;
     }
 
-    nav:not(.site-header__nav) {
+    nav:not(.site-header__nav):not(.nx) {
         width: 100%;
     }
 
-    nav:not(.site-header__nav) ul {
+    nav:not(.site-header__nav):not(.nx) ul {
         width: 100%;
         justify-content: center;
         gap: 10px;
@@ -7871,15 +7871,15 @@ body.is-loaded header figure::after {
         scrollbar-width: none;
     }
 
-    nav:not(.site-header__nav) ul::-webkit-scrollbar {
+    nav:not(.site-header__nav):not(.nx) ul::-webkit-scrollbar {
         display: none;
     }
 
-    nav:not(.site-header__nav) ul li {
+    nav:not(.site-header__nav):not(.nx) ul li {
         flex: 0 0 auto;
     }
 
-    nav:not(.site-header__nav) ul li a {
+    nav:not(.site-header__nav):not(.nx) ul li a {
         white-space: nowrap;
         font-size: 14px;
         min-height: 40px;

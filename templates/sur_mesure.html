@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block title %}Sur mesure — MIMOSA Atelier{% endblock %}
+{% block description %}Bougies personnalisées : prénoms, chiffres, mariages, baptêmes et commandes d’entreprise. Demandez un devis à l’atelier MIMOSA, Nîmes.{% endblock %}
+{% block body_class %}custom-page{% endblock %}
+{% block content %}
+{% include 'includes/page_hero.html' with eyebrow='Sur mesure' eyebrow_key='bespoke-eyebrow' title='Une bougie <em>à votre image</em>' title_key='sm-title' lede='Prénoms, chiffres, couleurs de mariage, logo d’entreprise : racontez-nous votre moment, nous imaginons la bougie qui l’accompagne.' lede_key='sm-lede' image='assets/images/MAIN6' w=801 h=1200 alt='Bougies chiffres roses personnalisées' %}
+
+<section class="sm-kinds" aria-label="Types de commandes">
+    <article class="sm-kind" data-reveal>
+        <span class="sm-kind__num">01</span>
+        <h2 class="sm-kind__title" data-translate="sm-kind-1-title">Prénoms &amp; chiffres</h2>
+        <p data-translate="sm-kind-1-text">Bougies d’anniversaire aux couleurs de la fête, initiales, âges, dates.</p>
+    </article>
+    <article class="sm-kind" data-reveal>
+        <span class="sm-kind__num">02</span>
+        <h2 class="sm-kind__title" data-translate="sm-kind-2-title">Mariages &amp; cérémonies</h2>
+        <p data-translate="sm-kind-2-text">Bougies de table, cadeaux d’invités, cierges de baptême, en harmonie avec votre décor.</p>
+    </article>
+    <article class="sm-kind" data-reveal>
+        <span class="sm-kind__num">03</span>
+        <h2 class="sm-kind__title" data-translate="sm-kind-3-title">Entreprises &amp; événements</h2>
+        <p data-translate="sm-kind-3-text">Cadeaux clients, séminaires, boutiques : une série à vos couleurs, emballée à l’atelier.</p>
+    </article>
+</section>
+
+<section class="sm-steps" aria-labelledby="sm-steps-title">
+    <h2 id="sm-steps-title" class="display-title sm-steps__title" data-translate-html="sm-steps-title">Comment <em>ça se passe</em></h2>
+    <ol class="sm-steps__list">
+        <li data-reveal><strong data-translate="sm-step-1-title">Votre demande</strong><span data-translate="sm-step-1-text">Le formulaire ci-dessous, une photo d’inspiration si vous en avez une.</span></li>
+        <li data-reveal><strong data-translate="sm-step-2-title">Notre proposition</strong><span data-translate="sm-step-2-text">Nous revenons vers vous par e-mail avec des idées, un délai et un devis.</span></li>
+        <li data-reveal><strong data-translate="sm-step-3-title">La création</strong><span data-translate="sm-step-3-text">Votre bougie est coulée, peinte et emballée à la main à Nîmes.</span></li>
+    </ol>
+</section>
+
+<section class="sm-form-wrap" id="demande" aria-labelledby="sm-form-title">
+    <div class="sm-form-intro">
+        <h2 id="sm-form-title" class="display-title" data-translate-html="sm-form-title">Parlez-nous <em>de votre projet</em></h2>
+        <p data-translate="sm-form-lede">Tous les champs marqués * sont nécessaires. Nous répondons à chaque demande.</p>
+    </div>
+
+    {% if sent %}
+    <div class="sm-sent" role="status">
+        <h3 data-translate="sm-sent-title">Merci, votre demande est bien arrivée.</h3>
+        <p data-translate="sm-sent-text">Nous l’étudions avec soin et revenons vers vous par e-mail très vite.</p>
+        <a class="text-link" href="{% url 'shop:products' %}" data-translate="sm-sent-link">En attendant, découvrir la boutique</a>
+    </div>
+    {% else %}
+    <form class="sm-form" method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        <input type="hidden" name="language" value="" data-lang-field />
+        <div class="sm-form__hp" aria-hidden="true">{{ form.website }}</div>
+        {% if form.non_field_errors %}<p class="sm-form__error" role="alert" data-translate="sm-err-generic">Merci de vérifier le formulaire.</p>{% endif %}
+
+        <div class="field{% if form.name.errors %} has-error{% endif %}">
+            <label for="{{ form.name.id_for_label }}"><span data-translate="sm-f-name">Nom</span> *</label>
+            {{ form.name }}
+            {% if form.name.errors %}<p class="field__error" data-translate="sm-err-required">Ce champ est nécessaire.</p>{% endif %}
+        </div>
+        <div class="field{% if form.email.errors %} has-error{% endif %}">
+            <label for="{{ form.email.id_for_label }}"><span data-translate="sm-f-email">E-mail</span> *</label>
+            {{ form.email }}
+            {% if form.email.errors %}<p class="field__error" data-translate="sm-err-email">Merci d’indiquer une adresse e-mail valide.</p>{% endif %}
+        </div>
+        <div class="field">
+            <label for="{{ form.phone.id_for_label }}" data-translate="sm-f-phone">Téléphone</label>
+            {{ form.phone }}
+        </div>
+        <div class="field{% if form.occasion.errors %} has-error{% endif %}">
+            <label for="{{ form.occasion.id_for_label }}"><span data-translate="sm-f-occasion">Occasion</span> *</label>
+            <select name="occasion" id="{{ form.occasion.id_for_label }}" required>
+                <option value="" data-translate="sm-f-choose">Choisir…</option>
+                {% for value, label in form.fields.occasion.choices %}{% if value %}
+                <option value="{{ value }}"{% if form.occasion.value == value %} selected{% endif %} data-translate="sm-occ-{{ value }}">{{ label }}</option>
+                {% endif %}{% endfor %}
+            </select>
+            {% if form.occasion.errors %}<p class="field__error" data-translate="sm-err-required">Ce champ est nécessaire.</p>{% endif %}
+        </div>
+        <div class="field{% if form.event_date.errors %} has-error{% endif %}">
+            <label for="{{ form.event_date.id_for_label }}" data-translate="sm-f-date">Date de l’événement</label>
+            {{ form.event_date }}
+            {% if form.event_date.errors %}<p class="field__error" data-translate="sm-err-date">Cette date est déjà passée.</p>{% endif %}
+        </div>
+        <div class="field{% if form.quantity.errors %} has-error{% endif %}">
+            <label for="{{ form.quantity.id_for_label }}"><span data-translate="sm-f-quantity">Quantité</span> *</label>
+            {{ form.quantity }}
+            {% if form.quantity.errors %}<p class="field__error" data-translate="sm-err-quantity">Entre 1 et 5000 pièces.</p>{% endif %}
+        </div>
+        <div class="field field--wide{% if form.message.errors %} has-error{% endif %}">
+            <label for="{{ form.message.id_for_label }}"><span data-translate="sm-f-message">Vos envies</span> *</label>
+            <textarea name="message" id="{{ form.message.id_for_label }}" rows="5" required placeholder="Couleurs, prénoms, parfum, budget…" data-placeholder="sm-f-message-ph">{{ form.message.value|default:'' }}</textarea>
+            {% if form.message.errors %}<p class="field__error" data-translate="sm-err-required">Ce champ est nécessaire.</p>{% endif %}
+        </div>
+        <div class="field field--wide field--file{% if form.reference_image.errors %} has-error{% endif %}">
+            <label for="{{ form.reference_image.id_for_label }}" data-translate="sm-f-photo">Photo d’inspiration (facultatif)</label>
+            <input type="file" name="reference_image" id="{{ form.reference_image.id_for_label }}" accept="image/jpeg,image/png,image/webp,image/heic" />
+            <p class="field__help" data-translate="sm-f-photo-help">JPG, PNG ou WEBP, 8 Mo maximum.</p>
+            {% if form.reference_image.errors %}<p class="field__error" data-translate="sm-err-file">Ce fichier ne convient pas (image de 8 Mo maximum).</p>{% endif %}
+        </div>
+        <div class="sm-form__submit">
+            <button type="submit" class="btn" data-translate="sm-submit">Envoyer ma demande</button>
+            <p class="field__help" data-translate="sm-privacy">Vos informations servent uniquement à répondre à votre demande.</p>
+        </div>
+    </form>
+    {% endif %}
+</section>
+{% endblock %}
+{% block scripts %}
+<script>
+    // Remember the visitor's language with the request so we answer in it.
+    (function () {
+        var f = document.querySelector('[data-lang-field]');
+        if (f) { try { f.value = localStorage.getItem('selectedLanguage') || 'en'; } catch (e) {} }
+    })();
+</script>
+{% endblock %}

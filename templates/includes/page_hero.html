@@ -1,0 +1,12 @@
+{% load static %}<div class="page-hero{% if image %} page-hero--media{% endif %}">
+    <div class="page-hero__copy">
+        <p class="eyebrow" {% if eyebrow_key %}data-translate="{{ eyebrow_key }}"{% endif %}>{{ eyebrow }}</p>
+        <h1 class="page-hero__title" data-translate-html="{{ title_key }}">{{ title|safe }}</h1>
+        {% if lede %}<p class="page-hero__lede" data-translate="{{ lede_key }}">{{ lede }}</p>{% endif %}
+    </div>
+    {% if image %}
+    <div class="page-hero__media">
+        {% include 'includes/picture_opt.html' with rel=image w=w h=h alt=alt sizes='(max-width: 767px) 100vw, 44vw' fetchpriority='high' only %}
+    </div>
+    {% endif %}
+</div>

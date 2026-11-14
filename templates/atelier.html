@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}L’atelier — MIMOSA Atelier, Nîmes{% endblock %}
+{% block description %}MIMOSA est un atelier indépendant de bougies coulées à la main dans le Sud de la France, à Nîmes, depuis 2025.{% endblock %}
+{% block body_class %}atelier-page{% endblock %}
+{% block content %}
+{% include 'includes/page_hero.html' with eyebrow='L’atelier' eyebrow_key='nav-atelier' title='La lumière <em>du Sud</em>' title_key='at-title' lede='MIMOSA est un petit atelier indépendant de Nîmes. Chaque bougie y est façonnée, coulée et finie à la main.' lede_key='at-lede' image='assets/images/MAIN1' w=1200 h=1600 alt='Bougies chiffres roses coulées à l’atelier MIMOSA' %}
+
+<section class="at-story">
+    <div class="at-story__name" data-reveal>
+        <p class="eyebrow" data-translate="at-name-eyebrow">Pourquoi MIMOSA</p>
+        <h2 class="display-title at-story__title" data-translate-html="at-name-title">La première fleur <em>du printemps</em></h2>
+    </div>
+    <div class="at-story__text" data-reveal>
+        <p data-translate="at-name-p1">Le mimosa est la première fleur à éclore dans le Sud de la France. Il annonce le retour de la lumière, de la chaleur et du renouveau — un symbole de délicatesse et de résilience.</p>
+        <p data-translate="at-name-p2">Nous croyons qu’une chose vraiment unique ne peut naître qu’avec un profond respect pour la nature qui l’inspire. C’est ce respect que nous coulons dans chaque bougie.</p>
+    </div>
+</section>
+
+<section class="at-split">
+    <figure class="at-split__media" data-parallax="0.06">
+        {% include 'includes/picture_opt.html' with rel='assets/images/sv-wax-setup' w=800 h=1200 alt='Cire de soja et matériel de l’atelier' loading='lazy' sizes='(max-width: 767px) 100vw, 45vw' only %}
+    </figure>
+    <div class="at-split__body">
+        <p class="eyebrow" data-translate="at-place-eyebrow">Notre atelier</p>
+        <h2 class="display-title" data-translate-html="at-place-title">Nîmes, <em>depuis 2025</em></h2>
+        <p data-translate="at-place-p">MIMOSA est née en 2025, au cœur du pays de la beauté et des parfums. Entourées de soleil, de fleurs et de paysages intemporels, nous puisons notre inspiration dans l’élégance naturelle de la Provence, où l’artisanat et l’authenticité sont un art de vivre.</p>
+    </div>
+</section>
+
+<section class="gestes" data-own-motion data-gestes aria-labelledby="gestes-title">
+    <div class="gestes__intro">
+        <p class="eyebrow" data-translate="gestes-eyebrow" data-reveal>Savoir-faire</p>
+        <h2 id="gestes-title" class="display-title gestes__title" data-translate-html="gestes-title" data-reveal="lines">Fait main <em>à Nîmes</em></h2>
+    </div>
+    <div class="gestes__layout">
+        <div class="gestes__visual" aria-hidden="true">
+            <div class="gestes__frame">
+                {% for step in atelier_steps %}
+                <div class="gestes__img{% if forloop.first %} is-active{% endif %}" data-step-img="{{ forloop.counter0 }}">
+                    {% include 'includes/picture_opt.html' with rel=step.image w=step.w h=step.h alt='' loading='lazy' sizes='(max-width: 767px) 92vw, 40vw' only %}
+                </div>
+                {% endfor %}
+                <span class="gestes__counter"><span data-step-now>01</span>&thinsp;/&thinsp;{{ atelier_steps|length|stringformat:"02d" }}</span>
+            </div>
+        </div>
+        <ol class="gestes__steps">
+            {% for step in atelier_steps %}
+            <li class="geste{% if forloop.first %} is-active{% endif %}" data-step="{{ forloop.counter0 }}">
+                <div class="geste__mobile-img">{% include 'includes/picture_opt.html' with rel=step.image w=step.w h=step.h alt='' loading='lazy' sizes='92vw' only %}</div>
+                <span class="geste__num">{{ forloop.counter|stringformat:"02d" }}</span>
+                <h3 class="geste__title" data-translate="{{ step.key }}-title">{{ step.title }}</h3>
+                <p class="geste__text" data-translate="{{ step.key }}-text">{{ step.text }}</p>
+            </li>
+            {% endfor %}
+        </ol>
+    </div>
+</section>
+
+<section class="at-values" aria-labelledby="at-values-title">
+    <h2 id="at-values-title" class="display-title" data-translate-html="at-values-title">Ce en quoi <em>nous croyons</em></h2>
+    <div class="at-values__grid">
+        <div class="at-value" data-reveal><h3 data-translate="at-v1-title">La main</h3><p data-translate="at-v1-text">Chaque bougie est entièrement faite à la main, avec une grande attention à la forme, à l’équilibre et à l’harmonie.</p></div>
+        <div class="at-value" data-reveal><h3 data-translate="at-v2-title">La matière</h3><p data-translate="at-v2-text">Des matières premières écologiques, conformes aux normes de qualité européennes, et une cire de soja naturelle.</p></div>
+        <div class="at-value" data-reveal><h3 data-translate="at-v3-title">Le parfum</h3><p data-translate="at-v3-text">Des fragrances exclusives créées en Provence, pour des bougies qui racontent le Sud.</p></div>
+    </div>
+    <div class="at-values__cta">
+        <a class="btn" href="{% url 'shop:products' %}" data-translate="intro-cta-shop">Boutique</a>
+        <a class="btn btn--ghost" href="{% url 'shop:custom_order' %}" data-translate="intro-cta-custom">Sur mesure</a>
+    </div>
+</section>
+{% endblock %}

@@ -15,3 +15,13 @@ def cart(request):
         'cart_items_count': cart_items_count,
         'STRIPE_PUBLISHABLE_KEY': settings.STRIPE_PUBLISHABLE_KEY,
     }
+
+
+def navigation(request):
+    """Collections and occasions for the header mega menu and the footer."""
+    from .catalog import COLLECTIONS, OCCASIONS
+
+    return {
+        'nav_collections': [c for c in COLLECTIONS if c['slug'] != 'gift-collections'],
+        'nav_occasions': OCCASIONS,
+    }

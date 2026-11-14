@@ -122,6 +122,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "shop.context_processors.cart",
+                "shop.context_processors.navigation",
             ],
         },
     },
@@ -262,6 +263,11 @@ STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET", "")
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
+
+# Welcome offer shown after a newsletter sign-up. Create the same code as a
+# Promotion code (-10 %, first order) in the Stripe dashboard: Checkout
+# already accepts promotion codes (allow_promotion_codes=True).
+NEWSLETTER_WELCOME_CODE = os.getenv("NEWSLETTER_WELCOME_CODE", "BIENVENUE10")
 
 LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "/profile/"

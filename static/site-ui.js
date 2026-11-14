@@ -57,41 +57,13 @@
         update();
     }
 
-    function initMobileMenuMotion() {
-        var nav = document.getElementById('primary-navigation');
-        if (!nav) return;
-
-        document.addEventListener('keydown', function (e) {
-            if (e.key !== 'Tab' || !document.body.classList.contains('kinetic-menu-open')) {
-                return;
-            }
-            var focusable = nav.querySelectorAll(
-                'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
-            );
-            if (!focusable.length) return;
-
-            var first = focusable[0];
-            var last = focusable[focusable.length - 1];
-
-            if (e.shiftKey && document.activeElement === first) {
-                e.preventDefault();
-                last.focus();
-            } else if (!e.shiftKey && document.activeElement === last) {
-                e.preventDefault();
-                first.focus();
-            }
-        });
-    }
-
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function () {
             initBackToTop();
             initFabVisibility();
-            initMobileMenuMotion();
         });
     } else {
         initBackToTop();
         initFabVisibility();
-        initMobileMenuMotion();
     }
 })();

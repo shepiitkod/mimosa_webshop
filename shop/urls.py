@@ -1,26 +1,38 @@
 from django.urls import path
+from django.views.generic import RedirectView
 
 from . import views
 
 app_name = "shop"
 
+
+class LegacyCategoryRedirect(RedirectView):
+    """/products/category/<slug>/ -> /boutique/<slug>/ (301, query kept)."""
+
+    permanent = True
+    query_string = True
+    pattern_name = "shop:products_by_category"
+
+
 urlpatterns = [
     path("", views.index_view, name="home"),
-    path("products/", views.products_catalog_view, name="products"),
+    # Boutique (all collections share one template)
+    path("boutique/", views.products_catalog_view, name="products"),
     path(
-        "products/category/<slug:category_slug>/",
+        "boutique/<slug:category_slug>/",
         views.products_catalog_view,
         name="products_by_category",
     ),
+    # Old catalogue addresses -> Boutique (301)
     path(
-        "products/<int:product_id>/",
-        views.product_detail_view,
-        name="product_detail_legacy",
+        "products/",
+        RedirectView.as_view(pattern_name="shop:products", permanent=True, query_string=True),
+        name="products_legacy",
     ),
     path(
-        "products/<int:product_id>/<slug:slug>/",
-        views.product_detail_view,
-        name="product_detail",
+        "products/category/<slug:category_slug>/",
+        LegacyCategoryRedirect.as_view(),
+        name="products_by_category_legacy",
     ),
     path("products/bento/", views.product_bento_view, name="product_bento"),
     path(
@@ -34,8 +46,22 @@ urlpatterns = [
         views.product_sachets_view,
         name="product_sachets",
     ),
-    path("seconde-vie/", views.seconde_vie_view, name="seconde_vie"),
+    # Product pages keep their address
+    path(
+        "products/<int:product_id>/",
+        views.product_detail_view,
+        name="product_detail_legacy",
+    ),
+    path(
+        "products/<int:product_id>/<slug:slug>/",
+        views.product_detail_view,
+        name="product_detail",
+    ),
+    path("sur-mesure/", views.custom_order_view, name="custom_order"),
+    path("atelier/", views.atelier_view, name="atelier"),
     path("about/", views.about_view, name="about"),
+    path("faq/", views.faq_view, name="faq"),
+    path("seconde-vie/", views.seconde_vie_view, name="seconde_vie"),
     path("contact/", views.contact_view, name="contact"),
     path("privacy/", views.confidential_view, name="privacy"),
     path("login/", views.login_view, name="login"),

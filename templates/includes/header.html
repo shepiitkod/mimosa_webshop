@@ -1,187 +1,107 @@
 {% load static %}
-<a href="#main-content" class="skip-to-content">Skip to main content</a>
+<a href="#main-content" class="skip-to-content" data-translate="skip-link">Aller au contenu</a>
 {% include 'includes/promo_ribbon.html' %}
-<style>
-    @media (max-width: 767px) {
-        body.kinetic-menu-open .site-header__brand {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-    }
-</style>
+<header class="mh{% if header_overlay %} mh--overlay is-top{% endif %}" id="site-header" data-header>
+    <div class="mh__bar">
+        <button type="button" class="mh__burger" id="mh-menu-toggle" aria-expanded="false" aria-controls="primary-navigation">
+            <span class="mh__burger-lines" aria-hidden="true"></span>
+            <span class="visually-hidden" data-translate="nav-menu">Menu</span>
+        </button>
 
-<header
-    class="site-header site-header--at-top"
-    id="kinetic-header"
-    data-kinetic-header
-    style="--kinetic-scroll: 0"
->
-    <div class="site-header__surface">
-        <a
-            href="{% url 'shop:home' %}"
-            class="site-header__brand site-header__logo-link"
-            aria-label="MIMOSA home"
-        >
-            <picture>
-                <source
-                    type="image/webp"
-                    srcset="{% static 'assets/images/mimosa-logo.webp' %}"
-                />
-                <img
-                    class="site-header__logo-img"
-                    src="{% static 'assets/images/mimosa-logo.jpg' %}"
-                    alt="MIMOSA"
-                    width="800"
-                    height="382"
-                    decoding="async"
-                />
-            </picture>
-        </a>
-
-        <div class="site-header__tools">
-            <div class="language-switcher" aria-label="Language switcher">
-                <button
-                    class="lang-current"
-                    type="button"
-                    aria-label="Toggle language menu"
-                    aria-expanded="false"
-                >
-                    EN
-                </button>
-                <div class="lang-options" aria-label="Language options">
-                    <button
-                        class="lang-btn active"
-                        data-lang="en"
-                        title="English"
-                        type="button"
-                    >
-                        EN
-                    </button>
-                    <button
-                        class="lang-btn"
-                        data-lang="fr"
-                        title="Français"
-                        type="button"
-                    >
-                        FR
-                    </button>
-                    <button
-                        class="lang-btn"
-                        data-lang="ua"
-                        title="Українська"
-                        type="button"
-                    >
-                        UA
-                    </button>
-                    <button
-                        class="lang-btn"
-                        data-lang="ru"
-                        title="Русский"
-                        type="button"
-                    >
-                        RU
-                    </button>
-                </div>
-            </div>
-
-            <a
-                href="{% url 'shop:profile' %}"
-                class="profile-icon site-header__profile"
-                aria-label="Open profile"
-            >
-                <svg
-                    width="40"
-                    height="40"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                >
-                    <circle
-                        cx="12"
-                        cy="8"
-                        r="4"
-                        stroke="currentColor"
-                        stroke-width="2"
-                    />
-                    <path
-                        d="M4 20c0-4 4-6 8-6s8 2 8 6"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                    />
-                </svg>
-            </a>
-
-            <button
-                type="button"
-                class="site-header__menu-toggle"
-                id="kinetic-menu-toggle"
-                aria-expanded="false"
-                aria-controls="primary-navigation"
-                aria-label="Open menu"
-            >
-                <span class="site-header__menu-bars" aria-hidden="true"></span>
-            </button>
-        </div>
-
-        <nav
-            class="site-header__nav primary-nav"
-            id="primary-navigation"
-            aria-label="Main navigation"
-            data-nav-root
-        >
-            <ul class="site-header__nav-list">
-                <li>
-                    <a
-                        href="{% url 'shop:home' %}"
-                        class="site-header__link magnetic-link"
-                        data-translate="nav-home"
-                        >Home</a
-                    >
-                </li>
-                {% if header_show_cart %}
-                <li>
-                    <a
-                        href="{% url 'shop:cart' %}"
-                        class="site-header__link magnetic-link nav-link-cart"
-                        ><span data-translate="nav-cart">Cart</span>
-                        (<span class="nav-cart-count">{{ cart_items_count }}</span>)</a
-                    >
-                </li>
-                {% endif %}
-                <li class="products-menu">
-                    <a
-                        href="{% url 'shop:products' %}"
-                        class="site-header__link magnetic-link"
-                        data-translate="nav-products"
-                        >Products</a
-                    >
-                    <div
-                        class="dropdown-catalog"
-                        aria-label="Product categories"
-                    >
-                        {% include 'includes/nav_catalog_dropdown.html' %}
+        <nav class="nx mh__nav" aria-label="Navigation principale">
+            <ul class="mh__list">
+                <li class="mh__item mh__item--mega" data-mega>
+                    <a href="{% url 'shop:products' %}" class="mh__link" aria-haspopup="true" aria-expanded="false" data-mega-trigger><span data-translate="nav-boutique">Boutique</span><svg class="mh__chev" viewBox="0 0 10 6" width="10" height="6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></a>
+                    <div class="mh__mega" data-mega-panel>
+                        <div class="mh__mega-inner">
+                            <div class="mh__mega-col">
+                                <p class="mh__mega-title" data-translate="nav-collections">Collections</p>
+                                <ul>
+                                    {% for c in nav_collections %}
+                                    <li><a href="{% url 'shop:products_by_category' c.slug %}" data-translate="{{ c.key }}">{{ c.name }}</a></li>
+                                    {% endfor %}
+                                    <li><a class="mh__mega-all" href="{% url 'shop:products' %}" data-translate="nav-all-products">Toute la boutique</a></li>
+                                </ul>
+                            </div>
+                            <div class="mh__mega-col">
+                                <p class="mh__mega-title" data-translate="nav-occasions">Pour quelle occasion ?</p>
+                                <ul>
+                                    {% for o in nav_occasions %}
+                                    <li><a href="{% url 'shop:products' %}?occasion={{ o.slug }}" data-translate="{{ o.key }}">{{ o.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <a class="mh__feature" href="{% url 'shop:custom_order' %}">
+                                <span class="mh__feature-img"><img src="{% static 'assets/images/intro/MAIN6-480.webp' %}" alt="" width="480" height="719" loading="lazy" decoding="async" /></span>
+                                <span class="mh__feature-title" data-translate="nav-sur-mesure">Sur mesure</span>
+                                <span class="mh__feature-line" data-translate="nav-feature-custom">Prénoms, chiffres, mariages</span>
+                            </a>
+                            <a class="mh__feature" href="{% url 'shop:seconde_vie' %}">
+                                <span class="mh__feature-img"><img src="{% static 'assets/images/sv-hero-refill.webp' %}" alt="" width="887" height="1280" loading="lazy" decoding="async" /></span>
+                                <span class="mh__feature-title">Seconde vie</span>
+                                <span class="mh__feature-line" data-translate="nav-feature-sv">Votre bougie, recoulée à l’atelier</span>
+                            </a>
+                        </div>
                     </div>
                 </li>
-                <li>
-                    <a
-                        href="{% url 'shop:about' %}"
-                        class="site-header__link magnetic-link"
-                        data-translate="nav-about"
-                        >About Us</a
-                    >
-                </li>
-                <li>
-                    <a
-                        href="{% url 'shop:contact' %}"
-                        class="site-header__link magnetic-link"
-                        data-translate="nav-contact"
-                        >Contact</a
-                    >
-                </li>
+                <li class="mh__item"><a href="{% url 'shop:custom_order' %}" class="mh__link" data-translate="nav-sur-mesure">Sur mesure</a></li>
+                <li class="mh__item"><a href="{% url 'shop:atelier' %}" class="mh__link" data-translate="nav-atelier">L’atelier</a></li>
             </ul>
         </nav>
+
+        <a href="{% url 'shop:home' %}" class="mh__logo" aria-label="MIMOSA Atelier">
+            <img class="mh__logo-ink" src="{% static 'assets/images/mimosa-logo-ink.png' %}" alt="MIMOSA" width="460" height="192" decoding="async" />
+            <img class="mh__logo-ivory" src="{% static 'assets/images/mimosa-logo-ivory.png' %}" alt="" width="460" height="192" decoding="async" aria-hidden="true" />
+        </a>
+
+        <div class="mh__tools">
+            <div class="language-switcher mh__lang" aria-label="Langue">
+                <button class="lang-current" type="button" aria-label="Langue" aria-expanded="false">EN</button>
+                <div class="lang-options">
+                    <button class="lang-btn active" data-lang="en" title="English" type="button">EN</button>
+                    <button class="lang-btn" data-lang="fr" title="Français" type="button">FR</button>
+                    <button class="lang-btn" data-lang="ua" title="Українська" type="button">UA</button>
+                    <button class="lang-btn" data-lang="ru" title="Русский" type="button">RU</button>
+                </div>
+            </div>
+            <a href="{% url 'shop:profile' %}" class="mh__icon mh__account">
+                <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="12" cy="8.5" r="3.7"/><path d="M4.5 20c.8-3.6 3.8-5.6 7.5-5.6s6.7 2 7.5 5.6" stroke-linecap="round"/></svg>
+                <span class="visually-hidden" data-translate="nav-account">Mon compte</span>
+            </a>
+            <a href="{% url 'shop:cart' %}" class="mh__icon mh__cart">
+                <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M5.5 8.5h13l-1 11.5h-11z" stroke-linejoin="round"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5" stroke-linecap="round"/></svg>
+                <span class="visually-hidden" data-translate="nav-cart">Panier</span>
+                <span class="mh__count nav-cart-count{% if not cart_items_count %} is-empty{% endif %}" aria-hidden="true">{{ cart_items_count }}</span>
+            </a>
+        </div>
     </div>
 </header>
+
+<div class="mh-drawer" id="primary-navigation" aria-label="Menu" data-drawer>
+    <div class="mh-drawer__panel">
+        <nav class="nx mh-drawer__nav" aria-label="Menu">
+            <details class="mh-drawer__group" open>
+                <summary data-translate="nav-boutique">Boutique</summary>
+                <p class="mh-drawer__label" data-translate="nav-collections">Collections</p>
+                <ul>
+                    {% for c in nav_collections %}
+                    <li><a href="{% url 'shop:products_by_category' c.slug %}" data-translate="{{ c.key }}">{{ c.name }}</a></li>
+                    {% endfor %}
+                </ul>
+                <p class="mh-drawer__label" data-translate="nav-occasions">Pour quelle occasion ?</p>
+                <ul>
+                    {% for o in nav_occasions %}
+                    <li><a href="{% url 'shop:products' %}?occasion={{ o.slug }}" data-translate="{{ o.key }}">{{ o.name }}</a></li>
+                    {% endfor %}
+                </ul>
+                <a class="mh-drawer__all" href="{% url 'shop:products' %}" data-translate="nav-all-products">Toute la boutique</a>
+            </details>
+            <a class="mh-drawer__big" href="{% url 'shop:custom_order' %}" data-translate="nav-sur-mesure">Sur mesure</a>
+            <a class="mh-drawer__big" href="{% url 'shop:atelier' %}" data-translate="nav-atelier">L’atelier</a>
+            <a class="mh-drawer__big" href="{% url 'shop:seconde_vie' %}">Seconde vie</a>
+            <a class="mh-drawer__big" href="{% url 'shop:faq' %}" data-translate="nav-faq">FAQ &amp; entretien</a>
+            <a class="mh-drawer__big" href="{% url 'shop:contact' %}" data-translate="nav-contact">Contact</a>
+        </nav>
+        <a class="mh-drawer__account" href="{% url 'shop:profile' %}" data-translate="nav-account">Mon compte</a>
+    </div>
+</div>

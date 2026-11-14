@@ -56,17 +56,21 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
 
             if (data.success) {
-                const successMsg = getTranslation('newsletter-success', 'Thank you for joining our journey!');
-                showMessage(successMsg, 'success');
-                
-                // Clear form
                 emailInput.value = '';
-                
-                // Keep success message visible for 5 seconds
-                setTimeout(function() {
-                    messageDiv.innerHTML = '';
-                    messageDiv.className = '';
-                }, 5000);
+                if (data.code) {
+                    // Keep the welcome code on screen: the visitor needs to copy it.
+                    messageDiv.className = 'newsletter-message success';
+                    messageDiv.textContent = '';
+                    const lead = document.createElement('span');
+                    lead.textContent = getTranslation('lettre-success', 'Bienvenue ! Votre code −10 % :') + ' ';
+                    const code = document.createElement('strong');
+                    code.className = 'lettre__code';
+                    code.textContent = data.code;
+                    messageDiv.appendChild(lead);
+                    messageDiv.appendChild(code);
+                } else {
+                    showMessage(getTranslation('newsletter-success', 'Thank you for joining our journey!'), 'success');
+                }
             } else {
                 let errorMsg = data.error || getTranslation('newsletter-generic-error', 'Something went wrong. Please try again.');
 

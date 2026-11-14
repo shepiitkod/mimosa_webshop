@@ -1,13 +1,10 @@
-{% load static %}
+{% load static %}{# Responsive picture for atelier photos: avif + webp at 480/960 px (static/assets/images/r/), jpg fallback. #}
 <picture>
-    <source
-        type="image/webp"
-        srcset="{% static rel|add:'.webp' %}"
-    >
+    <source type="image/avif" srcset="{% with b=rel|cut:'assets/images/' %}{% static 'assets/images/r/'|add:b|add:'-480.avif' %} 480w, {% static 'assets/images/r/'|add:b|add:'-960.avif' %} 960w{% endwith %}" sizes="{{ sizes|default:'(max-width: 767px) 100vw, 50vw' }}" />
+    <source type="image/webp" srcset="{% with b=rel|cut:'assets/images/' %}{% static 'assets/images/r/'|add:b|add:'-480.webp' %} 480w, {% static 'assets/images/r/'|add:b|add:'-960.webp' %} 960w{% endwith %}" sizes="{{ sizes|default:'(max-width: 767px) 100vw, 50vw' }}" />
     <img
         {% if class_name %}class="{{ class_name }}"{% endif %}
         src="{% static rel|add:'.jpg' %}"
-        {% if sizes %}sizes="{{ sizes }}"{% endif %}
         alt="{{ alt|default:'' }}"
         width="{{ w }}"
         height="{{ h }}"

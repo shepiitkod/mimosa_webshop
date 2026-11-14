@@ -1,73 +1,34 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-        <title>MIMOSA Contact Us</title>
-        <meta charset="UTF-8">
-        <meta name="Authors" content="Yuliia Sagan and Denys Shepitko">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="Keywords" content="MIMOSA, MIMOSA candles, MIMOSA bio bougies, bougies artisanales bio, bougies naturelles, bougies parfumées, bougies écologiques, bougies végétales, bougies faites main, bougies durables, bougies respectueuses de l'environnement">
-        <meta name="Keywordsru" content="Мимоза, свечи Мимоза, био свечи Мимоза, ручная работа свечей Мимоза, натуральные свечи Мимоза, ароматизированные свечи Мимоза, экологичные свечи Мимоза, вегетарианские свечи Мимоза, ручные свечи Мимоза, устойчивые свечи Мимоза, уважающие окружающую среду свечи Мимоза">
-        <meta name="Description" content="Découvrez MIMOSA, votre destination pour des bougies artisanales bio, naturelles et parfumées. Nos bougies écologiques sont fabriquées à la main avec des ingrédients végétaux durables, offrant une expérience sensorielle unique tout en respectant l'environnement. Explorez notre collection de bougies faites main pour créer une ambiance chaleureuse et durable chez vous.">
-        {% include 'includes/head_assets.html' %}
-
-</head>
-
-<body>
-    {% include 'includes/header.html' %}
-
-<main id="main-content" tabindex="-1" class="Contact-page">
-    <section class="Contact-hero">
-        <h1>Let's Connect!</h1>
-        <p class="hero-subtitle">We'd love to hear from you ✨</p>
-    </section>
-
-    <div class="contact-grid">
-        
-        <a href="mailto:mimosa.atelier.france@gmail.com" class="contact-item email-card">
-            <div class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg></div>
-            <h3>Email Us</h3>
-            <p>mimosa.atelier.france@gmail.com</p>
-            <span class="contact-arrow">→</span>
-        </a>
-
-        
-        <a href="https://www.instagram.com/mimosa_atelier_france/" target="_blank" class="contact-item instagram-card">
-            <div class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.6" fill="currentColor"/></svg></div>
-            <h3>Instagram</h3>
-            <p>@mimosa_atelier_france</p>
-            <span class="contact-arrow">→</span>
-        </a>
-
-        
-        <a href="https://www.tiktok.com/@mimosa_atelier_fr?_r=1&_t=ZN-93kuq9D0KjT" target="_blank" class="contact-item tiktok-card">
-            <div class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 3c.4 2.6 2.2 4.4 5 4.6"/></svg></div>
-            <h3>TikTok</h3>
-            <p>@mimosa_atelier_fr</p>
-            <span class="contact-arrow">→</span>
-        </a>
-
-        
-        <a href="tel:+33749050769" class="contact-item phone-card">
-            <div class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.5h3l1.5 4-2 1.3a11 11 0 0 0 6.2 6.2l1.3-2 4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.5 5.7a2 2 0 0 1 2-2.2Z"/></svg></div>
-            <h3>Call Us</h3>
-            <p>+33 7 49 05 07 69</p>
-            <span class="contact-arrow">→</span>
-        </a>
-    </div>
-
-    <section class="contact-message">
-        <h2>Or just say hi! 👋</h2>
-        <p>We usually respond within 24 hours</p>
-    </section>
-</main>
-
-{% include 'includes/footer.html' %}
-
-<button id="back-to-top" class="back-to-top">
-    <span>↑</span>
-</button>
-{% include 'includes/site_scripts.html' %}
-</body>
-</html>
+{% block title %}Contact — MIMOSA Atelier{% endblock %}
+{% block body_class %}contact-page{% endblock %}
+{% block main_class %}page Contact-page{% endblock %}
+{% block content %}
+{% include 'includes/page_hero.html' with eyebrow='Contact' eyebrow_key='nav-contact' title='Écrivez-nous, <em>simplement</em>' title_key='ct-title' lede='Une question, une idée, une commande ? Nous répondons sous 24 heures.' lede_key='ct-lede' %}
+<div class="contact-grid">
+    <a href="mailto:mimosa.atelier.france@gmail.com" class="contact-item">
+        <span class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg></span>
+        <h2 class="contact-item__title" data-translate="ct-email">E-mail</h2>
+        <p>mimosa.atelier.france<wbr>@gmail.com</p>
+    </a>
+    <a href="https://www.instagram.com/mimosa_atelier_france/" target="_blank" rel="noopener" class="contact-item">
+        <span class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.6" fill="currentColor"/></svg></span>
+        <h2 class="contact-item__title">Instagram</h2>
+        <p>@mimosa_atelier_france</p>
+    </a>
+    <a href="https://www.tiktok.com/@mimosa_atelier_fr" target="_blank" rel="noopener" class="contact-item">
+        <span class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 3c.4 2.6 2.2 4.4 5 4.6"/></svg></span>
+        <h2 class="contact-item__title">TikTok</h2>
+        <p>@mimosa_atelier_fr</p>
+    </a>
+    <a href="tel:+33749050769" class="contact-item">
+        <span class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.5h3l1.5 4-2 1.3a11 11 0 0 0 6.2 6.2l1.3-2 4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.5 5.7a2 2 0 0 1 2-2.2Z"/></svg></span>
+        <h2 class="contact-item__title" data-translate="ct-phone">Téléphone</h2>
+        <p>+33 7 49 05 07 69</p>
+    </a>
+</div>
+<section class="contact-more">
+    <p data-translate="ct-custom">Pour une commande personnalisée, le plus simple est notre formulaire :</p>
+    <a class="btn" href="{% url 'shop:custom_order' %}" data-translate="bespoke-cta">Demander un devis</a>
+</section>
+{% endblock %}

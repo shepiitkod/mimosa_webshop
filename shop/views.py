@@ -19,7 +19,7 @@ from django.core.paginator import Paginator
 from django.core.validators import validate_email
 from django.db import IntegrityError, transaction
 from django.db.models import Count, Prefetch, Sum
-from django.http import HttpResponse, JsonResponse, StreamingHttpResponse
+from django.http import Http404, HttpResponse, JsonResponse, StreamingHttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
@@ -40,7 +40,19 @@ from .emails import (
     send_order_confirmation_email,
     send_order_status_update_email,
 )
-from .models import CartItem, NewsletterUser, Order, OrderItem, Product
+from .catalog import (
+    COLLECTIONS,
+    COLLECTIONS_BY_SLUG,
+    OCCASIONS,
+    OCCASIONS_BY_SLUG,
+    PRICE_BANDS,
+    PRICE_BANDS_BY_SLUG,
+    collection_for_category,
+    occasion_filter,
+)
+from .emails import send_custom_order_request_email
+from .forms import CustomOrderRequestForm
+from .models import CartItem, CustomOrderRequest, NewsletterUser, Order, OrderItem, Product, Review
 
 CATEGORY_SLUG_ALIASES = {
     "decorative-rose": "scented-candles",
@@ -633,21 +645,33 @@ def _cart_total_weight_grams(items) -> int:
 
 @require_GET
 def index_view(request):
-    # Home: show the three most recently added products (by id) under "Our New Collection".
-    products = Product.objects.all().order_by("-id")[:3]
-    cart_count = _cart_count(request.session)
-    home_categories = _home_category_cards()
+    products = Product.objects.all().order_by("-id")[:8]
+    reviews = Review.objects.filter(is_published=True).select_related("product")[:6]
     return render(
         request,
         "index.html",
         {
             "products": products,
-            "cart_count": cart_count,
-            "home_categories": home_categories,
+            "cart_count": _cart_count(request.session),
+            "occasions": OCCASIONS,
+            "reviews": reviews,
             "atelier_steps": ATELIER_STEPS,
             "intro_photos": INTRO_PHOTOS,
+            "instagram_photos": INSTAGRAM_PHOTOS,
         },
     )
+
+
+# Instagram-style grid on the homepage: atelier photos linking to the
+# account (they are not pulled from Instagram).
+INSTAGRAM_PHOTOS = (
+    {"image": "assets/images/MAIN1", "w": 1200, "h": 1600, "alt": "Bougies chiffres roses tenues à la main"},
+    {"image": "assets/images/sv-parfums", "w": 800, "h": 1200, "alt": "Flacons de parfum de l’atelier"},
+    {"image": "assets/images/MAIN5", "w": 767, "h": 1200, "alt": "Carte MIMOSA et bougie bento cœur"},
+    {"image": "assets/images/photo2", "w": 853, "h": 1280, "alt": "Portrait avec bougies fines dorées"},
+    {"image": "assets/images/MAIN7", "w": 801, "h": 1200, "alt": "Bougies chiffres jaunes et confettis"},
+    {"image": "assets/images/sv-cire-close", "w": 800, "h": 1200, "alt": "Paillettes de cire de soja"},
+)
 
 
 # Homepage intro: candle photos floating in 3D. x/y are offsets from the
@@ -706,152 +730,78 @@ ATELIER_STEPS = (
 )
 
 
-def _home_category_cards():
-    """Category tiles for the homepage discovery grid. Each tile uses a
-    hand-picked atelier photo (rather than a random product image) so the
-    grid always looks curated, even before the catalog is fully stocked."""
-    specs = (
-        {
-            "slug": "bento-candles",
-            "tint": "bento",
-            "translate_key": "nav-sub-bento",
-            "subtitle_key": "home-category-bento-subtitle",
-            "name": Product.CATEGORY_BENTO,
-            "subtitle": "Playful bento-box candle sets",
-            "image": "assets/images/bento",
-            "image_w": 801,
-            "image_h": 1200,
-        },
-        {
-            "slug": "scented-candles",
-            "tint": "scented",
-            "translate_key": "nav-sub-scented",
-            "subtitle_key": "home-category-scented-subtitle",
-            "name": Product.CATEGORY_SCENTED,
-            "subtitle": "Candles for ceremonies and celebrations",
-            "image": "assets/images/MAIN11",
-            "image_w": 801,
-            "image_h": 1200,
-        },
-        {
-            "slug": "decorative-candles",
-            "tint": "decorative",
-            "translate_key": "nav-sub-decorative",
-            "subtitle_key": "home-category-decorative-subtitle",
-            "name": Product.CATEGORY_DECORATIVE,
-            "subtitle": "Personalized custom candles",
-            "image": "assets/images/MAIN9",
-            "image_w": 801,
-            "image_h": 1200,
-        },
-        {
-            "slug": "ceremony-candles",
-            "tint": "ceremony",
-            "translate_key": "nav-sub-ceremony",
-            "subtitle_key": "home-category-ceremony-subtitle",
-            "name": Product.CATEGORY_CEREMONY,
-            "subtitle": "Ceremonial candles for your special moments",
-            "image": "assets/images/MAIN1",
-            "image_w": 1200,
-            "image_h": 1600,
-        },
-    )
-
-    return [
-        {
-            "slug": spec["slug"],
-            "tint": spec["tint"],
-            "translate_key": spec["translate_key"],
-            "subtitle_key": spec["subtitle_key"],
-            "name": Product(category=spec["name"]).category_display_name,
-            "subtitle": spec["subtitle"],
-            "image": spec["image"],
-            "image_w": spec["image_w"],
-            "image_h": spec["image_h"],
-        }
-        for spec in specs
-    ]
-
-
 @require_GET
 def products_catalog_view(request, category_slug=None):
+    """Boutique: every product, or one collection, with occasion / price
+    filters and sorting. All collections share this template."""
     if category_slug in CATEGORY_SLUG_ALIASES:
-        return redirect(
-            "shop:products_by_category",
-            category_slug=CATEGORY_SLUG_ALIASES[category_slug],
-            permanent=True,
-        )
+        url = reverse("shop:products_by_category", args=[CATEGORY_SLUG_ALIASES[category_slug]])
+        if request.GET:
+            url += "?" + request.GET.urlencode()
+        return redirect(url, permanent=True)
 
-    products_qs = Product.objects.all().order_by("title")
-    raw_counts = Product.objects.values("category").annotate(total=Count("id"))
-    counts_map = {}
-    for row in raw_counts:
-        category = row["category"]
-        canonical = (
-            Product.CATEGORY_CEREMONY
-            if category == Product.CATEGORY_CEREMONY_LEGACY
-            else category
-        )
-        counts_map[canonical] = counts_map.get(canonical, 0) + row["total"]
-
-    visible_categories = [
-        Product.CATEGORY_BENTO,
-        Product.CATEGORY_SCENTED,
-        Product.CATEGORY_DECORATIVE,
-        Product.CATEGORY_CEREMONY,
-        Product.CATEGORY_SACHETS,
-    ]
-    if counts_map.get(Product.CATEGORY_GIFTS):
-        visible_categories.append(Product.CATEGORY_GIFTS)
-
-    category_items = []
-    for name in visible_categories:
-        category_items.append(
-            {
-                "name": Product(category=name).category_display_name,
-                "slug": slugify(name),
-                "count": counts_map.get(name, 0),
-                "translate_key": Product(category=name).category_translation_key,
-                "filter_values": (
-                    [Product.CATEGORY_CEREMONY, Product.CATEGORY_CEREMONY_LEGACY]
-                    if name == Product.CATEGORY_CEREMONY
-                    else [name]
-                ),
-            }
-        )
-
-    active_category = None
+    collection = None
     if category_slug:
-        active_category = next(
-            (item for item in category_items if item["slug"] == category_slug), None
-        )
-        if active_category:
-            products_qs = products_qs.filter(
-                category__in=active_category["filter_values"]
-            )
+        collection = COLLECTIONS_BY_SLUG.get(category_slug)
+        if collection is None:
+            raise Http404("Unknown collection")
 
-    paginator = Paginator(products_qs, 15)
+    base_qs = Product.objects.all()
+    counts = {}
+    for row in base_qs.values("category").annotate(total=Count("id")):
+        c = collection_for_category(row["category"])
+        if c:
+            counts[c["slug"]] = counts.get(c["slug"], 0) + row["total"]
+
+    collections = [
+        dict(c, count=counts.get(c["slug"], 0))
+        for c in COLLECTIONS
+        if counts.get(c["slug"]) or c["slug"] != "gift-collections"
+    ]
+
+    qs = base_qs
+    if collection:
+        qs = qs.filter(category__in=collection["categories"])
+
+    occasion = OCCASIONS_BY_SLUG.get(request.GET.get("occasion", ""))
+    if occasion:
+        qs = qs.filter(occasion_filter(occasion["slug"]))
+
+    band = PRICE_BANDS_BY_SLUG.get(request.GET.get("prix", ""))
+    if band:
+        if band["min"] is not None:
+            qs = qs.filter(price__gte=band["min"])
+        if band["max"] is not None:
+            qs = qs.filter(price__lt=band["max"])
+
+    sort = request.GET.get("tri", "")
+    ordering = {"prix-asc": ("price", "id"), "prix-desc": ("-price", "-id")}.get(sort, ("-id",))
+    qs = qs.order_by(*ordering)
+
+    paginator = Paginator(qs, 12)
     page_obj = paginator.get_page(request.GET.get("page"))
-    page_range = paginator.get_elided_page_range(
-        number=page_obj.number,
-        on_each_side=1,
-        on_ends=1,
-    )
+    keep = request.GET.copy()
+    keep.pop("page", None)
 
-    total_products_count = paginator.count
-
-    cart_count = _cart_count(request.session)
     return render(
         request,
         "products_catalog.html",
         {
             "products": page_obj.object_list,
             "page_obj": page_obj,
-            "page_range": page_range,
-            "total_products_count": total_products_count,
-            "categories": category_items,
-            "active_category": active_category,
-            "cart_count": cart_count,
+            "page_range": paginator.get_elided_page_range(number=page_obj.number, on_each_side=1, on_ends=1),
+            "total_products_count": paginator.count,
+            "collection": collection,
+            "collections": collections,
+            "categories": collections,
+            "occasions": OCCASIONS,
+            "price_bands": PRICE_BANDS,
+            "active_occasion": occasion,
+            "active_band": band,
+            "active_sort": sort,
+            "filters_active": bool(occasion or band or sort),
+            "querystring": keep.urlencode(),
+            "cart_count": _cart_count(request.session),
         },
     )
 
@@ -871,6 +821,11 @@ def product_detail_view(request, product_id, slug=None):
         .order_by("title")[:4]
     )
 
+    gallery = [
+        (getattr(product, field), getattr(product, f"{field}_object_position"))
+        for field in ("image", "image_2", "image_3", "image_4")
+        if getattr(product, field)
+    ]
     return render(
         request,
         "product_detail.html",
@@ -878,24 +833,17 @@ def product_detail_view(request, product_id, slug=None):
             "product": product,
             "canonical_slug": canonical_slug,
             "related_products": related_products,
+            "gallery": gallery,
+            "collection": collection_for_category(product.category),
+            "reviews": product.reviews.filter(is_published=True)[:6],
         },
     )
 
 
 @require_GET
 def product_sachets_view(request):
-    """Landing page for the new Plaster Scented Sachets ("sachet parfumé en
-    plâtre") collection — hero photo, story text, and the live products the
-    admin has added under this category."""
-    products = Product.objects.filter(category=Product.CATEGORY_SACHETS).order_by(
-        "-id"
-    )
-    cart_count = _cart_count(request.session)
-    return render(
-        request,
-        "product_sachets.html",
-        {"products": products, "cart_count": cart_count},
-    )
+    """Old Plaster Sachets landing page: now a Boutique collection."""
+    return redirect("shop:products_by_category", category_slug="plaster-sachets", permanent=True)
 
 
 @require_GET
@@ -906,7 +854,39 @@ def seconde_vie_view(request):
 
 @require_GET
 def about_view(request):
-    return render(request, "About.html")
+    """Old /about/ address."""
+    return redirect("shop:atelier", permanent=True)
+
+
+@require_GET
+def atelier_view(request):
+    return render(request, "atelier.html", {"atelier_steps": ATELIER_STEPS})
+
+
+@require_GET
+def faq_view(request):
+    return render(request, "faq.html")
+
+
+def custom_order_view(request):
+    """Sur mesure: description + request form. Requests are stored for the
+    admin and mailed to ADMIN_ORDER_EMAIL."""
+    sent = request.GET.get("envoye") == "1"
+    if request.method == "POST":
+        form = CustomOrderRequestForm(request.POST, request.FILES)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.language = (request.POST.get("language") or "")[:8]
+            obj.save()
+            send_custom_order_request_email(obj)
+            return redirect(reverse("shop:custom_order") + "?envoye=1#demande")
+    else:
+        initial = {}
+        occasion = request.GET.get("occasion")
+        if occasion in dict(CustomOrderRequest.OCCASION_CHOICES):
+            initial["occasion"] = occasion
+        form = CustomOrderRequestForm(initial=initial)
+    return render(request, "sur_mesure.html", {"form": form, "sent": sent})
 
 
 @require_GET
@@ -921,16 +901,14 @@ def confidential_view(request):
 
 @require_GET
 def product_bento_view(request):
-    """Legacy URL /products/bento/ — serve the live Bento category from the catalogue."""
-    return redirect(
-        "shop:products_by_category", category_slug=slugify(Product.CATEGORY_BENTO)
-    )
+    """Legacy URL /products/bento/."""
+    return redirect("shop:products_by_category", category_slug="bento-candles", permanent=True)
 
 
 @require_GET
 def product_rose_view(request):
-    """Legacy decorative product page URL — catalogue now has three categories only."""
-    return redirect("shop:products_by_category", category_slug="scented-candles")
+    """Legacy decorative product page URL."""
+    return redirect("shop:products_by_category", category_slug="decorative-candles", permanent=True)
 
 
 @require_GET
@@ -1461,7 +1439,11 @@ def subscribe_newsletter(request):
             )
 
         return JsonResponse(
-            {"success": True, "message": "Thank you for joining our journey!"}
+            {
+                "success": True,
+                "message": "Thank you for joining our journey!",
+                "code": getattr(settings, "NEWSLETTER_WELCOME_CODE", ""),
+            }
         )
 
     except json.JSONDecodeError:

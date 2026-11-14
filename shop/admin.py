@@ -8,7 +8,17 @@ from django.utils.html import format_html, format_html_join
 
 from . import shipping
 from .emails import send_order_status_update_email
-from .models import CartItem, ContestEntry, NewsletterUser, Order, OrderItem, Product
+from .catalog import OCCASION_CHOICES
+from .models import (
+    CartItem,
+    ContestEntry,
+    CustomOrderRequest,
+    NewsletterUser,
+    Order,
+    OrderItem,
+    Product,
+    Review,
+)
 
 FRAMING_FIELDS = (
     "image_focal_x",
@@ -66,6 +76,21 @@ def _payment_state(order):
 
 
 class ProductAdminForm(forms.ModelForm):
+    occasions = forms.MultipleChoiceField(
+        choices=OCCASION_CHOICES,
+        required=False,
+        widget=forms.CheckboxSelectMultiple,
+        help_text="Leave empty to follow the category defaults.",
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        raw = getattr(self.instance, "occasions", "") or ""
+        self.initial["occasions"] = [v for v in raw.split(",") if v]
+
+    def clean_occasions(self):
+        return ",".join(self.cleaned_data.get("occasions") or [])
+
     class Meta:
         model = Product
         fields = "__all__"
@@ -118,6 +143,7 @@ class ProductAdmin(admin.ModelAdmin):
                     "title",
                     "description",
                     "category",
+                    "occasions",
                     "hs_code",
                     "price",
                     "stock",
@@ -675,3 +701,45 @@ class NewsletterUserAdmin(admin.ModelAdmin):
     search_fields = ("email",)
     readonly_fields = ("date_added",)
     ordering = ("-date_added",)
+
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ("author_name", "city", "rating", "product", "is_published", "created_at")
+    list_filter = ("is_published", "rating")
+    list_editable = ("is_published",)
+    search_fields = ("author_name", "text", "city")
+    autocomplete_fields = ("product",)
+
+
+@admin.register(CustomOrderRequest)
+class CustomOrderRequestAdmin(admin.ModelAdmin):
+    list_display = ("created_at", "name", "occasion", "event_date", "quantity", "status")
+    list_filter = ("status", "occasion")
+    list_editable = ("status",)
+    search_fields = ("name", "email", "phone", "message")
+    readonly_fields = ("created_at", "reference_preview", "language")
+    fields = (
+        "status",
+        "name",
+        "email",
+        "phone",
+        "occasion",
+        "event_date",
+        "quantity",
+        "message",
+        "reference_image",
+        "reference_preview",
+        "language",
+        "admin_note",
+        "created_at",
+    )
+
+    @admin.display(description="Reference")
+    def reference_preview(self, obj):
+        if not obj.reference_image:
+            return "—"
+        return format_html(
+            '<a href="{0}" target="_blank" rel="noopener"><img src="{0}" style="max-width:320px;border-radius:8px"></a>',
+            obj.reference_image.url,
+        )

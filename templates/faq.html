@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}FAQ &amp; entretien — MIMOSA Atelier{% endblock %}
+{% block description %}Comment bien brûler une bougie, livraison, retours, commandes sur mesure : toutes les réponses de l’atelier MIMOSA.{% endblock %}
+{% block body_class %}faq-page{% endblock %}
+{% block content %}
+{% include 'includes/page_hero.html' with eyebrow='FAQ & entretien' eyebrow_key='nav-faq' title='Prendre soin <em>de la flamme</em>' title_key='faq-title' lede='Quelques gestes simples pour une combustion belle et longue, et les réponses à vos questions.' lede_key='faq-lede' %}
+
+<div class="faq">
+    <nav class="nx faq__nav" aria-label="Sommaire">
+        <a href="#entretien" data-translate="faq-sec-care">Entretien</a>
+        <a href="#livraison" data-translate="faq-sec-shipping">Livraison</a>
+        <a href="#retours" data-translate="faq-sec-returns">Retours</a>
+        <a href="#commandes" data-translate="faq-sec-orders">Commandes</a>
+    </nav>
+
+    <section class="faq__section" id="entretien" aria-labelledby="faq-care-title">
+        <h2 id="faq-care-title" class="display-title" data-translate="faq-sec-care">Entretien</h2>
+        <details class="faq__item" open><summary data-translate="faq-q1">Comment allumer ma bougie la première fois ?</summary><p data-translate="faq-a1">Laissez-la brûler jusqu’à ce que toute la surface de cire soit liquide, soit 2 à 3 heures. Ce premier bain de cire « mémorise » la surface : sans lui, la bougie creuse un tunnel et se consume mal.</p></details>
+        <details class="faq__item"><summary data-translate="faq-q2">Faut-il couper la mèche ?</summary><p data-translate="faq-a2">Oui, à environ 5 mm avant chaque allumage. Une mèche courte donne une flamme calme, sans fumée ni traces noires.</p></details>
+        <details class="faq__item"><summary data-translate="faq-q3">Combien de temps la laisser allumée ?</summary><p data-translate="faq-a3">Pas plus de 4 heures d’affilée. Laissez-la refroidir complètement avant de la rallumer.</p></details>
+        <details class="faq__item"><summary data-translate="faq-q4">Où la poser ?</summary><p data-translate="faq-a4">Sur une surface stable et résistante à la chaleur, à l’abri des courants d’air, loin des rideaux, des enfants et des animaux. Ne la laissez jamais brûler sans surveillance.</p></details>
+        <details class="faq__item"><summary data-translate="faq-q5">Comment l’éteindre ?</summary><p data-translate="faq-a5">Avec un éteignoir ou en plongeant la mèche dans la cire fondue puis en la redressant : pas de fumée, et la mèche reste prête pour la prochaine fois.</p></details>
+        <details class="faq__item"><summary data-translate="faq-q6">Et les bougies décoratives ou les sachets ?</summary><p data-translate="faq-a6">Les bougies sculptées sont aussi des objets : gardez-les à l’abri du soleil direct et de la chaleur. Les sachets en plâtre se ravivent avec quelques gouttes de parfum.</p></details>
+    </section>
+
+    <section class="faq__section" id="livraison" aria-labelledby="faq-ship-title">
+        <h2 id="faq-ship-title" class="display-title" data-translate="faq-sec-shipping">Livraison</h2>
+        <details class="faq__item" open><summary data-translate="faq-q7">Quels modes de livraison ?</summary><p data-translate="faq-a7">Nous expédions depuis Nîmes en point relais Mondial Relay, en Colissimo ou en Chronopost Express. Le prix s’affiche dans le panier selon le pays et le poids.</p></details>
+        <details class="faq__item"><summary data-translate="faq-q8">La livraison est-elle offerte ?</summary><p data-translate="faq-a8">Oui, en France, dès 85 € d’achat.</p></details>
+        <details class="faq__item"><summary data-translate="faq-q9">Livrez-vous hors de France ?</summary><p data-translate="faq-a9">Oui, vers plusieurs pays : choisissez votre pays dans le panier pour voir les options et les tarifs.</p></details>
+    </section>
+
+    <section class="faq__section" id="retours" aria-labelledby="faq-ret-title">
+        <h2 id="faq-ret-title" class="display-title" data-translate="faq-sec-returns">Retours</h2>
+        <details class="faq__item" open><summary data-translate="faq-q10">Puis-je retourner un article ?</summary><p data-translate="faq-a10">Vous disposez de 14 jours après réception pour nous retourner un article non utilisé, dans son emballage d’origine. Écrivez-nous d’abord, nous vous indiquons la marche à suivre.</p></details>
+        <details class="faq__item"><summary data-translate="faq-q11">Et les créations sur mesure ?</summary><p data-translate="faq-a11">Les pièces personnalisées sont fabriquées pour vous : elles ne peuvent être ni reprises ni échangées.</p></details>
+        <details class="faq__item"><summary data-translate="faq-q12">Mon colis est arrivé abîmé</summary><p data-translate="faq-a12">Prenez une photo du colis et de la bougie et écrivez-nous dans les 48 heures : nous trouvons une solution ensemble.</p></details>
+    </section>
+
+    <section class="faq__section" id="commandes" aria-labelledby="faq-ord-title">
+        <h2 id="faq-ord-title" class="display-title" data-translate="faq-sec-orders">Commandes</h2>
+        <details class="faq__item" open><summary data-translate="faq-q13">Comment commander une bougie personnalisée ?</summary><p data-translate="faq-a13">Remplissez le formulaire de la page Sur mesure : nous revenons vers vous avec une proposition et un devis.</p></details>
+        <details class="faq__item"><summary data-translate="faq-q14">Qu’est-ce que Seconde vie ?</summary><p data-translate="faq-a14">Rapportez votre contenant MIMOSA vide : nous le remplissons à nouveau de cire de soja et de parfum.</p></details>
+    </section>
+
+    <aside class="faq__contact">
+        <h2 class="display-title" data-translate-html="faq-contact-title">Une autre <em>question</em> ?</h2>
+        <p data-translate="faq-contact-text">Écrivez-nous, nous répondons sous 24 heures.</p>
+        <a class="btn" href="{% url 'shop:contact' %}" data-translate="faq-contact-btn">Nous écrire</a>
+    </aside>
+</div>
+{% endblock %}

@@ -4,116 +4,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ product.title }} - MIMOSA Atelier</title>
-    <meta name="description" content="{{ product.description|truncatechars:155 }}">
-    <meta property="og:title" content="{{ product.title }} - MIMOSA Atelier">
-    <meta property="og:description" content="{{ product.description|truncatechars:155 }}">
+    <title>{{ product.title }} — MIMOSA Atelier</title>
+    <meta name="description" content="{{ product.description|striptags|truncatechars:155 }}">
+    <meta property="og:title" content="{{ product.title }} — MIMOSA Atelier">
+    <meta property="og:description" content="{{ product.description|striptags|truncatechars:155 }}">
     <meta property="og:image" content="{{ product.image.url }}">
     <meta property="og:type" content="product">
     <link rel="canonical" href="{% url 'shop:product_detail' product.id canonical_slug %}">
     {% include 'includes/head_assets.html' %}
-    <style>
-        .main-image { position: relative; cursor: crosshair; }
-        .zoom-lens {
-            display: none;
-            position: absolute;
-            border: 1px solid rgba(201, 162, 39, 0.72);
-            border-radius: 6px;
-            background: rgba(201, 162, 39, 0.12);
-            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
-            pointer-events: none;
-            z-index: 10;
-        }
-        .zoom-result {
-            display: none;
-            position: fixed;
-            top: max(96px, 12vh);
-            right: clamp(18px, 3vw, 48px);
-            width: min(50vw, 680px);
-            height: min(72vh, 720px);
-            border: 1px solid rgba(201, 162, 39, 0.24);
-            border-radius: 24px;
-            background-repeat: no-repeat;
-            background-color: #fbf8f1;
-            z-index: 8000;
-            box-shadow: 0 24px 70px rgba(31, 24, 16, 0.22);
-            overflow: hidden;
-            pointer-events: none;
-        }
-        @media (max-width: 1100px) {
-            .zoom-result { display: none !important; }
-            .main-image { cursor: default; }
-        }
-    </style>
 </head>
-<body>
-    {% include 'includes/header.html' with header_show_cart=True %}
+<body class="pdp-page">
+    {% include 'includes/header.html' %}
 
-    <main id="main-content" tabindex="-1" class="product-page">
-        <div class="breadcrumbs">
-            <a href="{% url 'shop:home' %}" data-translate="nav-home">Home</a>
-            <span>/</span>
-            <a href="{% url 'shop:products' %}" data-translate="nav-products">Products</a>
-            <span>/</span>
-            <span
-                data-product-i18n="{{ product|product_i18n_json }}"
-                data-i18n-field="title"
-            >{{ product.title }}</span>
-        </div>
+    <main id="main-content" tabindex="-1" class="product-page pdp">
+        <nav class="nx crumbs pdp__crumbs" aria-label="Fil d’Ariane">
+            <a href="{% url 'shop:home' %}" data-translate="nav-home">Accueil</a>
+            <span aria-hidden="true">/</span>
+            <a href="{% url 'shop:products' %}" data-translate="nav-boutique">Boutique</a>
+            {% if collection %}
+            <span aria-hidden="true">/</span>
+            <a href="{% url 'shop:products_by_category' collection.slug %}" data-translate="{{ collection.key }}">{{ collection.name }}</a>
+            {% endif %}
+        </nav>
 
-        <div class="product-container">
-            <div class="product-gallery">
-                <div class="main-image" id="zoomContainer">
-                    {% product_picture product.image alt=product.title css_class="product-framed-image" img_id="mainProductImage" w=800 h=800 loading="eager" fetchpriority="high" object_position=product.image_object_position %}
+        <div class="pdp__layout">
+            {# ── Gallery ─────────────────────────────────────────────── #}
+            <section class="pdp-gallery" aria-label="Photos" data-gallery>
+                <div class="pdp-gallery__stage" id="zoomContainer">
+                    <div class="pdp-gallery__track" data-gallery-track>
+                        {% for image, position in gallery %}
+                        <button type="button" class="pdp-gallery__slide" data-index="{{ forloop.counter0 }}" data-full="{{ image.url }}" aria-label="Photo {{ forloop.counter }}">
+                            {% if forloop.first %}
+                            {% product_picture image alt=product.title css_class="product-framed-image pdp-gallery__img" img_id="mainProductImage" w=900 h=1125 loading="eager" fetchpriority="high" sizes="(max-width: 1023px) 100vw, 56vw" object_position=position %}
+                            {% else %}
+                            {% product_picture image alt=product.title css_class="product-framed-image pdp-gallery__img" w=900 h=1125 loading="lazy" sizes="(max-width: 1023px) 100vw, 56vw" object_position=position %}
+                            {% endif %}
+                        </button>
+                        {% endfor %}
+                    </div>
                     <div id="zoomLens" class="zoom-lens" aria-hidden="true"></div>
+                    {% if gallery|length > 1 %}
+                    <div class="pdp-gallery__dots" aria-hidden="true">
+                        {% for image, position in gallery %}<span class="{% if forloop.first %}is-active{% endif %}"></span>{% endfor %}
+                    </div>
+                    {% endif %}
                 </div>
-                <div class="thumbnail-images">
-                    <img src="{{ product.image.url }}" alt="{{ product.title }}" class="thumbnail product-framed-image active" data-object-position="{{ product.image_object_position }}" style="--product-image-position: {{ product.image_object_position }};" onclick="changeImage(this)" loading="lazy">
-                    {% if product.image_2 %}<img src="{{ product.image_2.url }}" alt="{{ product.title }} photo 2" class="thumbnail product-framed-image" data-object-position="{{ product.image_2_object_position }}" style="--product-image-position: {{ product.image_2_object_position }};" onclick="changeImage(this)">{% endif %}
-                    {% if product.image_3 %}<img src="{{ product.image_3.url }}" alt="{{ product.title }} photo 3" class="thumbnail product-framed-image" data-object-position="{{ product.image_3_object_position }}" style="--product-image-position: {{ product.image_3_object_position }};" onclick="changeImage(this)">{% endif %}
+                <div class="pdp-gallery__thumbs thumbnail-images"{% if gallery|length < 2 %} hidden{% endif %}>
+                    {% for image, position in gallery %}
+                    <button type="button" class="thumbnail{% if forloop.first %} active{% endif %}" data-index="{{ forloop.counter0 }}" data-object-position="{{ position }}" aria-label="Photo {{ forloop.counter }}">
+                        <img src="{{ image.url }}" alt="" class="product-framed-image" style="--product-image-position: {{ position }};" loading="lazy" decoding="async" width="120" height="150">
+                    </button>
+                    {% endfor %}
                 </div>
-            </div>
+            </section>
 
-            <div class="product-info">
+            {# ── Buy box ─────────────────────────────────────────────── #}
+            <section class="pdp-info product-info" aria-labelledby="pdp-title">
                 <p class="product-eyebrow">{% if product.category_translation_key %}<span data-translate="{{ product.category_translation_key }}">{{ product.category_display_name }}</span>{% else %}{{ product.category }}{% endif %}</p>
-                <h1
-                    data-product-i18n="{{ product|product_i18n_json }}"
-                    data-i18n-field="title"
-                >{{ product.title }}</h1>
+                <h1 id="pdp-title" data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="title">{{ product.title }}</h1>
                 <p class="product-price-large">{{ product.price }}&nbsp;€</p>
-                <p
-                    class="product-description"
-                    data-product-i18n="{{ product|product_i18n_json }}"
-                    data-i18n-field="description"
-                    data-i18n-html="true"
-                >{{ product.description }}</p>
+                <div class="product-description" data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="description" data-i18n-html="true">{{ product.description }}</div>
 
-                {% if product.category == "Bento Candles" %}{% include 'includes/bento_color_picker.html' with bento_white_src=product.image.url %}{% endif %}
-
-                {% if product.scent or product.wick or product.burn_time or product.weight or product.composition or product.form_capacity or product.wax_type %}
-                <div class="product-details">
-                    <h3 data-translate="details-title">Product Details</h3>
-                    <dl class="product-specs">
-                        {% if product.scent %}<div class="product-spec"><dt data-translate="detail-parfum-label">Fragrance:</dt><dd data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="scent">{{ product.scent }}</dd></div>{% endif %}
-                        {% if product.wick %}<div class="product-spec"><dt data-translate="detail-meche-label">Wick:</dt><dd data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="wick">{{ product.wick }}</dd></div>{% endif %}
-                        {% if product.burn_time %}<div class="product-spec"><dt data-translate="burn-time-label">Burn time:</dt><dd data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="burn_time">{{ product.burn_time }}</dd></div>{% endif %}
-                        {% if product.weight %}<div class="product-spec"><dt data-translate="detail-poids-label">Weight:</dt><dd>{{ product.weight }}</dd></div>{% endif %}
-                        {% if product.composition %}<div class="product-spec"><dt data-translate="composition-label">Composition:</dt><dd data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="composition">{{ product.composition }}</dd></div>{% endif %}
-                        {% if product.form_capacity %}<div class="product-spec"><dt data-translate="detail-form-label">Form / capacity:</dt><dd data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="form_capacity">{{ product.form_capacity }}</dd></div>{% endif %}
-                        {% if product.wax_type %}<div class="product-spec"><dt data-translate="detail-wax-label">Wax:</dt><dd data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="wax_type">{{ product.wax_type }}</dd></div>{% endif %}
-                    </dl>
-                </div>
-                {% endif %}
-
-                <form method="post" action="{% url 'shop:cart_add' product.id %}" class="product-actions">
+                <form method="post" action="{% url 'shop:cart_add' product.id %}" class="product-actions pdp-buy" id="pdp-buy">
                     {% csrf_token %}
+                    {% if product.category == "Bento Candles" %}{% include 'includes/bento_color_picker.html' with bento_white_src=product.image.url %}{% endif %}
                     <input type="hidden" name="selected_color_name" id="selectedColorName" value="{% if product.category == 'Bento Candles' %}White{% endif %}">
                     <input type="hidden" name="selected_color_hex" id="selectedColorHex" value="{% if product.category == 'Bento Candles' %}#ffffff{% endif %}">
-                    <input type="number" name="quantity" value="1" min="1" class="quantity-input" aria-label="Quantity">
-                    <button class="btn-add-to-cart" type="submit"><span data-translate="add-to-cart">Add to Cart</span></button>
+                    <div class="pdp-buy__row">
+                        <div class="qty" data-qty>
+                            <button type="button" class="qty__btn" data-qty-step="-1" aria-label="−1">−</button>
+                            <label class="visually-hidden" for="pdp-qty" data-translate="pdp-quantity">Quantité</label>
+                            <input id="pdp-qty" type="number" name="quantity" value="1" min="1" max="99" class="quantity-input qty__input" inputmode="numeric">
+                            <button type="button" class="qty__btn" data-qty-step="1" aria-label="+1">+</button>
+                        </div>
+                        <button class="btn btn-add-to-cart pdp-buy__btn" type="submit" data-buy-main><span data-translate="card-add-to-cart">Ajouter au panier</span></button>
+                    </div>
+                    <p class="pdp-reassure"><span data-translate="pdp-ships">Expédié sous 48 h</span> · <span data-translate="pdp-free-shipping">Livraison offerte dès 85 €</span></p>
                 </form>
-            </div>
+
+                <div class="pdp-acc">
+                    {% if product.composition or product.wax_type or product.scent or product.wick or product.weight or product.form_capacity %}
+                    <details class="pdp-acc__item" open>
+                        <summary data-translate="pdp-acc-composition">Composition</summary>
+                        <dl class="product-specs">
+                            {% if product.scent %}<div class="product-spec"><dt data-translate="detail-parfum-label">Fragrance:</dt><dd data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="scent">{{ product.scent }}</dd></div>{% endif %}
+                            {% if product.wax_type %}<div class="product-spec"><dt data-translate="detail-wax-label">Wax:</dt><dd data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="wax_type">{{ product.wax_type }}</dd></div>{% endif %}
+                            {% if product.wick %}<div class="product-spec"><dt data-translate="detail-meche-label">Wick:</dt><dd data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="wick">{{ product.wick }}</dd></div>{% endif %}
+                            {% if product.composition %}<div class="product-spec"><dt data-translate="composition-label">Composition:</dt><dd data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="composition">{{ product.composition }}</dd></div>{% endif %}
+                            {% if product.form_capacity %}<div class="product-spec"><dt data-translate="detail-form-label">Form / capacity:</dt><dd data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="form_capacity">{{ product.form_capacity }}</dd></div>{% endif %}
+                            {% if product.weight %}<div class="product-spec"><dt data-translate="detail-poids-label">Weight:</dt><dd>{{ product.weight }}</dd></div>{% endif %}
+                        </dl>
+                    </details>
+                    {% endif %}
+                    {% if product.burn_time %}
+                    <details class="pdp-acc__item">
+                        <summary data-translate="pdp-acc-burn">Durée de combustion</summary>
+                        <p data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="burn_time">{{ product.burn_time }}</p>
+                    </details>
+                    {% endif %}
+                    <details class="pdp-acc__item">
+                        <summary data-translate="pdp-acc-care">Entretien</summary>
+                        <p data-translate="pdp-care-text">Au premier allumage, laissez brûler jusqu’à ce que toute la surface soit fondue (2 à 3 h). Recoupez la mèche à 5 mm avant chaque usage, ne dépassez pas 4 h de combustion et gardez la bougie à l’abri des courants d’air.</p>
+                        <a class="text-link" href="{% url 'shop:faq' %}#entretien" data-translate="pdp-care-link">Tous nos conseils</a>
+                    </details>
+                    <details class="pdp-acc__item">
+                        <summary data-translate="pdp-acc-shipping">Livraison &amp; retours</summary>
+                        <p data-translate="pdp-shipping-text">Expédition depuis Nîmes en point relais, Colissimo ou Chronopost. Livraison offerte en France dès 85 € d’achat. Retours possibles sous 14 jours pour les pièces non personnalisées et non utilisées.</p>
+                        <a class="text-link" href="{% url 'shop:faq' %}#livraison" data-translate="pdp-shipping-link">Livraison et retours en détail</a>
+                    </details>
+                </div>
+            </section>
         </div>
+
+        {% if reviews %}
+        <section class="pdp-reviews" aria-labelledby="pdp-reviews-title">
+            <h2 id="pdp-reviews-title" class="display-title" data-translate="pdp-reviews-title">Avis</h2>
+            <div class="avis__list">
+                {% for review in reviews %}{% include 'includes/review_card.html' %}{% endfor %}
+            </div>
+        </section>
+        {% endif %}
 
         {% if related_products %}
         <section class="related-products" aria-labelledby="related-title">
@@ -127,107 +137,23 @@
         {% endif %}
     </main>
 
+    {# Phone: buy bar pinned to the bottom while the main button is off screen #}
+    <div class="pdp-sticky" data-buy-sticky>
+        <span class="pdp-sticky__info"><span class="pdp-sticky__title">{{ product.title }}</span><span class="pdp-sticky__price">{{ product.price }}&nbsp;€</span></span>
+        <button type="submit" form="pdp-buy" class="btn pdp-sticky__btn"><span data-translate="card-add-to-cart">Ajouter au panier</span></button>
+    </div>
+
+    <dialog class="lightbox" data-lightbox aria-label="Photos">
+        <button type="button" class="lightbox__close" data-lightbox-close aria-label="Fermer">×</button>
+        <button type="button" class="lightbox__nav lightbox__nav--prev" data-lightbox-step="-1" aria-label="Précédente">‹</button>
+        <img class="lightbox__img" alt="{{ product.title }}" data-lightbox-img>
+        <button type="button" class="lightbox__nav lightbox__nav--next" data-lightbox-step="1" aria-label="Suivante">›</button>
+    </dialog>
+
     {% include 'includes/footer.html' %}
     <div id="zoomResult" class="zoom-result" aria-hidden="true"></div>
 
-    <script>
-    function changeImage(thumbnail) {
-        const mainImage = document.getElementById('mainProductImage');
-        if (!mainImage) return;
-        mainImage.src = thumbnail.src;
-        const position = thumbnail.dataset.objectPosition || '50% 50%';
-        mainImage.dataset.objectPosition = position;
-        mainImage.style.setProperty('--product-image-position', position);
-        document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
-        thumbnail.classList.add('active');
-        initZoom();
-    }
-
-    function initZoom() {
-        const container = document.getElementById('zoomContainer');
-        const img = document.getElementById('mainProductImage');
-        const lens = document.getElementById('zoomLens');
-        const result = document.getElementById('zoomResult');
-        if (!container || !img || !lens || !result) return;
-
-        function disableZoom() {
-            lens.style.display = 'none';
-            result.style.display = 'none';
-            container.onmouseenter = null;
-            container.onmouseleave = null;
-            container.onmousemove = null;
-        }
-
-        disableZoom();
-
-        if (window.innerWidth <= 1100 || window.matchMedia('(hover: none)').matches) return;
-
-        const ZOOM = 2.8;
-
-        function getRenderedImageRect() {
-            const box = img.getBoundingClientRect();
-            if (!img.naturalWidth || !img.naturalHeight) {
-                return { left: box.left, top: box.top, width: box.width, height: box.height };
-            }
-            const naturalRatio = img.naturalWidth / img.naturalHeight;
-            const boxRatio = box.width / box.height;
-            let width = box.width;
-            let height = box.height;
-            let left = box.left;
-            let top = box.top;
-
-            if (boxRatio > naturalRatio) {
-                width = box.height * naturalRatio;
-                left = box.left + (box.width - width) / 2;
-            } else {
-                height = box.width / naturalRatio;
-                top = box.top + (box.height - height) / 2;
-            }
-            return { left, top, width, height };
-        }
-
-        function moveLens(e) {
-            e.preventDefault();
-            const rect = getRenderedImageRect();
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-
-            const lensW = result.offsetWidth / ZOOM;
-            const lensH = result.offsetHeight / ZOOM;
-
-            let x = clientX - rect.left - lensW / 2;
-            let y = clientY - rect.top - lensH / 2;
-
-            x = Math.max(0, Math.min(x, rect.width - lensW));
-            y = Math.max(0, Math.min(y, rect.height - lensH));
-
-            lens.style.width = lensW + 'px';
-            lens.style.height = lensH + 'px';
-            lens.style.left = (rect.left - container.getBoundingClientRect().left + x) + 'px';
-            lens.style.top = (rect.top - container.getBoundingClientRect().top + y) + 'px';
-
-            const bgX = -(x * ZOOM);
-            const bgY = -(y * ZOOM);
-            result.style.backgroundImage = 'url(' + img.src + ')';
-            result.style.backgroundSize = (rect.width * ZOOM) + 'px ' + (rect.height * ZOOM) + 'px';
-            result.style.backgroundPosition = bgX + 'px ' + bgY + 'px';
-        }
-
-        container.onmouseenter = function() {
-            lens.style.display = 'block';
-            result.style.display = 'block';
-            result.style.backgroundImage = 'url(' + img.src + ')';
-        };
-        container.onmouseleave = function() {
-            lens.style.display = 'none';
-            result.style.display = 'none';
-        };
-        container.onmousemove = moveLens;
-    }
-
-    document.addEventListener('DOMContentLoaded', initZoom);
-    window.addEventListener('resize', initZoom);
-    </script>
+    <script src="{% static 'product.js' %}?v=20261114a" defer></script>
     {% include 'includes/site_scripts.html' %}
     {% if product.category == "Bento Candles" %}
     <script src="{% static 'bento_color_picker.js' %}?v=20260612-mobile" defer></script>

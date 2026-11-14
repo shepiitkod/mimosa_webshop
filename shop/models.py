@@ -80,6 +80,16 @@ class Product(models.Model):
         help_text="Shipping weight in grams (used for checkout).",
     )
     burn_time = models.CharField(max_length=120, blank=True, default="")
+    occasions = models.CharField(
+        "Occasions",
+        max_length=200,
+        blank=True,
+        default="",
+        help_text=(
+            "Optional. Leave empty to follow the category (see shop/catalog.py); "
+            "pick occasions to place this product explicitly."
+        ),
+    )
     stock = models.PositiveIntegerField(default=0)
     i18n = models.JSONField(default=dict, blank=True)
 
@@ -261,3 +271,87 @@ class NewsletterUser(models.Model):
 
     def __str__(self):
         return self.email
+
+
+class Review(models.Model):
+    """Customer review, entered and published by staff in the admin.
+
+    Nothing is shown on the site until ``is_published`` is ticked; with no
+    published reviews the review blocks are hidden entirely.
+    """
+
+    author_name = models.CharField("Name", max_length=80)
+    city = models.CharField(max_length=80, blank=True, default="")
+    text = models.TextField()
+    rating = models.PositiveSmallIntegerField(
+        default=5, validators=[MinValueValidator(1), MaxValueValidator(5)]
+    )
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="reviews",
+        help_text="Optional: show this review on the product page too.",
+    )
+    is_published = models.BooleanField(default=False)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.author_name} ({self.rating}/5)"
+
+
+class CustomOrderRequest(models.Model):
+    """A "Sur mesure" (made-to-order) request sent from /sur-mesure/."""
+
+    OCCASION_BIRTHDAY = "anniversaire"
+    OCCASION_WEDDING = "mariage"
+    OCCASION_BAPTISM = "bapteme"
+    OCCASION_CORPORATE = "entreprise"
+    OCCASION_GIFT = "cadeau"
+    OCCASION_OTHER = "autre"
+    OCCASION_CHOICES = [
+        (OCCASION_BIRTHDAY, "Anniversaire"),
+        (OCCASION_WEDDING, "Mariage & cérémonie"),
+        (OCCASION_BAPTISM, "Baptême & naissance"),
+        (OCCASION_CORPORATE, "Entreprise & événement"),
+        (OCCASION_GIFT, "Cadeau personnalisé"),
+        (OCCASION_OTHER, "Autre"),
+    ]
+
+    STATUS_NEW = "new"
+    STATUS_CHOICES = [
+        (STATUS_NEW, "New"),
+        ("in_progress", "In progress"),
+        ("quoted", "Quote sent"),
+        ("confirmed", "Confirmed"),
+        ("declined", "Declined"),
+    ]
+
+    name = models.CharField(max_length=120)
+    email = models.EmailField()
+    phone = models.CharField(max_length=40, blank=True, default="")
+    occasion = models.CharField(max_length=20, choices=OCCASION_CHOICES)
+    event_date = models.DateField(null=True, blank=True)
+    quantity = models.PositiveIntegerField(
+        default=1, validators=[MinValueValidator(1), MaxValueValidator(5000)]
+    )
+    message = models.TextField()
+    reference_image = models.ImageField(
+        upload_to="custom_requests/", blank=True, null=True
+    )
+    language = models.CharField(max_length=8, blank=True, default="")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_NEW)
+    admin_note = models.TextField(blank=True, default="")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name = "Sur mesure request"
+        verbose_name_plural = "Sur mesure requests"
+
+    def __str__(self):
+        return f"{self.get_occasion_display()} — {self.name} ({self.created_at:%Y-%m-%d})"

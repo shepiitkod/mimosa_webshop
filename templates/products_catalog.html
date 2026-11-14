@@ -1,343 +1,138 @@
-{% load static product_media %}
+{% load static %}
 <!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>MIMOSA | Products Catalog</title>
-        {% include 'includes/head_assets.html' with page_css='catalog.css' %}
+        <title>{% if collection %}{{ collection.name }} — {% endif %}Boutique — MIMOSA Atelier</title>
+        <meta name="description" content="{% if collection %}{{ collection.intro }}{% else %}Bougies artisanales coulées à la main à Nîmes : bento, bougies parfumées, décoratives, de cérémonie et sachets parfumés.{% endif %}" />
+        <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}" />
+        {% include 'includes/head_assets.html' %}
     </head>
-    <body class="catalog-page">
-        <div class="mimosa-petals" aria-hidden="true">
-            <span class="petal"></span>
-            <span class="petal"></span>
-            <span class="petal"></span>
-            <span class="petal"></span>
-            <span class="petal"></span>
-            <span class="petal"></span>
-            <span class="petal"></span>
-            <span class="petal"></span>
-            <span class="petal"></span>
-            <span class="petal"></span>
-            <span class="petal"></span>
-            <span class="petal"></span>
-            <span class="petal"></span>
-            <span class="petal"></span>
-            <span class="petal"></span>
-            <span class="petal"></span>
-            <span class="petal"></span>
-            <span class="petal"></span>
-            <span class="petal"></span>
-            <span class="petal"></span>
-        </div>
-        {% include 'includes/header.html' with header_show_cart=True %}
+    <body class="boutique-page catalog-page">
+        {% include 'includes/header.html' %}
 
-        <main id="main-content" tabindex="-1" class="catalog-layout">
-            <aside class="catalog-sidebar" aria-label="Product categories">
-                <h2 data-translate="catalog-sidebar-title">Categories</h2>
-                {% for category in categories %}
-                <a
-                    href="{% url 'shop:products_by_category' category.slug %}"
-                    class="catalog-cat-link {% if active_category and active_category.slug == category.slug %}is-active{% endif %}"
-                >
-                    <span data-translate="{{ category.translate_key }}">{{ category.name }}</span>
-                    <span class="catalog-cat-count">{{ category.count }}</span>
-                </a>
-                {% empty %}
-                <p class="catalog-empty-note" data-translate="catalog-no-categories">
-                    No categories available yet. Check back soon!
-                </p>
-                {% endfor %}
-            </aside>
-
-            <section class="catalog-content" aria-label="Products list">
-                <div class="catalog-topbar">
-                    <h1>
-                        {% if active_category %}<span data-translate="{{ active_category.translate_key }}">{{ active_category.name }}</span>{% else %}<span data-translate="catalog-all-heading">All products</span>{% endif %}
-                    </h1>
-                    <p
-                        data-translate="catalog-items-count"
-                        data-count="{{ total_products_count }}"
-                    >
-                        {{ total_products_count }} items
-                    </p>
-                </div>
-
-                <div class="catalog-grid">
-                    {% for product in products %}
-                    {% include 'includes/product_card.html' with product=product %}
-                    {% empty %}
-                    <article class="catalog-card catalog-card-empty">
-                        <h3 data-translate="catalog-empty-title">
-                            No products in this category yet
-                        </h3>
-                        <p data-translate="catalog-empty-text">
-                            Try selecting a different category from the sidebar.
-                        </p>
-                    </article>
-                    {% endfor %}
-                </div>
-
-                {% if page_obj.paginator.num_pages > 1 %}
-                <nav class="catalog-pagination" aria-label="Catalog pages">
-                    <div class="catalog-pagination__shell">
-                    {% if page_obj.has_previous %}
-                    <a
-                        class="catalog-page-link catalog-page-link--control"
-                        href="?page={{ page_obj.previous_page_number }}"
-                        data-translate="catalog-page-prev"
-                    >Previous</a>
+        <main id="main-content" tabindex="-1" class="boutique">
+            <div class="boutique-hero{% if collection %} boutique-hero--collection{% endif %}"{% if collection %} style="--tint: var(--tint-{{ collection.tint }})"{% endif %}>
+                <div class="boutique-hero__copy">
+                    <nav class="nx crumbs" aria-label="Fil d’Ariane">
+                        <a href="{% url 'shop:home' %}" data-translate="nav-home">Accueil</a>
+                        <span aria-hidden="true">/</span>
+                        {% if collection %}
+                        <a href="{% url 'shop:products' %}" data-translate="nav-boutique">Boutique</a>
+                        <span aria-hidden="true">/</span>
+                        <span aria-current="page" data-translate="{{ collection.key }}">{{ collection.name }}</span>
+                        {% else %}
+                        <span aria-current="page" data-translate="nav-boutique">Boutique</span>
+                        {% endif %}
+                    </nav>
+                    {% if collection %}
+                    <p class="eyebrow" data-translate="boutique-collection">Collection</p>
+                    <h1 class="boutique-hero__title" data-translate="{{ collection.key }}">{{ collection.name }}</h1>
+                    <p class="boutique-hero__intro" data-translate="{{ collection.intro_key }}">{{ collection.intro }}</p>
                     {% else %}
-                    <span
-                        class="catalog-page-link catalog-page-link--control is-disabled"
-                        data-translate="catalog-page-prev"
-                    >Previous</span>
+                    <p class="eyebrow" data-translate="nav-boutique">Boutique</p>
+                    <h1 class="boutique-hero__title" data-translate-html="boutique-title">Toutes nos <em>créations</em></h1>
+                    <p class="boutique-hero__intro" data-translate="boutique-intro">Chaque pièce est coulée à la main dans notre atelier de Nîmes, en petites séries.</p>
                     {% endif %}
-
-                    <div class="catalog-page-numbers">
-                        {% for page_number in page_range %}
-                            {% if page_number == page_obj.paginator.ELLIPSIS %}
-                            <span class="catalog-page-ellipsis">{{ page_number }}</span>
-                            {% elif page_number == page_obj.number %}
-                            <span class="catalog-page-link is-current" aria-current="page">{{ page_number }}</span>
-                            {% else %}
-                            <a class="catalog-page-link" href="?page={{ page_number }}">{{ page_number }}</a>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-
-                    {% if page_obj.has_next %}
-                    <a
-                        class="catalog-page-link catalog-page-link--control"
-                        href="?page={{ page_obj.next_page_number }}"
-                        data-translate="catalog-page-next"
-                    >Next</a>
-                    {% else %}
-                    <span
-                        class="catalog-page-link catalog-page-link--control is-disabled"
-                        data-translate="catalog-page-next"
-                    >Next</span>
-                    {% endif %}
-                    </div>
-                </nav>
+                </div>
+                {% if collection %}
+                <div class="boutique-hero__media">
+                    {% include 'includes/picture_opt.html' with rel=collection.image w=801 h=1200 alt='' sizes='(max-width: 767px) 100vw, 40vw' fetchpriority='high' only %}
+                </div>
                 {% endif %}
+            </div>
+
+            <div class="boutique-bar">
+                <nav class="nx chips" aria-label="Collections">
+                    <a class="chip{% if not collection %} is-active{% endif %}" href="{% url 'shop:products' %}{% if querystring %}?{{ querystring }}{% endif %}"{% if not collection %} aria-current="page"{% endif %} data-translate="boutique-all">Tout</a>
+                    {% for c in collections %}
+                    <a class="chip{% if collection and collection.slug == c.slug %} is-active{% endif %}" href="{% url 'shop:products_by_category' c.slug %}{% if querystring %}?{{ querystring }}{% endif %}"{% if collection and collection.slug == c.slug %} aria-current="page"{% endif %}><span data-translate="{{ c.key }}">{{ c.name }}</span> <span class="chip__count">{{ c.count }}</span></a>
+                    {% endfor %}
+                </nav>
+
+                <form class="filters" method="get" action="{{ request.path }}" data-filters>
+                    <label class="filter">
+                        <span class="filter__label" data-translate="filter-occasion">Occasion</span>
+                        <select name="occasion">
+                            <option value="" data-translate="filter-any">Toutes</option>
+                            {% for o in occasions %}
+                            <option value="{{ o.slug }}"{% if active_occasion and active_occasion.slug == o.slug %} selected{% endif %} data-translate="{{ o.key }}">{{ o.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                    <label class="filter">
+                        <span class="filter__label" data-translate="filter-price">Prix</span>
+                        <select name="prix">
+                            <option value="" data-translate="filter-any-price">Tous les prix</option>
+                            {% for b in price_bands %}
+                            <option value="{{ b.slug }}"{% if active_band and active_band.slug == b.slug %} selected{% endif %} data-translate="{{ b.key }}">{{ b.label }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                    <label class="filter">
+                        <span class="filter__label" data-translate="filter-sort">Trier</span>
+                        <select name="tri">
+                            <option value="" data-translate="sort-new">Nouveautés</option>
+                            <option value="prix-asc"{% if active_sort == 'prix-asc' %} selected{% endif %} data-translate="sort-price-asc">Prix croissant</option>
+                            <option value="prix-desc"{% if active_sort == 'prix-desc' %} selected{% endif %} data-translate="sort-price-desc">Prix décroissant</option>
+                        </select>
+                    </label>
+                    <button type="submit" class="btn btn--ghost filters__apply" data-translate="filter-apply">Appliquer</button>
+                    {% if filters_active %}<a class="text-link filters__reset" href="{{ request.path }}" data-translate="filter-reset">Effacer</a>{% endif %}
+                </form>
+            </div>
+
+            <p class="boutique-count" aria-live="polite"><span data-translate="catalog-items-count" data-count="{{ total_products_count }}">{{ total_products_count }} items</span>{% if active_occasion %} · <span data-translate="{{ active_occasion.key }}">{{ active_occasion.name }}</span>{% endif %}</p>
+
+            <div class="catalog-grid boutique-grid">
+                {% for product in products %}
+                {% include 'includes/product_card.html' with product=product %}
+                {% empty %}
+                <div class="boutique-empty">
+                    <h2 data-translate="boutique-empty-title">Rien ici pour l’instant</h2>
+                    <p data-translate="boutique-empty-text">De nouvelles pièces sont en train de prendre forme à l’atelier. Essayez une autre collection ou effacez les filtres.</p>
+                    <a class="btn btn--ghost" href="{% url 'shop:products' %}" data-translate="boutique-all-link">Voir toute la boutique</a>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if page_obj.paginator.num_pages > 1 %}
+            <nav class="nx pager" aria-label="Pages">
+                {% if page_obj.has_previous %}<a class="pager__link" href="?{% if querystring %}{{ querystring }}&amp;{% endif %}page={{ page_obj.previous_page_number }}" data-translate="catalog-page-prev">Previous</a>{% endif %}
+                {% for p in page_range %}
+                {% if p == page_obj.paginator.ELLIPSIS %}<span class="pager__gap">…</span>
+                {% elif p == page_obj.number %}<span class="pager__link is-current" aria-current="page">{{ p }}</span>
+                {% else %}<a class="pager__link" href="?{% if querystring %}{{ querystring }}&amp;{% endif %}page={{ p }}">{{ p }}</a>{% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}<a class="pager__link" href="?{% if querystring %}{{ querystring }}&amp;{% endif %}page={{ page_obj.next_page_number }}" data-translate="catalog-page-next">Next</a>{% endif %}
+            </nav>
+            {% endif %}
+
+            {% if collection and collection.slug == 'plaster-sachets' %}
+            <section class="collection-story" aria-labelledby="story-title">
+                <h2 id="story-title" class="display-title collection-story__title" data-translate="sachets-hero-title">Plaster Scented Sachets</h2>
+                <div class="collection-story__text">
+                    <p class="collection-story__lead" data-translate="sachets-p1">Découvrez notre nouvelle création – le sachet parfumé en plâtre.</p>
+                    <p data-translate="sachets-p2">Plus qu’un simple parfum d’intérieur, c’est un véritable objet de décoration qui sublime votre quotidien en diffusant des fragrances délicates et raffinées.</p>
+                    <p data-translate="sachets-p3">Conçu pour durer, votre sachet peut être rechargé toutes les trois semaines avec votre parfum préféré. Une approche élégante, responsable et respectueuse de l’environnement.</p>
+                    <p data-translate="sachets-p6">Notre collection se décline en quatre senteurs inspirées des fleurs emblématiques du Sud de la France : Mimosa, Rose, Coquelicot et Lavande.</p>
+                    <p data-translate="sachets-p8">Offrez-vous un moment de douceur ou faites plaisir à ceux que vous aimez. Dans une voiture, une salle de bain, un dressing ou une chambre, chaque sachet diffuse une signature olfactive raffinée et apporte une touche de poésie à votre intérieur.</p>
+                </div>
             </section>
+            {% endif %}
         </main>
 
         {% include 'includes/footer.html' %}
-
-        <style>
-            .mimosa-petals {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                pointer-events: none;
-                z-index: 0;
-                overflow: hidden;
-            }
-
-            .petal {
-                position: absolute;
-                top: -40px;
-                display: block;
-                border-radius: 50%;
-                opacity: 0;
-                animation: petalFall linear infinite;
-            }
-
-            /* Каждый листок — уникальный размер, позиция, задержка, скорость */
-            .petal:nth-child(1) {
-                left: 4%;
-                width: 8px;
-                height: 8px;
-                background: #f0c84a;
-                animation-duration: 9s;
-                animation-delay: 0s;
-            }
-            .petal:nth-child(2) {
-                left: 10%;
-                width: 6px;
-                height: 6px;
-                background: #e8b830;
-                animation-duration: 11s;
-                animation-delay: 1.5s;
-            }
-            .petal:nth-child(3) {
-                left: 18%;
-                width: 10px;
-                height: 10px;
-                background: #f5d060;
-                animation-duration: 8s;
-                animation-delay: 3s;
-            }
-            .petal:nth-child(4) {
-                left: 25%;
-                width: 7px;
-                height: 7px;
-                background: #f0c84a;
-                animation-duration: 13s;
-                animation-delay: 0.5s;
-            }
-            .petal:nth-child(5) {
-                left: 33%;
-                width: 9px;
-                height: 9px;
-                background: #e8b830;
-                animation-duration: 10s;
-                animation-delay: 2s;
-            }
-            .petal:nth-child(6) {
-                left: 40%;
-                width: 6px;
-                height: 6px;
-                background: #f5d060;
-                animation-duration: 7s;
-                animation-delay: 4s;
-            }
-            .petal:nth-child(7) {
-                left: 48%;
-                width: 11px;
-                height: 11px;
-                background: #f0c84a;
-                animation-duration: 12s;
-                animation-delay: 1s;
-            }
-            .petal:nth-child(8) {
-                left: 55%;
-                width: 7px;
-                height: 7px;
-                background: #e8b830;
-                animation-duration: 9s;
-                animation-delay: 3.5s;
-            }
-            .petal:nth-child(9) {
-                left: 62%;
-                width: 8px;
-                height: 8px;
-                background: #f5d060;
-                animation-duration: 11s;
-                animation-delay: 0.8s;
-            }
-            .petal:nth-child(10) {
-                left: 70%;
-                width: 6px;
-                height: 6px;
-                background: #f0c84a;
-                animation-duration: 8s;
-                animation-delay: 2.5s;
-            }
-            .petal:nth-child(11) {
-                left: 76%;
-                width: 9px;
-                height: 9px;
-                background: #e8b830;
-                animation-duration: 14s;
-                animation-delay: 0.3s;
-            }
-            .petal:nth-child(12) {
-                left: 83%;
-                width: 7px;
-                height: 7px;
-                background: #f5d060;
-                animation-duration: 10s;
-                animation-delay: 5s;
-            }
-            .petal:nth-child(13) {
-                left: 90%;
-                width: 10px;
-                height: 10px;
-                background: #f0c84a;
-                animation-duration: 9s;
-                animation-delay: 1.8s;
-            }
-            .petal:nth-child(14) {
-                left: 96%;
-                width: 6px;
-                height: 6px;
-                background: #e8b830;
-                animation-duration: 12s;
-                animation-delay: 3.2s;
-            }
-            .petal:nth-child(15) {
-                left: 7%;
-                width: 8px;
-                height: 8px;
-                background: #f5d060;
-                animation-duration: 15s;
-                animation-delay: 6s;
-            }
-            .petal:nth-child(16) {
-                left: 22%;
-                width: 6px;
-                height: 6px;
-                background: #f0c84a;
-                animation-duration: 11s;
-                animation-delay: 4.5s;
-            }
-            .petal:nth-child(17) {
-                left: 38%;
-                width: 9px;
-                height: 9px;
-                background: #e8b830;
-                animation-duration: 8s;
-                animation-delay: 7s;
-            }
-            .petal:nth-child(18) {
-                left: 57%;
-                width: 7px;
-                height: 7px;
-                background: #f5d060;
-                animation-duration: 13s;
-                animation-delay: 2.2s;
-            }
-            .petal:nth-child(19) {
-                left: 73%;
-                width: 10px;
-                height: 10px;
-                background: #f0c84a;
-                animation-duration: 10s;
-                animation-delay: 0.6s;
-            }
-            .petal:nth-child(20) {
-                left: 87%;
-                width: 8px;
-                height: 8px;
-                background: #e8b830;
-                animation-duration: 9s;
-                animation-delay: 4.8s;
-            }
-
-            @keyframes petalFall {
-                0% {
-                    transform: translateY(0) rotate(0deg) scale(1);
-                    opacity: 0;
-                }
-                5% {
-                    opacity: 0.7;
-                }
-                50% {
-                    transform: translateY(50vh) rotate(180deg) scale(0.9);
-                    opacity: 0.5;
-                }
-                95% {
-                    opacity: 0.3;
-                }
-                100% {
-                    transform: translateY(105vh) rotate(360deg) scale(0.8);
-                    opacity: 0;
-                }
-            }
-
-            /* Небольшое горизонтальное покачивание через отдельную анимацию на wrapper */
-            .petal:nth-child(odd) {
-                animation-timing-function: ease-in-out;
-            }
-            .petal:nth-child(even) {
-                animation-timing-function: ease-in;
-            }
-        </style>
+        <script>
+            // Filters apply as soon as a choice is made; the button stays for no-JS.
+            (function () {
+                var form = document.querySelector('[data-filters]');
+                if (!form) return;
+                form.classList.add('is-live');
+                form.addEventListener('change', function () { form.submit(); });
+            })();
+        </script>
         {% include 'includes/site_scripts.html' %}
     </body>
 </html>

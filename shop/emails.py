@@ -157,3 +157,45 @@ def send_order_status_update_email(order, *, old_status: str = "") -> bool:
             "Failed to send admin notification for order #%s: %s", order.id, exc
         )
         return False
+
+
+def send_custom_order_request_email(request_obj) -> bool:
+    """Notify the owner (ADMIN_ORDER_EMAIL) about a new Sur mesure request.
+
+    Skips quietly when the address or SMTP credentials are not configured;
+    the request is saved in the admin either way.
+    """
+    admin_email = getattr(settings, "ADMIN_ORDER_EMAIL", "")
+    if not admin_email or not _email_configured():
+        return False
+    try:
+        r = request_obj
+        lines = [
+            f"Nouvelle demande sur mesure #{r.id}",
+            "",
+            f"Nom : {r.name}",
+            f"E-mail : {r.email}",
+            f"Téléphone : {r.phone or '—'}",
+            f"Occasion : {r.get_occasion_display()}",
+            f"Date : {r.event_date or '—'}",
+            f"Quantité : {r.quantity}",
+            "",
+            r.message,
+            "",
+        ]
+        if r.reference_image:
+            lines.append(f"Photo de référence : {r.reference_image.url}")
+        lines.append(f"{settings.SITE_URL}/admin/shop/customorderrequest/{r.id}/change/")
+        msg = EmailMultiAlternatives(
+            subject=f"[MIMOSA] Sur mesure — {r.get_occasion_display()} — {r.name}",
+            body="\n".join(lines),
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=[admin_email],
+            reply_to=[r.email],
+        )
+        msg.send(fail_silently=False)
+        logger.info("Sur mesure request #%s sent to admin.", r.id)
+        return True
+    except Exception as exc:  # never block the visitor on mail problems
+        logger.error("Failed to send sur mesure request #%s: %s", request_obj.id, exc)
+        return False

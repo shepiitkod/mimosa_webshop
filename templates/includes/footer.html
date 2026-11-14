@@ -7,26 +7,21 @@
 </footer>
 {% else %}
 {% if request.resolver_match.url_name == 'home' or request.resolver_match.url_name == 'contact' %}
-<section class="newsletter-section">
-    <div class="newsletter-container">
-        <div class="newsletter-content">
-            <h2 class="newsletter-title" data-translate="newsletter-title">Join the MIMOSA Atelier</h2>
-            <p class="newsletter-subtitle" data-translate="newsletter-subtitle">Be the first to know about new scent collections, artisan stories, and exclusive offers.</p>
+<section class="lettre" aria-labelledby="lettre-title">
+    <div class="lettre__inner">
+        <div class="lettre__copy">
+            <p class="eyebrow" data-translate="lettre-eyebrow">La lettre de l’atelier</p>
+            <h2 id="lettre-title" class="lettre__title" data-translate-html="lettre-title"><em>−10 %</em> sur votre première commande</h2>
+            <p class="lettre__text" data-translate="lettre-text">Nouvelles collections, coulisses de l’atelier et avant-premières. Une lettre par mois, jamais plus.</p>
         </div>
-        <form class="newsletter-form" id="newsletter-form">
-            <div class="newsletter-input-wrapper">
-                <input
-                    type="email"
-                    class="newsletter-input"
-                    id="newsletter-email"
-                    placeholder="Your email address"
-                    data-placeholder="newsletter-placeholder"
-                    required
-                    aria-label="Email address"
-                >
-                <button type="submit" class="newsletter-btn" data-translate="newsletter-btn">SUBSCRIBE</button>
+        <form class="lettre__form newsletter-form" id="newsletter-form" novalidate>
+            <label class="visually-hidden" for="newsletter-email" data-translate="lettre-label">Votre adresse e-mail</label>
+            <div class="lettre__field">
+                <input type="email" class="newsletter-input" id="newsletter-email" name="email" placeholder="Votre adresse e-mail" data-placeholder="newsletter-placeholder" autocomplete="email" required />
+                <button type="submit" class="btn newsletter-btn" data-translate="lettre-btn">Recevoir mon code</button>
             </div>
-            <div class="newsletter-message" id="newsletter-message"></div>
+            <p class="lettre__legal" data-translate="lettre-legal">Désinscription en un clic. Vos données restent chez nous.</p>
+            <div class="newsletter-message" id="newsletter-message" role="status" aria-live="polite"></div>
         </form>
     </div>
 </section>
@@ -35,72 +30,58 @@
 <footer class="site-footer" aria-labelledby="footer-title">
     <div class="site-footer__container">
         <div class="site-footer__grid">
-            <section class="site-footer__brand" aria-label="Brand">
-                <h2 id="footer-title" class="site-footer__title">MIMOSA Atelier</h2>
-                <p class="site-footer__tagline" data-translate="footer-tagline">
-                    Handcrafted candles, natural soy wax, fragrances from Provence.
-                </p>
-                <div class="site-footer__social" aria-label="Social links">
-                    <a class="site-footer__social-link" href="https://www.instagram.com/mimosa_atelier_france/" target="_blank" rel="noopener" data-translate="footer-instagram">
-                        Instagram
-                    </a>
-                    <a class="site-footer__social-link" href="mailto:mimosa.atelier.france@gmail.com" data-translate="footer-email">
-                        Email
-                    </a>
+            <section class="site-footer__brand" aria-label="MIMOSA Atelier">
+                <h2 id="footer-title" class="site-footer__title">
+                    <img src="{% static 'assets/images/mimosa-logo-ink.png' %}" alt="MIMOSA Atelier" width="460" height="192" loading="lazy" decoding="async" />
+                </h2>
+                <p class="site-footer__tagline" data-translate="footer-tagline-new">Bougies coulées à la main à Nîmes. Cire de soja naturelle, parfums de Provence.</p>
+                <div class="site-footer__social">
+                    <a class="site-footer__social-link" href="https://www.instagram.com/mimosa_atelier_france/" target="_blank" rel="noopener">Instagram</a>
+                    <a class="site-footer__social-link" href="https://www.tiktok.com/@mimosa_atelier_fr" target="_blank" rel="noopener">TikTok</a>
+                    <a class="site-footer__social-link" href="mailto:mimosa.atelier.france@gmail.com" data-translate="footer-email">Email</a>
                 </div>
             </section>
 
-            <nav class="site-footer__nav" aria-label="Shop">
-                <h3 class="site-footer__heading" data-translate="footer-shop">Shop</h3>
+            <nav class="nx site-footer__nav" aria-label="Boutique">
+                <h3 class="site-footer__heading" data-translate="nav-boutique">Boutique</h3>
                 <ul class="site-footer__list">
-                    <li><a class="site-footer__link" href="{% url 'shop:products' %}" data-translate="nav-products">Products</a></li>
-                    <li><a class="site-footer__link" href="{% url 'shop:cart' %}" data-translate="footer-cart">Cart</a></li>
-                    <li><a class="site-footer__link" href="{% url 'shop:profile' %}" data-translate="footer-profile">My account</a></li>
+                    {% for c in nav_collections %}
+                    <li><a class="site-footer__link" href="{% url 'shop:products_by_category' c.slug %}" data-translate="{{ c.key }}">{{ c.name }}</a></li>
+                    {% endfor %}
                 </ul>
             </nav>
 
-            <nav class="site-footer__nav" aria-label="Company">
-                <h3 class="site-footer__heading" data-translate="footer-company">Company</h3>
+            <nav class="nx site-footer__nav" aria-label="Maison">
+                <h3 class="site-footer__heading" data-translate="footer-maison">La maison</h3>
                 <ul class="site-footer__list">
-                    <li><a class="site-footer__link" href="{% url 'shop:about' %}" data-translate="nav-about">About Us</a></li>
+                    <li><a class="site-footer__link" href="{% url 'shop:custom_order' %}" data-translate="nav-sur-mesure">Sur mesure</a></li>
+                    <li><a class="site-footer__link" href="{% url 'shop:atelier' %}" data-translate="nav-atelier">L’atelier</a></li>
+                    <li><a class="site-footer__link" href="{% url 'shop:seconde_vie' %}">Seconde vie</a></li>
                     <li><a class="site-footer__link" href="{% url 'shop:contact' %}" data-translate="footer-contact">Contact</a></li>
-                    <li><a class="site-footer__link" href="{% url 'shop:privacy' %}" data-translate="footer-privacy">Privacy Policy</a></li>
                 </ul>
             </nav>
 
-            <section class="site-footer__support" aria-label="Support">
+            <section class="site-footer__support" aria-label="Aide">
                 <h3 class="site-footer__heading" data-translate="footer-help">Help</h3>
                 <ul class="site-footer__list">
-                    <li><a class="site-footer__link" href="{% url 'shop:contact' %}" data-translate="footer-shipping">Shipping & delivery</a></li>
-                    <li><a class="site-footer__link" href="{% url 'shop:contact' %}" data-translate="footer-returns">Returns & refunds</a></li>
-                    <li><a class="site-footer__link" href="#" data-translate="footer-terms">Terms</a></li>
+                    <li><a class="site-footer__link" href="{% url 'shop:faq' %}" data-translate="nav-faq">FAQ &amp; entretien</a></li>
+                    <li><a class="site-footer__link" href="{% url 'shop:faq' %}#livraison" data-translate="footer-shipping">Shipping &amp; delivery</a></li>
+                    <li><a class="site-footer__link" href="{% url 'shop:faq' %}#retours" data-translate="footer-returns">Returns &amp; refunds</a></li>
+                    <li><a class="site-footer__link" href="{% url 'shop:profile' %}" data-translate="footer-profile">My account</a></li>
                 </ul>
-
-                <div class="site-footer__contact">
-                    <p class="site-footer__contact-line">
-                        <span class="site-footer__contact-label" data-translate="footer-location">Location</span>
-                        <span class="site-footer__contact-value">Nîmes, France</span>
-                    </p>
-                    <p class="site-footer__contact-line">
-                        <span class="site-footer__contact-label" data-translate="footer-response">Response time</span>
-                        <span class="site-footer__contact-value" data-translate="footer-response-value">Within 24 hours</span>
-                    </p>
-                </div>
+                <p class="site-footer__place">Nîmes, France</p>
             </section>
         </div>
 
-        <div class="site-footer__bottom" aria-label="Legal">
-            <p class="site-footer__legal">
-                &copy; 2026 MIMOSA Atelier. <span data-translate="footer-copyright">All rights reserved.</span>
-            </p>
-            <nav class="site-footer__legal-links" aria-label="Legal links">
+        <div class="site-footer__bottom">
+            <p class="site-footer__legal">&copy; 2026 MIMOSA Atelier. <span data-translate="footer-copyright">All rights reserved.</span></p>
+            <nav class="nx site-footer__legal-links" aria-label="Informations légales">
                 <a class="site-footer__link" href="{% url 'shop:privacy' %}" data-translate="footer-privacy">Privacy Policy</a>
-                <a class="site-footer__link" href="#" data-translate="footer-terms">Terms</a>
             </nav>
         </div>
     </div>
 </footer>
 {% if request.resolver_match.url_name == 'home' or request.resolver_match.url_name == 'contact' %}
-<script src="{% static 'newsletter.js' %}" defer></script>
+<script src="{% static 'newsletter.js' %}?v=20261114a" defer></script>
 {% endif %}
 {% endif %}

@@ -1,0 +1,5 @@
+<figure class="review" data-reveal>
+    <p class="review__stars" aria-label="{{ review.rating }}/5">{% for i in "12345" %}<span class="{% if forloop.counter <= review.rating %}is-on{% endif %}" aria-hidden="true">★</span>{% endfor %}</p>
+    <blockquote class="review__text">{{ review.text|linebreaksbr }}</blockquote>
+    <figcaption class="review__author">{{ review.author_name }}{% if review.city %} <span>· {{ review.city }}</span>{% endif %}{% if review.product and show_product %} <span>· {{ review.product.title }}</span>{% endif %}</figcaption>
+</figure>

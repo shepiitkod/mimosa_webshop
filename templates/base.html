@@ -1,0 +1,21 @@
+{% load static %}<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{% block title %}MIMOSA Atelier{% endblock %}</title>
+        <meta name="description" content="{% block description %}Bougies artisanales coulées à la main à Nîmes, cire de soja naturelle et parfums de Provence.{% endblock %}" />
+        <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}" />
+        {% include 'includes/head_assets.html' %}
+        {% block head %}{% endblock %}
+    </head>
+    <body class="{% block body_class %}{% endblock %}">
+        {% include 'includes/header.html' %}
+        <main id="main-content" tabindex="-1" class="{% block main_class %}page{% endblock %}">
+            {% block content %}{% endblock %}
+        </main>
+        {% include 'includes/footer.html' %}
+        {% include 'includes/site_scripts.html' %}
+        {% block scripts %}{% endblock %}
+    </body>
+</html>

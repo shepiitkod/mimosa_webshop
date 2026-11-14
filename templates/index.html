@@ -19,7 +19,7 @@
     </head>
 
     <body class="home-page">
-        {% include 'includes/header.html' with header_show_cart=True %}
+        {% include 'includes/header.html' with header_overlay=True %}
 
         <main id="main-content" tabindex="-1">
             {# ── 1. Intro: a flame lights a room of floating candles ── #}
@@ -48,7 +48,7 @@
                         <p class="intro__sub" data-translate="intro-sub">Coulées à la main dans le Sud de la France, pour les moments qui méritent une flamme.</p>
                         <div class="intro__actions">
                             <a class="btn btn--light" href="{% url 'shop:products' %}" data-translate="intro-cta-shop">Boutique</a>
-                            <a class="btn btn--outline-light" href="{% url 'shop:contact' %}" data-translate="intro-cta-custom">Sur mesure</a>
+                            <a class="btn btn--outline-light" href="{% url 'shop:custom_order' %}" data-translate="intro-cta-custom">Sur mesure</a>
                         </div>
                     </div>
                     <div class="intro__fade" aria-hidden="true"></div>
@@ -56,9 +56,30 @@
                 </div>
             </section>
 
-            {% include 'includes/marquee.html' with marquee_set='a' %}
 
-            {# ── 2. Nouveautés ────────────────────────────────────── #}
+            {# ── 2. Pour quelle occasion ? ────────────────────────── #}
+            <section class="occasions" aria-labelledby="occasions-title">
+                <div class="section-head">
+                    <p class="eyebrow" data-translate="occasions-eyebrow" data-reveal>Trouver la bonne bougie</p>
+                    <h2 id="occasions-title" class="display-title section-head__title" data-translate-html="occasions-title" data-reveal="lines">Pour quelle <em>occasion</em> ?</h2>
+                </div>
+                <div class="occasions__grid">
+                    {% for o in occasions %}
+                    <a class="occasion" href="{% url 'shop:products' %}?occasion={{ o.slug }}" style="--i: {{ forloop.counter0 }}">
+                        <span class="occasion__media" data-parallax="0.05">
+                            {% include 'includes/picture_opt.html' with rel=o.image w=o.w h=o.h alt='' loading='lazy' sizes='(max-width: 767px) 46vw, 24vw' only %}
+                        </span>
+                        <span class="occasion__body">
+                            <span class="occasion__num" aria-hidden="true">{{ forloop.counter|stringformat:"02d" }}</span>
+                            <span class="occasion__name" data-translate="{{ o.key }}">{{ o.name }}</span>
+                            <span class="occasion__line" data-translate="{{ o.line_key }}">{{ o.line }}</span>
+                        </span>
+                    </a>
+                    {% endfor %}
+                </div>
+            </section>
+
+            {# ── 3. Nouveautés ────────────────────────────────────── #}
             {% if products %}
             <section class="nouveautes" id="nouveautes" data-own-motion aria-labelledby="nouveautes-title">
                 <div class="nouveautes__head">
@@ -66,47 +87,20 @@
                     <h2 id="nouveautes-title" class="display-title nouveautes__title" data-translate-html="home-new-title" data-reveal="lines">Les <em>nouvelles</em> lumières</h2>
                     <a class="text-link nouveautes__all" href="{% url 'shop:products' %}" data-translate="home-new-all" data-reveal>Toute la collection</a>
                 </div>
-                <div class="nouveautes__grid">
+                <div class="nouveautes__grid nouveautes__grid--{{ products|length }}">
                     {% for product in products %}
-                    {% include 'includes/product_card.html' with product=product card_size='large' %}
+                    {% include 'includes/product_card.html' with product=product %}
                     {% endfor %}
                 </div>
             </section>
             {% endif %}
 
-            {# ── 3. Nos Créations: horizontal showcase ────────────── #}
-            <section class="creations" id="nos-creations" data-own-motion data-creations aria-labelledby="creations-title">
-                <div class="creations__sticky">
-                    <div class="creations__head">
-                        <p class="eyebrow" data-translate="discover-eyebrow">Collections</p>
-                        <h2 id="creations-title" class="display-title creations__title" data-translate="home-categories-title">Nos Créations</h2>
-                        <p class="creations__progress" aria-hidden="true"><span class="creations__progress-now">01</span> / {{ home_categories|length|stringformat:"02d" }}</p>
-                    </div>
-                    <div class="creations__track">
-                        {% for cat in home_categories %}
-                        <a class="creation" href="{% url 'shop:products_by_category' cat.slug %}" data-tint="{{ cat.tint }}" style="--tint: var(--tint-{{ cat.tint }})">
-                            <span class="creation__index" aria-hidden="true">{{ forloop.counter|stringformat:"02d" }}</span>
-                            <figure class="creation__media">
-                                {% include 'includes/picture_opt.html' with rel=cat.image class_name='creation__img' w=cat.image_w h=cat.image_h alt=cat.name loading='lazy' sizes='(max-width: 767px) 78vw, 34vw' only %}
-                            </figure>
-                            <div class="creation__body">
-                                <h3 class="creation__name" data-translate="{{ cat.translate_key }}">{{ cat.name }}</h3>
-                                <p class="creation__subtitle" data-translate="{{ cat.subtitle_key }}">{{ cat.subtitle }}</p>
-                                <span class="text-link creation__cta" data-translate="discover-card-cta">Explore</span>
-                            </div>
-                        </a>
-                        {% endfor %}
-                    </div>
-                </div>
-            </section>
-
-            {% include 'includes/marquee.html' with marquee_set='b' %}
-
-            {# ── 4. Fait main à Nîmes: the four gestures ──────────── #}
+            {# ── 4. Fait main à Nîmes ─────────────────────────────── #}
             <section class="gestes" data-own-motion data-gestes aria-labelledby="gestes-title">
                 <div class="gestes__intro">
                     <p class="eyebrow" data-translate="gestes-eyebrow" data-reveal>Savoir-faire</p>
                     <h2 id="gestes-title" class="display-title gestes__title" data-translate-html="gestes-title" data-reveal="lines">Fait main <em>à Nîmes</em></h2>
+                    <p class="gestes__lede" data-translate="gestes-lede" data-reveal>Cire de soja naturelle, parfums de Provence, mèches en coton. Chaque bougie passe entre nos mains quatre fois avant d’arriver chez vous.</p>
                 </div>
                 <div class="gestes__layout">
                     <div class="gestes__visual" aria-hidden="true">
@@ -134,25 +128,66 @@
                 </div>
             </section>
 
-            {# ── 5. Manifesto ─────────────────────────────────────── #}
-            <section class="manifeste" data-own-motion aria-labelledby="manifeste-title">
-                <p class="eyebrow" data-reveal><span>Atelier</span> · <span>Nîmes</span></p>
-                <h2 id="manifeste-title" class="visually-hidden" data-translate="about-snippet-title">Welcome to MIMOSA Atelier</h2>
-                <p class="manifeste__text" data-translate="about-snippet-text" data-reveal="lines">Every candle is a story, crafted by hand with 100% natural soy wax and exclusive fragrances from Provence. We believe in beauty, sustainability, and the art of slow living.</p>
-                <span class="manifeste__signature" data-reveal>MIMOSA Atelier — Nîmes</span>
+            {% include 'includes/marquee.html' with marquee_set='b' %}
+
+            {# ── 5. Sur mesure ────────────────────────────────────── #}
+            <section class="bespoke" aria-labelledby="bespoke-title">
+                <div class="bespoke__media" data-parallax="0.06">
+                    {% include 'includes/picture_opt.html' with rel='assets/images/MAIN7' w=801 h=1200 alt='Bougies chiffres jaunes personnalisées pour un anniversaire' loading='lazy' sizes='(max-width: 767px) 100vw, 46vw' only %}
+                </div>
+                <div class="bespoke__body">
+                    <p class="eyebrow" data-translate="bespoke-eyebrow" data-reveal>Sur mesure</p>
+                    <h2 id="bespoke-title" class="display-title bespoke__title" data-translate-html="bespoke-title" data-reveal="lines">Votre prénom, <em>votre jour</em></h2>
+                    <p class="bespoke__text" data-translate="bespoke-text" data-reveal>Des bougies imaginées pour vous : chiffres et prénoms, tables de mariage, cadeaux d’entreprise. Racontez-nous votre moment, nous dessinons la lumière.</p>
+                    <ul class="bespoke__list" data-reveal>
+                        <li data-translate="bespoke-li-1">Prénoms, chiffres &amp; initiales</li>
+                        <li data-translate="bespoke-li-2">Mariages, baptêmes &amp; cérémonies</li>
+                        <li data-translate="bespoke-li-3">Entreprises &amp; événements</li>
+                    </ul>
+                    <a class="btn" href="{% url 'shop:custom_order' %}" data-translate="bespoke-cta" data-reveal>Demander un devis</a>
+                </div>
             </section>
 
-            {# ── 6. Seconde vie ───────────────────────────────────── #}
-            <section class="sv-teaser" data-own-motion aria-labelledby="sv-teaser-title">
-                <figure class="sv-teaser__media" data-parallax="0.08">
-                    {% include 'includes/picture_opt.html' with rel='assets/images/mainpipi' w=887 h=1280 alt='Seconde vie : une bougie MIMOSA recoulée à l’atelier' loading='lazy' sizes='(max-width: 767px) 100vw, 45vw' only %}
-                </figure>
-                <div class="sv-teaser__body">
-                    <p class="eyebrow" data-translate="promo-eyebrow" data-reveal>Exclusive atelier service</p>
-                    <h2 id="sv-teaser-title" class="display-title sv-teaser__title" data-translate="promo-title" data-reveal="lines">Seconde vie for your candle</h2>
-                    <p class="sv-teaser__text" data-translate="promo-text" data-reveal>Give your favorite MIMOSA piece a new life with our intimate Seconde Vie service: refill, renew, and keep the object you love.</p>
-                    <a href="{% url 'shop:seconde_vie' %}" class="btn btn--ghost" data-translate="promo-cta" data-reveal>Discover Seconde Vie</a>
+            {# ── 6. Avis + Instagram ──────────────────────────────── #}
+            {% if reviews %}
+            <section class="avis" aria-labelledby="avis-title">
+                <div class="section-head">
+                    <p class="eyebrow" data-translate="avis-eyebrow" data-reveal>Ils nous ont écrit</p>
+                    <h2 id="avis-title" class="display-title section-head__title" data-translate-html="avis-title" data-reveal="lines">Les mots <em>de nos clients</em></h2>
                 </div>
+                <div class="avis__list">
+                    {% for review in reviews %}
+                    {% include 'includes/review_card.html' %}
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            <section class="insta" aria-labelledby="insta-title">
+                <div class="insta__head">
+                    <p class="eyebrow" data-translate="insta-eyebrow">Suivez l’atelier</p>
+                    <h2 id="insta-title" class="display-title insta__title"><a href="https://www.instagram.com/mimosa_atelier_france/" target="_blank" rel="noopener">@mimosa_atelier_france</a></h2>
+                </div>
+                <div class="insta__grid">
+                    {% for ph in instagram_photos %}
+                    <a class="insta__item" href="https://www.instagram.com/mimosa_atelier_france/" target="_blank" rel="noopener" tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"{% if not forloop.first %} aria-hidden="true"{% endif %}>
+                        {% include 'includes/picture_opt.html' with rel=ph.image w=ph.w h=ph.h alt=ph.alt loading='lazy' sizes='(max-width: 767px) 33vw, 16vw' only %}
+                    </a>
+                    {% endfor %}
+                </div>
+            </section>
+
+            {# ── 7. Seconde vie (compact) ─────────────────────────── #}
+            <section class="sv-band" aria-labelledby="sv-band-title">
+                <div class="sv-band__media">
+                    {% include 'includes/picture_opt.html' with rel='assets/images/mainpipi' w=887 h=1280 alt='Bougie MIMOSA recoulée à l’atelier' loading='lazy' sizes='(max-width: 767px) 30vw, 200px' only %}
+                </div>
+                <div class="sv-band__body">
+                    <p class="eyebrow" data-translate="promo-eyebrow">Exclusive atelier service</p>
+                    <h2 id="sv-band-title" class="sv-band__title" data-translate="sv-band-title">Seconde vie : nous recoulons votre bougie</h2>
+                    <p class="sv-band__text" data-translate="sv-band-text">Rapportez votre contenant MIMOSA vide, nous le remplissons à nouveau de cire et de parfum.</p>
+                </div>
+                <a href="{% url 'shop:seconde_vie' %}" class="text-link sv-band__cta" data-translate="promo-cta">Discover Seconde Vie</a>
             </section>
         </main>
 
@@ -169,7 +204,7 @@
             </div>
         </div>
 
-        <a href="{% url 'shop:contact' %}" class="fab-consultation">
+        <a href="{% url 'shop:custom_order' %}" class="fab-consultation">
             <svg class="fab-consultation__icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 2.5c1.6 2 2.6 3.6 2.6 5.1A2.6 2.6 0 0 1 12 10.2a2.6 2.6 0 0 1-2.6-2.6c0-1.5 1-3.1 2.6-5.1Z" />
                 <rect x="8" y="12" width="8" height="9.5" rx="1.2" />

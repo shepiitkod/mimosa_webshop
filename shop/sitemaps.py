@@ -2,6 +2,7 @@ from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 from django.utils.text import slugify
 
+from .catalog import COLLECTIONS
 from .models import Product
 
 
@@ -10,7 +11,15 @@ class StaticViewSitemap(Sitemap):
     changefreq = 'monthly'
 
     def items(self):
-        return ['shop:home', 'shop:about', 'shop:contact', 'shop:product_sachets']
+        return [
+            'shop:home',
+            'shop:products',
+            'shop:custom_order',
+            'shop:atelier',
+            'shop:seconde_vie',
+            'shop:faq',
+            'shop:contact',
+        ]
 
     def location(self, item):
         return reverse(item)
@@ -21,11 +30,7 @@ class CategorySitemap(Sitemap):
     changefreq = 'weekly'
 
     def items(self):
-        return [
-            'gift-collections',
-            'bento-candles',
-            'scented-candles',
-        ]
+        return [c['slug'] for c in COLLECTIONS]
 
     def location(self, item):
         return reverse('shop:products_by_category', kwargs={'category_slug': item})
@@ -36,7 +41,7 @@ class ProductSitemap(Sitemap):
     priority = 0.9
 
     def items(self):
-        return Product.objects.filter(stock__gt=0).order_by('id')
+        return Product.objects.order_by('id')
 
     def location(self, obj):
         return reverse('shop:product_detail', kwargs={
