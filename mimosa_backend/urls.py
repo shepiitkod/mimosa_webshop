@@ -54,4 +54,7 @@ urlpatterns = [
 if settings.DEBUG or True:  # Serve static files even in production as fallback
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-# Media files are served by Cloudinary — no local media routes needed.
+# Media files are served by Cloudinary in production. Local development
+# (DEBUG with FileSystemStorage) needs Django to serve uploaded photos.
+if settings.DEBUG and not getattr(settings, "USE_CLOUDINARY_MEDIA", False):
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

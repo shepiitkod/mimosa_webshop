@@ -29,38 +29,32 @@
     }
 
     function initFabVisibility() {
+        // The consultation button stays out of the way on the first screen
+        // (so it never covers the hero CTA) and fades in once the visitor
+        // has scrolled past it. It hides again near the footer.
         var fab = document.querySelector('.fab-consultation');
         if (!fab) return;
 
-        var lastY = window.scrollY;
-        var hidden = false;
+        var ticking = false;
 
-        window.addEventListener(
-            'scroll',
-            function () {
-                var y = window.scrollY;
-                var scrollingDown = y > lastY + 6;
-                var scrollingUp = y < lastY - 6;
-                lastY = y;
+        function update() {
+            ticking = false;
+            var y = window.scrollY || 0;
+            var vh = window.innerHeight || 800;
+            var docH = document.documentElement.scrollHeight;
+            var pastHero = y > vh * 0.8;
+            var nearEnd = y + vh > docH - 260;
+            fab.classList.toggle('fab-consultation--visible', pastHero && !nearEnd);
+        }
 
-                if (y < 120) {
-                    if (hidden) {
-                        hidden = false;
-                        fab.classList.remove('fab-consultation--hidden');
-                    }
-                    return;
-                }
-
-                if (scrollingDown && !hidden) {
-                    hidden = true;
-                    fab.classList.add('fab-consultation--hidden');
-                } else if (scrollingUp && hidden) {
-                    hidden = false;
-                    fab.classList.remove('fab-consultation--hidden');
-                }
-            },
-            { passive: true }
-        );
+        window.addEventListener('scroll', function () {
+            if (!ticking) {
+                ticking = true;
+                window.requestAnimationFrame(update);
+            }
+        }, { passive: true });
+        window.addEventListener('resize', update, { passive: true });
+        update();
     }
 
     function initMobileMenuMotion() {

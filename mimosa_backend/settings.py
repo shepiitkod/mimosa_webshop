@@ -34,6 +34,7 @@ ALLOWED_HOSTS = [
     "mimosa-atelier.onrender.com",
     "mimosa-atelier.com",
     "www.mimosa-atelier.com",
+    "mimosa-webshop.vercel.app",
     "localhost",
     "127.0.0.1",
 ]
@@ -42,6 +43,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://mimosa-atelier.onrender.com",
     "https://mimosa-atelier.com",
     "https://www.mimosa-atelier.com",
+    "https://mimosa-webshop.vercel.app",
 ]
 if DEBUG:
     CSRF_TRUSTED_ORIGINS.extend(

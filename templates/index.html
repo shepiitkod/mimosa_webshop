@@ -7,11 +7,6 @@
         <meta name="Authors" content="Yuliia Sagan and Denys Shepitko" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <link
-            rel="shortcut icon"
-            href="{% static 'assets/images/logobl2.ico' %}"
-            type="image/x-icon"
-        />
         <meta
             name="Keywords"
             content="MIMOSA, MIMOSA candles, MIMOSA bio bougies, bougies artisanales bio, bougies naturelles, bougies parfumées, bougies écologiques, bougies végétales, bougies faites main, bougies durables, bougies respectueuses de l'environnement"
@@ -20,13 +15,7 @@
             name="Description"
             content="Découvrez MIMOSA, votre destination pour des bougies artisanales bio, naturelles et parfumées. Nos bougies écologiques sont fabriquées à la main avec des ingrédients végétaux durables, offrant une expérience sensorielle unique tout en respectant l'environnement."
         />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap"
-            rel="stylesheet"
-        />
-        <link rel="stylesheet" href="{% static 'styles.css' %}?v=20260805e" />
+        {% include 'includes/head_assets.html' %}
         <link
             rel="preload"
             as="image"
@@ -239,46 +228,25 @@
 
         {% include 'includes/footer.html' %}
 
-        <div id="cookie-banner" class="cookie-banner">
-            <div class="cookie-content">
-                <div class="cookie-text">
-                    <h3 data-translate="cookie-title">🍪 We use cookies</h3>
-                    <p data-translate="cookie-text">
-                        We use cookies to improve your experience on our site.
-                        By continuing, you accept our privacy policy.
-                    </p>
-                </div>
-                <div class="cookie-buttons">
-                    <button
-                        id="accept-cookies"
-                        class="btn-accept"
-                        data-translate="cookie-accept"
-                    >
-                        Accept
-                    </button>
-                    <a
-                        href="{% url 'shop:privacy' %}"
-                        class="cookie-policy-link"
-                        data-translate="footer-privacy"
-                        >Privacy Policy</a
-                    >
-                    <button
-                        id="decline-cookies"
-                        class="btn-decline"
-                        data-translate="cookie-decline"
-                    >
-                        Decline
-                    </button>
-                </div>
+        <div id="cookie-banner" class="cookie-banner" role="region" aria-label="Cookies">
+            <p class="cookie-banner__text">
+                <span data-translate="cookie-short">We use cookies to make your visit smoother.</span>
+                <a href="{% url 'shop:privacy' %}" class="cookie-banner__link" data-translate="cookie-learn-more">Learn more</a>
+            </p>
+            <div class="cookie-banner__actions">
+                <button id="decline-cookies" type="button" class="cookie-banner__btn cookie-banner__btn--ghost" data-translate="cookie-decline">Decline</button>
+                <button id="accept-cookies" type="button" class="cookie-banner__btn" data-translate="cookie-accept">Accept</button>
             </div>
         </div>
 
-        <a
-            href="{% url 'shop:contact' %}"
-            class="fab-consultation"
-            data-translate="fab-consultation"
-            >Book a Consultation</a
-        >
+        <a href="{% url 'shop:contact' %}" class="fab-consultation">
+            <svg class="fab-consultation__icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2.5c1.6 2 2.6 3.6 2.6 5.1A2.6 2.6 0 0 1 12 10.2a2.6 2.6 0 0 1-2.6-2.6c0-1.5 1-3.1 2.6-5.1Z" />
+                <rect x="8" y="12" width="8" height="9.5" rx="1.2" />
+                <path d="M12 10.2V12" />
+            </svg>
+            <span class="fab-consultation__label" data-translate="fab-consultation">Book a Consultation</span>
+        </a>
 
         <button id="back-to-top" class="back-to-top">
             <span>↑</span>

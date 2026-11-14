@@ -1,0 +1,26 @@
+{% load product_media %}{# Shared product card: the whole card is clickable (stretched title link); the quick-add form sits above it. #}
+<article class="p-card{% if card_size %} p-card--{{ card_size }}{% endif %}{% if product.image_2 %} p-card--has-alt{% endif %}">
+    <div class="p-card__media">
+        {% product_picture product.image alt=product.title css_class="p-card__img p-card__img--main" w=600 h=750 loading="lazy" sizes="(max-width: 767px) 70vw, (max-width: 1199px) 33vw, 380px" object_position=product.image_object_position %}
+        {% if product.image_2 %}
+        {% product_picture product.image_2 alt="" css_class="p-card__img p-card__img--alt" w=600 h=750 loading="lazy" sizes="(max-width: 767px) 70vw, (max-width: 1199px) 33vw, 380px" object_position=product.image_2_object_position %}
+        {% endif %}
+        <span class="p-card__glow" aria-hidden="true"></span>
+    </div>
+    <div class="p-card__body">
+        <p class="p-card__cat">{% if product.category_translation_key %}<span data-translate="{{ product.category_translation_key }}">{{ product.category_display_name }}</span>{% else %}{{ product.category }}{% endif %}</p>
+        <h3 class="p-card__title">
+            <a class="p-card__link" href="{% url 'shop:product_detail' product.id product.title|slugify %}" data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="title">{{ product.title }}</a>
+        </h3>
+        <p class="p-card__price">{{ product.price }}&nbsp;€</p>
+    </div>
+    <form class="p-card__quick" method="post" action="{% url 'shop:cart_add' product.id %}">
+        {% csrf_token %}
+        <input type="hidden" name="quantity" value="1" />
+        {% if product.category == "Bento Candles" %}
+        <input type="hidden" name="selected_color_name" value="White" />
+        <input type="hidden" name="selected_color_hex" value="#ffffff" />
+        {% endif %}
+        <button type="submit" class="p-card__quick-btn"><span data-translate="card-add-to-cart">Ajouter au panier</span></button>
+    </form>
+</article>

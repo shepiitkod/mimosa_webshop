@@ -11,8 +11,7 @@
     <meta property="og:image" content="{{ product.image.url }}">
     <meta property="og:type" content="product">
     <link rel="canonical" href="{% url 'shop:product_detail' product.id canonical_slug %}">
-    <link rel="shortcut icon" href="{% static 'assets/images/logobl2.ico' %}" type="image/x-icon">
-    <link rel="stylesheet" href="{% static 'styles.css' %}?v=20260620">
+    {% include 'includes/head_assets.html' %}
     <style>
         .main-image { position: relative; cursor: crosshair; }
         .zoom-lens {
@@ -76,11 +75,12 @@
             </div>
 
             <div class="product-info">
+                <p class="product-eyebrow">{% if product.category_translation_key %}<span data-translate="{{ product.category_translation_key }}">{{ product.category_display_name }}</span>{% else %}{{ product.category }}{% endif %}</p>
                 <h1
                     data-product-i18n="{{ product|product_i18n_json }}"
                     data-i18n-field="title"
                 >{{ product.title }}</h1>
-                <p class="product-price-large">EUR {{ product.price }}</p>
+                <p class="product-price-large">{{ product.price }}&nbsp;€</p>
                 <p
                     class="product-description"
                     data-product-i18n="{{ product|product_i18n_json }}"
@@ -90,44 +90,37 @@
 
                 {% if product.category == "Bento Candles" %}{% include 'includes/bento_color_picker.html' with bento_white_src=product.image.url %}{% endif %}
 
+                {% if product.scent or product.wick or product.burn_time or product.weight or product.composition or product.form_capacity or product.wax_type %}
                 <div class="product-details">
                     <h3 data-translate="details-title">Product Details</h3>
-                    <ul class="product-specs-primary">
-                        <li><strong><span data-translate="detail-parfum-label">Fragrance:</span></strong> {% if product.scent %}<span data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="scent">{{ product.scent }}</span>{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}</li>
-                        <li><strong><span data-translate="detail-meche-label">Wick:</span></strong> {% if product.wick %}<span data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="wick">{{ product.wick }}</span>{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}</li>
-                        <li><strong><span data-translate="burn-time-label">Burn time:</span></strong> {% if product.burn_time %}<span data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="burn_time">{{ product.burn_time }}</span>{% else %}<span data-translate="detail-not-specified">Not specified</span>{% endif %}</li>
-                    </ul>
-                    <ul class="product-specs-secondary">
-                        <li><strong><span data-translate="detail-category-label">Category:</span></strong> {% if product.category_translation_key %}<span data-translate="{{ product.category_translation_key }}">{{ product.category_display_name }}</span>{% else %}{{ product.category }}{% endif %}</li>
-                        {% if product.composition %}<li><strong><span data-translate="composition-label">Composition:</span></strong> <span data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="composition">{{ product.composition }}</span></li>{% endif %}
-                        {% if product.form_capacity %}<li><strong><span data-translate="detail-form-label">Form / capacity:</span></strong> <span data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="form_capacity">{{ product.form_capacity }}</span></li>{% endif %}
-                        {% if product.wax_type %}<li><strong><span data-translate="detail-wax-label">Wax:</span></strong> <span data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="wax_type">{{ product.wax_type }}</span></li>{% endif %}
-                    </ul>
+                    <dl class="product-specs">
+                        {% if product.scent %}<div class="product-spec"><dt data-translate="detail-parfum-label">Fragrance:</dt><dd data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="scent">{{ product.scent }}</dd></div>{% endif %}
+                        {% if product.wick %}<div class="product-spec"><dt data-translate="detail-meche-label">Wick:</dt><dd data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="wick">{{ product.wick }}</dd></div>{% endif %}
+                        {% if product.burn_time %}<div class="product-spec"><dt data-translate="burn-time-label">Burn time:</dt><dd data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="burn_time">{{ product.burn_time }}</dd></div>{% endif %}
+                        {% if product.weight %}<div class="product-spec"><dt data-translate="detail-poids-label">Weight:</dt><dd>{{ product.weight }}</dd></div>{% endif %}
+                        {% if product.composition %}<div class="product-spec"><dt data-translate="composition-label">Composition:</dt><dd data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="composition">{{ product.composition }}</dd></div>{% endif %}
+                        {% if product.form_capacity %}<div class="product-spec"><dt data-translate="detail-form-label">Form / capacity:</dt><dd data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="form_capacity">{{ product.form_capacity }}</dd></div>{% endif %}
+                        {% if product.wax_type %}<div class="product-spec"><dt data-translate="detail-wax-label">Wax:</dt><dd data-product-i18n="{{ product|product_i18n_json }}" data-i18n-field="wax_type">{{ product.wax_type }}</dd></div>{% endif %}
+                    </dl>
                 </div>
+                {% endif %}
 
                 <form method="post" action="{% url 'shop:cart_add' product.id %}" class="product-actions">
                     {% csrf_token %}
                     <input type="hidden" name="selected_color_name" id="selectedColorName" value="{% if product.category == 'Bento Candles' %}White{% endif %}">
                     <input type="hidden" name="selected_color_hex" id="selectedColorHex" value="{% if product.category == 'Bento Candles' %}#ffffff{% endif %}">
-                    <input type="number" name="quantity" value="1" min="1" class="quantity-input" style="width:92px; padding:12px; border-radius:12px; border:1px solid #d8c8a4;">
+                    <input type="number" name="quantity" value="1" min="1" class="quantity-input" aria-label="Quantity">
                     <button class="btn-add-to-cart" type="submit"><span data-translate="add-to-cart">Add to Cart</span></button>
                 </form>
             </div>
         </div>
 
         {% if related_products %}
-        <section class="related-products">
-            <h2 data-translate="related-title">You May Also Like</h2>
+        <section class="related-products" aria-labelledby="related-title">
+            <h2 id="related-title" data-translate="related-title">You May Also Like</h2>
             <div class="related-grid">
                 {% for item in related_products %}
-                <a class="related-card" href="{% url 'shop:product_detail' item.id item.title|slugify %}" style="cursor:pointer; text-decoration:none; color:inherit; display:block;">
-                    {% product_picture item.image alt=item.title css_class="product-framed-image" w=400 h=400 loading="lazy" object_position=item.image_object_position %}
-                    <h3
-                        data-product-i18n="{{ item|product_i18n_json }}"
-                        data-i18n-field="title"
-                    >{{ item.title }}</h3>
-                    <p class="price">EUR {{ item.price }}</p>
-                </a>
+                {% include 'includes/product_card.html' with product=item card_size='small' %}
                 {% endfor %}
             </div>
         </section>

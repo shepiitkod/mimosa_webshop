@@ -26,7 +26,7 @@ body.auth-body {
         radial-gradient(circle at 12% 16%, rgba(255, 241, 186, 0.78) 0%, rgba(255, 241, 186, 0) 44%),
         radial-gradient(circle at 84% 80%, rgba(222, 192, 120, 0.58) 0%, rgba(222, 192, 120, 0) 48%),
         linear-gradient(140deg, var(--mimosa-bg-1) 0%, var(--mimosa-bg-2) 55%, var(--mimosa-bg-3) 100%);
-    overflow-x: hidden;
+    overflow-x: clip;
 }
 
 .auth-stage {

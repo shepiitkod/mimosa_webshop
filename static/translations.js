@@ -447,6 +447,10 @@ const translations = {
     "sachets-products-title": "Our Sachets Collection",
     "sachets-empty-title": "New pieces are being handcrafted",
     "sachets-empty-text": "Check back soon \u2014 the first sachets are on their way!",
+    "card-add-to-cart": "Add to cart",
+    "cookie-short": "We use cookies to make your visit smoother.",
+    "cookie-learn-more": "Learn more",
+    "fab-consultation-short": "Consultation",
   },
 
   fr: {
@@ -899,6 +903,10 @@ const translations = {
     "sachets-products-title": "Notre Collection de Sachets",
     "sachets-empty-title": "De nouvelles pi\u00e8ces sont en cours de fa\u00e7onnage",
     "sachets-empty-text": "Revenez bient\u00f4t \u2014 les premiers sachets arrivent !",
+    "card-add-to-cart": "Ajouter au panier",
+    "cookie-short": "Nous utilisons des cookies pour une visite plus douce.",
+    "cookie-learn-more": "En savoir plus",
+    "fab-consultation-short": "Consultation",
   },
 
   ua: {
@@ -1348,6 +1356,10 @@ const translations = {
     "sachets-products-title": "Наша колекція саше",
     "sachets-empty-title": "Нові вироби вже виготовляються",
     "sachets-empty-text": "Завітайте незабаром — перші саше вже в дорозі!",
+    "card-add-to-cart": "Додати в кошик",
+    "cookie-short": "Ми використовуємо cookies, щоб зробити ваш візит зручнішим.",
+    "cookie-learn-more": "Детальніше",
+    "fab-consultation-short": "Консультація",
   },
 
   ru: {
@@ -1800,6 +1812,10 @@ const translations = {
     "sachets-products-title": "Наша коллекция саше",
     "sachets-empty-title": "Новые изделия уже готовятся",
     "sachets-empty-text": "Загляните позже — первые саше уже в пути!",
+    "card-add-to-cart": "В корзину",
+    "cookie-short": "Мы используем cookies, чтобы сделать визит удобнее.",
+    "cookie-learn-more": "Подробнее",
+    "fab-consultation-short": "Консультация",
   },
 };
 
