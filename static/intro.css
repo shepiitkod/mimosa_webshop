@@ -1,0 +1,498 @@
+/* ==========================================================================
+   MIMOSA — homepage intro
+   A dark, warm room. A flame catches, its light runs outward as a wave and
+   the candles of the atelier drift in from the depth. Scrolling flies the
+   camera through the photos into the rest of the site.
+
+   States (set on <html> in <head> and on .intro by intro.js):
+     html.motion          motion allowed  -> pinned, opening sequence
+     html.intro-seen      opening already seen this session -> final state
+     .intro.is-lite       no WebGL / weak device -> CSS flame
+   Without .motion (reduced motion or no JS) the intro is one still screen.
+   ========================================================================== */
+
+.intro {
+    --ivory: #f6efe3;
+    --night: #120d09;
+    --flame-y: 15%;
+    position: relative;
+    height: 100svh;
+    min-height: 560px;
+    background: var(--night);
+    color: var(--ivory);
+}
+
+.motion .intro {
+    height: 260svh;
+}
+
+.intro__stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    min-height: 560px;
+    overflow: hidden;
+    isolation: isolate;
+    background:
+        radial-gradient(60% 55% at 50% var(--flame-y), #3a2717 0%, #24170e 38%, var(--night) 78%);
+}
+
+/* ---- 3D photo space ---------------------------------------------------- */
+
+.intro__space {
+    position: absolute;
+    inset: 0;
+    perspective: 1000px;
+    perspective-origin: 50% 46%;
+    z-index: 1;
+}
+
+.intro__scene {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.intro__ph {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: calc(var(--w) * 1vmax);
+    margin: 0;
+    transform:
+        translate(-50%, -50%)
+        translate3d(calc(var(--x) * 1vw), calc(var(--y) * 1vh), calc(var(--z) * 1px))
+        rotate(var(--r));
+    transform-style: preserve-3d;
+    will-change: opacity;
+}
+
+.intro__ph-in {
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+    background: #2a1e14;
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.7);
+}
+
+.intro__ph img {
+    display: block;
+    width: 100%;
+    height: auto;
+    user-select: none;
+}
+
+/* Depth shading: the further, the dimmer (static per photo). */
+.intro__ph-in::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #120d09;
+    opacity: clamp(0.05, calc(var(--z) * -0.00026), 0.62);
+    transition: opacity 0.4s linear;
+}
+
+.intro__ph--dest .intro__ph-in::after {
+    opacity: var(--dest-dim, 0.55);
+}
+
+/* ---- Light ------------------------------------------------------------- */
+
+.intro__light {
+    position: absolute;
+    left: 50%;
+    top: var(--flame-y);
+    width: 0;
+    height: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.intro__halo,
+.intro__wave {
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.intro__halo {
+    width: 140vmin;
+    height: 140vmin;
+    margin: -70vmin 0 0 -70vmin;
+    background: radial-gradient(circle, rgba(255, 196, 120, 0.34) 0%, rgba(255, 160, 80, 0.12) 22%, rgba(255, 140, 60, 0.04) 42%, transparent 62%);
+    mix-blend-mode: screen;
+    animation: intro-breathe 4.2s ease-in-out infinite;
+}
+
+.intro__wave {
+    width: 300vmax;
+    height: 300vmax;
+    margin: -150vmax 0 0 -150vmax;
+    background: radial-gradient(circle, transparent 0%, transparent 30%, rgba(255, 205, 140, 0.22) 38%, rgba(255, 180, 100, 0.08) 44%, transparent 50%);
+    mix-blend-mode: screen;
+    opacity: 0;
+    transform: scale(0.02);
+}
+
+.intro__flame-gl {
+    --fw: clamp(220px, 30vmin, 380px);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: var(--fw);
+    height: calc(var(--fw) * 1.4);
+    max-width: none;
+    margin-left: calc(var(--fw) / -2);
+    margin-top: calc(var(--fw) * -1.12);
+    mix-blend-mode: screen;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.intro.is-gl .intro__flame-gl {
+    opacity: 1;
+}
+
+/* CSS flame: lite devices, no WebGL, reduced motion. */
+.intro__flame-css {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 22px;
+    height: 58px;
+    margin: -58px 0 0 -11px;
+    transform-origin: 50% 100%;
+    display: none;
+}
+
+.intro__flame-css::before,
+.intro__flame-css > span {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50% 50% 46% 46% / 64% 64% 36% 36%;
+}
+
+.intro__flame-css::before {
+    background: radial-gradient(60% 70% at 50% 72%, #fff8e6 0%, #ffd27a 36%, #f59a3a 70%, rgba(230, 110, 40, 0) 100%);
+    filter: blur(0.8px);
+    box-shadow: 0 0 22px 8px rgba(255, 180, 90, 0.45), 0 0 80px 30px rgba(255, 150, 60, 0.2);
+}
+
+.intro__flame-css > span {
+    inset: 50% 32% 6%;
+    background: radial-gradient(circle at 50% 70%, rgba(120, 150, 255, 0.6), transparent 70%);
+}
+
+.intro.is-lite .intro__flame-css,
+html:not(.motion) .intro__flame-css {
+    display: block;
+}
+
+.motion .intro.is-lite .intro__flame-css {
+    animation: intro-flicker 2.3s ease-in-out infinite;
+}
+
+/* ---- Words ------------------------------------------------------------- */
+
+.intro__content {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: calc(var(--flame-y) + 15vh) 20px 6vh;
+    text-align: center;
+    will-change: transform, opacity;
+}
+
+.intro__content::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 62%;
+    z-index: -1;
+    width: min(1100px, 130vw);
+    height: min(620px, 80vh);
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(18, 13, 9, 0.82), rgba(18, 13, 9, 0.55) 55%, transparent);
+    pointer-events: none;
+}
+
+.intro__eyebrow {
+    margin: 0 0 18px;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: rgba(246, 239, 227, 0.72);
+}
+
+/* Visible from the first paint (it is the LCP); it only settles into place. */
+main h1.intro__title,
+.intro__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(3.3rem, 7.4vw, 8.6rem);
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: var(--ivory);
+    text-shadow: 0 2px 40px rgba(0, 0, 0, 0.45);
+}
+
+.intro__title .l {
+    display: block;
+}
+
+.intro__title em {
+    font-style: italic;
+    font-weight: 300;
+    color: #f3cd93;
+}
+
+.intro__sub {
+    max-width: 38ch;
+    margin: 22px auto 0;
+    font-size: clamp(0.95rem, 1.1vw, 1.08rem);
+    line-height: 1.6;
+    color: rgba(246, 239, 227, 0.78);
+}
+
+.intro__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.intro .btn--light {
+    background: var(--ivory);
+    border-color: var(--ivory);
+    color: var(--ink);
+}
+
+.intro .btn--light:hover {
+    background: transparent;
+    color: var(--ivory);
+}
+
+.btn--outline-light {
+    background: transparent;
+    border-color: rgba(246, 239, 227, 0.55);
+    color: #f6efe3;
+}
+
+.btn--outline-light:hover {
+    background: #f6efe3;
+    border-color: #f6efe3;
+    color: var(--ink);
+}
+
+.intro .btn:focus-visible {
+    outline-color: #f3cd93;
+}
+
+/* Ivory veil that dissolves the last photo into the next section. */
+.intro__fade {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    background: linear-gradient(to bottom, rgba(248, 244, 237, 0) 0%, rgba(248, 244, 237, 0.35) 40%, var(--paper) 100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.intro__cue {
+    position: absolute;
+    left: 50%;
+    bottom: 22px;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    transform: translateX(-50%);
+    font-size: 0.64rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(246, 239, 227, 0.55);
+}
+
+.intro__cue i {
+    display: block;
+    width: 1px;
+    height: 38px;
+    background: linear-gradient(rgba(246, 239, 227, 0.7), transparent);
+    transform-origin: top;
+}
+
+html:not(.motion) .intro__cue {
+    display: none;
+}
+
+/* ---- Opening sequence (first visit of the session) --------------------- */
+
+.motion:not(.intro-seen) .intro .intro__wave {
+    animation: intro-wave 1.5s cubic-bezier(0.2, 0.7, 0.2, 1) 0.3s forwards;
+}
+
+.motion:not(.intro-seen) .intro .intro__halo {
+    animation:
+        intro-halo-in 1.2s ease 0.15s both,
+        intro-breathe 4.2s ease-in-out 1.4s infinite;
+}
+
+.motion:not(.intro-seen) .intro .intro__ph-in {
+    animation: intro-fly 1.25s cubic-bezier(0.16, 1, 0.3, 1) calc(0.4s + var(--i) * 0.045s) both;
+}
+
+.motion:not(.intro-seen) .intro .intro__title .l {
+    animation: intro-settle 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.motion:not(.intro-seen) .intro .intro__title .l + .l {
+    animation-delay: 0.12s;
+}
+
+.motion:not(.intro-seen) .intro .intro__eyebrow,
+.motion:not(.intro-seen) .intro .intro__sub,
+.motion:not(.intro-seen) .intro .intro__actions,
+.motion:not(.intro-seen) .intro .intro__cue {
+    animation: intro-rise 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+}
+
+.motion .intro__cue i {
+    animation: intro-cue 2.4s cubic-bezier(0.16, 1, 0.3, 1) 1.6s infinite;
+}
+
+@keyframes intro-fly {
+    from { opacity: 0; transform: translate3d(0, 0, -1600px); }
+    to { opacity: 1; transform: none; }
+}
+
+@keyframes intro-wave {
+    0% { opacity: 0.95; transform: scale(0.02); }
+    100% { opacity: 0; transform: scale(1); }
+}
+
+@keyframes intro-halo-in {
+    from { opacity: 0; transform: scale(0.3); }
+    to { opacity: 1; transform: none; }
+}
+
+@keyframes intro-breathe {
+    0%, 100% { opacity: 1; }
+    45% { opacity: 0.82; }
+    70% { opacity: 0.94; }
+}
+
+@keyframes intro-settle {
+    from { transform: translateY(0.18em); }
+    to { transform: none; }
+}
+
+@keyframes intro-rise {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: none; }
+}
+
+@keyframes intro-cue {
+    0% { transform: scaleY(0); opacity: 1; }
+    55% { transform: scaleY(1); opacity: 1; }
+    100% { transform: scaleY(1) translateY(16px); opacity: 0; }
+}
+
+@keyframes intro-flicker {
+    0%, 100% { transform: scale(1, 1) skewX(0deg); }
+    20% { transform: scale(0.96, 1.06) skewX(2deg); }
+    40% { transform: scale(1.03, 0.97) skewX(-1.5deg); }
+    60% { transform: scale(0.98, 1.08) skewX(2.5deg); }
+    80% { transform: scale(1.02, 0.98) skewX(-2deg); }
+}
+
+/* ---- Phones ------------------------------------------------------------ */
+
+@media (max-width: 767px) {
+    .intro {
+        --flame-y: 22%;
+    }
+
+    .motion .intro {
+        height: 230svh;
+    }
+
+    .intro__ph {
+        width: calc(var(--mw) * 1vw);
+        transform:
+            translate(-50%, -50%)
+            translate3d(calc(var(--mx) * 1vw), calc(var(--my) * 1vh), calc(var(--z) * 1px))
+            rotate(var(--r));
+    }
+
+    .intro__ph--desk {
+        display: none;
+    }
+
+    .intro__content {
+        justify-content: center;
+        padding-top: calc(var(--flame-y) + 2vh);
+    }
+
+    main h1.intro__title,
+    .intro__title {
+        font-size: clamp(3rem, 15vw, 4.6rem);
+    }
+
+    .intro__sub {
+        font-size: 0.95rem;
+    }
+
+    .intro__flame-gl {
+        --fw: 200px;
+    }
+}
+
+/* ---- Reduced motion: one still, lit scene ------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+    .intro *,
+    .intro *::before {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .intro__wave {
+        display: none;
+    }
+}
+
+/* Cursor becomes a small warm light while it is over the intro. */
+.cursor-in-intro .cursor-glow {
+    width: 360px;
+    height: 360px;
+    margin: -180px 0 0 -180px;
+    mix-blend-mode: screen;
+    background: radial-gradient(circle, rgba(255, 214, 160, 0.34) 0%, rgba(255, 170, 90, 0.12) 26%, transparent 60%);
+}
+
+.cursor-in-intro .cursor-glow::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 6px;
+    height: 6px;
+    margin: -3px 0 0 -3px;
+    border-radius: 50%;
+    background: #ffe2b0;
+    box-shadow: 0 0 12px 4px rgba(255, 190, 110, 0.6);
+}

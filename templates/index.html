@@ -15,37 +15,45 @@
             name="Description"
             content="Découvrez MIMOSA, votre destination pour des bougies artisanales bio, naturelles et parfumées. Nos bougies écologiques sont fabriquées à la main avec des ingrédients végétaux durables, offrant une expérience sensorielle unique tout en respectant l'environnement."
         />
-        {% include 'includes/head_assets.html' %}
-        <link rel="preload" as="image" href="{% static 'assets/images/MAIN10.webp' %}" type="image/webp" fetchpriority="high" />
+        {% include 'includes/head_assets.html' with page_css='intro.css' %}
     </head>
 
     <body class="home-page">
         {% include 'includes/header.html' with header_show_cart=True %}
 
         <main id="main-content" tabindex="-1">
-            {# ── 1. Allumer la bougie ─────────────────────────────── #}
-            <section class="lumiere" data-own-motion aria-labelledby="lumiere-title">
-                <div class="lumiere__media">
-                    <div class="lumiere__frame">
-                        <div class="lumiere__photo" data-parallax="0.06">
-                            {% include 'includes/picture_opt.html' with rel='assets/images/MAIN10' class_name='lumiere__img' w=801 h=1200 sizes='(max-width: 767px) 140vw, 520px' alt='Bougie pivoine allumée sur une pile de livres, branches de cerisier' fetchpriority='high' only %}
+            {# ── 1. Intro: a flame lights a room of floating candles ── #}
+            <section class="intro" data-intro data-own-motion aria-labelledby="intro-title">
+                <div class="intro__stage">
+                    <div class="intro__space" aria-hidden="true">
+                        <div class="intro__scene" data-intro-scene>
+                            {% for ph in intro_photos %}
+                            <figure class="intro__ph{% if not ph.mobile %} intro__ph--desk{% endif %}{% if ph.destination %} intro__ph--dest{% endif %}" data-z="{{ ph.z }}" style="--x:{{ ph.x }};--y:{{ ph.y }};--z:{{ ph.z }};--w:{{ ph.w }};--r:{{ ph.r }}deg;--mx:{{ ph.mx }};--my:{{ ph.my }};--mw:{{ ph.mw }};--i:{{ forloop.counter0 }}">
+                                <div class="intro__ph-in">
+                                    {% include 'includes/intro_picture.html' with name=ph.name h=ph.h alt=ph.alt only %}
+                                </div>
+                            </figure>
+                            {% endfor %}
                         </div>
-                        <span class="lumiere__bloom" aria-hidden="true"></span>
-                        <span class="lumiere__halo" aria-hidden="true"></span>
-                        <span class="lumiere__flame" aria-hidden="true"><span class="lumiere__flame-core"></span></span>
                     </div>
-                </div>
-                <div class="lumiere__veil" aria-hidden="true"></div>
-                <div class="lumiere__content">
-                    <p class="eyebrow lumiere__eyebrow" data-translate="hero-eyebrow">Atelier · Nîmes</p>
-                    <h1 id="lumiere-title" class="lumiere__title" data-translate-html="hero-title-lumiere"><span class="l"><span>L’art</span></span><span class="l"><span><em>de la</em> bougie</span></span></h1>
-                    <p class="lumiere__sub" data-translate="hero-subtitle">Bougies coulées à la main, cire de soja naturelle, parfums de Provence. Nîmes, France.</p>
-                    <div class="lumiere__actions">
-                        <a href="{% url 'shop:products' %}" class="btn hero-btn" data-translate="hero-btn">Explore Collection</a>
-                        <a href="#nos-creations" class="text-link" data-translate="hero-secondary">Nos créations</a>
+                    <div class="intro__light" aria-hidden="true">
+                        <span class="intro__wave"></span>
+                        <span class="intro__halo"></span>
+                        <canvas class="intro__flame-gl" data-intro-flame width="1" height="1"></canvas>
+                        <span class="intro__flame-css"><span></span></span>
                     </div>
+                    <div class="intro__content" data-intro-content>
+                        <p class="intro__eyebrow" data-translate="intro-eyebrow">Atelier de bougies · Nîmes</p>
+                        <h1 id="intro-title" class="intro__title" data-translate-html="intro-title"><span class="l">L’art de la</span> <span class="l"><em>bougie</em></span></h1>
+                        <p class="intro__sub" data-translate="intro-sub">Coulées à la main dans le Sud de la France, pour les moments qui méritent une flamme.</p>
+                        <div class="intro__actions">
+                            <a class="btn btn--light" href="{% url 'shop:products' %}" data-translate="intro-cta-shop">Boutique</a>
+                            <a class="btn btn--outline-light" href="{% url 'shop:contact' %}" data-translate="intro-cta-custom">Sur mesure</a>
+                        </div>
+                    </div>
+                    <div class="intro__fade" aria-hidden="true"></div>
+                    <span class="intro__cue" aria-hidden="true"><span data-translate="intro-scroll">Défiler</span><i></i></span>
                 </div>
-                <span class="lumiere__cue" aria-hidden="true"></span>
             </section>
 
             {% include 'includes/marquee.html' with marquee_set='a' %}
@@ -277,6 +285,7 @@
             });
         </script>
         {% include 'includes/site_scripts.html' %}
+        <script src="{% static 'intro.js' %}?v=20261114a" defer></script>
 
     </body>
 </html>

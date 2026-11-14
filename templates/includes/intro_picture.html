@@ -1,0 +1,5 @@
+{% load static %}<picture>
+    <source type="image/avif" srcset="{% static 'assets/images/intro/'|add:name|add:'-480.avif' %} 480w, {% static 'assets/images/intro/'|add:name|add:'-960.avif' %} 960w" sizes="{{ sizes|default:'(max-width: 767px) 40vw, 22vw' }}" />
+    <source type="image/webp" srcset="{% static 'assets/images/intro/'|add:name|add:'-480.webp' %} 480w, {% static 'assets/images/intro/'|add:name|add:'-960.webp' %} 960w" sizes="{{ sizes|default:'(max-width: 767px) 40vw, 22vw' }}" />
+    <img src="{% static 'assets/images/intro/'|add:name|add:'-480.webp' %}" width="480" height="{{ h }}" alt="{{ alt }}" decoding="async" {% if lazy %}loading="lazy"{% endif %} fetchpriority="{{ priority|default:'low' }}" draggable="false" />
+</picture>

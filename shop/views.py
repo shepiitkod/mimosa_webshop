@@ -645,8 +645,27 @@ def index_view(request):
             "cart_count": cart_count,
             "home_categories": home_categories,
             "atelier_steps": ATELIER_STEPS,
+            "intro_photos": INTRO_PHOTOS,
         },
     )
+
+
+# Homepage intro: candle photos floating in 3D. x/y are offsets from the
+# centre in vw/vh, z is depth in px (perspective 1000px), w is width in vmax.
+# mx/my/mw are the phone layout; mobile=False hides the photo on phones.
+INTRO_PHOTOS = (
+    {"name": "MAIN10", "h": 719, "x": 0, "y": -6, "z": -2600, "w": 26, "r": 0, "mx": 0, "my": -12, "mw": 40, "mobile": True, "destination": True, "alt": "Bougie pivoine sur une pile de livres, branches de cerisier"},
+    {"name": "MAIN11", "h": 719, "x": -36, "y": -22, "z": -260, "w": 16, "r": -3, "mx": -38, "my": -30, "mw": 30, "mobile": True, "alt": "Trio de bougies fleurs en coupelles blanches"},
+    {"name": "MAIN8", "h": 719, "x": 36, "y": -24, "z": -520, "w": 14, "r": 4, "mx": 38, "my": -32, "mw": 27, "mobile": True, "alt": "Bougies sphères florales pastel"},
+    {"name": "MAIN2", "h": 640, "x": -41, "y": 30, "z": -120, "w": 15, "r": 2, "mx": -38, "my": 38, "mw": 30, "mobile": True, "alt": "Bougies bento étoiles dorées à la feuille d’or"},
+    {"name": "MAIN6", "h": 719, "x": 41, "y": 28, "z": -200, "w": 16, "r": -2, "mx": 38, "my": 39, "mw": 30, "mobile": True, "alt": "Bougies chiffres roses pour anniversaire"},
+    {"name": "contest-bouquet", "h": 719, "x": -19, "y": -36, "z": -1200, "w": 13, "r": 1, "mx": 0, "my": 0, "mw": 0, "mobile": False, "alt": "Bouquet de bougies fleurs pastel"},
+    {"name": "bento", "h": 719, "x": 21, "y": 36, "z": -980, "w": 13, "r": -3, "mx": 0, "my": 0, "mw": 0, "mobile": False, "alt": "Fines bougies colorées nouées d’un ruban"},
+    {"name": "MAIN9", "h": 719, "x": 17, "y": -33, "z": -1650, "w": 12, "r": 2, "mx": 22, "my": -40, "mw": 22, "mobile": True, "alt": "Bougie rose dans une coupelle blanche"},
+    {"name": "MAIN12", "h": 719, "x": -23, "y": 32, "z": -1450, "w": 12, "r": -1, "mx": -22, "my": 40, "mw": 22, "mobile": True, "alt": "Bougies chauffe-plat roses et lilas"},
+    {"name": "sachets-hero", "h": 620, "x": 47, "y": -1, "z": -760, "w": 12, "r": 3, "mx": 0, "my": 0, "mw": 0, "mobile": False, "alt": "Sachets parfumés en plâtre dans leur écrin"},
+    {"name": "MAIN4", "h": 719, "x": -47, "y": -2, "z": -860, "w": 12, "r": -3, "mx": 0, "my": 0, "mw": 0, "mobile": False, "alt": "Bougies cœurs pastel à la feuille d’or"},
+)
 
 
 # "Fait main à Nîmes" on the homepage: the four gestures behind every candle.

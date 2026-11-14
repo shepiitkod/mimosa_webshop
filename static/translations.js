@@ -475,6 +475,12 @@ const translations = {
     "geste-or-text": "Gold leaf laid with a brush, freehand. No two candles are ever quite the same.",
     "geste-ecrin-title": "The case",
     "geste-ecrin-text": "Wrapped at the atelier, tied with a ribbon, ready to be given — or kept for yourself.",
+    "intro-eyebrow": "Candle atelier · Nîmes",
+    "intro-title": "<span class=\"l\">The art of the</span> <span class=\"l\"><em>candle</em></span>",
+    "intro-sub": "Hand-poured in the South of France, for the moments that deserve a flame.",
+    "intro-cta-shop": "Shop",
+    "intro-cta-custom": "Made to order",
+    "intro-scroll": "Scroll",
   },
 
   fr: {
@@ -955,6 +961,12 @@ const translations = {
     "geste-or-text": "Une feuille d’or posée au pinceau, à main levée. Aucune bougie n’est tout à fait la même.",
     "geste-ecrin-title": "L’écrin",
     "geste-ecrin-text": "Emballée à l’atelier, nouée d’un ruban, prête à être offerte — ou gardée pour soi.",
+    "intro-eyebrow": "Atelier de bougies · Nîmes",
+    "intro-title": "<span class=\"l\">L’art de la</span> <span class=\"l\"><em>bougie</em></span>",
+    "intro-sub": "Coulées à la main dans le Sud de la France, pour les moments qui méritent une flamme.",
+    "intro-cta-shop": "Boutique",
+    "intro-cta-custom": "Sur mesure",
+    "intro-scroll": "Défiler",
   },
 
   ua: {
@@ -1432,6 +1444,12 @@ const translations = {
     "geste-or-text": "Сусальне золото, нанесене пензлем від руки. Двох однакових свічок не буває.",
     "geste-ecrin-title": "Пакування",
     "geste-ecrin-text": "Запакована в ательє, перев’язана стрічкою, готова стати подарунком — або залишитися у вас.",
+    "intro-eyebrow": "Ательє свічок · Нім",
+    "intro-title": "<span class=\"l\">Мистецтво</span> <span class=\"l\"><em>свічки</em></span>",
+    "intro-sub": "Відлиті вручну на півдні Франції — для моментів, гідних полум’я.",
+    "intro-cta-shop": "Магазин",
+    "intro-cta-custom": "На замовлення",
+    "intro-scroll": "Гортайте",
   },
 
   ru: {
@@ -1912,6 +1930,12 @@ const translations = {
     "geste-or-text": "Сусальное золото, нанесённое кистью от руки. Двух одинаковых свечей не бывает.",
     "geste-ecrin-title": "Упаковка",
     "geste-ecrin-text": "Упакована в ателье, перевязана лентой, готова стать подарком — или остаться у вас.",
+    "intro-eyebrow": "Ателье свечей · Ним",
+    "intro-title": "<span class=\"l\">Искусство</span> <span class=\"l\"><em>свечи</em></span>",
+    "intro-sub": "Отлиты вручную на юге Франции — для моментов, достойных пламени.",
+    "intro-cta-shop": "Магазин",
+    "intro-cta-custom": "На заказ",
+    "intro-scroll": "Листайте",
   },
 };
 
