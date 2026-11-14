@@ -10,7 +10,8 @@
     <meta property="og:description" content="{{ product.description|striptags|truncatechars:155 }}">
     <meta property="og:image" content="{{ product.image.url }}">
     <meta property="og:type" content="product">
-    <link rel="canonical" href="{% url 'shop:product_detail' product.id canonical_slug %}">
+    <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{% url 'shop:product_detail' product.id canonical_slug %}">
+    {% product_image_preload product.image "(max-width: 1023px) 100vw, 56vw" %}
     {% include 'includes/head_assets.html' %}
 </head>
 <body class="pdp-page">
@@ -153,7 +154,7 @@
     {% include 'includes/footer.html' %}
     <div id="zoomResult" class="zoom-result" aria-hidden="true"></div>
 
-    <script src="{% static 'product.js' %}?v=20261114a" defer></script>
+    <script src="{% static 'product.js' %}?v=20261114d" defer></script>
     {% include 'includes/site_scripts.html' %}
     {% if product.category == "Bento Candles" %}
     <script src="{% static 'bento_color_picker.js' %}?v=20260612-mobile" defer></script>

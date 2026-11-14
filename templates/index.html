@@ -199,7 +199,7 @@
         <div id="cookie-banner" class="cookie-banner" role="region" aria-label="Cookies">
             <p class="cookie-banner__text">
                 <span data-translate="cookie-short">We use cookies to make your visit smoother.</span>
-                <a href="{% url 'shop:privacy' %}" class="cookie-banner__link" data-translate="cookie-learn-more">Learn more</a>
+                <a href="{% url 'shop:privacy' %}" class="cookie-banner__link" data-translate="cookie-learn-more">Politique de confidentialité</a>
             </p>
             <div class="cookie-banner__actions">
                 <button id="decline-cookies" type="button" class="cookie-banner__btn cookie-banner__btn--ghost" data-translate="cookie-decline">Decline</button>
@@ -306,9 +306,20 @@
                 const cookieConsent = localStorage.getItem("cookieConsent");
 
                 if (!cookieConsent) {
-                    setTimeout(() => {
+                    // Never over the intro's buttons: wait for the first
+                    // scroll, or a few seconds of reading.
+                    let shown = false;
+                    const showBanner = () => {
+                        if (shown) return;
+                        shown = true;
                         cookieBanner.classList.add("show");
-                    }, 1000);
+                        window.removeEventListener("scroll", onFirstScroll);
+                    };
+                    const onFirstScroll = () => {
+                        if (window.scrollY > 120) showBanner();
+                    };
+                    window.addEventListener("scroll", onFirstScroll, { passive: true });
+                    setTimeout(showBanner, 6000);
                 }
 
                 acceptBtn.addEventListener("click", function () {
@@ -323,7 +334,7 @@
             });
         </script>
         {% include 'includes/site_scripts.html' %}
-        <script src="{% static 'intro.js' %}?v=20261114a" defer></script>
+        <script src="{% static 'intro.js' %}?v=20261114d" defer></script>
 
     </body>
 </html>

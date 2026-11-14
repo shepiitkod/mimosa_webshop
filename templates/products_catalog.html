@@ -85,6 +85,7 @@
 
             <p class="boutique-count" aria-live="polite"><span data-translate="catalog-items-count" data-count="{{ total_products_count }}">{{ total_products_count }} items</span>{% if active_occasion %} · <span data-translate="{{ active_occasion.key }}">{{ active_occasion.name }}</span>{% endif %}</p>
 
+            <h2 class="visually-hidden" data-translate="boutique-products-heading">Produits</h2>
             <div class="catalog-grid boutique-grid">
                 {% for product in products %}
                 {% include 'includes/product_card.html' with product=product %}

@@ -8,7 +8,7 @@
     /* Colour */
     --ink: #1d1a16;
     --ink-soft: #4a443b;
-    --mute: #7b7367;
+    --mute: #665e53;
     --paper: #f8f4ed;
     --paper-deep: #efe7da;
     --paper-card: #fffdf9;
@@ -18,6 +18,7 @@
     --flame-soft: rgba(240, 166, 74, 0.38);
     --flame-core: #ffd9a0;
     --gold: #a98443;
+    --gold-deep: #7f6129;
 
     /* Collection tints (Nos Créations) */
     --tint-bento: #efe3d6;
@@ -1415,7 +1416,7 @@ main h2.gestes__title {
     justify-content: center;
     padding: 24px 0;
     border-top: 1px solid var(--line);
-    opacity: 0.32;
+    opacity: 0.62;
     transition: opacity 0.9s var(--ease-silk);
 }
 

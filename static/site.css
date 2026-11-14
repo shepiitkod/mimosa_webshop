@@ -2579,3 +2579,31 @@ body .product-page form.product-actions .pdp-buy__btn {
     line-height: 1;
     box-shadow: none;
 }
+
+/* Small gold text needs the deeper gold for contrast (≥ 4.5:1). */
+.geste__num,
+.sm-kind__num,
+.occasion__num {
+    color: var(--gold-deep);
+}
+
+.occasion__num {
+    color: var(--flame-core);
+}
+
+/* Seconde vie: quieter, in the house palette. */
+.sv-hero__leaf,
+.sv-hero__ornament {
+    display: none !important;
+}
+
+.sv-hero__eyebrow,
+.seconde-vie-page .eyebrow,
+[class*="sv-"][class*="eyebrow"] {
+    color: var(--gold-deep) !important;
+    letter-spacing: 0.26em;
+}
+
+.sv-hero__title {
+    font-weight: 300 !important;
+}

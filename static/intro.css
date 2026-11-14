@@ -14,7 +14,7 @@
 .intro {
     --ivory: #f6efe3;
     --night: #120d09;
-    --flame-y: 15%;
+    --flame-y: max(15%, 170px);
     position: relative;
     height: 100svh;
     min-height: 560px;
@@ -206,7 +206,7 @@ html:not(.motion) .intro__flame-css {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding: calc(var(--flame-y) + 15vh) 20px 6vh;
+    padding: calc(var(--flame-y) + min(15vh, 130px)) 20px 6vh;
     text-align: center;
     will-change: transform, opacity;
 }
@@ -241,7 +241,7 @@ main h1.intro__title,
     margin: 0;
     font-family: var(--font-display);
     font-weight: 300;
-    font-size: clamp(3.3rem, 7.4vw, 8.6rem);
+    font-size: clamp(3.3rem, min(7.4vw, 12.5vh), 8.6rem);
     line-height: 0.9;
     letter-spacing: -0.02em;
     color: var(--ivory);
@@ -423,7 +423,7 @@ html:not(.motion) .intro__cue {
 
 @media (max-width: 767px) {
     .intro {
-        --flame-y: 22%;
+        --flame-y: max(22%, 150px);
     }
 
     .motion .intro {

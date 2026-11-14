@@ -449,7 +449,7 @@ const translations = {
     "sachets-empty-text": "Check back soon \u2014 the first sachets are on their way!",
     "card-add-to-cart": "Add to cart",
     "cookie-short": "We use cookies to make your visit smoother.",
-    "cookie-learn-more": "Learn more",
+    "cookie-learn-more": "Privacy policy",
     "fab-consultation-short": "Consultation",
     "home-new-eyebrow": "New arrivals",
     "home-new-title": "The <em>newest</em> lights",
@@ -666,6 +666,7 @@ const translations = {
     "ct-email": "Email",
     "ct-phone": "Phone",
     "ct-custom": "For a personalised order, the simplest way is our form:",
+    "boutique-products-heading": "Products",
   },
 
   fr: {
@@ -1120,7 +1121,7 @@ const translations = {
     "sachets-empty-text": "Revenez bient\u00f4t \u2014 les premiers sachets arrivent !",
     "card-add-to-cart": "Ajouter au panier",
     "cookie-short": "Nous utilisons des cookies pour une visite plus douce.",
-    "cookie-learn-more": "En savoir plus",
+    "cookie-learn-more": "Politique de confidentialité",
     "fab-consultation-short": "Consultation",
     "home-new-eyebrow": "Nouveautés",
     "home-new-title": "Les <em>nouvelles</em> lumières",
@@ -1337,6 +1338,7 @@ const translations = {
     "ct-email": "E-mail",
     "ct-phone": "Téléphone",
     "ct-custom": "Pour une commande personnalisée, le plus simple est notre formulaire :",
+    "boutique-products-heading": "Produits",
   },
 
   ua: {
@@ -1788,7 +1790,7 @@ const translations = {
     "sachets-empty-text": "Завітайте незабаром — перші саше вже в дорозі!",
     "card-add-to-cart": "Додати в кошик",
     "cookie-short": "Ми використовуємо cookies, щоб зробити ваш візит зручнішим.",
-    "cookie-learn-more": "Детальніше",
+    "cookie-learn-more": "Політика конфіденційності",
     "fab-consultation-short": "Консультація",
     "home-new-eyebrow": "Новинки",
     "home-new-title": "<em>Нове</em> світло",
@@ -2005,6 +2007,7 @@ const translations = {
     "ct-email": "Ел. пошта",
     "ct-phone": "Телефон",
     "ct-custom": "Для персоналізованого замовлення найпростіше скористатися нашою формою:",
+    "boutique-products-heading": "Товари",
   },
 
   ru: {
@@ -2459,7 +2462,7 @@ const translations = {
     "sachets-empty-text": "Загляните позже — первые саше уже в пути!",
     "card-add-to-cart": "В корзину",
     "cookie-short": "Мы используем cookies, чтобы сделать визит удобнее.",
-    "cookie-learn-more": "Подробнее",
+    "cookie-learn-more": "Политика конфиденциальности",
     "fab-consultation-short": "Консультация",
     "home-new-eyebrow": "Новинки",
     "home-new-title": "<em>Новый</em> свет",
@@ -2676,6 +2679,7 @@ const translations = {
     "ct-email": "E-mail",
     "ct-phone": "Телефон",
     "ct-custom": "Для персонализированного заказа проще всего воспользоваться нашей формой:",
+    "boutique-products-heading": "Товары",
   },
 };
 

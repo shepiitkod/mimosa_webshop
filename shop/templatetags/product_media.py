@@ -16,6 +16,22 @@ def product_i18n_json(product):
     return escape(json.dumps(product.get_i18n_data(), ensure_ascii=False))
 
 
+@register.filter
+def product_title_i18n_json(product):
+    """Only the translated titles: what a product card needs (keeps listing
+    pages light). Shape matches product_i18n_json: {lang: {"title": ...}}."""
+    import json
+
+    from django.utils.html import escape
+
+    if not product:
+        return ""
+    data = product.get_i18n_data()
+    return escape(
+        json.dumps({lang: {"title": v.get("title", "")} for lang, v in data.items()}, ensure_ascii=False)
+    )
+
+
 @register.inclusion_tag("includes/product_picture.html", takes_context=False)
 def product_picture(
     image_field,
@@ -58,3 +74,19 @@ def product_picture(
         "sizes": sizes,
         "object_position": object_position,
     }
+
+
+@register.simple_tag
+def product_image_preload(image_field, sizes=""):
+    """<link rel=preload> for the main product photo (the page's LCP)."""
+    from django.utils.html import format_html
+
+    if not image_field:
+        return ""
+    ctx = product_picture(image_field, sizes=sizes)
+    if ctx["srcset"]:
+        return format_html(
+            '<link rel="preload" as="image" href="{}" imagesrcset="{}" imagesizes="{}" fetchpriority="high">',
+            ctx["src"], ctx["srcset"], sizes,
+        )
+    return format_html('<link rel="preload" as="image" href="{}" fetchpriority="high">', ctx["src"])
