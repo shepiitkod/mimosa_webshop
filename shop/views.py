@@ -775,12 +775,15 @@ def products_catalog_view(request, category_slug=None):
         )
         counts_map[canonical] = counts_map.get(canonical, 0) + row["total"]
 
-    visible_categories = (
+    visible_categories = [
         Product.CATEGORY_BENTO,
         Product.CATEGORY_SCENTED,
         Product.CATEGORY_DECORATIVE,
         Product.CATEGORY_CEREMONY,
-    )
+        Product.CATEGORY_SACHETS,
+    ]
+    if counts_map.get(Product.CATEGORY_GIFTS):
+        visible_categories.append(Product.CATEGORY_GIFTS)
 
     category_items = []
     for name in visible_categories:

@@ -177,3 +177,20 @@ class PaymentSyncTests(TestCase):
 		self.assertEqual(response.status_code, 200)
 		self.order.refresh_from_db()
 		self.assertEqual(self.order.status, Order.STATUS_PROCESSING)
+
+
+class CatalogCategoryFilterTests(TestCase):
+	def test_plaster_sachets_listed_in_catalog_filter(self):
+		Product.objects.create(
+			title='Sachet Rose',
+			description='Plaster sachet',
+			price=Decimal('12.00'),
+			image='products/sachet.jpg',
+			category=Product.CATEGORY_SACHETS,
+		)
+		response = self.client.get(reverse('shop:products'))
+		self.assertContains(response, 'nav-sub-sachets')
+		filtered = self.client.get(
+			reverse('shop:products_by_category', args=['plaster-sachets'])
+		)
+		self.assertContains(filtered, 'Sachet Rose')
