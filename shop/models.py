@@ -355,3 +355,72 @@ class CustomOrderRequest(models.Model):
 
     def __str__(self):
         return f"{self.get_occasion_display()} — {self.name} ({self.created_at:%Y-%m-%d})"
+
+
+class Fragrance(models.Model):
+    """A fragrance of the atelier (Seconde vie table, editable in the admin).
+
+    Names and notes stay in French. Family terms, seasons and moments are
+    translated by translations.js (keys built in shop/fragrances.py);
+    description and mood are translated here, in ``i18n``.
+    """
+
+    FAMILY_CHOICES = [
+        ("oriental", "Oriental"),
+        ("hesperide", "Hespéridé"),
+        ("boise", "Boisé"),
+        ("floral", "Floral"),
+        ("poudre", "Poudré & musqué"),
+        ("aromatique", "Aromatique"),
+    ]
+    SEASON_CHOICES = [
+        ("printemps", "Printemps"),
+        ("ete", "Été"),
+        ("automne", "Automne"),
+        ("hiver", "Hiver"),
+    ]
+
+    slug = models.SlugField(unique=True)
+    name = models.CharField(max_length=80)
+    family = models.CharField(
+        max_length=80, help_text='Shown as is, e.g. "Floral · Poudré".'
+    )
+    family_group = models.CharField(
+        max_length=20, choices=FAMILY_CHOICES, help_text="Used by the family filter."
+    )
+    notes = models.JSONField(default=list, blank=True, help_text="List of notes, in French.")
+    intensity = models.PositiveSmallIntegerField(
+        default=3, validators=[MinValueValidator(1), MaxValueValidator(5)]
+    )
+    seasons = models.JSONField(
+        default=list,
+        blank=True,
+        help_text='Season codes: "printemps", "ete", "automne", "hiver". All four = all seasons.',
+    )
+    moments = models.JSONField(default=list, blank=True, help_text="List of moments, in French.")
+    pairs_with = models.JSONField(default=list, blank=True, help_text="Names of other fragrances.")
+    description = models.TextField(blank=True, default="")
+    mood = models.TextField(blank=True, default="")
+    i18n = models.JSONField(
+        default=dict,
+        blank=True,
+        help_text='{"en": {"description": "...", "mood": "..."}, "ua": {...}, "ru": {...}}',
+    )
+    image = models.ImageField(
+        upload_to="fragrances/", blank=True, null=True, help_text="Optional: replaces the default photo."
+    )
+    static_image = models.CharField(
+        max_length=120, blank=True, default="", help_text="Default photo in static/ (set by the data migration)."
+    )
+    position = models.PositiveSmallIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["position", "name"]
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def all_seasons(self):
+        return set(self.seasons or []) >= {code for code, _ in self.SEASON_CHOICES}

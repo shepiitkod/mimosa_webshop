@@ -1,8 +1,9 @@
 # MIMOSA Atelier — design notes (site-redesign)
 
 What changed, and why. The brand idea that drives every decision:
-**light and flame** — a dark, warm room where a candle is lit, then the ivory
-calm of an atelier in Nîmes.
+**an atelier, not a render** — the ivory calm of a workshop in Nîmes, real
+photographs of real pieces, printed-page typography. Nothing on the site
+should look generated (no glows, flames, particles or gradients).
 
 ---
 
@@ -19,7 +20,7 @@ calm of an atelier in Nîmes.
 | French as the brand voice | New copy is written in French first; EN/UA/RU translate it. Ribbons stay French in every language on purpose. |
 
 All tokens live in `static/atelier.css` (`:root`). Layout per page lives in
-`static/site.css`; the homepage intro in `static/intro.css`.
+`static/site.css`; the homepage first block in `static/hero.css`.
 
 ## 2. The first block (rebuilt — "made by a studio, not by an AI")
 
@@ -50,15 +51,43 @@ self-hosted), plain words (what it is, where it is made) and the two ways in:
 Boutique and Sur mesure. If `static/assets/video/hero.mp4` (and
 `hero-poster.jpg`) exist, the plate plays that film instead of the photos.
 
+## 2b. Seconde vie — the fragrance table
+
+**Removed**: the horizontal ribbon of fragrance cards and its glass modal
+(data hard-coded in JavaScript, English only, the first card washed out by a
+fade, big empty gaps around it, invisible to Google and without JS).
+
+**Now**: a printed-catalogue table of the 18 fragrances, the way an atelier
+lists its scents: small photo, name, family, notes, intensity 1–5 as five
+short bars, seasons, moments, "se marie avec". Clicking a row opens it in
+place: larger photo, description and mood. Filters for family, intensity
+(légère 1–2 · moyenne 3 · intense 4–5) and season, sorting by name or
+intensity. On phones each fragrance is a card that opens; the filters sit in
+a 2 × 2 grid; nothing scrolls sideways.
+
+- Data lives in the `Fragrance` model (Admin → Fragrances: text, notes,
+  intensity, seasons, moments, translations, an optional photo that replaces
+  the default one, order, active). Migration `0023_fragrance_data` fills it.
+- The table is rendered by Django (`shop/fragrances.py`,
+  `includes/fragrance_table.html`), so it is complete without JavaScript and
+  for search engines; the filters are a plain GET form (`?famille=floral&
+  saison=ete&tri=intensite-desc`) that also works without JS.
+  `fragrance_catalog.js` only filters/sorts in place (keeping the URL
+  shareable) and opens rows. `#parfum-mimosa` opens that fragrance.
+- Names and notes stay in French in every language (they are the product's
+  names). Families, seasons, moments and the interface are translated through
+  `translations.js` (`frag-t-*`, `frag-season-*`, `ft-*`); description and
+  mood through `Fragrance.i18n`.
+- Lighthouse mobile on `/seconde-vie/`: performance 92, accessibility 100.
+
 ## 3. Structure
 
 **Header** — Boutique (mega menu: collections + occasions + two editorial
 cards), Sur mesure, L’atelier · centred logo · language, account, bag with
-count. Transparent with an ivory logo over the intro, solid elsewhere, hides
-on scroll down and returns on scroll up. Phone: burger + drawer.
+count. Solid ivory everywhere, hides on scroll down and returns on scroll up. Phone: burger + drawer.
 The logo was re-cut from the JPEG into transparent ink and ivory PNGs.
 
-**Homepage**, in order: intro → *Pour quelle occasion ?* (4 occasions → the
+**Homepage**, in order: first block (see 2) → *Pour quelle occasion ?* (4 occasions → the
 Boutique filtered) → *Nouveautés* (8 newest products, hover shows the second
 photo and *Ajouter au panier*) → *Fait main à Nîmes* (4 gestures swap on
 scroll) → *Sur mesure* → reviews (only published ones; hidden when none) +
@@ -112,8 +141,7 @@ and every collection. Canonical URLs are absolute.
 
 - Fonts self-hosted (`static/fonts`, unicode-range subsets incl. Cyrillic),
   3 preloads, no render-blocking Google CSS.
-- Atelier photos: 480/960 px AVIF + WebP (`static/assets/images/r/`,
-  `.../intro/`), lazy below the fold, explicit sizes.
+- Atelier photos: 480/960 px AVIF + WebP (`static/assets/images/r/`), lazy below the fold, explicit sizes.
 - Product photos: Cloudinary `f_auto,q_auto,w_400/800/1200` srcset; main
   product photo preloaded.
 - Only transform / opacity / clip-path are animated.

@@ -13,6 +13,7 @@ from .models import (
     CartItem,
     ContestEntry,
     CustomOrderRequest,
+    Fragrance,
     NewsletterUser,
     Order,
     OrderItem,
@@ -743,3 +744,38 @@ class CustomOrderRequestAdmin(admin.ModelAdmin):
             '<a href="{0}" target="_blank" rel="noopener"><img src="{0}" style="max-width:320px;border-radius:8px"></a>',
             obj.reference_image.url,
         )
+
+
+@admin.register(Fragrance)
+class FragranceAdmin(admin.ModelAdmin):
+    list_display = ("photo", "name", "family", "family_group", "intensity", "position", "is_active")
+    list_display_links = ("photo", "name")
+    list_editable = ("intensity", "position", "is_active")
+    list_filter = ("family_group", "intensity", "is_active")
+    search_fields = ("name", "family", "description")
+    prepopulated_fields = {"slug": ("name",)}
+    readonly_fields = ("photo_large",)
+    fieldsets = (
+        (None, {"fields": ("name", "slug", "position", "is_active")}),
+        ("Character", {"fields": ("family", "family_group", "intensity", "notes", "seasons", "moments", "pairs_with")}),
+        ("Texts (French)", {"fields": ("description", "mood")}),
+        ("Translations", {"fields": ("i18n",), "classes": ("collapse",)}),
+        ("Photo", {"fields": ("image", "static_image", "photo_large")}),
+    )
+
+    def _url(self, obj, size):
+        if obj.image:
+            return obj.image.url
+        from django.templatetags.static import static
+
+        return static((obj.static_image or "assets/images/fragrances/" + obj.slug) + f"-{size}.webp")
+
+    @admin.display(description="")
+    def photo(self, obj):
+        return format_html('<img src="{}" style="width:44px;height:44px;object-fit:cover;border-radius:4px">', self._url(obj, 160))
+
+    @admin.display(description="Preview")
+    def photo_large(self, obj):
+        if not obj.pk:
+            return "—"
+        return format_html('<img src="{}" style="max-width:260px;border-radius:8px">', self._url(obj, 720))

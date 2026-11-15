@@ -1,0 +1,97 @@
+{% comment %}
+Every fragrance with all its characteristics, rendered on the server (visible
+without JavaScript and to search engines). static/fragrance_catalog.js only
+filters, sorts and opens rows without reloading. Names and notes stay French.
+{% endcomment %}
+<section class="ft" id="parfums" data-ft aria-labelledby="ft-title">
+    <div class="ft-head">
+        <p class="ft-eyebrow" data-translate="sv-catalog-eyebrow">La Collection MIMOSA Atelier</p>
+        <h2 id="ft-title" class="ft-title" data-translate="sv-catalog-title">Nos Parfums</h2>
+        <p class="ft-lead" data-translate="ft-lead">Dix-huit parfums pour remplir votre contenant. Cliquez sur un parfum pour lire sa description.</p>
+    </div>
+
+    <form class="ft-filters" method="get" action="#parfums" data-ft-filters>
+        <label class="ft-filter">
+            <span class="ft-filter__label" data-translate="ft-family">Famille</span>
+            <select name="famille">
+                <option value="" data-translate="ft-all-families">Toutes</option>
+                {% for f in frag_families %}<option value="{{ f.code }}"{% if frag_active.famille == f.code %} selected{% endif %} data-translate="{{ f.key }}">{{ f.label }}</option>{% endfor %}
+            </select>
+        </label>
+        <label class="ft-filter">
+            <span class="ft-filter__label" data-translate="ft-intensity">Intensité</span>
+            <select name="intensite">
+                <option value="" data-translate="ft-all-intensities">Toutes</option>
+                {% for b in frag_bands %}<option value="{{ b.code }}"{% if frag_active.intensite == b.code %} selected{% endif %} data-translate="{{ b.key }}">{{ b.label }}</option>{% endfor %}
+            </select>
+        </label>
+        <label class="ft-filter">
+            <span class="ft-filter__label" data-translate="ft-season">Saison</span>
+            <select name="saison">
+                <option value="" data-translate="ft-all-seasons">Toutes</option>
+                {% for s in frag_seasons %}<option value="{{ s.code }}"{% if frag_active.saison == s.code %} selected{% endif %} data-translate="{{ s.key }}">{{ s.label }}</option>{% endfor %}
+            </select>
+        </label>
+        <label class="ft-filter">
+            <span class="ft-filter__label" data-translate="ft-sort">Trier</span>
+            <select name="tri">
+                <option value="" data-translate="ft-sort-default">Ordre de l’atelier</option>
+                <option value="nom"{% if frag_active.tri == 'nom' %} selected{% endif %} data-translate="ft-sort-name">Nom, A → Z</option>
+                <option value="intensite-asc"{% if frag_active.tri == 'intensite-asc' %} selected{% endif %} data-translate="ft-sort-int-asc">Intensité croissante</option>
+                <option value="intensite-desc"{% if frag_active.tri == 'intensite-desc' %} selected{% endif %} data-translate="ft-sort-int-desc">Intensité décroissante</option>
+            </select>
+        </label>
+        <button type="submit" class="btn btn--ghost ft-apply" data-translate="filter-apply">Appliquer</button>
+        <a class="text-link ft-reset" href="?#parfums" data-ft-reset{% if not frag_filtered %} hidden{% endif %} data-translate="filter-reset">Effacer</a>
+        <p class="ft-count" aria-live="polite"><span data-ft-count>{{ fragrance_visible }}</span>&thinsp;/&thinsp;{{ fragrance_total }}</p>
+    </form>
+
+    <table class="ft-table">
+        <caption class="visually-hidden" data-translate="sv-catalog-title">Nos Parfums</caption>
+        <thead>
+            <tr>
+                <th scope="col"><span class="visually-hidden" data-translate="ft-col-photo">Photo</span></th>
+                <th scope="col" data-translate="ft-col-name">Parfum</th>
+                <th scope="col" data-translate="ft-family">Famille</th>
+                <th scope="col" data-translate="ft-col-notes">Notes</th>
+                <th scope="col" data-translate="ft-intensity">Intensité</th>
+                <th scope="col" data-translate="ft-col-seasons">Saisons</th>
+                <th scope="col" data-translate="ft-col-moments">Moments</th>
+                <th scope="col" data-translate="ft-col-pairs">Se marie avec</th>
+            </tr>
+        </thead>
+        {% for row in fragrance_rows %}{% with f=row.obj %}
+        <tbody class="ft-item" id="parfum-{{ f.slug }}" data-ft-item data-name="{{ f.name|lower }}" data-family="{{ f.family_group }}" data-intensity="{{ f.intensity }}" data-seasons="{{ f.seasons|join:' ' }}" data-position="{{ f.position }}"{% if row.hidden %} hidden{% endif %}>
+            <tr class="ft-row">
+                <td class="ft-cell ft-cell--photo"><img src="{{ row.thumb }}" alt="" width="64" height="64" loading="lazy" decoding="async"></td>
+                <th scope="row" class="ft-cell ft-cell--name">
+                    <button type="button" class="ft-toggle" aria-expanded="false" aria-controls="ft-detail-{{ f.slug }}" data-ft-toggle>
+                        <span class="ft-name" lang="fr">{{ f.name }}</span>
+                        <span class="ft-chevron" aria-hidden="true"></span>
+                    </button>
+                </th>
+                <td class="ft-cell ft-cell--family" data-label="Famille" data-label-key="ft-family">{% for t in row.family_terms %}<span data-translate="{{ t.key }}">{{ t.text }}</span>{% if not forloop.last %} · {% endif %}{% endfor %}</td>
+                <td class="ft-cell ft-cell--notes" data-label="Notes" data-label-key="ft-col-notes"><ul class="ft-list" lang="fr">{% for n in f.notes %}<li>{{ n }}</li>{% endfor %}</ul></td>
+                <td class="ft-cell ft-cell--intensity" data-label="Intensité" data-label-key="ft-intensity">
+                    <span class="ft-dots" role="img" aria-label="{{ f.intensity }} / 5">{% for i in row.dots %}<i class="{% if i <= f.intensity %}is-on{% endif %}"></i>{% endfor %}</span>
+                </td>
+                <td class="ft-cell ft-cell--seasons" data-label="Saisons" data-label-key="ft-col-seasons">{% if row.all_seasons %}<span data-translate="frag-season-all">Toutes saisons</span>{% else %}{% for s in row.seasons %}<span data-translate="{{ s.key }}">{{ s.label }}</span>{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}</td>
+                <td class="ft-cell ft-cell--moments" data-label="Moments" data-label-key="ft-col-moments"><ul class="ft-list">{% for m in row.moments %}<li data-translate="{{ m.key }}">{{ m.text }}</li>{% endfor %}</ul></td>
+                <td class="ft-cell ft-cell--pairs" data-label="Se marie avec" data-label-key="ft-col-pairs"><ul class="ft-list" lang="fr">{% for p in f.pairs_with %}<li>{{ p }}</li>{% endfor %}</ul></td>
+            </tr>
+            <tr class="ft-detail" id="ft-detail-{{ f.slug }}" data-ft-detail>
+                <td colspan="8">
+                    <div class="ft-detail__inner">
+                        <img class="ft-detail__img" src="{{ row.big }}" alt="{{ f.name }}" width="360" height="360" loading="lazy" decoding="async">
+                        <div class="ft-detail__text">
+                            <p class="ft-detail__desc" data-product-i18n="{{ row.i18n_json }}" data-i18n-field="description">{{ f.description }}</p>
+                            {% if f.mood %}<p class="ft-detail__mood" data-product-i18n="{{ row.i18n_json }}" data-i18n-field="mood">{{ f.mood }}</p>{% endif %}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        {% endwith %}{% endfor %}
+    </table>
+    <p class="ft-empty" data-ft-empty{% if fragrance_visible %} hidden{% endif %} data-translate="ft-empty">Aucun parfum ne correspond à ces filtres.</p>
+</section>

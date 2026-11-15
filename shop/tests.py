@@ -470,3 +470,135 @@ class HeroTests(TestCase):
 		with patch('django.contrib.staticfiles.finders.find', return_value='/x/hero.mp4'):
 			body = self.client.get('/').content.decode()
 		self.assertIn('<video class="hero-img hero-video"', body)
+
+
+@override_settings(SECURE_SSL_REDIRECT=False)
+class FragranceTests(TestCase):
+	"""Fragrance model, its data migration, the table filters and the page."""
+
+	def setUp(self):
+		from .models import Fragrance
+		self.Fragrance = Fragrance
+
+	def test_data_migration_loads_eighteen_fragrances(self):
+		self.assertEqual(self.Fragrance.objects.filter(is_active=True).count(), 18)
+		mimosa = self.Fragrance.objects.get(slug='mimosa')
+		self.assertEqual(mimosa.name, 'Mimosa')
+		self.assertEqual(mimosa.family_group, 'floral')
+		self.assertIn('Mimosa de Cannes', mimosa.notes)
+		self.assertTrue(1 <= mimosa.intensity <= 5)
+		self.assertTrue(mimosa.description)
+		for lang in ('en', 'ua', 'ru'):
+			self.assertTrue(mimosa.i18n[lang]['description'], lang)
+			self.assertTrue(mimosa.i18n[lang]['mood'], lang)
+
+	def test_every_fragrance_is_complete(self):
+		codes = {c for c, _ in self.Fragrance.SEASON_CHOICES}
+		groups = {c for c, _ in self.Fragrance.FAMILY_CHOICES}
+		for f in self.Fragrance.objects.all():
+			self.assertIn(f.family_group, groups, f.slug)
+			self.assertTrue(set(f.seasons) <= codes, f.slug)
+			self.assertTrue(f.notes and f.moments and f.pairs_with, f.slug)
+			self.assertTrue(f.static_image, f.slug)
+
+	def test_all_seasons_property(self):
+		f = self.Fragrance(seasons=['printemps', 'ete', 'automne', 'hiver'])
+		self.assertTrue(f.all_seasons)
+		f.seasons = ['ete']
+		self.assertFalse(f.all_seasons)
+
+	def test_intensity_is_validated(self):
+		from django.core.exceptions import ValidationError
+		f = self.Fragrance.objects.get(slug='mimosa')
+		f.intensity = 6
+		with self.assertRaises(ValidationError):
+			f.full_clean()
+
+	def test_filter_by_family_intensity_season(self):
+		from .fragrances import filter_fragrances
+		every = list(self.Fragrance.objects.all())
+		floral = filter_fragrances(every, famille='floral')
+		self.assertTrue(floral)
+		self.assertTrue(all(f.family_group == 'floral' for f in floral))
+		intense = filter_fragrances(every, intensite='intense')
+		self.assertTrue(all(f.intensity >= 4 for f in intense))
+		legere = filter_fragrances(every, intensite='legere')
+		self.assertTrue(all(f.intensity <= 2 for f in legere))
+		hiver = filter_fragrances(every, saison='hiver')
+		self.assertTrue(hiver)
+		self.assertTrue(all('hiver' in f.seasons for f in hiver))
+		both = filter_fragrances(every, famille='floral', saison='ete')
+		self.assertEqual(both, [f for f in floral if 'ete' in f.seasons])
+
+	def test_sorting(self):
+		from .fragrances import filter_fragrances
+		every = list(self.Fragrance.objects.all())
+		names = [f.name.lower() for f in filter_fragrances(every, tri='nom')]
+		self.assertEqual(names, sorted(names))
+		desc = [f.intensity for f in filter_fragrances(every, tri='intensite-desc')]
+		self.assertEqual(desc, sorted(desc, reverse=True))
+		asc = [f.intensity for f in filter_fragrances(every, tri='intensite-asc')]
+		self.assertEqual(asc, sorted(asc))
+
+	def test_unknown_values_are_ignored(self):
+		from .fragrances import filter_fragrances, table_context
+		every = list(self.Fragrance.objects.all())
+		self.assertEqual(len(filter_fragrances(every, famille='x', intensite='y', saison='z', tri='w')), 18)
+		ctx = table_context({'tri': 'nonsense'})
+		self.assertEqual(ctx['frag_active']['tri'], '')
+		self.assertFalse(ctx['frag_filtered'])
+
+	def test_inactive_fragrance_is_left_out(self):
+		from .fragrances import table_context
+		self.Fragrance.objects.filter(slug='mimosa').update(is_active=False)
+		ctx = table_context({})
+		self.assertEqual(ctx['fragrance_total'], 17)
+		self.assertNotIn('mimosa', [r['obj'].slug for r in ctx['fragrance_rows']])
+
+	def test_table_context_flags_hidden_rows_and_keeps_all(self):
+		from .fragrances import table_context
+		ctx = table_context({'famille': 'floral'})
+		self.assertEqual(len(ctx['fragrance_rows']), 18)
+		visible = [r for r in ctx['fragrance_rows'] if not r['hidden']]
+		self.assertEqual(len(visible), ctx['fragrance_visible'])
+		self.assertTrue(ctx['frag_filtered'])
+		# Visible rows come first.
+		flags = [r['hidden'] for r in ctx['fragrance_rows']]
+		self.assertEqual(flags, sorted(flags))
+
+	def test_page_renders_table_server_side(self):
+		response = self.client.get(reverse('shop:seconde_vie'))
+		self.assertEqual(response.status_code, 200)
+		html = response.content.decode()
+		self.assertEqual(html.count('data-ft-item'), 18)
+		self.assertIn('id="parfum-mimosa"', html)
+		self.assertIn('Mimosa de Cannes', html)
+		self.assertIn('data-translate="frag-t-floral"', html)
+		self.assertIn('data-translate="frag-season-ete"', html)
+		self.assertIn('assets/images/fragrances/mimosa-160.webp', html)
+		# The old JS-built carousel is gone.
+		self.assertNotIn('spc-card', html)
+
+	def test_page_applies_get_filters_without_js(self):
+		response = self.client.get(reverse('shop:seconde_vie'), {'famille': 'floral', 'tri': 'nom'})
+		html = response.content.decode()
+		floral = self.Fragrance.objects.filter(family_group='floral').count()
+		self.assertEqual(html.count('data-ft-item'), 18)
+		import re
+		hidden = len(re.findall(r'data-ft-item[^>]*\shidden>', html))
+		self.assertEqual(hidden, 18 - floral)
+		self.assertIn('<option value="floral" selected', html)
+
+	def test_every_translation_key_exists(self):
+		from pathlib import Path
+		from django.conf import settings
+		from .fragrances import table_context
+		js = (Path(settings.BASE_DIR) / 'static' / 'translations.js').read_text(encoding='utf-8')
+		ctx = table_context({})
+		keys = set()
+		for r in ctx['fragrance_rows']:
+			keys |= {t['key'] for t in r['family_terms'] + r['moments']}
+			keys |= {s['key'] for s in r['seasons']}
+		keys |= {x['key'] for x in ctx['frag_families'] + ctx['frag_bands'] + ctx['frag_seasons']}
+		for key in keys:
+			self.assertGreaterEqual(js.count('"%s"' % key), 3, key)

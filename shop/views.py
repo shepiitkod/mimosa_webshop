@@ -874,8 +874,11 @@ def product_sachets_view(request):
 
 @require_GET
 def seconde_vie_view(request):
-    """Landing page for the Candle Upcycling (Seconde vie) premium service."""
-    return render(request, "seconde_vie.html")
+    """Landing page for the Candle Upcycling (Seconde vie) premium service,
+    with the table of every fragrance (filters work with and without JS)."""
+    from .fragrances import table_context
+
+    return render(request, "seconde_vie.html", table_context(request.GET))
 
 
 @require_GET
