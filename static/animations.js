@@ -10,7 +10,6 @@
  *  - [data-parallax="0.08"] photo drifts and settles while scrolling
  *  - [data-creations]       horizontal showcase pinned to vertical scroll (desktop)
  *  - [data-gestes]          "Fait main à Nîmes" steps swap the picture on scroll
- *  - warm cursor light      desktop with a mouse only
  *  - smooth wheel scrolling desktop with a mouse only
  */
 (function () {
@@ -323,48 +322,6 @@
     }
 
     /* ------------------------------------------------------------------
-       Warm light under the cursor (mouse devices only)
-       ------------------------------------------------------------------ */
-    function initCursorGlow() {
-        if (reduce || !finePointer) return;
-        var glow = document.createElement('div');
-        glow.className = 'cursor-glow';
-        glow.setAttribute('aria-hidden', 'true');
-        document.body.appendChild(glow);
-
-        var tx = window.innerWidth / 2;
-        var ty = window.innerHeight / 2;
-        var x = tx;
-        var y = ty;
-        var running = false;
-
-        function frame() {
-            x += (tx - x) * 0.12;
-            y += (ty - y) * 0.12;
-            glow.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0)';
-            if (Math.abs(tx - x) > 0.3 || Math.abs(ty - y) > 0.3) {
-                window.requestAnimationFrame(frame);
-            } else {
-                running = false;
-            }
-        }
-
-        document.addEventListener('mousemove', function (e) {
-            tx = e.clientX;
-            ty = e.clientY;
-            glow.classList.add('is-on');
-            if (!running) {
-                running = true;
-                window.requestAnimationFrame(frame);
-            }
-        }, { passive: true });
-
-        document.documentElement.addEventListener('mouseleave', function () {
-            glow.classList.remove('is-on');
-        });
-    }
-
-    /* ------------------------------------------------------------------
        Smooth wheel scrolling (mouse devices only). Keyboard, scrollbar,
        anchors and trackpad momentum keep working natively.
        ------------------------------------------------------------------ */
@@ -440,7 +397,6 @@
         initParallax();
         initCreations();
         initGestes();
-        initCursorGlow();
         initSmoothScroll();
         window.addEventListener('scroll', requestScrollTasks, { passive: true });
         window.addEventListener('resize', requestScrollTasks, { passive: true });

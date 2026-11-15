@@ -1,0 +1,38 @@
+{% comment %} Variant A — "la couverture": a magazine cover. Words on the left, one large
+   frame on the right with the atelier's pieces changing slowly, captioned
+   like a lookbook plate. {% endcomment %}
+<section class="cover hero-a" data-hero="a" data-own-motion aria-labelledby="hero-title">
+    <div class="hero-a__words">
+        {% include 'includes/hero_copy.html' %}
+    </div>
+    <figure class="hero-a__plate">
+        <div class="hero-a__frame" data-hero-frame>
+            {% if hero_video %}
+            {% load static %}
+            <video class="hero-img hero-video" src="{% static hero_video.src %}"{% if hero_video.poster %} poster="{% static hero_video.poster %}"{% endif %} autoplay muted loop playsinline preload="metadata" aria-label="MIMOSA Atelier, Nîmes"></video>
+            {% else %}
+            {% for item in hero_items %}
+            <div class="hero-a__slide{% if forloop.first %} is-active{% endif %}" data-slide="{{ forloop.counter0 }}"{% if not forloop.first %} aria-hidden="true"{% endif %}>
+                {% if forloop.first %}{% include 'includes/hero_media.html' with loading='eager' priority='high' sizes='(max-width: 767px) 100vw, 52vw' %}{% else %}{% include 'includes/hero_media.html' with loading='lazy' priority='' sizes='(max-width: 767px) 100vw, 52vw' %}{% endif %}
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+        {% if not hero_video %}
+        <figcaption class="hero-cap">
+            <span class="hero-cap__num"><span data-hero-num>01</span>&thinsp;/&thinsp;{{ hero_items|length|stringformat:"02d" }}</span>
+            <span class="hero-cap__text" data-hero-caption aria-live="polite">
+                {% for item in hero_items %}
+                <span class="hero-cap__item{% if forloop.first %} is-active{% endif %}" data-cap="{{ forloop.counter0 }}"{% if not forloop.first %} hidden{% endif %}>{% include 'includes/hero_caption_title.html' %}</span>
+                {% endfor %}
+            </span>
+            <span class="hero-cap__controls">
+                <button type="button" class="hero-cap__btn" data-hero-prev><span class="visually-hidden" data-translate="hero2-prev">Photo précédente</span><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+                <button type="button" class="hero-cap__btn hero-cap__pause" data-hero-pause aria-pressed="false"><span data-translate="hero2-pause">Pause</span></button>
+                <button type="button" class="hero-cap__btn" data-hero-next><span class="visually-hidden" data-translate="hero2-next">Photo suivante</span><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+            </span>
+            <span class="hero-cap__progress" aria-hidden="true"><i data-hero-progress></i></span>
+        </figcaption>
+        {% endif %}
+    </figure>
+</section>

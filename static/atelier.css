@@ -270,17 +270,6 @@ main h2.display-title {
     opacity: 0;
 }
 
-/* Warm light that blooms over the photo on hover — the "flame" signature. */
-.p-card__glow {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    pointer-events: none;
-    background: radial-gradient(120% 70% at 50% 110%, rgba(255, 190, 110, 0.32), transparent 60%);
-    opacity: 0;
-    transition: opacity 900ms var(--ease-flame);
-}
-
 .p-card__body {
     display: grid;
     gap: 4px;
@@ -429,10 +418,6 @@ main h2.display-title {
         opacity: 1;
     }
 
-    .p-card:hover .p-card__glow,
-    .p-card:focus-within .p-card__glow {
-        opacity: 1;
-    }
 
     .p-card:hover .p-card__quick-btn,
     .p-card:focus-within .p-card__quick-btn {
@@ -964,7 +949,6 @@ body.kinetic-menu-open .fab-consultation {
 @media (prefers-reduced-motion: reduce) {
     .p-card,
     .p-card__img,
-    .p-card__glow,
     .p-card__quick-btn,
     .fab-consultation,
     .cookie-banner {
@@ -1122,8 +1106,7 @@ main h2.nouveautes__title {
     width: 5px;
     height: 5px;
     border-radius: 50%;
-    background: var(--flame);
-    box-shadow: 0 0 10px 2px rgba(240, 166, 74, 0.5);
+    background: var(--gold);
 }
 
 @keyframes marquee-run {
@@ -1613,28 +1596,6 @@ main h2.sv-teaser__title {
     will-change: transform;
 }
 
-/* Warm cursor light (desktop, mouse only — created by animations.js). */
-.cursor-glow {
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 9000;
-    width: 520px;
-    height: 520px;
-    margin: -260px 0 0 -260px;
-    border-radius: 50%;
-    pointer-events: none;
-    background: radial-gradient(circle, rgba(255, 196, 120, 0.42) 0%, rgba(255, 176, 92, 0.16) 30%, transparent 62%);
-    mix-blend-mode: soft-light;
-    opacity: 0;
-    transition: opacity 0.8s var(--ease-silk);
-    will-change: transform;
-}
-
-.cursor-glow.is-on {
-    opacity: 1;
-}
-
 /* ==========================================================================
    Reduced motion: final states, no movement.
    ========================================================================== */
@@ -1659,9 +1620,6 @@ main h2.sv-teaser__title {
         opacity: 1 !important;
     }
 
-    .cursor-glow {
-        display: none;
-    }
 
     .marquee__track {
         transform: none;

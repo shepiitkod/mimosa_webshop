@@ -21,30 +21,34 @@ calm of an atelier in Nîmes.
 All tokens live in `static/atelier.css` (`:root`). Layout per page lives in
 `static/site.css`; the homepage intro in `static/intro.css`.
 
-## 2. The intro ("vau" block)
+## 2. The first block (rebuilt — "made by a studio, not by an AI")
 
-- **Dark warm room, a live flame.** The flame is a ~60-line WebGL fragment
-  shader (`static/intro.js`): fbm noise body, blue root, warm glow and a heat
-  haze that shimmers above it. It **leans when the cursor sweeps past**, like
-  a candle in a draught — a small, honest piece of physics that makes the page
-  feel alive.
-- **11 atelier photos in CSS 3D space** at different depths. On the first visit
-  of the session they drift in from the depth (≤ 2 s) while a ring of light
-  runs outward from the flame. Repeat visits in the same session skip it
-  (`sessionStorage`, decided in `<head>` so there is no flash).
-- **Headline visible from the first paint** (it is the LCP). It only settles
-  by a few pixels (transform). It is translated by a tiny inline script before
-  paint, so it never changes after load.
-- **Parallax**: mouse turns the whole scene (perspective does the depth work);
-  phones get a slow drift or device tilt (Android, no permission prompt).
-- **Scroll**: the section pins; the camera flies through the photos, the last
-  one fills the screen and dissolves into ivory, flowing into the next block.
-- **Fallbacks**: no WebGL, weak device (`deviceMemory < 4`, `saveData`),
-  software GL (SwiftShader/llvmpipe) or a dropping frame rate → CSS flame.
-  `prefers-reduced-motion` or no JS → one still, lit composition.
-- **No libraries**: GSAP/three.js/Lenis would have cost 40–150 KB and a CDN
-  request for effects that are ~400 lines of vanilla code. The CDNs are not
-  reachable from the build sandbox either, so nothing could have been verified.
+**Removed**, because nothing on the page should be invented: the WebGL and CSS
+flames, every glow and halo, the heat haze, the light dot at the bottom, the
+warm light that followed the cursor, the photos scattered at angles on a dark
+background, the gold-gradient italic headline, the "scroll" line and the dark
+"room". The brand is light, pastel and mimosa-yellow, so the hero now is too.
+Glows were also removed from product cards, list dots, the newsletter and the
+login page; headline italics are ink, not gold.
+
+**Now**: an editorial layout built only from the atelier's real photographs
+and type, in two variants for review (`?hero=a`, `?hero=b`):
+
+- **A — la couverture**: words on the left, one large plate on the right on a
+  flat blush block (a wax colour). The plate is uncovered by a mask on load,
+  then the pieces change slowly (crossfade, a very slight zoom), each with a
+  lookbook caption: plate number, product name and price from the database,
+  linked to the product. Pause / previous / next controls (it never moves by
+  itself with reduced motion, off screen or in a hidden tab).
+- **B — le lookbook**: the block holds while you scroll and each plate is
+  uncovered from the right over the previous one, like turning a page;
+  folio number, caption and a column of plate numbers you can click.
+
+Both carry the brand's own line from its printed card, *«Faire briller la
+bougie pour que le vœu se réalise»*, set in a handwriting face (Allura,
+self-hosted), plain words (what it is, where it is made) and the two ways in:
+Boutique and Sur mesure. If `static/assets/video/hero.mp4` (and
+`hero-poster.jpg`) exist, the plate plays that film instead of the photos.
 
 ## 3. Structure
 
@@ -112,7 +116,7 @@ and every collection. Canonical URLs are absolute.
   `.../intro/`), lazy below the fold, explicit sizes.
 - Product photos: Cloudinary `f_auto,q_auto,w_400/800/1200` srcset; main
   product photo preloaded.
-- Only transform / opacity / canvas are animated.
+- Only transform / opacity / clip-path are animated.
 - Lighthouse (local, mobile profile, brotli like Vercel):
   home 91, boutique 89, product 90, sur mesure 91; accessibility 100.
   Desktop home 97.

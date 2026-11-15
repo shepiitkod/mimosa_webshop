@@ -1,0 +1,13 @@
+{# Shared words of both hero variants. Plain and concrete: what, where, two ways in. #}
+<div class="hero-copy">
+    <p class="hero-copy__eyebrow"><span data-translate="hero2-eyebrow">Atelier de bougies</span> <span aria-hidden="true">·</span> Nîmes</p>
+    <h1 id="hero-title" class="hero-copy__title" data-translate="hero2-title">Bougies coulées à la main à&nbsp;Nîmes</h1>
+    <p class="hero-copy__text" data-translate="hero2-text">Cire de soja, mèches en coton, parfums de Provence. Chaque bougie est coulée, peinte et emballée dans notre atelier.</p>
+    <div class="hero-copy__actions">
+        <a class="btn" href="{% url 'shop:products' %}" data-translate="intro-cta-shop">Boutique</a>
+        <a class="btn btn--ghost" href="{% url 'shop:custom_order' %}" data-translate="intro-cta-custom">Sur mesure</a>
+    </div>
+</div>
+<p class="hero-script" lang="fr">«&#8239;Faire briller la bougie pour que le vœu se réalise&#8239;»</p>
+{# Translate the hero words before their first paint (no flicker). Same strings as translations.js. #}
+<script>(function(){var t={"en":{"hero2-eyebrow":"Candle atelier","hero2-title":"Candles hand-poured in Nîmes","hero2-text":"Soy wax, cotton wicks, Provence fragrances. Every candle is poured, painted and wrapped in our atelier.","hero2-plate":"Plate","intro-cta-shop":"Shop","intro-cta-custom":"Made to order"},"ua":{"hero2-eyebrow":"Ательє свічок","hero2-title":"Свічки, відлиті вручну в Німі","hero2-text":"Соєвий віск, бавовняні ґноти, аромати Провансу. Кожну свічку відливають, розписують і пакують у нашому ательє.","hero2-plate":"Аркуш","intro-cta-shop":"Магазин","intro-cta-custom":"На замовлення"},"ru":{"hero2-eyebrow":"Ателье свечей","hero2-title":"Свечи, отлитые вручную в Ниме","hero2-text":"Соевый воск, хлопковые фитили, ароматы Прованса. Каждую свечу отливают, расписывают и упаковывают в нашем ателье.","hero2-plate":"Лист","intro-cta-shop":"Магазин","intro-cta-custom":"На заказ"}},s=t[document.documentElement.getAttribute("data-lang")];if(!s)return;document.querySelectorAll("[data-hero] [data-translate]").forEach(function(e){var v=s[e.getAttribute("data-translate")];if(v)e.textContent=v})})()</script>

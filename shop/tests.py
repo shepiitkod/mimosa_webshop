@@ -438,3 +438,35 @@ class NewsletterOfferTests(TestCase):
 		)
 		self.assertEqual(response.json()['code'], 'BIENVENUE10')
 		self.assertTrue(NewsletterUser.objects.filter(email='new@example.com').exists())
+
+
+@override_settings(SECURE_SSL_REDIRECT=False)
+class HeroTests(TestCase):
+	def test_variant_switch(self):
+		self.assertContains(self.client.get('/'), 'data-hero="a"')
+		self.assertContains(self.client.get('/?hero=b'), 'data-hero="b"')
+		self.assertContains(self.client.get('/?hero=zzz'), 'data-hero="a"')
+
+	def test_captions_use_real_products(self):
+		_product('Bougie Pivoine', Product.CATEGORY_SCENTED, '34.00')
+		_product('Chiffres Roses', Product.CATEGORY_CEREMONY, '18.00')
+		_product('Sphères Florales', Product.CATEGORY_DECORATIVE, '26.00')
+		body = self.client.get('/').content.decode()
+		self.assertIn('class="hero-cap__title"', body)
+		self.assertIn('Bougie Pivoine', body)
+		self.assertIn('34.00&nbsp;€', body)
+
+	def test_fallback_photos_when_catalogue_is_empty(self):
+		response = self.client.get('/')
+		self.assertGreaterEqual(len(response.context['hero_items']), 3)
+		self.assertContains(response, '/boutique/scented-candles/')
+
+	def test_no_generated_effects_left(self):
+		body = self.client.get('/').content.decode()
+		for gone in ('intro__flame', 'data-intro-flame', 'cursor-glow', 'intro.js'):
+			self.assertNotIn(gone, body)
+
+	def test_video_used_when_present(self):
+		with patch('django.contrib.staticfiles.finders.find', return_value='/x/hero.mp4'):
+			body = self.client.get('/').content.decode()
+		self.assertIn('<video class="hero-img hero-video"', body)

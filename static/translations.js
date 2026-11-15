@@ -667,6 +667,14 @@ const translations = {
     "ct-phone": "Phone",
     "ct-custom": "For a personalised order, the simplest way is our form:",
     "boutique-products-heading": "Products",
+    "hero2-eyebrow": "Candle atelier",
+    "hero2-title": "Candles hand-poured in Nîmes",
+    "hero2-text": "Soy wax, cotton wicks, Provence fragrances. Every candle is poured, painted and wrapped in our atelier.",
+    "hero2-prev": "Previous photo",
+    "hero2-next": "Next photo",
+    "hero2-pause": "Pause",
+    "hero2-play": "Play",
+    "hero2-plate": "Plate",
   },
 
   fr: {
@@ -1339,6 +1347,14 @@ const translations = {
     "ct-phone": "Téléphone",
     "ct-custom": "Pour une commande personnalisée, le plus simple est notre formulaire :",
     "boutique-products-heading": "Produits",
+    "hero2-eyebrow": "Atelier de bougies",
+    "hero2-title": "Bougies coulées à la main à Nîmes",
+    "hero2-text": "Cire de soja, mèches en coton, parfums de Provence. Chaque bougie est coulée, peinte et emballée dans notre atelier.",
+    "hero2-prev": "Photo précédente",
+    "hero2-next": "Photo suivante",
+    "hero2-pause": "Pause",
+    "hero2-play": "Lecture",
+    "hero2-plate": "Planche",
   },
 
   ua: {
@@ -2008,6 +2024,14 @@ const translations = {
     "ct-phone": "Телефон",
     "ct-custom": "Для персоналізованого замовлення найпростіше скористатися нашою формою:",
     "boutique-products-heading": "Товари",
+    "hero2-eyebrow": "Ательє свічок",
+    "hero2-title": "Свічки, відлиті вручну в Німі",
+    "hero2-text": "Соєвий віск, бавовняні ґноти, аромати Провансу. Кожну свічку відливають, розписують і пакують у нашому ательє.",
+    "hero2-prev": "Попереднє фото",
+    "hero2-next": "Наступне фото",
+    "hero2-pause": "Пауза",
+    "hero2-play": "Відтворити",
+    "hero2-plate": "Аркуш",
   },
 
   ru: {
@@ -2680,6 +2704,14 @@ const translations = {
     "ct-phone": "Телефон",
     "ct-custom": "Для персонализированного заказа проще всего воспользоваться нашей формой:",
     "boutique-products-heading": "Товары",
+    "hero2-eyebrow": "Ателье свечей",
+    "hero2-title": "Свечи, отлитые вручную в Ниме",
+    "hero2-text": "Соевый воск, хлопковые фитили, ароматы Прованса. Каждую свечу отливают, расписывают и упаковывают в нашем ателье.",
+    "hero2-prev": "Предыдущее фото",
+    "hero2-next": "Следующее фото",
+    "hero2-pause": "Пауза",
+    "hero2-play": "Смотреть",
+    "hero2-plate": "Лист",
   },
 };
 

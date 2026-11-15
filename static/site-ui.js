@@ -42,7 +42,10 @@
             var y = window.scrollY || 0;
             var vh = window.innerHeight || 800;
             var docH = document.documentElement.scrollHeight;
-            var pastHero = y > vh * 0.8;
+            // Past the whole first block (it can be pinned and tall).
+            var hero = document.querySelector('[data-hero]');
+            var heroEnd = hero ? hero.offsetTop + hero.offsetHeight - vh * 0.3 : vh * 0.8;
+            var pastHero = y > heroEnd;
             var nearEnd = y + vh > docH - 260;
             fab.classList.toggle('fab-consultation--visible', pastHero && !nearEnd);
         }

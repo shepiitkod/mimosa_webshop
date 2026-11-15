@@ -1,0 +1,1 @@
+{% load product_media %}<a class="hero-cap__title" href="{{ item.url }}"{% if item.product %} data-product-i18n="{{ item.product|product_title_i18n_json }}" data-i18n-field="title"{% else %} data-translate="{{ item.key }}"{% endif %}>{{ item.title }}</a>{% if item.price %}<span class="hero-cap__price">{{ item.price }}&nbsp;€</span>{% endif %}

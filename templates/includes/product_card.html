@@ -5,7 +5,6 @@
         {% if product.image_2 %}
         {% product_picture product.image_2 alt="" css_class="p-card__img p-card__img--alt" w=600 h=750 loading="lazy" sizes="(max-width: 767px) 46vw, (max-width: 1199px) 30vw, 320px" object_position=product.image_2_object_position %}
         {% endif %}
-        <span class="p-card__glow" aria-hidden="true"></span>
     </div>
     <div class="p-card__body">
         <p class="p-card__cat">{% if product.category_translation_key %}<span data-translate="{{ product.category_translation_key }}">{{ product.category_display_name }}</span>{% else %}{{ product.category }}{% endif %}</p>

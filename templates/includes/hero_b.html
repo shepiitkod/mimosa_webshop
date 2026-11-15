@@ -1,0 +1,41 @@
+{% load static %}
+{% comment %} Variant B — "le lookbook": the section holds still while the visitor scrolls
+   and each plate turns over the previous one like a page, from right to left.
+   A column of plate numbers shows where you are. {% endcomment %}
+<section class="cover hero-b" data-hero="b" data-own-motion style="--plates: {{ hero_items|length }}" aria-labelledby="hero-title">
+    <div class="hero-b__stage">
+        <div class="hero-b__words">
+            {% include 'includes/hero_copy.html' %}
+        </div>
+        <div class="hero-b__book">
+            <div class="hero-b__frame" data-hero-frame>
+                {% if hero_video %}
+                <div class="hero-b__plate is-on" data-plate="0">
+                    <video class="hero-img hero-video" src="{% static hero_video.src %}"{% if hero_video.poster %} poster="{% static hero_video.poster %}"{% endif %} autoplay muted loop playsinline preload="metadata" aria-label="MIMOSA Atelier, Nîmes"></video>
+                </div>
+                {% endif %}
+                {% for item in hero_items %}
+                {% if not hero_video or not forloop.first %}
+                <div class="hero-b__plate{% if forloop.first %} is-on{% endif %}" data-plate="{{ forloop.counter0 }}"{% if not forloop.first %} aria-hidden="true"{% endif %}>
+                    {% if forloop.first %}{% include 'includes/hero_media.html' with loading='eager' priority='high' sizes='(max-width: 767px) 100vw, 60vw' %}{% else %}{% include 'includes/hero_media.html' with loading='lazy' priority='' sizes='(max-width: 767px) 100vw, 60vw' %}{% endif %}
+                </div>
+                {% endif %}
+                {% endfor %}
+                <span class="hero-b__folio" aria-hidden="true"><span data-hero-num>01</span></span>
+            </div>
+            <div class="hero-cap hero-b__cap">
+                <span class="hero-cap__num"><span data-translate="hero2-plate">Planche</span> <span data-hero-num>01</span>&thinsp;/&thinsp;{{ hero_items|length|stringformat:"02d" }}</span>
+                <span class="hero-cap__text" aria-live="polite">
+                    {% for item in hero_items %}
+                    <span class="hero-cap__item{% if forloop.first %} is-active{% endif %}" data-cap="{{ forloop.counter0 }}"{% if not forloop.first %} hidden{% endif %}>{% include 'includes/hero_caption_title.html' %}</span>
+                    {% endfor %}
+                </span>
+            </div>
+            <ol class="hero-b__index" aria-label="Planches">
+                {% for item in hero_items %}
+                <li><button type="button" class="hero-b__tick{% if forloop.first %} is-active{% endif %}" data-goto="{{ forloop.counter0 }}" aria-label="{{ forloop.counter|stringformat:'02d' }} — {{ item.title }}">{{ forloop.counter|stringformat:"02d" }}</button></li>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+</section>
