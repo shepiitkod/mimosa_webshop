@@ -14,6 +14,8 @@
     var intro = document.querySelector('[data-intro]');
     var lastY = window.scrollY || 0;
     var ticking = false;
+    var lastVisible = -1;
+    var lastTop = -1;
 
     function update() {
         ticking = false;
@@ -32,10 +34,18 @@
             else if (y < lastY - 6 || y < 240) header.classList.remove('is-hidden');
         }
         lastY = y;
-        // Sticky bars below the header (boutique filters) follow it.
-        var visible = header.classList.contains('is-hidden') ? 0 : Math.max(0, header.getBoundingClientRect().bottom);
-        document.documentElement.style.setProperty('--mh-visible', visible + 'px');
-        document.documentElement.style.setProperty('--mh-top', (header.getBoundingClientRect().bottom || h) + 'px');
+        // Sticky bars below the header (boutique filters) follow it. Written
+        // only when the value changes: a custom property on <html> restyles
+        // the whole page, so it must not be touched on every scroll frame.
+        var visible = header.classList.contains('is-hidden') ? 0 : h;
+        if (visible !== lastVisible) {
+            lastVisible = visible;
+            document.documentElement.style.setProperty('--mh-visible', visible + 'px');
+        }
+        if (h !== lastTop) {
+            lastTop = h;
+            document.documentElement.style.setProperty('--mh-top', h + 'px');
+        }
     }
 
     window.addEventListener('scroll', function () {

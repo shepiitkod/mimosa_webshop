@@ -10,14 +10,13 @@
  *  - [data-parallax="0.08"] photo drifts and settles while scrolling
  *  - [data-creations]       horizontal showcase pinned to vertical scroll (desktop)
  *  - [data-gestes]          "Fait main à Nîmes" steps swap the picture on scroll
- *  - smooth wheel scrolling desktop with a mouse only
+ *  Scrolling itself is always native (never intercepted).
  */
 (function () {
     'use strict';
 
     var reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     var reduce = reduceMotionQuery.matches;
-    var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     var isTouchViewport =
         window.matchMedia('(max-width: 767px)').matches ||
         window.matchMedia('(pointer: coarse)').matches;
@@ -221,16 +220,20 @@
         }
 
         scrollTasks.push(function (y, vh) {
+            // Read every position first, then write: no forced layout per item.
+            var jobs = [];
             visible.forEach(function (el) {
                 var img = el.querySelector('img');
-                if (!img) return;
-                var r = el.getBoundingClientRect();
+                if (img) jobs.push([el, img, el.getBoundingClientRect()]);
+            });
+            jobs.forEach(function (j) {
+                var r = j[2];
                 // -1 when the block enters at the bottom, +1 when it leaves at the top.
                 var p = clamp(((r.top + r.height / 2) - vh / 2) / (vh / 2 + r.height / 2), -1, 1);
-                var f = parseFloat(el.getAttribute('data-parallax')) || 0.06;
+                var f = parseFloat(j[0].getAttribute('data-parallax')) || 0.06;
                 var shift = p * f * r.height;
                 var scale = 1 + f * (0.6 + 0.4 * Math.abs(p));
-                img.style.transform = 'translate3d(0,' + shift.toFixed(1) + 'px,0) scale(' + scale.toFixed(3) + ')';
+                j[1].style.transform = 'translate3d(0,' + shift.toFixed(1) + 'px,0) scale(' + scale.toFixed(3) + ')';
             });
         });
     }
@@ -321,75 +324,6 @@
         steps.forEach(function (s) { io.observe(s); });
     }
 
-    /* ------------------------------------------------------------------
-       Smooth wheel scrolling (mouse devices only). Keyboard, scrollbar,
-       anchors and trackpad momentum keep working natively.
-       ------------------------------------------------------------------ */
-    function canScrollInside(node, deltaY, deltaX) {
-        while (node && node !== document.body && node !== document.documentElement) {
-            if (node.nodeType === 1) {
-                var cs = window.getComputedStyle(node);
-                if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                    if (/(auto|scroll)/.test(cs.overflowX) && node.scrollWidth > node.clientWidth) return true;
-                } else if (/(auto|scroll)/.test(cs.overflowY) && node.scrollHeight > node.clientHeight) {
-                    if ((deltaY < 0 && node.scrollTop > 0) ||
-                        (deltaY > 0 && node.scrollTop + node.clientHeight < node.scrollHeight)) return true;
-                }
-            }
-            node = node.parentNode;
-        }
-        return false;
-    }
-
-    function initSmoothScroll() {
-        if (reduce || !finePointer) return;
-        var target = window.scrollY;
-        var current = window.scrollY;
-        var animating = false;
-
-        function maxScroll() {
-            return document.documentElement.scrollHeight - window.innerHeight;
-        }
-
-        function step() {
-            current += (target - current) * 0.11;
-            if (Math.abs(target - current) < 0.5) {
-                current = target;
-                animating = false;
-            }
-            window.scrollTo(0, current);
-            if (animating) window.requestAnimationFrame(step);
-        }
-
-        window.addEventListener('wheel', function (e) {
-            if (e.ctrlKey || e.defaultPrevented) return;
-            // Pixel-precise trackpads already feel smooth; leave them alone.
-            if (e.deltaMode === 0 && Math.abs(e.deltaY) < 40 && !animating) return;
-            if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
-            if (document.body.classList.contains('kinetic-menu-open')) return;
-            if (canScrollInside(e.target, e.deltaY, e.deltaX)) return;
-
-            e.preventDefault();
-            var delta = e.deltaY * (e.deltaMode === 1 ? 32 : e.deltaMode === 2 ? window.innerHeight : 1);
-            if (!animating) {
-                target = window.scrollY;
-                current = window.scrollY;
-            }
-            target = clamp(target + delta, 0, maxScroll());
-            if (!animating) {
-                animating = true;
-                window.requestAnimationFrame(step);
-            }
-        }, { passive: false });
-
-        window.addEventListener('scroll', function () {
-            if (!animating) {
-                target = window.scrollY;
-                current = window.scrollY;
-            }
-        }, { passive: true });
-    }
-
     function init() {
         initScrollReveals();
         initImageReveal();
@@ -397,7 +331,6 @@
         initParallax();
         initCreations();
         initGestes();
-        initSmoothScroll();
         window.addEventListener('scroll', requestScrollTasks, { passive: true });
         window.addEventListener('resize', requestScrollTasks, { passive: true });
         requestScrollTasks();

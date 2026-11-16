@@ -32,18 +32,26 @@ background, the gold-gradient italic headline, the "scroll" line and the dark
 Glows were also removed from product cards, list dots, the newsletter and the
 login page; headline italics are ink, not gold.
 
-**Now**: an editorial layout built only from the atelier's real photographs
-and type, in two variants for review (`?hero=a`, `?hero=b`):
+**Now** — *le lookbook*, built only from the atelier's real photographs and
+type (the owner chose this one of the two variants reviewed; the other, a
+slow slideshow, was removed). The block holds while you scroll and each
+plate is uncovered from the right over the previous one, like turning a
+page; folio number, caption with the product's name and price from the
+database (linked to it) and a column of plate numbers you can click.
 
-- **A — la couverture**: words on the left, one large plate on the right on a
-  flat blush block (a wax colour). The plate is uncovered by a mask on load,
-  then the pieces change slowly (crossfade, a very slight zoom), each with a
-  lookbook caption: plate number, product name and price from the database,
-  linked to the product. Pause / previous / next controls (it never moves by
-  itself with reduced motion, off screen or in a hidden tab).
-- **B — le lookbook**: the block holds while you scroll and each plate is
-  uncovered from the right over the previous one, like turning a page;
-  folio number, caption and a column of plate numbers you can click.
+How it stays smooth (it lagged at first):
+
+- scrolling is always native. A home-made "smooth wheel" script that
+  intercepted the mouse wheel was removed: it made the page trail far
+  behind the wheel (≈ 0.7 s to settle, now ≈ 15 ms);
+- the page turn moves the plate and its photo in opposite directions with
+  `transform` only (no animated `clip-path`), so the photos are never
+  repainted while scrolling; the section is measured once, not every frame;
+- the frame no longer resizes when the header hides;
+- the header writes its CSS variables only when they change (a variable on
+  `<html>` restyles the whole page); the parallax reads all positions
+  before writing;
+- the next plates load after the page has loaded, never before the first.
 
 Both carry the brand's own line from its printed card, *«Faire briller la
 bougie pour que le vœu se réalise»*, set in a handwriting face (Allura,

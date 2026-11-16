@@ -23,8 +23,8 @@
         {% include 'includes/header.html' %}
 
         <main id="main-content" tabindex="-1">
-            {# ── 1. Hero (two variants for review: ?hero=a / ?hero=b) ── #}
-            {% if hero_variant == 'b' %}{% include 'includes/hero_b.html' %}{% else %}{% include 'includes/hero_a.html' %}{% endif %}
+            {# ── 1. Hero: the lookbook, plates turn while you scroll ── #}
+            {% include 'includes/hero_b.html' %}
 
             {# ── 2. Pour quelle occasion ? ────────────────────────── #}
             <section class="occasions" aria-labelledby="occasions-title">
@@ -300,7 +300,7 @@
             });
         </script>
         {% include 'includes/site_scripts.html' %}
-        <script src="{% static 'hero.js' %}?v=20261115a" defer></script>
+        <script src="{% static 'hero.js' %}?v=20261116a" defer></script>
 
     </body>
 </html>

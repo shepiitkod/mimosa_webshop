@@ -442,10 +442,11 @@ class NewsletterOfferTests(TestCase):
 
 @override_settings(SECURE_SSL_REDIRECT=False)
 class HeroTests(TestCase):
-	def test_variant_switch(self):
-		self.assertContains(self.client.get('/'), 'data-hero="a"')
-		self.assertContains(self.client.get('/?hero=b'), 'data-hero="b"')
-		self.assertContains(self.client.get('/?hero=zzz'), 'data-hero="a"')
+	def test_lookbook_hero(self):
+		body = self.client.get('/').content.decode()
+		self.assertIn('data-hero="b"', body)
+		self.assertNotIn('data-hero="a"', body)
+		self.assertIn('data-plate="0"', body)
 
 	def test_captions_use_real_products(self):
 		_product('Bougie Pivoine', Product.CATEGORY_SCENTED, '34.00')

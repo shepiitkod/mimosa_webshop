@@ -658,7 +658,6 @@ def index_view(request):
             "atelier_steps": ATELIER_STEPS,
             "hero_items": _hero_items(),
             "hero_video": _hero_video(),
-            "hero_variant": "b" if request.GET.get("hero") == "b" else "a",
             "instagram_photos": INSTAGRAM_PHOTOS,
         },
     )
