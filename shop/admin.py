@@ -1,14 +1,19 @@
 from decimal import Decimal
 
 from django import forms
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.db.models import Sum
+from django.http import HttpResponse
+from django.shortcuts import redirect
+from django.template.response import TemplateResponse
+from django.urls import path
 from django.utils import timezone
 from django.utils.html import format_html, format_html_join
 
 from . import shipping
 from .emails import send_order_status_update_email
 from .models import CartItem, ContestEntry, NewsletterUser, Order, OrderItem, Product
+from .product_transfer import export_products_csv, export_products_json, import_products
 
 FRAMING_FIELDS = (
     "image_focal_x",
@@ -84,6 +89,72 @@ class ProductAdminForm(forms.ModelForm):
 class ProductAdmin(admin.ModelAdmin):
     form = ProductAdminForm
     change_form_template = "admin/shop/product/change_form.html"
+    change_list_template = "admin/shop/product/change_list.html"
+
+    def get_urls(self):
+        custom = [
+            path(
+                "transfer/",
+                self.admin_site.admin_view(self.transfer_view),
+                name="shop_product_transfer",
+            ),
+            path(
+                "export/<str:fmt>/",
+                self.admin_site.admin_view(self.export_view),
+                name="shop_product_export",
+            ),
+        ]
+        return custom + super().get_urls()
+
+    def transfer_view(self, request):
+        if not self.has_add_permission(request):
+            return redirect("admin:shop_product_changelist")
+
+        if request.method == "POST":
+            upload = request.FILES.get("file")
+            text = request.POST.get("text", "")
+            if upload:
+                text = upload.read().decode("utf-8-sig", errors="replace")
+            if not text.strip():
+                messages.error(request, "Выберите файл или вставьте данные.")
+                return redirect("admin:shop_product_transfer")
+
+            result = import_products(
+                text, update_existing=bool(request.POST.get("update_existing"))
+            )
+            for error in result.errors[:20]:
+                messages.warning(request, error)
+            if result.created or result.updated:
+                messages.success(
+                    request,
+                    f"Готово: добавлено {result.created}, обновлено {result.updated}, "
+                    f"пропущено {result.skipped}.",
+                )
+                return redirect("admin:shop_product_changelist")
+            messages.info(request, f"Ничего не изменено (пропущено {result.skipped}).")
+            return redirect("admin:shop_product_transfer")
+
+        context = {
+            **self.admin_site.each_context(request),
+            "opts": self.model._meta,
+            "title": "Импорт / экспорт товаров",
+            "product_count": Product.objects.count(),
+        }
+        return TemplateResponse(request, "admin/shop/product/transfer.html", context)
+
+    def export_view(self, request, fmt):
+        if not self.has_view_permission(request):
+            return redirect("admin:index")
+        stamp = timezone.now().strftime("%Y-%m-%d")
+        if fmt == "csv":
+            body, ctype = export_products_csv(), "text/csv; charset=utf-8"
+        else:
+            fmt, body, ctype = "json", export_products_json(), "application/json"
+        response = HttpResponse(body, content_type=ctype)
+        response["Content-Disposition"] = (
+            f'attachment; filename="mimosa-products-{stamp}.{fmt}"'
+        )
+        return response
 
     class Media:
         css = {"all": ("admin_custom_v2.css", "image-cropper.css")}

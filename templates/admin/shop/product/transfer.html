@@ -1,0 +1,54 @@
+{% extends "admin/base_site.html" %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="{% url 'admin:index' %}">Home</a> &rsaquo;
+  <a href="{% url 'admin:shop_product_changelist' %}">Products</a> &rsaquo;
+  Импорт / экспорт
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main" style="max-width: 760px;">
+  <p>Сейчас в каталоге: <strong>{{ product_count }}</strong> товар(ов).</p>
+
+  <fieldset class="module aligned">
+    <h2>Импорт товаров</h2>
+    <form method="post" enctype="multipart/form-data" style="padding: 12px;">
+      {% csrf_token %}
+      <p>
+        Загрузите файл <strong>.json</strong> (экспорт с этой страницы или
+        <code>manage.py dumpdata</code> со старой базы) либо <strong>.csv</strong>
+        с колонками по названиям полей (title, description, price, category,
+        stock, image …).
+      </p>
+      <p>
+        Фото не нужно загружать заново: в поле <code>image</code> хранится путь
+        к файлу в Cloudinary, и товар сразу показывается с прежней картинкой.
+      </p>
+      <p><input type="file" name="file" accept=".json,.csv,application/json,text/csv"></p>
+      <p>или вставьте содержимое файла:</p>
+      <p><textarea name="text" rows="8" style="width: 100%;"></textarea></p>
+      <p>
+        <label>
+          <input type="checkbox" name="update_existing" value="1" checked>
+          Обновлять товары с таким же названием (иначе — пропускать)
+        </label>
+      </p>
+      <p><input type="submit" class="default" value="Импортировать"></p>
+    </form>
+  </fieldset>
+
+  <fieldset class="module aligned">
+    <h2>Экспорт / резервная копия</h2>
+    <div style="padding: 12px;">
+      <p>Скачайте весь каталог, чтобы держать копию или перенести его на другой сервер.</p>
+      <p>
+        <a class="button" href="{% url 'admin:shop_product_export' 'json' %}">Скачать JSON</a>
+        &nbsp;
+        <a class="button" href="{% url 'admin:shop_product_export' 'csv' %}">Скачать CSV (Excel)</a>
+      </p>
+    </div>
+  </fieldset>
+</div>
+{% endblock %}
